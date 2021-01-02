@@ -23,7 +23,7 @@ public class TwoNumbersJ {
             } else if (currentSum < target){
                 left++;
             } else if (currentSum > target){
-                right++;
+                right--;
             }
         }
         return new int[0];
