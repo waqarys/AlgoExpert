@@ -1,4 +1,4 @@
-package easy.question_21_run_length_encoding;
+package easy.question21_run_length_encoding;
 
 /**
  * <div class="html">
