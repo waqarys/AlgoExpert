@@ -32,6 +32,7 @@ public class NumberOfWaysToMakeChange {
             for (int amount = 1; amount < n + 1; amount++) {
                 if (denom <= amount){
                     ways[amount] += ways[amount - denom];
+                    System.out.println(ways[amount]);
                 }
             }
         }

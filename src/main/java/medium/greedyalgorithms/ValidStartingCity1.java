@@ -43,13 +43,13 @@ package medium.greedyalgorithms;
  * </pre>
  * </div>
  */
-public class ValidStartingCity {
+public class ValidStartingCity1 {
     public static void main(String[] args) {
         int[] distances = new int[] {5, 25, 15, 10, 15};
         int[] fuel = new int[] {1, 2, 1, 0, 3};
         int mpg = 10;
         int expected = 4;
-        var actual = new ValidStartingCity().validStartingCity(distances, fuel, mpg);
+        var actual = new ValidStartingCity1().validStartingCity(distances, fuel, mpg);
         System.out.println(expected == actual);
     }
 
