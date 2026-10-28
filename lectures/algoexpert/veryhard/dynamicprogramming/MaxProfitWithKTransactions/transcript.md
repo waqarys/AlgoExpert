@@ -14,18 +14,42 @@ Here's the problem. Daily prices, at most k buy or sell pairs (no overlap); max 
 
 For each transaction count, track the best profit by day using the best buy so far.
 
-## 4. Approach (0:26) — `slides/04.png`
+## 4. Brute force vs optimal (0:26) — `slides/04.png`
+
+The naive DP checks every buy day for every sell day. Tracking the best value of previous profit minus price makes each row linear.
+
+## 5. Approach (0:35) — `slides/05.png`
 
 Step by step. First, rows for transactions, columns for days. Second, carry max of previous row minus price. Third, profit is max of skip or sell today. Fourth, two rows suffice.
 
-## 5. Java solution (0:41) — `slides/05.png`
+## 6. Worked example (0:51) — `slides/06.png`
 
-Here's the Java solution, starting with max profit with k transactions. It follows the steps we just described.
+Prices five, eleven, three, fifty, sixty, ninety; at most two transactions.
 
-## 6. Complexity (0:50) — `slides/06.png`
+## 7. Worked example (0:57) — `slides/07.png`
+
+Row 1: the best profit by each day using at most 1 transactions. By the last day it's 87.
+
+## 8. Worked example (1:05) — `slides/08.png`
+
+Row 2: the best profit by each day using at most 2 transactions. By the last day it's 93.
+
+## 9. Java solution (1:13) — `slides/09.png`
+
+For each transaction count, we sweep days, updating best buy with prev profit minus price, and cur as the max of yesterday or selling today. Then swap rows.
+
+## 10. Complexity (1:23) — `slides/10.png`
 
 Time is O of n times k. Space is O of n.
 
-## 7. Recap (0:54) — `slides/07.png`
+## 11. Edge cases & pitfalls (1:27) — `slides/11.png`
+
+If k is at least half the days, it's the unlimited case.
+
+## 12. Interview tips & follow-ups (1:32) — `slides/12.png`
+
+Explain best buy as the max of prior profit minus price.
+
+## 13. Recap (1:37) — `slides/13.png`
 
 To recap Max Profit With K Transactions: For each transaction count, track the best profit by day using the best buy so far. Try re-implementing it from scratch without looking.

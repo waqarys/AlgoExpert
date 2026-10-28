@@ -14,18 +14,38 @@ Here's the problem. A chain is built by removing one character at a time where e
 
 Process strings by length; each string's chain extends the best chain of any one-character-shorter string.
 
-## 4. Approach (0:32) — `slides/04.png`
+## 4. Brute force vs optimal (0:32) — `slides/04.png`
+
+Comparing every pair is quadratic in the number of strings. Sorting by length and trying each single deletion with a hash map is n times L squared.
+
+## 5. Approach (0:41) — `slides/05.png`
 
 Step by step. First, sort by length. Second, for each string, try removing each character. Third, look up the result. Fourth, keep best lengths and next links.
 
-## 5. Java solution (0:46) — `slides/05.png`
+## 6. Worked example (0:55) — `slides/06.png`
 
-Here's the Java solution, starting with longest string chain. It follows the steps we just described.
+Sort by length. For each string, delete each character in turn; if the shorter string exists, extend its chain.
 
-## 6. Complexity (0:53) — `slides/06.png`
+## 7. Worked example (1:03) — `slides/07.png`
+
+The longest chain is abcdef, abcde, abde, ade, ae.
+
+## 8. Java solution (1:09) — `slides/08.png`
+
+We sort by length; each string starts at length one, and for each deletion that exists we extend and remember the link. Then we follow links from the best start.
+
+## 9. Complexity (1:19) — `slides/09.png`
 
 Time is O of n times m squared plus n log n. Space is O of n times m.
 
-## 7. Recap (0:59) — `slides/07.png`
+## 10. Edge cases & pitfalls (1:24) — `slides/10.png`
+
+A single string isn't a chain; return empty if the best is one.
+
+## 11. Interview tips & follow-ups (1:29) — `slides/11.png`
+
+It's longest increasing subsequence on a different relation.
+
+## 12. Recap (1:34) — `slides/12.png`
 
 To recap Longest String Chain: Process strings by length; each string's chain extends the best chain of any one-character-shorter string. Try re-implementing it from scratch without looking.
