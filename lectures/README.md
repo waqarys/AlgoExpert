@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (42)
+## AlgoExpert (52)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -97,3 +97,13 @@ Built with [`pipeline/`](pipeline/README.md).
 | medium / arrays / Move Element To End | 1:02 | [mp4](algoexpert/medium/arrays/MoveElementToEnd/lecture.mp4) | [pdf](algoexpert/medium/arrays/MoveElementToEnd/slides.pdf) | [md](algoexpert/medium/arrays/MoveElementToEnd/transcript.md) |
 | medium / arrays / Smallest Difference | 1:02 | [mp4](algoexpert/medium/arrays/SmallestDifference/lecture.mp4) | [pdf](algoexpert/medium/arrays/SmallestDifference/slides.pdf) | [md](algoexpert/medium/arrays/SmallestDifference/transcript.md) |
 | medium / arrays / Spiral Traverse | 1:02 | [mp4](algoexpert/medium/arrays/SpiralTraverse/lecture.mp4) | [pdf](algoexpert/medium/arrays/SpiralTraverse/slides.pdf) | [md](algoexpert/medium/arrays/SpiralTraverse/transcript.md) |
+| medium / arrays / Sweet And Savory | 1:09 | [mp4](algoexpert/medium/arrays/SweetAndSavory/lecture.mp4) | [pdf](algoexpert/medium/arrays/SweetAndSavory/slides.pdf) | [md](algoexpert/medium/arrays/SweetAndSavory/transcript.md) |
+| medium / arrays / Three Number Sum | 1:04 | [mp4](algoexpert/medium/arrays/ThreeNumberSum/lecture.mp4) | [pdf](algoexpert/medium/arrays/ThreeNumberSum/slides.pdf) | [md](algoexpert/medium/arrays/ThreeNumberSum/transcript.md) |
+| medium / arrays / Zero Sum Subarray | 0:59 | [mp4](algoexpert/medium/arrays/ZeroSumSubarray/lecture.mp4) | [pdf](algoexpert/medium/arrays/ZeroSumSubarray/slides.pdf) | [md](algoexpert/medium/arrays/ZeroSumSubarray/transcript.md) |
+| medium / binarysearchtrees / Bst Construction | 1:21 | [mp4](algoexpert/medium/binarysearchtrees/BstConstruction/lecture.mp4) | [pdf](algoexpert/medium/binarysearchtrees/BstConstruction/slides.pdf) | [md](algoexpert/medium/binarysearchtrees/BstConstruction/transcript.md) |
+| medium / binarysearchtrees / Bst Traversal | 1:01 | [mp4](algoexpert/medium/binarysearchtrees/BstTraversal/lecture.mp4) | [pdf](algoexpert/medium/binarysearchtrees/BstTraversal/slides.pdf) | [md](algoexpert/medium/binarysearchtrees/BstTraversal/transcript.md) |
+| medium / binarysearchtrees / Find Kth Largest Value In Bst | 1:03 | [mp4](algoexpert/medium/binarysearchtrees/FindKthLargestValueInBst/lecture.mp4) | [pdf](algoexpert/medium/binarysearchtrees/FindKthLargestValueInBst/slides.pdf) | [md](algoexpert/medium/binarysearchtrees/FindKthLargestValueInBst/transcript.md) |
+| medium / binarysearchtrees / Min Height Bst | 0:57 | [mp4](algoexpert/medium/binarysearchtrees/MinHeightBst/lecture.mp4) | [pdf](algoexpert/medium/binarysearchtrees/MinHeightBst/slides.pdf) | [md](algoexpert/medium/binarysearchtrees/MinHeightBst/transcript.md) |
+| medium / binarysearchtrees / Reconstruct Bst | 1:03 | [mp4](algoexpert/medium/binarysearchtrees/ReconstructBst/lecture.mp4) | [pdf](algoexpert/medium/binarysearchtrees/ReconstructBst/slides.pdf) | [md](algoexpert/medium/binarysearchtrees/ReconstructBst/transcript.md) |
+| medium / binarysearchtrees / Validate Bst | 1:05 | [mp4](algoexpert/medium/binarysearchtrees/ValidateBst/lecture.mp4) | [pdf](algoexpert/medium/binarysearchtrees/ValidateBst/slides.pdf) | [md](algoexpert/medium/binarysearchtrees/ValidateBst/transcript.md) |
+| medium / binarytrees / Binary Tree Diameter | 0:56 | [mp4](algoexpert/medium/binarytrees/BinaryTreeDiameter/lecture.mp4) | [pdf](algoexpert/medium/binarytrees/BinaryTreeDiameter/slides.pdf) | [md](algoexpert/medium/binarytrees/BinaryTreeDiameter/transcript.md) |
