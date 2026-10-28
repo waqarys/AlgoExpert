@@ -1,4 +1,4 @@
-# Design the Tinder API
+# Design Tinder
 
 > Original study notes for the SystemsExpert-style prompt. Use them to practise, then run the interview from scratch.
 

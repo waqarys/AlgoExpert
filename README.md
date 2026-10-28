@@ -49,7 +49,7 @@ The problem list and difficulty labels were checked against two public mirrors o
 ([koykov/algoexpert.io](https://github.com/koykov/algoexpert.io), [AyushiGarg13/algoexpert-solutions](https://github.com/AyushiGarg13/algoexpert-solutions)).
 Each problem has its own JUnit test method covering the sample and edge cases (empty, single element, duplicates, negatives).
 
-## SystemsExpert (12 designs + fundamentals)
+## SystemsExpert (13 designs + fundamentals)
 See [systemsexpert/README.md](systemsexpert/README.md).
 
 ## MLExpert
