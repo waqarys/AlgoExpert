@@ -19,8 +19,9 @@ public class AmbiguousMeasurements {
         if (low <= 0 && high <= 0) return false;
         boolean ok = false;
         for (int[] c : cups) {
+            if (c[1] == 0) continue; // an empty cup never makes progress (avoids infinite recursion)
             if (c[0] >= low && c[1] <= high) { ok = true; break; }
-            if (c[1] < high && can(cups, Math.max(0, low - c[0]), high - c[1], memo)) { ok = true; break; }
+            if (can(cups, Math.max(0, low - c[0]), Math.max(0, high - c[1]), memo)) { ok = true; break; }
         }
         memo.put(key, ok);
         return ok;

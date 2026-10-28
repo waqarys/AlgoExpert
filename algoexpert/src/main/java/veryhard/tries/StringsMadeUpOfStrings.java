@@ -1,4 +1,4 @@
-package veryhard.strings;
+package veryhard.tries;
 
 import java.util.*;
 

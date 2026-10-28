@@ -42,3 +42,20 @@
 
 ## Concepts to be able to explain
 Bias-variance trade-off, regularisation (L1 vs L2), overfitting & cross-validation, class imbalance (resampling, class weights, focal loss), vanishing gradients, batch norm, dropout, embeddings, bagging vs boosting, precision/recall trade-off, calibration, A/B testing statistics.
+
+## MLExpert course design questions (real question names, my own notes)
+### Design a machine learning platform
+Feature store (offline in a warehouse, online in a KV store, with point-in-time joins), training orchestration (pipelines, GPU scheduling), experiment tracking and model registry, batch and online serving, shadow and A/B deploys, monitoring for data drift and prediction drift, retraining triggers.
+### Design Facebook photo tagging
+Face detection (CNN detector) → face embedding (metric learning, triplet/ArcFace loss) → match against the embeddings of the uploader's friends (ANN index), with a confidence threshold. Privacy opt-in. Users confirming or rejecting suggestions provides labels. Metrics: precision@1, coverage.
+### Design Amazon Alexa
+Wake word on device (small CNN/RNN) → streaming ASR → NLU (intent classification + slot filling) → skill routing/dialog manager → TTS. Latency budget under ~1 s. Train on reviewed failure cases; measure WER and intent accuracy.
+### Design a fake news detector
+Signals: text (transformer classifier), source reputation, propagation graph (who shares, how fast), user reports. Human fact-checkers in the loop. Act by down-ranking rather than deleting. Labels are scarce and adversarial, so use active learning and monitor drift.
+### Design YouTube's recommendation system
+Two stages: candidate generation (two-tower embeddings + ANN; collaborative signals) then ranking (deep model predicting watch time, CTR and satisfaction), then re-ranking for diversity and freshness. Avoid clickbait by using watch time and surveys. Handle cold start with content features.
+
+## Deep learning lessons (theory)
+- **CNNs:** convolution = shared local weights; pooling; receptive field; ResNet skip connections.
+- **RNNs:** hidden state over time; vanishing gradients → LSTM/GRU gates; now mostly replaced by Transformers (attention).
+- **GANs:** generator vs discriminator minimax; mode collapse; WGAN; evaluate with FID.

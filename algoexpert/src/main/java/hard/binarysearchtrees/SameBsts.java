@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class SameBsts {
     public static boolean sameBsts(List<Integer> a, List<Integer> b) {
+        if (a.size() != b.size()) return false;
+        if (a.isEmpty()) return true;
         return same(a, b, 0, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 

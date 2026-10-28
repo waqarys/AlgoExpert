@@ -13,5 +13,8 @@ Original notes, one per question. Mermaid diagrams render on GitHub.
 - [Design the Uber API](08-design-the-uber-api.md)
 - [Design Slack](09-design-slack.md)
 - [Design Airbnb](10-design-airbnb.md)
-- [Design the Tinder API](11-design-the-tinder-api.md)
-- [Design an E-commerce Checkout (Amazon-style)](12-design-amazon-shopping.md)
+- [Design Tinder](11-design-tinder.md)
+- [Design Amazon (cart, checkout and inventory)](12-design-amazon.md)
+- [Design the Twitch API](13-design-the-twitch-api.md)
+
+The 13 design questions and 24 fundamentals topics match the public SystemsExpert course outlines (lesson lists on coursehunter.net and courseflix.net). The question names are the real ones; the notes themselves are my own and do not copy the course solutions.

@@ -1,4 +1,4 @@
-package hard.binarytrees;
+package veryhard.binarytrees;
 
 import common.BinaryTree;
 import java.util.function.Consumer;

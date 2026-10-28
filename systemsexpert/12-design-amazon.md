@@ -1,4 +1,4 @@
-# Design an E-commerce Checkout (Amazon-style)
+# Design Amazon (cart, checkout and inventory)
 
 > Original study notes for the SystemsExpert-style prompt. Use them to practise, then run the interview from scratch.
 
