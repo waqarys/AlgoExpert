@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (122)
+## AlgoExpert (138)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -177,3 +177,19 @@ Built with [`pipeline/`](pipeline/README.md).
 | hard / dynamicprogramming / Disk Stacking | 1:11 | [mp4](algoexpert/hard/dynamicprogramming/DiskStacking/lecture.mp4) | [pdf](algoexpert/hard/dynamicprogramming/DiskStacking/slides.pdf) | [md](algoexpert/hard/dynamicprogramming/DiskStacking/transcript.md) |
 | hard / dynamicprogramming / Juice Bottling | 1:11 | [mp4](algoexpert/hard/dynamicprogramming/JuiceBottling/lecture.mp4) | [pdf](algoexpert/hard/dynamicprogramming/JuiceBottling/slides.pdf) | [md](algoexpert/hard/dynamicprogramming/JuiceBottling/transcript.md) |
 | hard / dynamicprogramming / Knapsack Problem | 1:04 | [mp4](algoexpert/hard/dynamicprogramming/KnapsackProblem/lecture.mp4) | [pdf](algoexpert/hard/dynamicprogramming/KnapsackProblem/slides.pdf) | [md](algoexpert/hard/dynamicprogramming/KnapsackProblem/transcript.md) |
+| hard / dynamicprogramming / Longest Common Subsequence | 1:06 | [mp4](algoexpert/hard/dynamicprogramming/LongestCommonSubsequence/lecture.mp4) | [pdf](algoexpert/hard/dynamicprogramming/LongestCommonSubsequence/slides.pdf) | [md](algoexpert/hard/dynamicprogramming/LongestCommonSubsequence/transcript.md) |
+| hard / dynamicprogramming / Max Sum Increasing Subsequence | 1:03 | [mp4](algoexpert/hard/dynamicprogramming/MaxSumIncreasingSubsequence/lecture.mp4) | [pdf](algoexpert/hard/dynamicprogramming/MaxSumIncreasingSubsequence/slides.pdf) | [md](algoexpert/hard/dynamicprogramming/MaxSumIncreasingSubsequence/transcript.md) |
+| hard / dynamicprogramming / Maximize Expression | 1:06 | [mp4](algoexpert/hard/dynamicprogramming/MaximizeExpression/lecture.mp4) | [pdf](algoexpert/hard/dynamicprogramming/MaximizeExpression/slides.pdf) | [md](algoexpert/hard/dynamicprogramming/MaximizeExpression/transcript.md) |
+| hard / dynamicprogramming / Maximum Sum Submatrix | 1:01 | [mp4](algoexpert/hard/dynamicprogramming/MaximumSumSubmatrix/lecture.mp4) | [pdf](algoexpert/hard/dynamicprogramming/MaximumSumSubmatrix/slides.pdf) | [md](algoexpert/hard/dynamicprogramming/MaximumSumSubmatrix/transcript.md) |
+| hard / dynamicprogramming / Min Number Of Jumps | 1:01 | [mp4](algoexpert/hard/dynamicprogramming/MinNumberOfJumps/lecture.mp4) | [pdf](algoexpert/hard/dynamicprogramming/MinNumberOfJumps/slides.pdf) | [md](algoexpert/hard/dynamicprogramming/MinNumberOfJumps/transcript.md) |
+| hard / dynamicprogramming / Numbers In Pi | 1:07 | [mp4](algoexpert/hard/dynamicprogramming/NumbersInPi/lecture.mp4) | [pdf](algoexpert/hard/dynamicprogramming/NumbersInPi/slides.pdf) | [md](algoexpert/hard/dynamicprogramming/NumbersInPi/transcript.md) |
+| hard / dynamicprogramming / Water Area | 1:00 | [mp4](algoexpert/hard/dynamicprogramming/WaterArea/lecture.mp4) | [pdf](algoexpert/hard/dynamicprogramming/WaterArea/slides.pdf) | [md](algoexpert/hard/dynamicprogramming/WaterArea/transcript.md) |
+| hard / famousalgorithms / Dijkstras Algorithm | 1:08 | [mp4](algoexpert/hard/famousalgorithms/DijkstrasAlgorithm/lecture.mp4) | [pdf](algoexpert/hard/famousalgorithms/DijkstrasAlgorithm/slides.pdf) | [md](algoexpert/hard/famousalgorithms/DijkstrasAlgorithm/transcript.md) |
+| hard / famousalgorithms / Kruskals Algorithm | 1:11 | [mp4](algoexpert/hard/famousalgorithms/KruskalsAlgorithm/lecture.mp4) | [pdf](algoexpert/hard/famousalgorithms/KruskalsAlgorithm/slides.pdf) | [md](algoexpert/hard/famousalgorithms/KruskalsAlgorithm/transcript.md) |
+| hard / famousalgorithms / Prims Algorithm | 1:05 | [mp4](algoexpert/hard/famousalgorithms/PrimsAlgorithm/lecture.mp4) | [pdf](algoexpert/hard/famousalgorithms/PrimsAlgorithm/slides.pdf) | [md](algoexpert/hard/famousalgorithms/PrimsAlgorithm/transcript.md) |
+| hard / famousalgorithms / Topological Sort | 1:03 | [mp4](algoexpert/hard/famousalgorithms/TopologicalSort/lecture.mp4) | [pdf](algoexpert/hard/famousalgorithms/TopologicalSort/slides.pdf) | [md](algoexpert/hard/famousalgorithms/TopologicalSort/transcript.md) |
+| hard / graphs / Boggle Board | 1:10 | [mp4](algoexpert/hard/graphs/BoggleBoard/lecture.mp4) | [pdf](algoexpert/hard/graphs/BoggleBoard/slides.pdf) | [md](algoexpert/hard/graphs/BoggleBoard/transcript.md) |
+| hard / graphs / Largest Island | 1:15 | [mp4](algoexpert/hard/graphs/LargestIsland/lecture.mp4) | [pdf](algoexpert/hard/graphs/LargestIsland/slides.pdf) | [md](algoexpert/hard/graphs/LargestIsland/transcript.md) |
+| hard / heaps / Continuous Median | 1:03 | [mp4](algoexpert/hard/heaps/ContinuousMedian/lecture.mp4) | [pdf](algoexpert/hard/heaps/ContinuousMedian/slides.pdf) | [md](algoexpert/hard/heaps/ContinuousMedian/transcript.md) |
+| hard / heaps / Laptop Rentals | 1:01 | [mp4](algoexpert/hard/heaps/LaptopRentals/lecture.mp4) | [pdf](algoexpert/hard/heaps/LaptopRentals/slides.pdf) | [md](algoexpert/hard/heaps/LaptopRentals/transcript.md) |
+| hard / heaps / Sort K Sorted Array | 1:04 | [mp4](algoexpert/hard/heaps/SortKSortedArray/lecture.mp4) | [pdf](algoexpert/hard/heaps/SortKSortedArray/slides.pdf) | [md](algoexpert/hard/heaps/SortKSortedArray/transcript.md) |
