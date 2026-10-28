@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 3:43 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 5:26 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (159)
+## AlgoExpert (175)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -118,6 +118,22 @@ Built with [`pipeline/`](pipeline/README.md).
 | medium / dynamicprogramming / Min Number Of Coins For Change | 2:00 | [mp4](algoexpert/medium/dynamicprogramming/MinNumberOfCoinsForChange/lecture.mp4) | [pdf](algoexpert/medium/dynamicprogramming/MinNumberOfCoinsForChange/slides.pdf) | [md](algoexpert/medium/dynamicprogramming/MinNumberOfCoinsForChange/transcript.md) |
 | medium / dynamicprogramming / Number Of Ways To Make Change | 1:54 | [mp4](algoexpert/medium/dynamicprogramming/NumberOfWaysToMakeChange/lecture.mp4) | [pdf](algoexpert/medium/dynamicprogramming/NumberOfWaysToMakeChange/slides.pdf) | [md](algoexpert/medium/dynamicprogramming/NumberOfWaysToMakeChange/transcript.md) |
 | medium / dynamicprogramming / Number Of Ways To Traverse Graph | 2:10 | [mp4](algoexpert/medium/dynamicprogramming/NumberOfWaysToTraverseGraph/lecture.mp4) | [pdf](algoexpert/medium/dynamicprogramming/NumberOfWaysToTraverseGraph/slides.pdf) | [md](algoexpert/medium/dynamicprogramming/NumberOfWaysToTraverseGraph/transcript.md) |
+| medium / famousalgorithms / Kadanes Algorithm | 2:12 | [mp4](algoexpert/medium/famousalgorithms/KadanesAlgorithm/lecture.mp4) | [pdf](algoexpert/medium/famousalgorithms/KadanesAlgorithm/slides.pdf) | [md](algoexpert/medium/famousalgorithms/KadanesAlgorithm/transcript.md) |
+| medium / famousalgorithms / Stable Internships | 2:27 | [mp4](algoexpert/medium/famousalgorithms/StableInternships/lecture.mp4) | [pdf](algoexpert/medium/famousalgorithms/StableInternships/slides.pdf) | [md](algoexpert/medium/famousalgorithms/StableInternships/transcript.md) |
+| medium / famousalgorithms / Union Find | 2:22 | [mp4](algoexpert/medium/famousalgorithms/UnionFind/lecture.mp4) | [pdf](algoexpert/medium/famousalgorithms/UnionFind/slides.pdf) | [md](algoexpert/medium/famousalgorithms/UnionFind/transcript.md) |
+| medium / graphs / Breadth First Search | 1:55 | [mp4](algoexpert/medium/graphs/BreadthFirstSearch/lecture.mp4) | [pdf](algoexpert/medium/graphs/BreadthFirstSearch/slides.pdf) | [md](algoexpert/medium/graphs/BreadthFirstSearch/transcript.md) |
+| medium / graphs / Cycle In Graph | 2:02 | [mp4](algoexpert/medium/graphs/CycleInGraph/lecture.mp4) | [pdf](algoexpert/medium/graphs/CycleInGraph/slides.pdf) | [md](algoexpert/medium/graphs/CycleInGraph/transcript.md) |
+| medium / graphs / Minimum Passes Of Matrix | 2:20 | [mp4](algoexpert/medium/graphs/MinimumPassesOfMatrix/lecture.mp4) | [pdf](algoexpert/medium/graphs/MinimumPassesOfMatrix/slides.pdf) | [md](algoexpert/medium/graphs/MinimumPassesOfMatrix/transcript.md) |
+| medium / graphs / Remove Islands | 1:55 | [mp4](algoexpert/medium/graphs/RemoveIslands/lecture.mp4) | [pdf](algoexpert/medium/graphs/RemoveIslands/slides.pdf) | [md](algoexpert/medium/graphs/RemoveIslands/transcript.md) |
+| medium / graphs / River Sizes | 2:04 | [mp4](algoexpert/medium/graphs/RiverSizes/lecture.mp4) | [pdf](algoexpert/medium/graphs/RiverSizes/slides.pdf) | [md](algoexpert/medium/graphs/RiverSizes/transcript.md) |
+| medium / graphs / Single Cycle Check | 2:08 | [mp4](algoexpert/medium/graphs/SingleCycleCheck/lecture.mp4) | [pdf](algoexpert/medium/graphs/SingleCycleCheck/slides.pdf) | [md](algoexpert/medium/graphs/SingleCycleCheck/transcript.md) |
+| medium / graphs / Two Colorable | 1:48 | [mp4](algoexpert/medium/graphs/TwoColorable/lecture.mp4) | [pdf](algoexpert/medium/graphs/TwoColorable/slides.pdf) | [md](algoexpert/medium/graphs/TwoColorable/transcript.md) |
+| medium / graphs / Youngest Common Ancestor | 1:50 | [mp4](algoexpert/medium/graphs/YoungestCommonAncestor/lecture.mp4) | [pdf](algoexpert/medium/graphs/YoungestCommonAncestor/slides.pdf) | [md](algoexpert/medium/graphs/YoungestCommonAncestor/transcript.md) |
+| medium / greedyalgorithms / Task Assignment | 1:58 | [mp4](algoexpert/medium/greedyalgorithms/TaskAssignment/lecture.mp4) | [pdf](algoexpert/medium/greedyalgorithms/TaskAssignment/slides.pdf) | [md](algoexpert/medium/greedyalgorithms/TaskAssignment/transcript.md) |
+| medium / greedyalgorithms / Valid Starting City | 2:14 | [mp4](algoexpert/medium/greedyalgorithms/ValidStartingCity/lecture.mp4) | [pdf](algoexpert/medium/greedyalgorithms/ValidStartingCity/slides.pdf) | [md](algoexpert/medium/greedyalgorithms/ValidStartingCity/transcript.md) |
+| medium / heaps / Min Heap Construction | 2:29 | [mp4](algoexpert/medium/heaps/MinHeapConstruction/lecture.mp4) | [pdf](algoexpert/medium/heaps/MinHeapConstruction/slides.pdf) | [md](algoexpert/medium/heaps/MinHeapConstruction/transcript.md) |
+| medium / linkedlists / Linked List Construction | 2:51 | [mp4](algoexpert/medium/linkedlists/LinkedListConstruction/lecture.mp4) | [pdf](algoexpert/medium/linkedlists/LinkedListConstruction/slides.pdf) | [md](algoexpert/medium/linkedlists/LinkedListConstruction/transcript.md) |
+| medium / linkedlists / Merging Linked Lists | 2:06 | [mp4](algoexpert/medium/linkedlists/MergingLinkedLists/lecture.mp4) | [pdf](algoexpert/medium/linkedlists/MergingLinkedLists/slides.pdf) | [md](algoexpert/medium/linkedlists/MergingLinkedLists/transcript.md) |
 | hard / arrays / Count Squares | 1:11 | [mp4](algoexpert/hard/arrays/CountSquares/lecture.mp4) | [pdf](algoexpert/hard/arrays/CountSquares/slides.pdf) | [md](algoexpert/hard/arrays/CountSquares/transcript.md) |
 | hard / arrays / Four Number Sum | 1:11 | [mp4](algoexpert/hard/arrays/FourNumberSum/lecture.mp4) | [pdf](algoexpert/hard/arrays/FourNumberSum/slides.pdf) | [md](algoexpert/hard/arrays/FourNumberSum/transcript.md) |
 | hard / arrays / Knight Connection | 1:07 | [mp4](algoexpert/hard/arrays/KnightConnection/lecture.mp4) | [pdf](algoexpert/hard/arrays/KnightConnection/slides.pdf) | [md](algoexpert/hard/arrays/KnightConnection/transcript.md) |
