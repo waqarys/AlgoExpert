@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 3:43 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 5:26 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (191)
+## AlgoExpert (200)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -150,6 +150,15 @@ Built with [`pipeline/`](pipeline/README.md).
 | medium / stacks / Min Max Stack Construction | 2:10 | [mp4](algoexpert/medium/stacks/MinMaxStackConstruction/lecture.mp4) | [pdf](algoexpert/medium/stacks/MinMaxStackConstruction/slides.pdf) | [md](algoexpert/medium/stacks/MinMaxStackConstruction/transcript.md) |
 | medium / stacks / Next Greater Element | 1:54 | [mp4](algoexpert/medium/stacks/NextGreaterElement/lecture.mp4) | [pdf](algoexpert/medium/stacks/NextGreaterElement/slides.pdf) | [md](algoexpert/medium/stacks/NextGreaterElement/transcript.md) |
 | medium / stacks / Reverse Polish Notation | 1:55 | [mp4](algoexpert/medium/stacks/ReversePolishNotation/lecture.mp4) | [pdf](algoexpert/medium/stacks/ReversePolishNotation/slides.pdf) | [md](algoexpert/medium/stacks/ReversePolishNotation/transcript.md) |
+| medium / stacks / Sort Stack | 2:01 | [mp4](algoexpert/medium/stacks/SortStack/lecture.mp4) | [pdf](algoexpert/medium/stacks/SortStack/slides.pdf) | [md](algoexpert/medium/stacks/SortStack/transcript.md) |
+| medium / stacks / Sunset Views | 2:12 | [mp4](algoexpert/medium/stacks/SunsetViews/lecture.mp4) | [pdf](algoexpert/medium/stacks/SunsetViews/slides.pdf) | [md](algoexpert/medium/stacks/SunsetViews/transcript.md) |
+| medium / strings / Group Anagrams | 1:41 | [mp4](algoexpert/medium/strings/GroupAnagrams/lecture.mp4) | [pdf](algoexpert/medium/strings/GroupAnagrams/slides.pdf) | [md](algoexpert/medium/strings/GroupAnagrams/transcript.md) |
+| medium / strings / Longest Palindromic Substring | 1:38 | [mp4](algoexpert/medium/strings/LongestPalindromicSubstring/lecture.mp4) | [pdf](algoexpert/medium/strings/LongestPalindromicSubstring/slides.pdf) | [md](algoexpert/medium/strings/LongestPalindromicSubstring/transcript.md) |
+| medium / strings / Minimum Characters For Words | 1:38 | [mp4](algoexpert/medium/strings/MinimumCharactersForWords/lecture.mp4) | [pdf](algoexpert/medium/strings/MinimumCharactersForWords/slides.pdf) | [md](algoexpert/medium/strings/MinimumCharactersForWords/transcript.md) |
+| medium / strings / One Edit | 1:40 | [mp4](algoexpert/medium/strings/OneEdit/lecture.mp4) | [pdf](algoexpert/medium/strings/OneEdit/slides.pdf) | [md](algoexpert/medium/strings/OneEdit/transcript.md) |
+| medium / strings / Reverse Words In String | 1:29 | [mp4](algoexpert/medium/strings/ReverseWordsInString/lecture.mp4) | [pdf](algoexpert/medium/strings/ReverseWordsInString/slides.pdf) | [md](algoexpert/medium/strings/ReverseWordsInString/transcript.md) |
+| medium / strings / Valid Ip Addresses | 1:46 | [mp4](algoexpert/medium/strings/ValidIpAddresses/lecture.mp4) | [pdf](algoexpert/medium/strings/ValidIpAddresses/slides.pdf) | [md](algoexpert/medium/strings/ValidIpAddresses/transcript.md) |
+| medium / tries / Suffix Trie Construction | 1:48 | [mp4](algoexpert/medium/tries/SuffixTrieConstruction/lecture.mp4) | [pdf](algoexpert/medium/tries/SuffixTrieConstruction/slides.pdf) | [md](algoexpert/medium/tries/SuffixTrieConstruction/transcript.md) |
 | hard / arrays / Count Squares | 1:11 | [mp4](algoexpert/hard/arrays/CountSquares/lecture.mp4) | [pdf](algoexpert/hard/arrays/CountSquares/slides.pdf) | [md](algoexpert/hard/arrays/CountSquares/transcript.md) |
 | hard / arrays / Four Number Sum | 1:11 | [mp4](algoexpert/hard/arrays/FourNumberSum/lecture.mp4) | [pdf](algoexpert/hard/arrays/FourNumberSum/slides.pdf) | [md](algoexpert/hard/arrays/FourNumberSum/transcript.md) |
 | hard / arrays / Knight Connection | 1:07 | [mp4](algoexpert/hard/arrays/KnightConnection/lecture.mp4) | [pdf](algoexpert/hard/arrays/KnightConnection/slides.pdf) | [md](algoexpert/hard/arrays/KnightConnection/transcript.md) |
