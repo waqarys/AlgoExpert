@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: repeatedly merge any overlapping pair → O(n²) or worse",
+    "Optimal: sort by start, single sweep → O(n log n)",
+    "After sorting, only the last merged interval can overlap"
+   ],
+   "narration": "Repeatedly scanning for any overlapping pair is at least quadratic. Once intervals are sorted by start, an interval can only overlap the most recent merged one, so a single sweep finishes the job after an n log n sort."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Sort by start",
@@ -36,13 +46,233 @@
    "narration": "Step by step. First, sort by start. Second, keep the current merged interval. Third, extend its end on overlap. Fourth, otherwise start a new one."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "[1,2]",
+       "[3,5]",
+       "[4,7]",
+       "[6,8]",
+       "[9,10]"
+      ]
+     ],
+     "hl": {
+      "0,0": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "sorted intervals",
+     "h": 1
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       "[1,2]"
+      ]
+     ],
+     "hl": {
+      "0,0": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "merged",
+     "h": 1
+    }
+   ],
+   "caption": "[1,2] no overlap → start new interval",
+   "narration": "Interval 1 to 2: it starts after the last merged interval ends, so it begins a new one.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "[1,2]",
+       "[3,5]",
+       "[4,7]",
+       "[6,8]",
+       "[9,10]"
+      ]
+     ],
+     "hl": {
+      "0,1": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "sorted intervals",
+     "h": 1
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       "[1,2]",
+       "[3,5]"
+      ]
+     ],
+     "hl": {
+      "0,1": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "merged",
+     "h": 1
+    }
+   ],
+   "caption": "[3,5] no overlap → start new interval",
+   "narration": "Interval 3 to 5: it starts after the last merged interval ends, so it begins a new one.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "[1,2]",
+       "[3,5]",
+       "[4,7]",
+       "[6,8]",
+       "[9,10]"
+      ]
+     ],
+     "hl": {
+      "0,2": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "sorted intervals",
+     "h": 1
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       "[1,2]",
+       "[3,7]"
+      ]
+     ],
+     "hl": {
+      "0,1": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "merged",
+     "h": 1
+    }
+   ],
+   "caption": "[4,7] overlaps → extend to [3, 7]",
+   "narration": "Interval 4 to 7: it starts before the last merged interval ends, so we extend that interval's end to 7.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "[1,2]",
+       "[3,5]",
+       "[4,7]",
+       "[6,8]",
+       "[9,10]"
+      ]
+     ],
+     "hl": {
+      "0,3": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "sorted intervals",
+     "h": 1
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       "[1,2]",
+       "[3,8]"
+      ]
+     ],
+     "hl": {
+      "0,1": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "merged",
+     "h": 1
+    }
+   ],
+   "caption": "[6,8] overlaps → extend to [3, 8]",
+   "narration": "Interval 6 to 8: it starts before the last merged interval ends, so we extend that interval's end to 8.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "[1,2]",
+       "[3,5]",
+       "[4,7]",
+       "[6,8]",
+       "[9,10]"
+      ]
+     ],
+     "hl": {
+      "0,4": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "sorted intervals",
+     "h": 1
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       "[1,2]",
+       "[3,8]",
+       "[9,10]"
+      ]
+     ],
+     "hl": {
+      "0,2": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "merged",
+     "h": 1
+    }
+   ],
+   "caption": "[9,10] no overlap → start new interval",
+   "narration": "Interval 9 to 10: it starts after the last merged interval ends, so it begins a new one.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MergeOverlappingIntervals {\n    public static int[][] mergeOverlappingIntervals(int[][] intervals) {\n        int[][] s = intervals.clone();\n        Arrays.sort(s, (x, y) -> Integer.compare(x[0], y[0]));\n        List<int[]> out = new ArrayList<>();\n        for (int[] iv : s) {\n            if (!out.isEmpty() && out.get(out.size() - 1)[1] >= iv[0])\n                out.get(out.size() - 1)[1] = Math.max(out.get(out.size() - 1)[1], iv[1]);\n            else out.add(new int[]{iv[0], iv[1]});\n        }\n        return out.toArray(new int[0][]);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MergeOverlappingIntervals.java",
-   "narration": "Here's the Java solution, starting with merge overlapping intervals. It follows the steps we just described."
+   "narration": "We clone and sort by start. For each interval, if the last merged interval's end reaches its start, we extend that end to the max; otherwise we append a copy."
   },
   {
    "kind": "bullets",
@@ -52,6 +282,25 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n log n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Touching intervals [3,5] and [5,7] overlap (≥)",
+    "Fully contained intervals: take max of ends",
+    "Don't mutate the caller's array"
+   ],
+   "narration": "Touching endpoints count as overlapping, which is why we compare with greater-or-equal. A contained interval is handled by taking the max of the ends."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: insert a new interval into a sorted list",
+    "Follow-up: minimum meeting rooms (Laptop Rentals)"
+   ],
+   "narration": "Follow-ups include inserting one interval into an already merged list, or counting overlapping meetings."
   },
   {
    "kind": "bullets",

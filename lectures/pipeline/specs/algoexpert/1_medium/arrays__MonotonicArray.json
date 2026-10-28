@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Naive: determine direction from the first unequal pair, then re-scan",
+    "Simpler: track two flags in one pass → O(n)",
+    "No sorting or extra memory needed"
+   ],
+   "narration": "A common first attempt finds the direction from the first unequal pair, then checks everything again. Tracking two flags, can-still-be-increasing and can-still-be-decreasing, does it in a single pass."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Track two flags, non-increasing and non-decreasing",
@@ -35,13 +45,181 @@
    "narration": "Step by step. First, track two flags, non-increasing and non-decreasing. Second, clear the opposite flag on each rise or fall. Third, return true if either flag survives."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -1,
+      -5,
+      -10,
+      -1100,
+      -1100,
+      -1101,
+      -1102,
+      -9001
+     ],
+     "hl": {
+      "0": "done",
+      "1": "cur"
+     },
+     "ptr": {
+      "i": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "-1 → -5",
+      "non-decreasing possible: False",
+      "non-increasing possible: True"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "-1 → -5: inc=False, dec=True",
+   "narration": "From -1 to -5: it drops, so the array can't be non-decreasing.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -1,
+      -5,
+      -10,
+      -1100,
+      -1100,
+      -1101,
+      -1102,
+      -9001
+     ],
+     "hl": {
+      "2": "done",
+      "3": "cur"
+     },
+     "ptr": {
+      "i": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "-10 → -1100",
+      "non-decreasing possible: False",
+      "non-increasing possible: True"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "-10 → -1100: inc=False, dec=True",
+   "narration": "From -10 to -1100: it drops, so the array can't be non-decreasing.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -1,
+      -5,
+      -10,
+      -1100,
+      -1100,
+      -1101,
+      -1102,
+      -9001
+     ],
+     "hl": {
+      "3": "done",
+      "4": "cur"
+     },
+     "ptr": {
+      "i": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "-1100 → -1100",
+      "non-decreasing possible: False",
+      "non-increasing possible: True"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "-1100 → -1100: inc=False, dec=True",
+   "narration": "From -1100 to -1100: equal values don't break either direction.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -1,
+      -5,
+      -10,
+      -1100,
+      -1100,
+      -1101,
+      -1102,
+      -9001
+     ],
+     "hl": {
+      "6": "done",
+      "7": "cur"
+     },
+     "ptr": {
+      "i": 7
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "-1102 → -9001",
+      "non-decreasing possible: False",
+      "non-increasing possible: True"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "-1102 → -9001: inc=False, dec=True",
+   "narration": "From -1102 to -9001: it drops, so the array can't be non-decreasing.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MonotonicArray {\n    public static boolean isMonotonic(int[] a) {\n        boolean inc = true, dec = true;\n        for (int i = 1; i < a.length; i++) {\n            if (a[i] < a[i - 1]) inc = false;\n            if (a[i] > a[i - 1]) dec = false;\n        }\n        return inc || dec;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MonotonicArray.java",
-   "narration": "Here's the Java solution, starting with is monotonic. It follows the steps we just described."
+   "narration": "We keep increasing and decreasing flags. Any drop clears increasing, any rise clears decreasing, and we return whether either survives."
   },
   {
    "kind": "bullets",
@@ -51,6 +229,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Empty or 1-element arrays are monotonic",
+    "Equal neighbours are allowed",
+    "Leading equal values before the trend"
+   ],
+   "narration": "Empty and single-element arrays are monotonic, equal neighbours are fine, and leading equal values don't fix a direction prematurely."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Early exit when both flags are false",
+    "Follow-up: strictly monotonic"
+   ],
+   "narration": "You can return early once both flags are false. A follow-up asks for strict monotonicity."
   },
   {
    "kind": "bullets",

@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Build a new list: non-targets then targets → O(n) space",
+    "Bubble targets one step at a time → O(n²)",
+    "Two pointers in place → O(n), O(1) space"
+   ],
+   "narration": "You could build a new list, or bubble each two to the end one step at a time, which is quadratic. Two pointers swap targets from the left with non-targets from the right in a single pass, in place."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Left and right pointers",
@@ -36,13 +46,144 @@
    "narration": "Step by step. First, left and right pointers. Second, skip targets already at the right. Third, swap a target on the left with a non-target on the right. Fourth, meet in the middle."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      4,
+      1,
+      2,
+      2,
+      2,
+      3,
+      2,
+      2
+     ],
+     "hl": {
+      "0": "ok",
+      "6": "warn"
+     },
+     "ptr": {
+      "L": 0,
+      "R": 6
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "swap a[0] ↔ a[6]",
+   "narration": "The right pointer skips trailing twos and stops at index 6. The left value was a two, so we swap it to the right.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      4,
+      1,
+      2,
+      2,
+      2,
+      3,
+      2,
+      2
+     ],
+     "hl": {
+      "1": "done",
+      "5": "warn"
+     },
+     "ptr": {
+      "L": 1,
+      "R": 5
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "a[1] = 1 ≠ 2, keep",
+   "narration": "The value at index 1 isn't a two, so it stays.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      4,
+      1,
+      3,
+      2,
+      2,
+      2,
+      2,
+      2
+     ],
+     "hl": {
+      "2": "ok",
+      "5": "warn"
+     },
+     "ptr": {
+      "L": 2,
+      "R": 5
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "swap a[2] ↔ a[5]",
+   "narration": "The right pointer skips trailing twos and stops at index 5. The left value was a two, so we swap it to the right.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      4,
+      1,
+      3,
+      2,
+      2,
+      2,
+      2,
+      2
+     ],
+     "hl": {
+      "3": "warn"
+     },
+     "ptr": {
+      "L": 3,
+      "R": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "swap a[3] ↔ a[3]",
+   "narration": "The right pointer skips trailing twos and stops at index 3. The left value was a two, so we swap it to the right.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MoveElementToEnd {\n    public static List<Integer> moveElementToEnd(List<Integer> array, int toMove) {\n        int l = 0, r = array.size() - 1;\n        while (l < r) {\n            while (l < r && array.get(r) == toMove) r--;\n            if (array.get(l) == toMove) Collections.swap(array, l, r);\n            l++;\n        }\n        return array;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MoveElementToEnd.java",
-   "narration": "Here's the Java solution, starting with move element to end. It follows the steps we just described."
+   "narration": "While l is less than r, we move r left past targets, swap if the left element is the target, then advance l."
   },
   {
    "kind": "bullets",
@@ -52,6 +193,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Order of other elements need not be kept",
+    "All targets or no targets",
+    "Check l < r inside the inner loop"
+   ],
+   "narration": "The problem doesn't require preserving order of the other elements. Guard the inner loop with l less than r so it never crosses."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: keep relative order (stable) → write pointer",
+    "Related: Dutch flag partitioning"
+   ],
+   "narration": "If order must be preserved, use a write pointer that copies non-targets forward, then fill the tail with targets."
   },
   {
    "kind": "bullets",

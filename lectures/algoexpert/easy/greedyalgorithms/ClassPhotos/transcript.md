@@ -14,18 +14,46 @@ Here's the problem. Equal numbers of red and blue shirted students; all of one c
 
 Sort both groups. The taller group must stand in the back, and then every back student must be taller than the one in front.
 
-## 4. Approach (0:32) — `slides/04.png`
+## 4. Brute force vs optimal (0:32) — `slides/04.png`
+
+Trying every arrangement would be factorial. If any arrangement works, pairing the sorted groups position by position works too, so we sort and compare, in n log n.
+
+## 5. Approach (0:43) — `slides/05.png`
 
 Step by step. First, sort red and blue shirts. Second, the group with the taller tallest goes in the back. Third, check every pair strictly. Fourth, any failure means false.
 
-## 5. Java solution (0:46) — `slides/05.png`
+## 6. Worked example (0:57) — `slides/06.png`
 
-Here's the Java solution, starting with class photos. It follows the steps we just described.
+Sort both groups by height. The tallest blue student, nine, beats the tallest red, eight, so blue must be the back row.
 
-## 6. Complexity (0:53) — `slides/06.png`
+## 7. Worked example (1:06) — `slides/07.png`
+
+Position 0: back 9 versus front 8. The back student is strictly taller, so this pair works.
+
+## 8. Worked example (1:14) — `slides/08.png`
+
+Position 2: back 5 versus front 4. The back student is strictly taller, so this pair works.
+
+## 9. Worked example (1:22) — `slides/09.png`
+
+Position 4: back 2 versus front 1. The back student is strictly taller, so this pair works.
+
+## 10. Java solution (1:29) — `slides/10.png`
+
+We sort both lists in descending order, choose the back row by comparing the first elements, then check every position strictly. Any failure returns false.
+
+## 11. Complexity (1:40) — `slides/11.png`
 
 Time is O of n log n. Space is constant.
 
-## 7. Recap (0:58) — `slides/07.png`
+## 12. Edge cases & pitfalls (1:44) — `slides/12.png`
+
+Heights must be strictly greater, so equal heights fail. Decide which colour goes in the back from the tallest students, then never switch.
+
+## 13. Interview tips & follow-ups (1:53) — `slides/13.png`
+
+Justify the greedy with an exchange argument: swapping any pair out of sorted order can't help.
+
+## 14. Recap (1:59) — `slides/14.png`
 
 To recap Class Photos: Sort both groups. The taller group must stand in the back, and then every back student must be taller than the one in front. Try re-implementing it from scratch without looking.

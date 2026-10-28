@@ -30,50 +30,54 @@ The API. The main endpoints are: GET channels by channelId; GET channels by chan
 
 Pagination with cursors on list endpoints. Auth with OAuth bearer tokens, scoped per action.
 
-## 8. High-level architecture (1:58) — `slides/08.png`
+## 8. Capacity: worked out (1:58) — `slides/08.png`
+
+Before drawing boxes, let's estimate the hardest load. Imagine a big channel with a hundred thousand viewers and fifty chat messages a second. That's five million message deliveries a second. With about fifty thousand sockets per server, that's at least two servers each pushing two and a half million messages a second. Batching every hundred milliseconds turns that into just ten frames a second per viewer.
+
+## 9. High-level architecture (2:23) — `slides/09.png`
 
 Here's the high-level architecture. Clients connects to API Gateway / LB. API Gateway / LB connects to Channel and Follow API and Chat WebSocket servers. Chat WebSocket servers connects to Pub or Sub per channel and Chat moderation service. Channel and Follow API connects to SQL: channels, follows, subs and Redis: live state, viewer counts. Stream ingest connects to Event queue. Event queue connects to Notification service.
 
-## 9. Request flow: Send a chat message (2:26) — `slides/09.png`
+## 10. Request flow: Send a chat message (2:51) — `slides/10.png`
 
 Let's follow a chat message. The viewer's client sends it over its open websocket.
 
-## 10. Request flow: Send a chat message (2:33) — `slides/10.png`
+## 11. Request flow: Send a chat message (2:57) — `slides/11.png`
 
 The chat server holding that connection receives it.
 
-## 11. Request flow: Send a chat message (2:37) — `slides/11.png`
+## 12. Request flow: Send a chat message (3:01) — `slides/12.png`
 
 It checks bans, slow mode and filters with the moderation service, cached in memory.
 
-## 12. Request flow: Send a chat message (2:43) — `slides/12.png`
+## 13. Request flow: Send a chat message (3:07) — `slides/13.png`
 
 The message is published once to the channel's pub-sub topic.
 
-## 13. Request flow: Send a chat message (2:47) — `slides/13.png`
+## 14. Request flow: Send a chat message (3:12) — `slides/14.png`
 
 Every chat server with viewers of that channel receives it and pushes it to its local sockets, batching for huge channels.
 
-## 14. Deep dives (2:55) — `slides/14.png`
+## 15. Deep dives (3:19) — `slides/15.png`
 
 Let's go deeper on one of the hard parts: Chat fan-out: clients hash to WebSocket servers; each server subscribes to the channel topic it has viewers for. A message is published once and each server pushes to its local sockets. For huge channels, batch messages every about 100 ms and sample or rate-limit sending. Moderation: check bans and slow mode before publishing (cache them in Redis). Deletions are published as moderation events so clients remove messages.
 
-## 15. Deep dives (cont.) (3:23) — `slides/15.png`
+## 16. Deep dives (cont.) (3:48) — `slides/16.png`
 
 Viewer count: each WS or edge server reports per-channel counts every few seconds; an aggregator sums them into Redis. Show approximate values. Go-live notifications: an ingest event goes onto a queue; workers page through followers and send push or email in batches. Large channels take minutes, which is acceptable.
 
-## 16. Deep dives (cont.) (3:44) — `slides/16.png`
+## 17. Deep dives (cont.) (4:08) — `slides/17.png`
 
 Subscriptions: require an idempotency key, call the payment provider, write the subscription in a transaction, then emit an event (badge in chat, emote unlock). Video: the API returns only a signed CDN playlist URL (HLS); the video bytes never go through this API.
 
-## 17. Key decisions (4:01) — `slides/17.png`
+## 18. Key decisions (4:25) — `slides/18.png`
 
 Let's pull together the key decisions. Pub or sub per channel, because publish once, fan out per server. Approximate viewer counts, because cheap, a few seconds stale is fine. Strong consistency for subscriptions, because money involved. API serves playback URLs only, because video bytes go via CDN.
 
-## 18. Trade-offs (4:22) — `slides/18.png`
+## 19. Trade-offs (4:47) — `slides/19.png`
 
 Finally, the key trade-offs. WebSockets versus long polling for chat: WS gives lower latency and less overhead. Chat is persisted asynchronously (log or queue to storage). The live path doesn't wait on the database. Viewer counts are eventually consistent; payments are strongly consistent.
 
-## 19. Recap (4:43) — `slides/19.png`
+## 20. Recap (5:07) — `slides/20.png`
 
 To recap the Twitch API: we clarified the scope, set functional and non-functional requirements, estimated the load, sketched an architecture built around Clients, API Gateway / LB, Channel and Follow API, Chat WebSocket servers, and walked through the deep dives and trade-offs. Practise explaining each decision out loud.

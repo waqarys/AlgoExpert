@@ -14,6 +14,10 @@ Run every interview in the same order. Step 1: Clarify the scope and the users. 
 
 Some numbers worth memorising. 1 day about 86,400 s about 10^5 s; 1M requests per day about 12 Q P S; peak about 2–3× the average. Character 1 B; tweet-size text about 300 B; photo about 200 KB–2 MB; 1 min of HD video about 50–100 MB. One server handles about 10k concurrent connections and about 1k–10k simple Q P S; Redis does about 100k ops per s. A disk sequential read is about 100× faster than random; reading 1 MB from memory takes about 250 µs, from SSD about 1 ms.
 
-## 4. Recap (1:17) — `slides/04.png`
+## 4. Worked estimate: photo sharing (1:17) — `slides/04.png`
+
+Let's run one estimate end to end, for a photo-sharing app. A hundred million daily users uploading two photos each is two hundred million photos a day. Divide by about eighty-six thousand seconds: roughly twenty-three hundred uploads a second, maybe seven thousand at peak. At two megabytes each that's four hundred terabytes a day, about a hundred and fifty petabytes a year before replication. If reads are fifty times writes, that's over a hundred thousand reads a second. Those numbers tell you immediately: photos go in a blob store behind a CDN, and metadata needs a sharded database.
+
+## 5. Recap (1:52) — `slides/05.png`
 
 To recap: use the same structure every time, settle requirements before drawing boxes, let estimates size the design, and always finish with trade-offs and failure modes. Next, the fundamentals, in four parts.

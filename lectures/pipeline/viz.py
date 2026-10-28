@@ -72,16 +72,16 @@ def tree(ax, p):
     walk(p["root"], 0)
     if not pos: _label(ax, p.get("label")); return
     D = max(d for _, d in pos.values()) + 1; n = len(order)
-    xy = {i: ((k + .5) / n, 0.9 - d * (0.8 / max(D - 1, 1)) if D > 1 else 0.5) for i, (k, d) in pos.items()}
+    r = min(0.045, 0.4 / n); ry = r * _ratio(ax); top, bot = 1 - ry - 0.03, ry + 0.03
+    xy = {i: ((k + .5) / n, top - d * ((top - bot) / max(D - 1, 1)) if D > 1 else 0.5) for i, (k, d) in pos.items()}
     for i in pos:
         for ch in N[i][1:3]:
             if ch is not None and str(ch) in xy: ax.plot(*zip(xy[i], xy[str(ch)]), color=MUTED, lw=1.5, zorder=1)
-    r = min(0.045, 0.4 / n)
     for i, (x, y) in xy.items():
         ax.add_patch(Circle((x, y), r, ax=ax, fc=c(hl.get(i)), ec=ACCENT, lw=1.5, zorder=2, transform=ax.transData))
         ax.text(x, y, str(N[i][0]), ha="center", va="center", fontsize=_fs(n, 18), color=FG, zorder=3)
     for k, t in p.get("notes", {}).items():
-        if k in xy: ax.text(xy[k][0], xy[k][1] - r - 0.05, t, ha="center", va="top", fontsize=13, color=COL["cur"])
+        if k in xy: ax.text(xy[k][0] + r + 0.008, xy[k][1], t, ha="left", va="center", fontsize=16, color=COL["cur"], zorder=4)
     _label(ax, p.get("label"))
 
 def graph(ax, p):

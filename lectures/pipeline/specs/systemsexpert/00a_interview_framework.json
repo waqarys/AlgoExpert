@@ -35,6 +35,18 @@
   },
   {
    "kind": "bullets",
+   "heading": "Worked estimate: photo sharing",
+   "bullets": [
+    "100M DAU × 2 uploads/day = 200M photos/day",
+    "200M ÷ 86,400 s ≈ 2.3k uploads/s (peak ×3 ≈ 7k/s)",
+    "× 2 MB ≈ 400 TB/day → ~150 PB/year (× 3 replicas)",
+    "Reads 50× writes ≈ 115k/s → CDN + cache",
+    "Conclusion: blob store + CDN; metadata DB sharded"
+   ],
+   "narration": "Let's run one estimate end to end, for a photo-sharing app. A hundred million daily users uploading two photos each is two hundred million photos a day. Divide by about eighty-six thousand seconds: roughly twenty-three hundred uploads a second, maybe seven thousand at peak. At two megabytes each that's four hundred terabytes a day, about a hundred and fifty petabytes a year before replication. If reads are fifty times writes, that's over a hundred thousand reads a second. Those numbers tell you immediately: photos go in a blob store behind a CDN, and metadata needs a sharded database."
+  },
+  {
+   "kind": "bullets",
    "heading": "Recap",
    "bullets": [
     "Same structure every time",

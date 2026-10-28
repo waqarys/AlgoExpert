@@ -141,6 +141,10 @@ def design_spec(path, idx):
                 if sec == "Capacity estimates" and j == len(parts) - 1 and E.get("capacity"):
                     slides.append(dict(kind="bullets", heading="Capacity: worked out", bullets=[a for a, _ in E["capacity"]],
                         narration="Let's actually work the numbers. " + " ".join(b for _, b in E["capacity"])))
+    if E.get("capacity") and not any(x["heading"] == "Capacity: worked out" for x in slides):
+        at = next((i for i, x in enumerate(slides) if x["heading"] == "High-level architecture"), len(slides) - 1)
+        slides.insert(at, dict(kind="bullets", heading="Capacity: worked out", bullets=[a for a, _ in E["capacity"]],
+                               narration="Before drawing boxes, let's estimate the hardest load. " + " ".join(b for _, b in E["capacity"])))
     rec = ["Clarify scope, then functional + non-functional needs", "Estimate load to size storage and fan-out"]
     if comps: rec.append("Core pieces: " + ", ".join(re.sub(r"[:(].*", "", c).strip() for c in comps[:5]))
     rec.append("Know your trade-offs and failure modes")
@@ -162,6 +166,11 @@ def fundamentals_specs(path):
              narration="Run every interview in the same order. " + " ".join(f"Step {i}: {speak(s).rstrip('.')}." for i, s in enumerate(steps, 1)) + " Keep the interviewer involved at every step."),
         dict(kind="bullets", heading="Back-of-envelope numbers", bullets=cheat,
              narration="Some numbers worth memorising. " + " ".join(speak(c).rstrip(".") + "." for c in cheat)),
+        dict(kind="bullets", heading="Worked estimate: photo sharing", bullets=[
+             "100M DAU × 2 uploads/day = 200M photos/day", "200M ÷ 86,400 s ≈ 2.3k uploads/s (peak ×3 ≈ 7k/s)",
+             "× 2 MB ≈ 400 TB/day → ~150 PB/year (× 3 replicas)", "Reads 50× writes ≈ 115k/s → CDN + cache",
+             "Conclusion: blob store + CDN; metadata DB sharded"],
+             narration="Let's run one estimate end to end, for a photo-sharing app. A hundred million daily users uploading two photos each is two hundred million photos a day. Divide by about eighty-six thousand seconds: roughly twenty-three hundred uploads a second, maybe seven thousand at peak. At two megabytes each that's four hundred terabytes a day, about a hundred and fifty petabytes a year before replication. If reads are fifty times writes, that's over a hundred thousand reads a second. Those numbers tell you immediately: photos go in a blob store behind a CDN, and metadata needs a sharded database."),
         dict(kind="bullets", heading="Recap", bullets=["Same structure every time", "Requirements before boxes", "Estimate, then size the design", "Finish with trade-offs"],
              narration="To recap: use the same structure every time, settle requirements before drawing boxes, let estimates size the design, and always finish with trade-offs and failure modes. Next, the fundamentals, in four parts.")])]
     for part in range(4):

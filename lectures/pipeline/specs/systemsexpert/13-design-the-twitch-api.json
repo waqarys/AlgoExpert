@@ -68,6 +68,17 @@
    "narration": "Pagination with cursors on list endpoints. Auth with OAuth bearer tokens, scoped per action."
   },
   {
+   "kind": "bullets",
+   "heading": "Capacity: worked out",
+   "bullets": [
+    "Big channel: 100k viewers, 50 msgs/s",
+    "Fan-out: 50 × 100k = 5M deliveries/s",
+    "Server holds ~50k sockets → ≥2 servers, each 2.5M pushes/s",
+    "Batch every 100 ms → 10 frames/s per viewer"
+   ],
+   "narration": "Before drawing boxes, let's estimate the hardest load. Imagine a big channel with a hundred thousand viewers and fifty chat messages a second. That's five million message deliveries a second. With about fifty thousand sockets per server, that's at least two servers each pushing two and a half million messages a second. Batching every hundred milliseconds turns that into just ten frames a second per viewer."
+  },
+  {
    "kind": "diagram",
    "heading": "High-level architecture",
    "edges": [

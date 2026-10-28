@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: all subarrays → O(n²) (or O(n³) naive sums)",
+    "Prefix sums + hash set → O(n)",
+    "Repeated prefix ⇒ zero-sum in between"
+   ],
+   "narration": "Checking every subarray is at least quadratic. With prefix sums, if the same running total appears twice, everything between those positions sums to zero. A hash set detects that in linear time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Keep a set of prefix sums starting with zero",
@@ -36,13 +46,163 @@
    "narration": "Step by step. First, keep a set of prefix sums starting with zero. Second, add each element to the running sum. Third, if the sum was seen before, return true."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      4,
+      2,
+      -1,
+      -1,
+      3
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {
+      "i": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "prefix sum = 4",
+      "seen = {0}"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Prefix sum 4 is new",
+   "narration": "Adding 4, the prefix sum is 4, which we haven't seen. Add it to the set.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      4,
+      2,
+      -1,
+      -1,
+      3
+     ],
+     "hl": {
+      "1": "cur"
+     },
+     "ptr": {
+      "i": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "prefix sum = 6",
+      "seen = {0, 4}"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Prefix sum 6 is new",
+   "narration": "Adding 2, the prefix sum is 6, which we haven't seen. Add it to the set.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      4,
+      2,
+      -1,
+      -1,
+      3
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {
+      "i": 2
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "prefix sum = 5",
+      "seen = {0, 4, 6}"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Prefix sum 5 is new",
+   "narration": "Adding -1, the prefix sum is 5, which we haven't seen. Add it to the set.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      4,
+      2,
+      -1,
+      -1,
+      3
+     ],
+     "hl": {
+      "3": "ok",
+      "1": "ok",
+      "2": "ok"
+     },
+     "ptr": {
+      "i": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "prefix sum = 4",
+      "seen = {0, 4, 6, 5}  ✓ repeat!"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Prefix 4 seen before → zero-sum subarray",
+   "narration": "The prefix sum is 4 again, so the elements in between sum to zero. Return true.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ZeroSumSubarray {\n    public static boolean zeroSumSubarray(int[] nums) {\n        Set<Long> seen = new HashSet<>();\n        seen.add(0L);\n        long sum = 0;\n        for (int n : nums) { sum += n; if (!seen.add(sum)) return true; }\n        return false;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ZeroSumSubarray.java",
-   "narration": "Here's the Java solution, starting with zero sum subarray. It follows the steps we just described."
+   "narration": "We seed a set with zero, keep a running sum, and return true as soon as adding a sum to the set fails because it's already there."
   },
   {
    "kind": "bullets",
@@ -52,6 +212,25 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Seed the set with 0 (subarray starting at index 0)",
+    "A single 0 element is a zero-sum subarray",
+    "Use long for sums"
+   ],
+   "narration": "Seed the set with zero so a subarray starting at index zero is detected. A single zero element counts."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: count zero-sum subarrays (map of counts)",
+    "Follow-up: subarray sum = k"
+   ],
+   "narration": "Follow-ups count zero-sum subarrays with a map of counts, or look for a target sum k."
   },
   {
    "kind": "bullets",
