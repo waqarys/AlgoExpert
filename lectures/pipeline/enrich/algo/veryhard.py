@@ -380,9 +380,9 @@ def LongestBalancedSubstring():
 
 def SmallestSubstringContaining():
     big, small = "abcd$ef$axb$c$", "$$abf"
-    st = [S("Worked example", [TX([f"big: {big}", f"small: {small}"])], "Smallest window containing all chars of small", "Find the smallest substring of big containing every character of small, with multiplicity."),
+    st = [S("Worked example", [TX(["big: " + big.replace("$", r"\$"), "small: " + small.replace("$", r"\$")])], "Smallest window containing all chars of small", "Find the smallest substring of big containing every character of small, with multiplicity."),
           S("Worked example", [TX(["expand r until nothing is missing", "then shrink l while still valid"])], "Expand right, shrink left", "Expand the right end until nothing is missing, then shrink from the left while it stays valid, recording the best."),
-          S("Worked example", [TX(["answer: f$axb$"])], "Answer: f$axb$", "The smallest such window is f, dollar, a, x, b, dollar.")]
+          S("Worked example", [TX([r"answer: f\$axb\$"])], r"Answer: f\$axb\$", "The smallest such window is f, dollar, a, x, b, dollar.")]
     return _e(["Check every substring → O(n² · m)", "Sliding window with need counts → O(n + m)"], "Checking every substring is quadratic or worse. A sliding window with a count of missing characters is linear.",
               st, ["Multiplicity matters", "None → ''", "Track 'missing' to avoid map scans"], "Duplicates in small must be matched in count.", ["Same as Minimum Window Substring"], "This is minimum window substring.",
               "We count needs, decrement missing as r covers needed characters, and while missing is zero record the window and advance l, restoring needs.")
