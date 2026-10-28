@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (186)
+## AlgoExpert (200)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -241,3 +241,17 @@ Built with [`pipeline/`](pipeline/README.md).
 | veryhard / graphs / Two Edge Connected Graph | 1:13 | [mp4](algoexpert/veryhard/graphs/TwoEdgeConnectedGraph/lecture.mp4) | [pdf](algoexpert/veryhard/graphs/TwoEdgeConnectedGraph/slides.pdf) | [md](algoexpert/veryhard/graphs/TwoEdgeConnectedGraph/transcript.md) |
 | veryhard / heaps / Merge Sorted Arrays | 1:01 | [mp4](algoexpert/veryhard/heaps/MergeSortedArrays/lecture.mp4) | [pdf](algoexpert/veryhard/heaps/MergeSortedArrays/slides.pdf) | [md](algoexpert/veryhard/heaps/MergeSortedArrays/transcript.md) |
 | veryhard / linkedlists / Linked List Palindrome | 0:59 | [mp4](algoexpert/veryhard/linkedlists/LinkedListPalindrome/lecture.mp4) | [pdf](algoexpert/veryhard/linkedlists/LinkedListPalindrome/slides.pdf) | [md](algoexpert/veryhard/linkedlists/LinkedListPalindrome/transcript.md) |
+| veryhard / linkedlists / Lru Cache | 1:12 | [mp4](algoexpert/veryhard/linkedlists/LruCache/lecture.mp4) | [pdf](algoexpert/veryhard/linkedlists/LruCache/slides.pdf) | [md](algoexpert/veryhard/linkedlists/LruCache/transcript.md) |
+| veryhard / linkedlists / Node Swap | 0:55 | [mp4](algoexpert/veryhard/linkedlists/NodeSwap/lecture.mp4) | [pdf](algoexpert/veryhard/linkedlists/NodeSwap/slides.pdf) | [md](algoexpert/veryhard/linkedlists/NodeSwap/transcript.md) |
+| veryhard / linkedlists / Rearrange Linked List | 0:59 | [mp4](algoexpert/veryhard/linkedlists/RearrangeLinkedList/lecture.mp4) | [pdf](algoexpert/veryhard/linkedlists/RearrangeLinkedList/slides.pdf) | [md](algoexpert/veryhard/linkedlists/RearrangeLinkedList/transcript.md) |
+| veryhard / linkedlists / Zip Linked List | 0:57 | [mp4](algoexpert/veryhard/linkedlists/ZipLinkedList/lecture.mp4) | [pdf](algoexpert/veryhard/linkedlists/ZipLinkedList/slides.pdf) | [md](algoexpert/veryhard/linkedlists/ZipLinkedList/transcript.md) |
+| veryhard / recursion / Non Attacking Queens | 1:05 | [mp4](algoexpert/veryhard/recursion/NonAttackingQueens/lecture.mp4) | [pdf](algoexpert/veryhard/recursion/NonAttackingQueens/slides.pdf) | [md](algoexpert/veryhard/recursion/NonAttackingQueens/transcript.md) |
+| veryhard / recursion / Number Of Binary Tree Topologies | 1:01 | [mp4](algoexpert/veryhard/recursion/NumberOfBinaryTreeTopologies/lecture.mp4) | [pdf](algoexpert/veryhard/recursion/NumberOfBinaryTreeTopologies/slides.pdf) | [md](algoexpert/veryhard/recursion/NumberOfBinaryTreeTopologies/transcript.md) |
+| veryhard / searching / Median Of Two Sorted Arrays | 1:05 | [mp4](algoexpert/veryhard/searching/MedianOfTwoSortedArrays/lecture.mp4) | [pdf](algoexpert/veryhard/searching/MedianOfTwoSortedArrays/slides.pdf) | [md](algoexpert/veryhard/searching/MedianOfTwoSortedArrays/transcript.md) |
+| veryhard / searching / Optimal Assembly Line | 1:04 | [mp4](algoexpert/veryhard/searching/OptimalAssemblyLine/lecture.mp4) | [pdf](algoexpert/veryhard/searching/OptimalAssemblyLine/slides.pdf) | [md](algoexpert/veryhard/searching/OptimalAssemblyLine/transcript.md) |
+| veryhard / sorting / Count Inversions | 1:00 | [mp4](algoexpert/veryhard/sorting/CountInversions/lecture.mp4) | [pdf](algoexpert/veryhard/sorting/CountInversions/slides.pdf) | [md](algoexpert/veryhard/sorting/CountInversions/transcript.md) |
+| veryhard / sorting / Merge Sort | 0:52 | [mp4](algoexpert/veryhard/sorting/MergeSort/lecture.mp4) | [pdf](algoexpert/veryhard/sorting/MergeSort/slides.pdf) | [md](algoexpert/veryhard/sorting/MergeSort/transcript.md) |
+| veryhard / stacks / Largest Park | 1:11 | [mp4](algoexpert/veryhard/stacks/LargestPark/lecture.mp4) | [pdf](algoexpert/veryhard/stacks/LargestPark/slides.pdf) | [md](algoexpert/veryhard/stacks/LargestPark/transcript.md) |
+| veryhard / strings / Longest Balanced Substring | 1:00 | [mp4](algoexpert/veryhard/strings/LongestBalancedSubstring/lecture.mp4) | [pdf](algoexpert/veryhard/strings/LongestBalancedSubstring/slides.pdf) | [md](algoexpert/veryhard/strings/LongestBalancedSubstring/transcript.md) |
+| veryhard / strings / Smallest Substring Containing | 1:05 | [mp4](algoexpert/veryhard/strings/SmallestSubstringContaining/lecture.mp4) | [pdf](algoexpert/veryhard/strings/SmallestSubstringContaining/slides.pdf) | [md](algoexpert/veryhard/strings/SmallestSubstringContaining/transcript.md) |
+| veryhard / tries / Strings Made Up Of Strings | 1:10 | [mp4](algoexpert/veryhard/tries/StringsMadeUpOfStrings/lecture.mp4) | [pdf](algoexpert/veryhard/tries/StringsMadeUpOfStrings/slides.pdf) | [md](algoexpert/veryhard/tries/StringsMadeUpOfStrings/transcript.md) |
