@@ -73,7 +73,7 @@
      "type": "text",
      "lines": [
       "sort all busy intervals by start",
-      "merge overlaps: 0–10:00, 10:00–11:30, 12:00–15:00, 16:00–18:00, 18:30–24:00"
+      "merge overlaps: 0:00–11:30, 12:00–15:00, 16:00–18:00, 18:30–24:00"
      ],
      "label": null,
      "h": 0.6,

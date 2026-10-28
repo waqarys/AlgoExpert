@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 3:43 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 5:26 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (199)
+## AlgoExpert (200)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -253,4 +253,5 @@ Built with [`pipeline/`](pipeline/README.md).
 | veryhard / sorting / Merge Sort | 1:20 | [mp4](algoexpert/veryhard/sorting/MergeSort/lecture.mp4) | [pdf](algoexpert/veryhard/sorting/MergeSort/slides.pdf) | [md](algoexpert/veryhard/sorting/MergeSort/transcript.md) |
 | veryhard / stacks / Largest Park | 2:03 | [mp4](algoexpert/veryhard/stacks/LargestPark/lecture.mp4) | [pdf](algoexpert/veryhard/stacks/LargestPark/slides.pdf) | [md](algoexpert/veryhard/stacks/LargestPark/transcript.md) |
 | veryhard / strings / Longest Balanced Substring | 1:37 | [mp4](algoexpert/veryhard/strings/LongestBalancedSubstring/lecture.mp4) | [pdf](algoexpert/veryhard/strings/LongestBalancedSubstring/slides.pdf) | [md](algoexpert/veryhard/strings/LongestBalancedSubstring/transcript.md) |
+| veryhard / strings / Smallest Substring Containing | 1:39 | [mp4](algoexpert/veryhard/strings/SmallestSubstringContaining/lecture.mp4) | [pdf](algoexpert/veryhard/strings/SmallestSubstringContaining/slides.pdf) | [md](algoexpert/veryhard/strings/SmallestSubstringContaining/transcript.md) |
 | veryhard / tries / Strings Made Up Of Strings | 1:40 | [mp4](algoexpert/veryhard/tries/StringsMadeUpOfStrings/lecture.mp4) | [pdf](algoexpert/veryhard/tries/StringsMadeUpOfStrings/slides.pdf) | [md](algoexpert/veryhard/tries/StringsMadeUpOfStrings/transcript.md) |
