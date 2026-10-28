@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (138)
+## AlgoExpert (154)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -193,3 +193,19 @@ Built with [`pipeline/`](pipeline/README.md).
 | hard / heaps / Continuous Median | 1:03 | [mp4](algoexpert/hard/heaps/ContinuousMedian/lecture.mp4) | [pdf](algoexpert/hard/heaps/ContinuousMedian/slides.pdf) | [md](algoexpert/hard/heaps/ContinuousMedian/transcript.md) |
 | hard / heaps / Laptop Rentals | 1:01 | [mp4](algoexpert/hard/heaps/LaptopRentals/lecture.mp4) | [pdf](algoexpert/hard/heaps/LaptopRentals/slides.pdf) | [md](algoexpert/hard/heaps/LaptopRentals/transcript.md) |
 | hard / heaps / Sort K Sorted Array | 1:04 | [mp4](algoexpert/hard/heaps/SortKSortedArray/lecture.mp4) | [pdf](algoexpert/hard/heaps/SortKSortedArray/slides.pdf) | [md](algoexpert/hard/heaps/SortKSortedArray/transcript.md) |
+| hard / linkedlists / Find Loop | 1:02 | [mp4](algoexpert/hard/linkedlists/FindLoop/lecture.mp4) | [pdf](algoexpert/hard/linkedlists/FindLoop/slides.pdf) | [md](algoexpert/hard/linkedlists/FindLoop/transcript.md) |
+| hard / linkedlists / Merge Linked Lists | 1:01 | [mp4](algoexpert/hard/linkedlists/MergeLinkedLists/lecture.mp4) | [pdf](algoexpert/hard/linkedlists/MergeLinkedLists/slides.pdf) | [md](algoexpert/hard/linkedlists/MergeLinkedLists/transcript.md) |
+| hard / linkedlists / Reverse Linked List | 0:57 | [mp4](algoexpert/hard/linkedlists/ReverseLinkedList/lecture.mp4) | [pdf](algoexpert/hard/linkedlists/ReverseLinkedList/slides.pdf) | [md](algoexpert/hard/linkedlists/ReverseLinkedList/transcript.md) |
+| hard / linkedlists / Shift Linked List | 1:01 | [mp4](algoexpert/hard/linkedlists/ShiftLinkedList/lecture.mp4) | [pdf](algoexpert/hard/linkedlists/ShiftLinkedList/slides.pdf) | [md](algoexpert/hard/linkedlists/ShiftLinkedList/transcript.md) |
+| hard / recursion / Ambiguous Measurements | 1:08 | [mp4](algoexpert/hard/recursion/AmbiguousMeasurements/lecture.mp4) | [pdf](algoexpert/hard/recursion/AmbiguousMeasurements/slides.pdf) | [md](algoexpert/hard/recursion/AmbiguousMeasurements/transcript.md) |
+| hard / recursion / Generate Div Tags | 1:07 | [mp4](algoexpert/hard/recursion/GenerateDivTags/lecture.mp4) | [pdf](algoexpert/hard/recursion/GenerateDivTags/slides.pdf) | [md](algoexpert/hard/recursion/GenerateDivTags/transcript.md) |
+| hard / recursion / Interweaving Strings | 1:03 | [mp4](algoexpert/hard/recursion/InterweavingStrings/lecture.mp4) | [pdf](algoexpert/hard/recursion/InterweavingStrings/slides.pdf) | [md](algoexpert/hard/recursion/InterweavingStrings/transcript.md) |
+| hard / recursion / Lowest Common Manager | 1:06 | [mp4](algoexpert/hard/recursion/LowestCommonManager/lecture.mp4) | [pdf](algoexpert/hard/recursion/LowestCommonManager/slides.pdf) | [md](algoexpert/hard/recursion/LowestCommonManager/transcript.md) |
+| hard / recursion / Solve Sudoku | 1:08 | [mp4](algoexpert/hard/recursion/SolveSudoku/lecture.mp4) | [pdf](algoexpert/hard/recursion/SolveSudoku/slides.pdf) | [md](algoexpert/hard/recursion/SolveSudoku/transcript.md) |
+| hard / searching / Index Equals Value | 1:04 | [mp4](algoexpert/hard/searching/IndexEqualsValue/lecture.mp4) | [pdf](algoexpert/hard/searching/IndexEqualsValue/slides.pdf) | [md](algoexpert/hard/searching/IndexEqualsValue/transcript.md) |
+| hard / searching / Quickselect | 1:01 | [mp4](algoexpert/hard/searching/Quickselect/lecture.mp4) | [pdf](algoexpert/hard/searching/Quickselect/slides.pdf) | [md](algoexpert/hard/searching/Quickselect/transcript.md) |
+| hard / searching / Search For Range | 1:01 | [mp4](algoexpert/hard/searching/SearchForRange/lecture.mp4) | [pdf](algoexpert/hard/searching/SearchForRange/slides.pdf) | [md](algoexpert/hard/searching/SearchForRange/transcript.md) |
+| hard / searching / Shifted Binary Search | 1:02 | [mp4](algoexpert/hard/searching/ShiftedBinarySearch/lecture.mp4) | [pdf](algoexpert/hard/searching/ShiftedBinarySearch/slides.pdf) | [md](algoexpert/hard/searching/ShiftedBinarySearch/transcript.md) |
+| hard / sorting / Heap Sort | 0:57 | [mp4](algoexpert/hard/sorting/HeapSort/lecture.mp4) | [pdf](algoexpert/hard/sorting/HeapSort/slides.pdf) | [md](algoexpert/hard/sorting/HeapSort/transcript.md) |
+| hard / sorting / Quick Sort | 1:03 | [mp4](algoexpert/hard/sorting/QuickSort/lecture.mp4) | [pdf](algoexpert/hard/sorting/QuickSort/slides.pdf) | [md](algoexpert/hard/sorting/QuickSort/transcript.md) |
+| hard / sorting / Radix Sort | 1:01 | [mp4](algoexpert/hard/sorting/RadixSort/lecture.mp4) | [pdf](algoexpert/hard/sorting/RadixSort/slides.pdf) | [md](algoexpert/hard/sorting/RadixSort/transcript.md) |
