@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (52)
+## AlgoExpert (62)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -107,3 +107,13 @@ Built with [`pipeline/`](pipeline/README.md).
 | medium / binarysearchtrees / Reconstruct Bst | 1:03 | [mp4](algoexpert/medium/binarysearchtrees/ReconstructBst/lecture.mp4) | [pdf](algoexpert/medium/binarysearchtrees/ReconstructBst/slides.pdf) | [md](algoexpert/medium/binarysearchtrees/ReconstructBst/transcript.md) |
 | medium / binarysearchtrees / Validate Bst | 1:05 | [mp4](algoexpert/medium/binarysearchtrees/ValidateBst/lecture.mp4) | [pdf](algoexpert/medium/binarysearchtrees/ValidateBst/slides.pdf) | [md](algoexpert/medium/binarysearchtrees/ValidateBst/transcript.md) |
 | medium / binarytrees / Binary Tree Diameter | 0:56 | [mp4](algoexpert/medium/binarytrees/BinaryTreeDiameter/lecture.mp4) | [pdf](algoexpert/medium/binarytrees/BinaryTreeDiameter/slides.pdf) | [md](algoexpert/medium/binarytrees/BinaryTreeDiameter/transcript.md) |
+| medium / binarytrees / Find Successor | 0:59 | [mp4](algoexpert/medium/binarytrees/FindSuccessor/lecture.mp4) | [pdf](algoexpert/medium/binarytrees/FindSuccessor/slides.pdf) | [md](algoexpert/medium/binarytrees/FindSuccessor/transcript.md) |
+| medium / binarytrees / Height Balanced Binary Tree | 1:02 | [mp4](algoexpert/medium/binarytrees/HeightBalancedBinaryTree/lecture.mp4) | [pdf](algoexpert/medium/binarytrees/HeightBalancedBinaryTree/slides.pdf) | [md](algoexpert/medium/binarytrees/HeightBalancedBinaryTree/transcript.md) |
+| medium / binarytrees / Invert Binary Tree | 0:53 | [mp4](algoexpert/medium/binarytrees/InvertBinaryTree/lecture.mp4) | [pdf](algoexpert/medium/binarytrees/InvertBinaryTree/slides.pdf) | [md](algoexpert/medium/binarytrees/InvertBinaryTree/transcript.md) |
+| medium / binarytrees / Merge Binary Trees | 1:04 | [mp4](algoexpert/medium/binarytrees/MergeBinaryTrees/lecture.mp4) | [pdf](algoexpert/medium/binarytrees/MergeBinaryTrees/slides.pdf) | [md](algoexpert/medium/binarytrees/MergeBinaryTrees/transcript.md) |
+| medium / binarytrees / Split Binary Tree | 1:00 | [mp4](algoexpert/medium/binarytrees/SplitBinaryTree/lecture.mp4) | [pdf](algoexpert/medium/binarytrees/SplitBinaryTree/slides.pdf) | [md](algoexpert/medium/binarytrees/SplitBinaryTree/transcript.md) |
+| medium / binarytrees / Symmetrical Tree | 0:54 | [mp4](algoexpert/medium/binarytrees/SymmetricalTree/lecture.mp4) | [pdf](algoexpert/medium/binarytrees/SymmetricalTree/slides.pdf) | [md](algoexpert/medium/binarytrees/SymmetricalTree/transcript.md) |
+| medium / dynamicprogramming / Levenshtein Distance | 1:06 | [mp4](algoexpert/medium/dynamicprogramming/LevenshteinDistance/lecture.mp4) | [pdf](algoexpert/medium/dynamicprogramming/LevenshteinDistance/slides.pdf) | [md](algoexpert/medium/dynamicprogramming/LevenshteinDistance/transcript.md) |
+| medium / dynamicprogramming / Max Subset Sum No Adjacent | 0:58 | [mp4](algoexpert/medium/dynamicprogramming/MaxSubsetSumNoAdjacent/lecture.mp4) | [pdf](algoexpert/medium/dynamicprogramming/MaxSubsetSumNoAdjacent/slides.pdf) | [md](algoexpert/medium/dynamicprogramming/MaxSubsetSumNoAdjacent/transcript.md) |
+| medium / dynamicprogramming / Min Number Of Coins For Change | 0:57 | [mp4](algoexpert/medium/dynamicprogramming/MinNumberOfCoinsForChange/lecture.mp4) | [pdf](algoexpert/medium/dynamicprogramming/MinNumberOfCoinsForChange/slides.pdf) | [md](algoexpert/medium/dynamicprogramming/MinNumberOfCoinsForChange/transcript.md) |
+| medium / dynamicprogramming / Number Of Ways To Make Change | 0:59 | [mp4](algoexpert/medium/dynamicprogramming/NumberOfWaysToMakeChange/lecture.mp4) | [pdf](algoexpert/medium/dynamicprogramming/NumberOfWaysToMakeChange/slides.pdf) | [md](algoexpert/medium/dynamicprogramming/NumberOfWaysToMakeChange/transcript.md) |
