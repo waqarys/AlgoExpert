@@ -1,0 +1,13 @@
+GET    /channels/{channelId}               -> Channel + viewerCount + playbackUrl (signed, short-lived)
+GET    /channels/{channelId}/viewers/count
+POST   /channels/{channelId}/follow        (idempotent)
+DELETE /channels/{channelId}/follow
+POST   /channels/{channelId}/subscriptions { tier, paymentToken, idempotencyKey }
+DELETE /subscriptions/{subscriptionId}
+
+# Chat: long-lived connection
+WS     /channels/{channelId}/chat
+  client -> { type: "send", text, clientMessageId }
+  server -> { type: "message", ChatMessage } | { type: "moderation", action, userId }
+POST   /channels/{channelId}/bans { userId, durationSec? }   (moderators only)
+POST   /channels/{channelId}/chat-settings { slowModeSec, emoteOnly, followersOnly }

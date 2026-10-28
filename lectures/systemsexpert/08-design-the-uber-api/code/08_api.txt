@@ -1,0 +1,9 @@
+POST   /trips                       {pickup, dropoff, idempotencyKey} -> Trip
+GET    /trips/{tripId}              -> Trip incl. driver location, ETA
+POST   /trips/{tripId}/cancel
+POST   /trips/{tripId}/rating       {stars}
+PUT    /drivers/me/status           {online: true|false}
+PUT    /drivers/me/location         {lat, lng}
+POST   /trips/{tripId}/accept
+POST   /trips/{tripId}/arrive | /start | /complete
+Stream: GET /stream (websocket) -> trip updates, offers to drivers

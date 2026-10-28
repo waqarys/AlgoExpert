@@ -1,0 +1,6 @@
+GET  /v1/profile, PUT /v1/profile
+GET  /v1/deck?limit=50            -> profiles[]
+POST /v1/swipes {profileId, decision: LIKE|PASS} -> {matched: bool, matchId?}
+GET  /v1/matches?cursor
+POST /v1/matches/{id}/messages {text}
+GET  /v1/matches/{id}/messages?cursor

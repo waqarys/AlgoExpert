@@ -28,7 +28,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Learning to Rank | 1:42 | [mp4](mlexpert/19_learning_to_rank/lecture.mp4) | [pdf](mlexpert/19_learning_to_rank/slides.pdf) | [md](mlexpert/19_learning_to_rank/transcript.md) |
 | ML System Design | 2:25 | [mp4](mlexpert/20_ml_system_design/lecture.mp4) | [pdf](mlexpert/20_ml_system_design/slides.pdf) | [md](mlexpert/20_ml_system_design/transcript.md) |
 
-## SystemsExpert (10)
+## SystemsExpert (18)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -42,8 +42,18 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design a Stockbroker | 3:31 | [mp4](systemsexpert/03-design-a-stockbroker/lecture.mp4) | [pdf](systemsexpert/03-design-a-stockbroker/slides.pdf) | [md](systemsexpert/03-design-a-stockbroker/transcript.md) |
 | Design Facebook News Feed | 3:25 | [mp4](systemsexpert/04-design-facebook-news-feed/lecture.mp4) | [pdf](systemsexpert/04-design-facebook-news-feed/slides.pdf) | [md](systemsexpert/04-design-facebook-news-feed/transcript.md) |
 | Design Google Drive | 3:22 | [mp4](systemsexpert/05-design-google-drive/lecture.mp4) | [pdf](systemsexpert/05-design-google-drive/slides.pdf) | [md](systemsexpert/05-design-google-drive/transcript.md) |
+| Design the Reddit API | 3:22 | [mp4](systemsexpert/06-design-the-reddit-api/lecture.mp4) | [pdf](systemsexpert/06-design-the-reddit-api/slides.pdf) | [md](systemsexpert/06-design-the-reddit-api/transcript.md) |
+| Design Netflix | 3:20 | [mp4](systemsexpert/07-design-netflix/lecture.mp4) | [pdf](systemsexpert/07-design-netflix/slides.pdf) | [md](systemsexpert/07-design-netflix/transcript.md) |
+| Design the Uber API | 2:54 | [mp4](systemsexpert/08-design-the-uber-api/lecture.mp4) | [pdf](systemsexpert/08-design-the-uber-api/slides.pdf) | [md](systemsexpert/08-design-the-uber-api/transcript.md) |
+| Design Slack | 3:10 | [mp4](systemsexpert/09-design-slack/lecture.mp4) | [pdf](systemsexpert/09-design-slack/slides.pdf) | [md](systemsexpert/09-design-slack/transcript.md) |
+| Design Airbnb | 3:01 | [mp4](systemsexpert/10-design-airbnb/lecture.mp4) | [pdf](systemsexpert/10-design-airbnb/slides.pdf) | [md](systemsexpert/10-design-airbnb/transcript.md) |
+| Design Tinder | 2:42 | [mp4](systemsexpert/11-design-tinder/lecture.mp4) | [pdf](systemsexpert/11-design-tinder/slides.pdf) | [md](systemsexpert/11-design-tinder/transcript.md) |
+| Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
+| Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (0)
+## AlgoExpert (2)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
+| easy / arrays / Non Constructible Change | 1:17 | [mp4](algoexpert/easy/arrays/NonConstructibleChange/lecture.mp4) | [pdf](algoexpert/easy/arrays/NonConstructibleChange/slides.pdf) | [md](algoexpert/easy/arrays/NonConstructibleChange/transcript.md) |
+| easy / arrays / Sorted Squared Array | 1:06 | [mp4](algoexpert/easy/arrays/SortedSquaredArray/lecture.mp4) | [pdf](algoexpert/easy/arrays/SortedSquaredArray/slides.pdf) | [md](algoexpert/easy/arrays/SortedSquaredArray/transcript.md) |
