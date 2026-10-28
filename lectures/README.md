@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (90)
+## AlgoExpert (106)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -145,3 +145,19 @@ Built with [`pipeline/`](pipeline/README.md).
 | medium / searching / Search In Sorted Matrix | 1:08 | [mp4](algoexpert/medium/searching/SearchInSortedMatrix/lecture.mp4) | [pdf](algoexpert/medium/searching/SearchInSortedMatrix/slides.pdf) | [md](algoexpert/medium/searching/SearchInSortedMatrix/transcript.md) |
 | medium / sorting / Three Number Sort | 0:58 | [mp4](algoexpert/medium/sorting/ThreeNumberSort/lecture.mp4) | [pdf](algoexpert/medium/sorting/ThreeNumberSort/slides.pdf) | [md](algoexpert/medium/sorting/ThreeNumberSort/transcript.md) |
 | medium / stacks / Balanced Brackets | 0:58 | [mp4](algoexpert/medium/stacks/BalancedBrackets/lecture.mp4) | [pdf](algoexpert/medium/stacks/BalancedBrackets/slides.pdf) | [md](algoexpert/medium/stacks/BalancedBrackets/transcript.md) |
+| medium / stacks / Best Digits | 1:01 | [mp4](algoexpert/medium/stacks/BestDigits/lecture.mp4) | [pdf](algoexpert/medium/stacks/BestDigits/slides.pdf) | [md](algoexpert/medium/stacks/BestDigits/transcript.md) |
+| medium / stacks / Colliding Asteroids | 1:03 | [mp4](algoexpert/medium/stacks/CollidingAsteroids/lecture.mp4) | [pdf](algoexpert/medium/stacks/CollidingAsteroids/slides.pdf) | [md](algoexpert/medium/stacks/CollidingAsteroids/transcript.md) |
+| medium / stacks / Min Max Stack Construction | 1:00 | [mp4](algoexpert/medium/stacks/MinMaxStackConstruction/lecture.mp4) | [pdf](algoexpert/medium/stacks/MinMaxStackConstruction/slides.pdf) | [md](algoexpert/medium/stacks/MinMaxStackConstruction/transcript.md) |
+| medium / stacks / Next Greater Element | 1:01 | [mp4](algoexpert/medium/stacks/NextGreaterElement/lecture.mp4) | [pdf](algoexpert/medium/stacks/NextGreaterElement/slides.pdf) | [md](algoexpert/medium/stacks/NextGreaterElement/transcript.md) |
+| medium / stacks / Reverse Polish Notation | 0:59 | [mp4](algoexpert/medium/stacks/ReversePolishNotation/lecture.mp4) | [pdf](algoexpert/medium/stacks/ReversePolishNotation/slides.pdf) | [md](algoexpert/medium/stacks/ReversePolishNotation/transcript.md) |
+| medium / stacks / Sort Stack | 0:59 | [mp4](algoexpert/medium/stacks/SortStack/lecture.mp4) | [pdf](algoexpert/medium/stacks/SortStack/slides.pdf) | [md](algoexpert/medium/stacks/SortStack/transcript.md) |
+| medium / stacks / Sunset Views | 1:01 | [mp4](algoexpert/medium/stacks/SunsetViews/lecture.mp4) | [pdf](algoexpert/medium/stacks/SunsetViews/slides.pdf) | [md](algoexpert/medium/stacks/SunsetViews/transcript.md) |
+| medium / strings / Group Anagrams | 0:56 | [mp4](algoexpert/medium/strings/GroupAnagrams/lecture.mp4) | [pdf](algoexpert/medium/strings/GroupAnagrams/slides.pdf) | [md](algoexpert/medium/strings/GroupAnagrams/transcript.md) |
+| medium / strings / Longest Palindromic Substring | 0:59 | [mp4](algoexpert/medium/strings/LongestPalindromicSubstring/lecture.mp4) | [pdf](algoexpert/medium/strings/LongestPalindromicSubstring/slides.pdf) | [md](algoexpert/medium/strings/LongestPalindromicSubstring/transcript.md) |
+| medium / strings / Minimum Characters For Words | 0:58 | [mp4](algoexpert/medium/strings/MinimumCharactersForWords/lecture.mp4) | [pdf](algoexpert/medium/strings/MinimumCharactersForWords/slides.pdf) | [md](algoexpert/medium/strings/MinimumCharactersForWords/transcript.md) |
+| medium / strings / One Edit | 0:57 | [mp4](algoexpert/medium/strings/OneEdit/lecture.mp4) | [pdf](algoexpert/medium/strings/OneEdit/slides.pdf) | [md](algoexpert/medium/strings/OneEdit/transcript.md) |
+| medium / strings / Reverse Words In String | 0:55 | [mp4](algoexpert/medium/strings/ReverseWordsInString/lecture.mp4) | [pdf](algoexpert/medium/strings/ReverseWordsInString/slides.pdf) | [md](algoexpert/medium/strings/ReverseWordsInString/transcript.md) |
+| medium / strings / Valid Ip Addresses | 1:05 | [mp4](algoexpert/medium/strings/ValidIpAddresses/lecture.mp4) | [pdf](algoexpert/medium/strings/ValidIpAddresses/slides.pdf) | [md](algoexpert/medium/strings/ValidIpAddresses/transcript.md) |
+| medium / tries / Suffix Trie Construction | 0:59 | [mp4](algoexpert/medium/tries/SuffixTrieConstruction/lecture.mp4) | [pdf](algoexpert/medium/tries/SuffixTrieConstruction/slides.pdf) | [md](algoexpert/medium/tries/SuffixTrieConstruction/transcript.md) |
+| hard / arrays / Count Squares | 1:11 | [mp4](algoexpert/hard/arrays/CountSquares/lecture.mp4) | [pdf](algoexpert/hard/arrays/CountSquares/slides.pdf) | [md](algoexpert/hard/arrays/CountSquares/transcript.md) |
+| hard / arrays / Four Number Sum | 1:11 | [mp4](algoexpert/hard/arrays/FourNumberSum/lecture.mp4) | [pdf](algoexpert/hard/arrays/FourNumberSum/slides.pdf) | [md](algoexpert/hard/arrays/FourNumberSum/transcript.md) |
