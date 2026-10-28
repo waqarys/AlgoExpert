@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 3:43 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 5:26 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (199)
+## AlgoExpert (200)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -85,6 +85,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | easy / strings / Generate Document | 1:47 | [mp4](algoexpert/easy/strings/GenerateDocument/lecture.mp4) | [pdf](algoexpert/easy/strings/GenerateDocument/slides.pdf) | [md](algoexpert/easy/strings/GenerateDocument/transcript.md) |
 | easy / strings / Palindrome Check | 1:43 | [mp4](algoexpert/easy/strings/PalindromeCheck/lecture.mp4) | [pdf](algoexpert/easy/strings/PalindromeCheck/slides.pdf) | [md](algoexpert/easy/strings/PalindromeCheck/transcript.md) |
 | easy / strings / Run Length Encoding | 1:52 | [mp4](algoexpert/easy/strings/RunLengthEncoding/lecture.mp4) | [pdf](algoexpert/easy/strings/RunLengthEncoding/slides.pdf) | [md](algoexpert/easy/strings/RunLengthEncoding/transcript.md) |
+| easy / strings / Semordnilap | 1:44 | [mp4](algoexpert/easy/strings/Semordnilap/lecture.mp4) | [pdf](algoexpert/easy/strings/Semordnilap/slides.pdf) | [md](algoexpert/easy/strings/Semordnilap/transcript.md) |
 | medium / arrays / Array Of Products | 1:05 | [mp4](algoexpert/medium/arrays/ArrayOfProducts/lecture.mp4) | [pdf](algoexpert/medium/arrays/ArrayOfProducts/slides.pdf) | [md](algoexpert/medium/arrays/ArrayOfProducts/transcript.md) |
 | medium / arrays / Best Seat | 1:04 | [mp4](algoexpert/medium/arrays/BestSeat/lecture.mp4) | [pdf](algoexpert/medium/arrays/BestSeat/slides.pdf) | [md](algoexpert/medium/arrays/BestSeat/transcript.md) |
 | medium / arrays / First Duplicate Value | 1:08 | [mp4](algoexpert/medium/arrays/FirstDuplicateValue/lecture.mp4) | [pdf](algoexpert/medium/arrays/FirstDuplicateValue/slides.pdf) | [md](algoexpert/medium/arrays/FirstDuplicateValue/transcript.md) |
