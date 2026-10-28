@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 3:43 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 5:26 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (183)
+## AlgoExpert (199)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -200,6 +200,22 @@ Built with [`pipeline/`](pipeline/README.md).
 | hard / recursion / Ambiguous Measurements | 1:51 | [mp4](algoexpert/hard/recursion/AmbiguousMeasurements/lecture.mp4) | [pdf](algoexpert/hard/recursion/AmbiguousMeasurements/slides.pdf) | [md](algoexpert/hard/recursion/AmbiguousMeasurements/transcript.md) |
 | hard / recursion / Generate Div Tags | 1:48 | [mp4](algoexpert/hard/recursion/GenerateDivTags/lecture.mp4) | [pdf](algoexpert/hard/recursion/GenerateDivTags/slides.pdf) | [md](algoexpert/hard/recursion/GenerateDivTags/transcript.md) |
 | hard / recursion / Interweaving Strings | 1:44 | [mp4](algoexpert/hard/recursion/InterweavingStrings/lecture.mp4) | [pdf](algoexpert/hard/recursion/InterweavingStrings/slides.pdf) | [md](algoexpert/hard/recursion/InterweavingStrings/transcript.md) |
+| hard / recursion / Lowest Common Manager | 1:53 | [mp4](algoexpert/hard/recursion/LowestCommonManager/lecture.mp4) | [pdf](algoexpert/hard/recursion/LowestCommonManager/slides.pdf) | [md](algoexpert/hard/recursion/LowestCommonManager/transcript.md) |
+| hard / recursion / Solve Sudoku | 2:06 | [mp4](algoexpert/hard/recursion/SolveSudoku/lecture.mp4) | [pdf](algoexpert/hard/recursion/SolveSudoku/slides.pdf) | [md](algoexpert/hard/recursion/SolveSudoku/transcript.md) |
+| hard / searching / Index Equals Value | 1:34 | [mp4](algoexpert/hard/searching/IndexEqualsValue/lecture.mp4) | [pdf](algoexpert/hard/searching/IndexEqualsValue/slides.pdf) | [md](algoexpert/hard/searching/IndexEqualsValue/transcript.md) |
+| hard / searching / Quickselect | 1:53 | [mp4](algoexpert/hard/searching/Quickselect/lecture.mp4) | [pdf](algoexpert/hard/searching/Quickselect/slides.pdf) | [md](algoexpert/hard/searching/Quickselect/transcript.md) |
+| hard / searching / Search For Range | 1:40 | [mp4](algoexpert/hard/searching/SearchForRange/lecture.mp4) | [pdf](algoexpert/hard/searching/SearchForRange/slides.pdf) | [md](algoexpert/hard/searching/SearchForRange/transcript.md) |
+| hard / searching / Shifted Binary Search | 1:43 | [mp4](algoexpert/hard/searching/ShiftedBinarySearch/lecture.mp4) | [pdf](algoexpert/hard/searching/ShiftedBinarySearch/slides.pdf) | [md](algoexpert/hard/searching/ShiftedBinarySearch/transcript.md) |
+| hard / sorting / Heap Sort | 1:59 | [mp4](algoexpert/hard/sorting/HeapSort/lecture.mp4) | [pdf](algoexpert/hard/sorting/HeapSort/slides.pdf) | [md](algoexpert/hard/sorting/HeapSort/transcript.md) |
+| hard / sorting / Quick Sort | 2:01 | [mp4](algoexpert/hard/sorting/QuickSort/lecture.mp4) | [pdf](algoexpert/hard/sorting/QuickSort/slides.pdf) | [md](algoexpert/hard/sorting/QuickSort/transcript.md) |
+| hard / sorting / Radix Sort | 1:47 | [mp4](algoexpert/hard/sorting/RadixSort/lecture.mp4) | [pdf](algoexpert/hard/sorting/RadixSort/slides.pdf) | [md](algoexpert/hard/sorting/RadixSort/transcript.md) |
+| hard / stacks / Largest Rectangle Under Skyline | 2:04 | [mp4](algoexpert/hard/stacks/LargestRectangleUnderSkyline/lecture.mp4) | [pdf](algoexpert/hard/stacks/LargestRectangleUnderSkyline/slides.pdf) | [md](algoexpert/hard/stacks/LargestRectangleUnderSkyline/transcript.md) |
+| hard / stacks / Shorten Path | 1:53 | [mp4](algoexpert/hard/stacks/ShortenPath/lecture.mp4) | [pdf](algoexpert/hard/stacks/ShortenPath/slides.pdf) | [md](algoexpert/hard/stacks/ShortenPath/transcript.md) |
+| hard / strings / Longest Substring Without Duplication | 1:48 | [mp4](algoexpert/hard/strings/LongestSubstringWithoutDuplication/lecture.mp4) | [pdf](algoexpert/hard/strings/LongestSubstringWithoutDuplication/slides.pdf) | [md](algoexpert/hard/strings/LongestSubstringWithoutDuplication/transcript.md) |
+| hard / strings / Pattern Matcher | 1:46 | [mp4](algoexpert/hard/strings/PatternMatcher/lecture.mp4) | [pdf](algoexpert/hard/strings/PatternMatcher/slides.pdf) | [md](algoexpert/hard/strings/PatternMatcher/transcript.md) |
+| hard / strings / Underscorify Substring | 1:34 | [mp4](algoexpert/hard/strings/UnderscorifySubstring/lecture.mp4) | [pdf](algoexpert/hard/strings/UnderscorifySubstring/slides.pdf) | [md](algoexpert/hard/strings/UnderscorifySubstring/transcript.md) |
+| hard / tries / Longest Most Frequent Prefix | 1:36 | [mp4](algoexpert/hard/tries/LongestMostFrequentPrefix/lecture.mp4) | [pdf](algoexpert/hard/tries/LongestMostFrequentPrefix/slides.pdf) | [md](algoexpert/hard/tries/LongestMostFrequentPrefix/transcript.md) |
+| hard / tries / Multi String Search | 1:45 | [mp4](algoexpert/hard/tries/MultiStringSearch/lecture.mp4) | [pdf](algoexpert/hard/tries/MultiStringSearch/slides.pdf) | [md](algoexpert/hard/tries/MultiStringSearch/transcript.md) |
 | veryhard / arrays / Apartment Hunting | 1:14 | [mp4](algoexpert/veryhard/arrays/ApartmentHunting/lecture.mp4) | [pdf](algoexpert/veryhard/arrays/ApartmentHunting/slides.pdf) | [md](algoexpert/veryhard/arrays/ApartmentHunting/transcript.md) |
 | veryhard / arrays / Calendar Matching | 1:14 | [mp4](algoexpert/veryhard/arrays/CalendarMatching/lecture.mp4) | [pdf](algoexpert/veryhard/arrays/CalendarMatching/slides.pdf) | [md](algoexpert/veryhard/arrays/CalendarMatching/transcript.md) |
 | veryhard / arrays / Line Through Points | 1:05 | [mp4](algoexpert/veryhard/arrays/LineThroughPoints/lecture.mp4) | [pdf](algoexpert/veryhard/arrays/LineThroughPoints/slides.pdf) | [md](algoexpert/veryhard/arrays/LineThroughPoints/transcript.md) |
