@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (72)
+## AlgoExpert (81)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -127,3 +127,12 @@ Built with [`pipeline/`](pipeline/README.md).
 | medium / graphs / Remove Islands | 1:03 | [mp4](algoexpert/medium/graphs/RemoveIslands/lecture.mp4) | [pdf](algoexpert/medium/graphs/RemoveIslands/slides.pdf) | [md](algoexpert/medium/graphs/RemoveIslands/transcript.md) |
 | medium / graphs / River Sizes | 0:59 | [mp4](algoexpert/medium/graphs/RiverSizes/lecture.mp4) | [pdf](algoexpert/medium/graphs/RiverSizes/slides.pdf) | [md](algoexpert/medium/graphs/RiverSizes/transcript.md) |
 | medium / graphs / Single Cycle Check | 1:03 | [mp4](algoexpert/medium/graphs/SingleCycleCheck/lecture.mp4) | [pdf](algoexpert/medium/graphs/SingleCycleCheck/slides.pdf) | [md](algoexpert/medium/graphs/SingleCycleCheck/transcript.md) |
+| medium / graphs / Two Colorable | 0:59 | [mp4](algoexpert/medium/graphs/TwoColorable/lecture.mp4) | [pdf](algoexpert/medium/graphs/TwoColorable/slides.pdf) | [md](algoexpert/medium/graphs/TwoColorable/transcript.md) |
+| medium / graphs / Youngest Common Ancestor | 0:59 | [mp4](algoexpert/medium/graphs/YoungestCommonAncestor/lecture.mp4) | [pdf](algoexpert/medium/graphs/YoungestCommonAncestor/slides.pdf) | [md](algoexpert/medium/graphs/YoungestCommonAncestor/transcript.md) |
+| medium / greedyalgorithms / Task Assignment | 1:03 | [mp4](algoexpert/medium/greedyalgorithms/TaskAssignment/lecture.mp4) | [pdf](algoexpert/medium/greedyalgorithms/TaskAssignment/slides.pdf) | [md](algoexpert/medium/greedyalgorithms/TaskAssignment/transcript.md) |
+| medium / greedyalgorithms / Valid Starting City | 1:05 | [mp4](algoexpert/medium/greedyalgorithms/ValidStartingCity/lecture.mp4) | [pdf](algoexpert/medium/greedyalgorithms/ValidStartingCity/slides.pdf) | [md](algoexpert/medium/greedyalgorithms/ValidStartingCity/transcript.md) |
+| medium / heaps / Min Heap Construction | 1:07 | [mp4](algoexpert/medium/heaps/MinHeapConstruction/lecture.mp4) | [pdf](algoexpert/medium/heaps/MinHeapConstruction/slides.pdf) | [md](algoexpert/medium/heaps/MinHeapConstruction/transcript.md) |
+| medium / linkedlists / Linked List Construction | 1:27 | [mp4](algoexpert/medium/linkedlists/LinkedListConstruction/lecture.mp4) | [pdf](algoexpert/medium/linkedlists/LinkedListConstruction/slides.pdf) | [md](algoexpert/medium/linkedlists/LinkedListConstruction/transcript.md) |
+| medium / linkedlists / Merging Linked Lists | 1:05 | [mp4](algoexpert/medium/linkedlists/MergingLinkedLists/lecture.mp4) | [pdf](algoexpert/medium/linkedlists/MergingLinkedLists/slides.pdf) | [md](algoexpert/medium/linkedlists/MergingLinkedLists/transcript.md) |
+| medium / linkedlists / Sum Of Linked Lists | 1:01 | [mp4](algoexpert/medium/linkedlists/SumOfLinkedLists/lecture.mp4) | [pdf](algoexpert/medium/linkedlists/SumOfLinkedLists/slides.pdf) | [md](algoexpert/medium/linkedlists/SumOfLinkedLists/transcript.md) |
+| medium / recursion / Blackjack Probability | 1:11 | [mp4](algoexpert/medium/recursion/BlackjackProbability/lecture.mp4) | [pdf](algoexpert/medium/recursion/BlackjackProbability/slides.pdf) | [md](algoexpert/medium/recursion/BlackjackProbability/transcript.md) |
