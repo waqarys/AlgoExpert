@@ -28,6 +28,15 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Remove each edge, test connectivity → O(E·(V+E))",
+    "Tarjan's bridge-finding DFS → O(V + E)"
+   ],
+   "narration": "Removing each edge and re-checking connectivity is E times V plus E. Tarjan's single DFS finds bridges in linear time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. DFS with arrival times",
@@ -38,13 +47,69 @@
    "narration": "Step by step. First, dFS with arrival times. Second, compute the lowest reachable arrival time. Third, a child with low time above the parent is a bridge. Fourth, check connectivity too."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "2-edge-connected: connected, and no bridge",
+      "bridge = edge whose removal disconnects"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Definition",
+   "narration": "A graph is two-edge-connected if it's connected and removing any single edge keeps it connected, meaning no bridges.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "DFS: disc[v] = visit time",
+      "low[v] = earliest disc reachable via one back edge"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Discovery and low times",
+   "narration": "During DFS, track discovery time and low link: the earliest discovery time reachable from v's subtree with one back edge.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "edge (v, w) is a bridge if low[w] > disc[v]",
+      "any bridge or unvisited vertex → false"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Bridge test",
+   "narration": "If a child's low is greater than the parent's discovery time, the edge between them is a bridge. Also fail if DFS didn't reach everything.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class TwoEdgeConnectedGraph {\n    public static boolean twoEdgeConnectedGraph(int[][] edges) {\n        int n = edges.length;\n        if (n == 0) return true;\n        int[] disc = new int[n], low = new int[n];\n        java.util.Arrays.fill(disc, -1);\n        int[] time = {0};\n        if (hasBridge(0, -1, edges, disc, low, time)) return false;\n        for (int d : disc) if (d == -1) return false;\n        return true;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "TwoEdgeConnectedGraph_part1.java",
-   "narration": "Here's the Java solution, starting with two edge connected graph. It follows the steps we just described."
+   "narration": "Has bridge assigns disc and low, recurses into unvisited neighbours, returns true if low of the child exceeds disc of v, and updates low from children and back edges. Then we check all vertices were visited."
   },
   {
    "kind": "code",
@@ -53,7 +118,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "TwoEdgeConnectedGraph_part2.java",
-   "narration": "Continuing with has bridge."
+   "narration": "Has bridge assigns disc and low, recurses into unvisited neighbours, returns true if low of the child exceeds disc of v, and updates low from children and back edges. Then we check all vertices were visited."
   },
   {
    "kind": "bullets",
@@ -63,6 +128,24 @@
     "Space: O(v)"
    ],
    "narration": "Time is O of v plus e. Space is O of v."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Skip the parent edge once",
+    "Disconnected → false",
+    "Empty graph → true"
+   ],
+   "narration": "Skip the edge back to the parent, and check every vertex was visited."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Relate to articulation points"
+   ],
+   "narration": "The same DFS finds articulation points."
   },
   {
    "kind": "bullets",

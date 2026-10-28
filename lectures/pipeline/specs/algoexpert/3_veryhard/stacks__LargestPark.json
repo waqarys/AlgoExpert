@@ -28,6 +28,15 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Check every rectangle → O(R²C²)",
+    "Histogram per row + monotonic stack → O(R·C)"
+   ],
+   "narration": "Checking every rectangle is huge. Treating each row as the base of a histogram and using the skyline stack is linear in the grid."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Update column heights per row",
@@ -37,13 +46,293 @@
    "narration": "Step by step. First, update column heights per row. Second, run the monotonic stack. Third, track the max area."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       1
+      ],
+      [
+       0,
+       0,
+       0,
+       0
+      ]
+     ],
+     "hl": {
+      "0,0": "cur",
+      "0,1": "cur",
+      "0,2": "cur",
+      "0,3": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      0,
+      1,
+      1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "free heights",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "largest rectangle in histogram: 2"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Row 0: histogram [1, 0, 1, 1]",
+   "narration": "After row 0, each column's height counts free cells above. The best rectangle in this histogram is 2.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       1
+      ],
+      [
+       0,
+       0,
+       0,
+       0
+      ]
+     ],
+     "hl": {
+      "1,0": "cur",
+      "1,1": "cur",
+      "1,2": "cur",
+      "1,3": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "array",
+     "values": [
+      2,
+      1,
+      2,
+      2
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "free heights",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "largest rectangle in histogram: 4"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Row 1: histogram [2, 1, 2, 2]",
+   "narration": "After row 1, each column's height counts free cells above. The best rectangle in this histogram is 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       1
+      ],
+      [
+       0,
+       0,
+       0,
+       0
+      ]
+     ],
+     "hl": {
+      "2,0": "cur",
+      "2,1": "cur",
+      "2,2": "cur",
+      "2,3": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "array",
+     "values": [
+      0,
+      2,
+      3,
+      0
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "free heights",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "largest rectangle in histogram: 4"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Row 2: histogram [0, 2, 3, 0]",
+   "narration": "After row 2, each column's height counts free cells above. The best rectangle in this histogram is 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       1
+      ],
+      [
+       0,
+       0,
+       0,
+       0
+      ]
+     ],
+     "hl": {
+      "3,0": "cur",
+      "3,1": "cur",
+      "3,2": "cur",
+      "3,3": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      3,
+      4,
+      1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "free heights",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "largest rectangle in histogram: 6"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Row 3: histogram [1, 3, 4, 1]",
+   "narration": "After row 3, each column's height counts free cells above. The best rectangle in this histogram is 6.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class LargestPark {\n    public static int largestPark(boolean[][] land) {\n        if (land.length == 0) return 0;\n        int[] heights = new int[land[0].length];\n        int best = 0;\n        for (boolean[] row : land) {\n            for (int c = 0; c < row.length; c++) heights[c] = row[c] ? 0 : heights[c] + 1;\n            best = Math.max(best, largestRectangle(heights));\n        }\n        return best;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "LargestPark_part1.java",
-   "narration": "Here's the Java solution, starting with largest park. It follows the steps we just described."
+   "narration": "For each row, update heights, then compute the largest rectangle under that histogram with the stack method, tracking the best."
   },
   {
    "kind": "code",
@@ -52,7 +341,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "LargestPark_part2.java",
-   "narration": "Continuing with largest rectangle."
+   "narration": "For each row, update heights, then compute the largest rectangle under that histogram with the stack method, tracking the best."
   },
   {
    "kind": "bullets",
@@ -62,6 +351,23 @@
     "Space: O(w)"
    ],
    "narration": "Time is O of w times h. Space is O of w."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Reset height on obstacles",
+    "Empty grid → 0"
+   ],
+   "narration": "A blocked cell resets that column's height to zero."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same as Maximal Rectangle"
+   ],
+   "narration": "This is maximal rectangle."
   },
   {
    "kind": "bullets",

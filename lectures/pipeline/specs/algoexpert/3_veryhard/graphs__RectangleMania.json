@@ -27,6 +27,15 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "All 4-point combos → O(n⁴)",
+    "Diagonal pairs + hash set → O(n²)"
+   ],
+   "narration": "Choosing four points is n to the fourth. Using strictly up-right pairs as diagonals counts each rectangle once in quadratic time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Put points in a set",
@@ -37,13 +46,66 @@
    "narration": "Step by step. First, put points in a set. Second, for each pair up and to the right. Third, check the other two corners. Fourth, count."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "[(0, 0), (0, 1), (1, 1), (1, 0), (2, 1), (2, 0), (3, 1), (3, 0)]"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Points",
+   "narration": "Count axis-aligned rectangles formed by these points.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "pair (a, b) with b up-right of a = a diagonal",
+      "check the other two corners in a set"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Bottom-left & top-right as diagonal",
+   "narration": "Treat each pair where the second is strictly up and right of the first as a diagonal, and check the other corners.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "rectangles: 6"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Answer: 6",
+   "narration": "Each rectangle is counted exactly once this way: 6 in total.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class RectangleMania {\n    public static int rectangleMania(int[][] coords) {\n        Set<String> set = new HashSet<>();\n        for (int[] p : coords) set.add(p[0] + \",\" + p[1]);\n        int count = 0;\n        for (int[] a : coords) for (int[] b : coords)\n            if (b[0] > a[0] && b[1] > a[1] && set.contains(a[0] + \",\" + b[1]) && set.contains(b[0] + \",\" + a[1])) count++;\n        return count;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "RectangleMania.java",
-   "narration": "Here's the Java solution, starting with rectangle mania. It follows the steps we just described."
+   "narration": "We store points, and for each ordered pair with b up and right of a, count when both other corners exist."
   },
   {
    "kind": "bullets",
@@ -53,6 +115,23 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n squared. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Strictly up-right avoids double counting",
+    "Duplicate points"
+   ],
+   "narration": "Requiring up-right ordering is what avoids counting each rectangle four times."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Contrast with Count Squares"
+   ],
+   "narration": "Contrast with count squares, which allows tilts."
   },
   {
    "kind": "bullets",

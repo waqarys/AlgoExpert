@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Recursion → O(h) stack",
+    "Explicit stack → O(h)",
+    "Parent pointers + prev → O(1) space"
+   ],
+   "narration": "Recursion and explicit stacks both use height space. With parent pointers, tracking the previous node is enough for constant space."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Track previous and current",
@@ -36,13 +46,99 @@
    "narration": "Step by step. First, track previous and current. Second, coming from parent, go left if possible. Third, coming from left, visit then go right. Fourth, coming from right, go up."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       null
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       null,
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {},
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Use parent pointers, no stack",
+   "narration": "With parent pointers, we can traverse in-order using only prev and current.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "came from parent → go left if possible, else visit & go right/up",
+      "came from left child → visit, go right or up",
+      "came from right child → go up"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Three cases by where we came from",
+   "narration": "If we came from the parent, go left if we can, else visit and go right or up. From the left child, visit and go right or up. From the right child, go up.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "visit order: 4, 2, 1, 6, 3, 7"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Visit order 4, 2, 1, 6, 3, 7",
+   "narration": "That yields the in-order sequence four, two, one, six, three, seven.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class IterativeInOrderTraversal {\n    public static void iterativeInOrderTraversal(BinaryTree tree, Consumer<BinaryTree> callback) {\n        BinaryTree prev = null, cur = tree;\n        while (cur != null) {\n            BinaryTree next;\n            if (prev == null || prev == cur.parent) {\n                if (cur.left != null) next = cur.left;\n                else { callback.accept(cur); next = cur.right != null ? cur.right : cur.parent; }\n            } else if (prev == cur.left) {\n                callback.accept(cur);\n                next = cur.right != null ? cur.right : cur.parent;\n            } else next = cur.parent;\n            prev = cur;\n            cur = next;\n        }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "IterativeInOrderTraversal.java",
-   "narration": "Here's the Java solution, starting with iterative in order traversal. It follows the steps we just described."
+   "narration": "We loop while current exists, choose next by the three cases, calling the callback at the right moments, then shift prev and current."
   },
   {
    "kind": "bullets",
@@ -52,6 +148,24 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Distinguish arriving from left vs right",
+    "Missing children",
+    "Stop when we step past the root's parent"
+   ],
+   "narration": "Carefully distinguish arriving from the left child versus the right."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention Morris traversal"
+   ],
+   "narration": "Morris traversal does constant space without parent pointers."
   },
   {
    "kind": "bullets",

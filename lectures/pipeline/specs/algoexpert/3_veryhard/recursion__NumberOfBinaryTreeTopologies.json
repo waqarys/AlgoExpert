@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Recursion without memo → exponential",
+    "DP over sizes → O(n²)",
+    "Closed form: Catalan number"
+   ],
+   "narration": "Plain recursion recomputes sizes. A DP over sizes is quadratic, and the answer is the Catalan number."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. ways of zero is one",
@@ -35,13 +45,143 @@
    "narration": "Step by step. First, ways of zero is one. Second, for each n, sum left times right counts. Third, return ways of n."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1
+     ],
+     "hl": {
+      "1": "ok"
+     },
+     "ptr": {},
+     "label": "topologies for 0…m nodes",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "c[1] = Σ c[left]·c[1−1−left] = 1"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "1 nodes → 1",
+   "narration": "With 1 nodes, choose how many go left; multiply the left and right counts and sum: 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      2
+     ],
+     "hl": {
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": "topologies for 0…m nodes",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "c[2] = Σ c[left]·c[2−1−left] = 2"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "2 nodes → 2",
+   "narration": "With 2 nodes, choose how many go left; multiply the left and right counts and sum: 2.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      2,
+      5
+     ],
+     "hl": {
+      "3": "ok"
+     },
+     "ptr": {},
+     "label": "topologies for 0…m nodes",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "c[3] = Σ c[left]·c[3−1−left] = 5"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "3 nodes → 5",
+   "narration": "With 3 nodes, choose how many go left; multiply the left and right counts and sum: 5.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      2,
+      5,
+      14
+     ],
+     "hl": {
+      "4": "ok"
+     },
+     "ptr": {},
+     "label": "topologies for 0…m nodes",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "c[4] = Σ c[left]·c[4−1−left] = 14"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "4 nodes → 14",
+   "narration": "With 4 nodes, choose how many go left; multiply the left and right counts and sum: 14.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class NumberOfBinaryTreeTopologies {\n    public static long numberOfBinaryTreeTopologies(int n) {\n        long[] c = new long[n + 1];\n        c[0] = 1;\n        for (int m = 1; m <= n; m++) for (int l = 0; l < m; l++) c[m] += c[l] * c[m - 1 - l];\n        return c[n];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "NumberOfBinaryTreeTopologies.java",
-   "narration": "Here's the Java solution, starting with number of binary tree topologies. It follows the steps we just described."
+   "narration": "C of zero is one. For each m, sum c of left times c of m minus one minus left over all left sizes."
   },
   {
    "kind": "bullets",
@@ -51,6 +191,23 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n squared. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "c[0] = 1",
+    "Overflow for large n"
+   ],
+   "narration": "The empty tree counts as one topology."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention Catalan closed form"
+   ],
+   "narration": "Mention the closed form, two n choose n over n plus one."
   },
   {
    "kind": "bullets",

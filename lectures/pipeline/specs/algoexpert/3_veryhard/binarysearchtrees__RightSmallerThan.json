@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "For each element, scan right → O(n²)",
+    "BST with left-subtree sizes → O(n log n) average",
+    "Merge-sort counting or BIT → O(n log n) worst"
+   ],
+   "narration": "Scanning right from every element is quadratic. Inserting right to left into a BST that tracks left-subtree sizes counts smaller values during insertion."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Iterate from the end",
@@ -37,13 +47,193 @@
    "narration": "Step by step. First, iterate from the end. Second, insert into an augmented BST. Third, add left sizes when going right. Fourth, record the count."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      8,
+      5,
+      11,
+      -1,
+      3,
+      4,
+      2
+     ],
+     "hl": {
+      "6": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      0
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "answers from index 6",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Insert 2: 0 smaller to its right",
+   "narration": "Moving right to left, insert 2 into a BST of everything to its right. Every time we go right, we add the left-subtree size plus one: 0 smaller values.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      8,
+      5,
+      11,
+      -1,
+      3,
+      4,
+      2
+     ],
+     "hl": {
+      "4": "cur",
+      "5": "done",
+      "6": "done"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      0
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "answers from index 4",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Insert 3: 1 smaller to its right",
+   "narration": "Moving right to left, insert 3 into a BST of everything to its right. Every time we go right, we add the left-subtree size plus one: 1 smaller values.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      8,
+      5,
+      11,
+      -1,
+      3,
+      4,
+      2
+     ],
+     "hl": {
+      "2": "cur",
+      "3": "done",
+      "4": "done",
+      "5": "done",
+      "6": "done"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      4,
+      0,
+      1,
+      1,
+      0
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "answers from index 2",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Insert 11: 4 smaller to its right",
+   "narration": "Moving right to left, insert 11 into a BST of everything to its right. Every time we go right, we add the left-subtree size plus one: 4 smaller values.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      8,
+      5,
+      11,
+      -1,
+      3,
+      4,
+      2
+     ],
+     "hl": {
+      "0": "cur",
+      "1": "done",
+      "2": "done",
+      "3": "done",
+      "4": "done",
+      "5": "done",
+      "6": "done"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      5,
+      4,
+      4,
+      0,
+      1,
+      1,
+      0
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "answers from index 0",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Insert 8: 5 smaller to its right",
+   "narration": "Moving right to left, insert 8 into a BST of everything to its right. Every time we go right, we add the left-subtree size plus one: 5 smaller values.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class RightSmallerThan {\n    private static class Node {\n        int value, leftSize;\n        Node left, right;\n        Node(int v) { value = v; }\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "RightSmallerThan_part1.java",
-   "narration": "Here's the Java solution. It follows the steps we just described."
+   "narration": "We insert from the end. Going left increments that node's left size; going right adds left size plus one, unless equal. The accumulated count is the answer for that index."
   },
   {
    "kind": "code",
@@ -52,7 +242,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "RightSmallerThan_part2.java",
-   "narration": "Continuing with right smaller than."
+   "narration": "We insert from the end. Going left increments that node's left size; going right adds left size plus one, unless equal. The accumulated count is the answer for that index."
   },
   {
    "kind": "bullets",
@@ -62,6 +252,24 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n log n avg, O of n squared worst. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Unbalanced BST → O(n²) worst",
+    "Duplicates go right without counting",
+    "Empty input"
+   ],
+   "narration": "A sorted input makes the BST degenerate; a Fenwick tree avoids that."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention BIT / merge sort alternatives"
+   ],
+   "narration": "Mention the Fenwick-tree and merge-sort alternatives."
   },
   {
    "kind": "bullets",

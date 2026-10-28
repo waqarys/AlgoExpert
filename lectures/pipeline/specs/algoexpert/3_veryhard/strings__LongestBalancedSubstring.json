@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Check every substring → O(n³)",
+    "Stack of indices → O(n), O(n) space",
+    "Two counter scans → O(n), O(1)"
+   ],
+   "narration": "Checking every substring is cubic. A stack of indices is linear; two counting scans in opposite directions are linear with constant space."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Left to right, equal counts give a candidate",
@@ -36,13 +46,79 @@
    "narration": "Step by step. First, left to right, equal counts give a candidate. Second, reset when closes exceed opens. Third, repeat right to left."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "(",
+      ")",
+      ")",
+      "(",
+      ")",
+      "(",
+      "(",
+      ")",
+      "(",
+      ")",
+      ")"
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    }
+   ],
+   "caption": "Find the longest balanced substring",
+   "narration": "Find the longest balanced substring of parentheses.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "left→right: count opens/closes",
+      "equal → candidate; closes > opens → reset"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Left-to-right scan",
+   "narration": "Scan left to right counting opens and closes. Equal counts give a candidate; more closes means reset.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "right→left scan catches extra '(' cases",
+      "answer: 8"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Answer: 8",
+   "narration": "A second scan from the right catches cases with surplus opens. The answer is 8.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LongestBalancedSubstring {\n    public static int longestBalancedSubstring(String s) {\n        return Math.max(scan(s, false), scan(s, true));\n    }\n\n    private static int scan(String s, boolean reverse) {\n        int open = 0, close = 0, best = 0;\n        for (int k = 0; k < s.length(); k++) {\n            char c = s.charAt(reverse ? s.length() - 1 - k : k);\n            boolean opening = (c == '(') != reverse;\n            if (opening) open++; else close++;\n            if (open == close) best = Math.max(best, 2 * close);\n            else if (close > open) open = close = 0;\n        }\n        return best;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LongestBalancedSubstring.java",
-   "narration": "Here's the Java solution, starting with longest balanced substring. It follows the steps we just described."
+   "narration": "Scan counts opens and closes, records two times closes when equal, and resets when closes exceed opens; reverse mode swaps the roles."
   },
   {
    "kind": "bullets",
@@ -52,6 +128,24 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Need both directions",
+    "Reset correctly",
+    "Empty → 0"
+   ],
+   "narration": "One direction alone misses cases like extra opens."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention the stack approach"
+   ],
+   "narration": "Mention the stack alternative."
   },
   {
    "kind": "bullets",

@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 3:43 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 5:26 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (199)
+## AlgoExpert (200)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -216,6 +216,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | hard / strings / Underscorify Substring | 1:34 | [mp4](algoexpert/hard/strings/UnderscorifySubstring/lecture.mp4) | [pdf](algoexpert/hard/strings/UnderscorifySubstring/slides.pdf) | [md](algoexpert/hard/strings/UnderscorifySubstring/transcript.md) |
 | hard / tries / Longest Most Frequent Prefix | 1:36 | [mp4](algoexpert/hard/tries/LongestMostFrequentPrefix/lecture.mp4) | [pdf](algoexpert/hard/tries/LongestMostFrequentPrefix/slides.pdf) | [md](algoexpert/hard/tries/LongestMostFrequentPrefix/transcript.md) |
 | hard / tries / Multi String Search | 1:45 | [mp4](algoexpert/hard/tries/MultiStringSearch/lecture.mp4) | [pdf](algoexpert/hard/tries/MultiStringSearch/slides.pdf) | [md](algoexpert/hard/tries/MultiStringSearch/transcript.md) |
+| hard / tries / Shortest Unique Prefixes | 1:31 | [mp4](algoexpert/hard/tries/ShortestUniquePrefixes/lecture.mp4) | [pdf](algoexpert/hard/tries/ShortestUniquePrefixes/slides.pdf) | [md](algoexpert/hard/tries/ShortestUniquePrefixes/transcript.md) |
 | veryhard / arrays / Apartment Hunting | 1:14 | [mp4](algoexpert/veryhard/arrays/ApartmentHunting/lecture.mp4) | [pdf](algoexpert/veryhard/arrays/ApartmentHunting/slides.pdf) | [md](algoexpert/veryhard/arrays/ApartmentHunting/transcript.md) |
 | veryhard / arrays / Calendar Matching | 1:14 | [mp4](algoexpert/veryhard/arrays/CalendarMatching/lecture.mp4) | [pdf](algoexpert/veryhard/arrays/CalendarMatching/slides.pdf) | [md](algoexpert/veryhard/arrays/CalendarMatching/transcript.md) |
 | veryhard / arrays / Line Through Points | 1:05 | [mp4](algoexpert/veryhard/arrays/LineThroughPoints/lecture.mp4) | [pdf](algoexpert/veryhard/arrays/LineThroughPoints/slides.pdf) | [md](algoexpert/veryhard/arrays/LineThroughPoints/transcript.md) |

@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Try all placements → C(n², n)",
+    "Backtracking row by row with sets → O(n!)",
+    "Bitmasks make checks O(1)"
+   ],
+   "narration": "Trying every placement is hopeless. Backtracking one row at a time with blocked sets prunes hard; bitmasks make it very fast."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Recurse row by row",
@@ -37,13 +47,68 @@
    "narration": "Step by step. First, recurse row by row. Second, try each free column. Third, mark column and diagonals. Fourth, count full placements."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "one queen per row",
+      "bitmasks: used columns, ↘ diagonals, ↙ diagonals"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Place row by row with bitmasks",
+   "narration": "Place one queen per row. Three bitmasks track blocked columns and both diagonals.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "free = ~(cols | d1 | d2) & full",
+      "take lowest bit, recurse with shifted diagonals"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Iterate over free columns",
+   "narration": "Free positions are the bits not blocked. Take each lowest set bit, recurse, shifting the diagonal masks for the next row.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "n=4 → 2 solutions",
+      "n=8 → 92"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Results",
+   "narration": "For four queens there are two solutions; for eight, ninety-two.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class NonAttackingQueens {\n    public static int nonAttackingQueens(int n) { return place(n, 0, 0, 0, 0); }\n\n    private static int place(int n, int row, int cols, int d1, int d2) {\n        if (row == n) return 1;\n        int count = 0;\n        int free = ~(cols | d1 | d2) & ((1 << n) - 1);\n        while (free != 0) {\n            int bit = free & -free;\n            free -= bit;\n            count += place(n, row + 1, cols | bit, (d1 | bit) << 1, (d2 | bit) >> 1);\n        }\n        return count;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "NonAttackingQueens.java",
-   "narration": "Here's the Java solution, starting with non attacking queens. It follows the steps we just described."
+   "narration": "Place returns one when all rows are filled. Otherwise it loops over free bits, recursing with the column added and diagonals shifted left and right."
   },
   {
    "kind": "bullets",
@@ -53,6 +118,24 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n factorial. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Shift diagonals each row",
+    "Mask to n bits",
+    "n = 2, 3 → 0"
+   ],
+   "narration": "Mask to n bits after shifting."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention symmetry pruning"
+   ],
+   "narration": "Mirror symmetry halves the work."
   },
   {
    "kind": "bullets",

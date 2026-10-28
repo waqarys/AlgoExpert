@@ -27,6 +27,15 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "BFS level order with a queue → O(n) time, O(w) space",
+    "Recursive with parent sibling pointers → O(h)"
+   ],
+   "narration": "Level-order processing is straightforward and linear. The recursive version uses the parent's new sibling pointer to reach cousins, saving space."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Recurse with parent and side",
@@ -37,13 +46,103 @@
    "narration": "Step by step. First, recurse with parent and side. Second, save the old right child. Third, set right to the sibling. Fourth, recurse on children."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       null,
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {},
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Point every node's right to its right neighbour",
+   "narration": "Rewire every node so its right pointer points to the next node on the same level.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "level 1: 1 → null",
+      "level 2: 2 → 3 → null",
+      "level 3: 4 → 5 → 6 → 7 → null"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Process level by level",
+   "narration": "Gather each level's nodes first, from the old pointers, then rewire right pointers along the level.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "children collected before rewiring → no data lost"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Collect children before rewiring",
+   "narration": "Collecting the next level before overwriting right pointers is what keeps the right children reachable.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class RightSiblingTree {\n    public static BinaryTree rightSiblingTree(BinaryTree root) {\n        java.util.List<BinaryTree> level = java.util.List.of(root);\n        while (!level.isEmpty()) {\n            java.util.List<BinaryTree> next = new java.util.ArrayList<>();\n            for (BinaryTree n : level) { if (n.left != null) next.add(n.left); if (n.right != null) next.add(n.right); }\n            for (int i = 0; i < level.size(); i++) level.get(i).right = i + 1 < level.size() ? level.get(i + 1) : null;\n            level = next;\n        }\n        return root;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "RightSiblingTree.java",
-   "narration": "Here's the Java solution, starting with right sibling tree. It follows the steps we just described."
+   "narration": "We build each next level from the current level's children, then set each node's right to the following node in the level."
   },
   {
    "kind": "bullets",
@@ -53,6 +152,24 @@
     "Space: O(1) (iterative, besides an original-children snapshot per level)"
    ],
    "narration": "Time is O of n. Space is constant (iterative, besides an original-children snapshot per level)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Don't lose right children while rewiring",
+    "Last node on a level → null",
+    "Missing children"
+   ],
+   "narration": "Grab the children before you overwrite right."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention the O(1)-space recursive approach"
+   ],
+   "narration": "Mention the recursive variant."
   },
   {
    "kind": "bullets",

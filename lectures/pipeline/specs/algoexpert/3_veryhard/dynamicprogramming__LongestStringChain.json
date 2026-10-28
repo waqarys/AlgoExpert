@@ -27,6 +27,15 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Compare all pairs for one-deletion → O(n² · L)",
+    "Sort by length + hash map, try each deletion → O(n · L²)"
+   ],
+   "narration": "Comparing every pair is quadratic in the number of strings. Sorting by length and trying each single deletion with a hash map is n times L squared."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Sort by length",
@@ -37,13 +46,84 @@
    "narration": "Step by step. First, sort by length. Second, for each string, try removing each character. Third, look up the result. Fourth, keep best lengths and next links."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "ae",
+       1
+      ],
+      [
+       "abc",
+       1
+      ],
+      [
+       "abd",
+       1
+      ],
+      [
+       "ade",
+       2
+      ],
+      [
+       "abde",
+       3
+      ],
+      [
+       "abcde",
+       4
+      ],
+      [
+       "1abde",
+       4
+      ],
+      [
+       "abcdef",
+       5
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "string (by length)",
+      "chain length"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Process by length; try deleting each char",
+   "narration": "Sort by length. For each string, delete each character in turn; if the shorter string exists, extend its chain.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "abcdef → abcde → abde → ade → ae"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Longest chain: 5",
+   "narration": "The longest chain is abcdef, abcde, abde, ade, ae.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LongestStringChain {\n    public static List<String> longestStringChain(List<String> strings) {\n        List<String> sorted = new ArrayList<>(strings);\n        sorted.sort(Comparator.comparingInt(String::length));\n        Map<String, Integer> len = new HashMap<>();\n        Map<String, String> next = new HashMap<>();\n        String bestStart = null;\n        for (String s : sorted) {\n            len.put(s, 1);\n            for (int i = 0; i < s.length(); i++) {\n                String shorter = s.substring(0, i) + s.substring(i + 1);\n                if (len.containsKey(shorter) && len.get(shorter) + 1 > len.get(s)) { len.put(s, len.get(shorter) + 1); next.put(s, shorter); }\n            }\n            if (bestStart == null || len.get(s) > len.get(bestStart)) bestStart = s;\n        }\n        List<String> out = new ArrayList<>();\n        if (bestStart == null || len.get(bestStart) < 2) return out;\n        for (String s = bestStart; s != null; s = next.get(s)) out.add(s);\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LongestStringChain.java",
-   "narration": "Here's the Java solution, starting with longest string chain. It follows the steps we just described."
+   "narration": "We sort by length; each string starts at length one, and for each deletion that exists we extend and remember the link. Then we follow links from the best start."
   },
   {
    "kind": "bullets",
@@ -53,6 +133,24 @@
     "Space: O(n * m)"
    ],
    "narration": "Time is O of n times m squared plus n log n. Space is O of n times m."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Chain must have ≥ 2 strings",
+    "Track next for reconstruction",
+    "Duplicates"
+   ],
+   "narration": "A single string isn't a chain; return empty if the best is one."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Relate to LIS"
+   ],
+   "narration": "It's longest increasing subsequence on a different relation."
   },
   {
    "kind": "bullets",

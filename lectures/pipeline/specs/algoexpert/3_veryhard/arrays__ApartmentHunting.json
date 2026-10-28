@@ -28,6 +28,15 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "For each block, scan all blocks for each req → O(b² · r)",
+    "Two sweeps per requirement → O(b · r)"
+   ],
+   "narration": "Scanning outward from every block is quadratic. Two linear sweeps per requirement give nearest distances, so the whole thing is blocks times requirements."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. For each requirement, sweep left to right and right to left",
@@ -38,13 +47,123 @@
    "narration": "Step by step. First, for each requirement, sweep left to right and right to left. Second, store min distances. Third, for each block, take the max over requirements. Fourth, pick the block with the smallest max."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "gym",
+       1,
+       0,
+       0,
+       1,
+       2
+      ],
+      [
+       "school",
+       0,
+       1,
+       0,
+       0,
+       0
+      ],
+      [
+       "store",
+       4,
+       3,
+       2,
+       1,
+       0
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "req",
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Distance to nearest requirement, per block",
+   "narration": "For each requirement, two sweeps, left to right and right to left, give every block's distance to the nearest one.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "gym",
+       1,
+       0,
+       0,
+       1,
+       2
+      ],
+      [
+       "school",
+       0,
+       1,
+       0,
+       0,
+       0
+      ],
+      [
+       "store",
+       4,
+       3,
+       2,
+       1,
+       0
+      ],
+      [
+       "worst",
+       4,
+       3,
+       2,
+       1,
+       2
+      ]
+     ],
+     "hl": {
+      "3,4": "ok"
+     },
+     "rowh": null,
+     "colh": [
+      "req",
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Worst-case per block; minimum at block 3",
+   "narration": "Each block's score is its farthest requirement. The minimum, 1, is at block 3.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ApartmentHunting {\n    public static int apartmentHunting(List<Map<String, Boolean>> blocks, String[] reqs) {\n        int n = blocks.size();\n        int[] worst = new int[n];\n        for (String r : reqs) {\n            int[] d = new int[n];\n            int last = -1_000_000;\n            for (int i = 0; i < n; i++) { if (blocks.get(i).getOrDefault(r, false)) last = i; d[i] = i - last; }\n            last = 2_000_000;\n            for (int i = n - 1; i >= 0; i--) { if (blocks.get(i).getOrDefault(r, false)) last = i; d[i] = Math.min(d[i], last - i); }\n            for (int i = 0; i < n; i++) worst[i] = Math.max(worst[i], d[i]);\n        }\n        int best = 0;\n        for (int i = 1; i < n; i++) if (worst[i] < worst[best]) best = i;\n        return best;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ApartmentHunting.java",
-   "narration": "Here's the Java solution, starting with apartment hunting. It follows the steps we just described."
+   "narration": "For each requirement, the forward sweep tracks the last block with it and the backward sweep the next one; each block keeps the min, and worst keeps the max across requirements. Return the index of the smallest worst."
   },
   {
    "kind": "bullets",
@@ -54,6 +173,24 @@
     "Space: O(b*r)"
    ],
    "narration": "Time is O of b times r. Space is O of b times r."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Requirement missing everywhere",
+    "Ties → any index",
+    "Use large sentinels"
+   ],
+   "narration": "Use large sentinel distances before the first occurrence."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain min of max"
+   ],
+   "narration": "Frame it as minimising the maximum distance."
   },
   {
    "kind": "bullets",

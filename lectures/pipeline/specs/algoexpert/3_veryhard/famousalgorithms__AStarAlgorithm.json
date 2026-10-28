@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "BFS explores uniformly → many cells",
+    "Dijkstra (h = 0)",
+    "A* with admissible heuristic → far fewer expansions"
+   ],
+   "narration": "BFS and Dijkstra explore in all directions. A star adds a heuristic that pulls the search toward the goal while staying optimal if it never overestimates."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Open set ordered by f equals g plus h",
@@ -37,13 +47,67 @@
    "narration": "Step by step. First, open set ordered by f equals g plus h. Second, expand the best node. Third, update neighbours' g. Fourth, rebuild the path when reaching the end."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "f = g + h",
+      "g: steps from start; h: Manhattan distance to end"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Priority = cost so far + heuristic",
+   "narration": "A star orders the frontier by f, the cost so far plus a heuristic estimate to the goal; here Manhattan distance.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "expand lowest f; skip walls (1)",
+      "update g if a shorter path is found"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Expand the most promising cell",
+   "narration": "Pop the cell with the lowest f, relax its four neighbours, skipping walls, and push improvements.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "reach end → follow 'from' pointers back",
+      "return the path; unreachable → []"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Rebuild the path",
+   "narration": "When we pop the end, follow back-pointers to rebuild the path.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class AStarAlgorithm {\n    public static int[][] aStarAlgorithm(int startRow, int startCol, int endRow, int endCol, int[][] graph) {\n        int R = graph.length, C = graph[0].length;\n        int[][] g = new int[R][C];\n        for (int[] row : g) Arrays.fill(row, Integer.MAX_VALUE);\n        int[][] from = new int[R * C][];\n        PriorityQueue<int[]> open = new PriorityQueue<>(Comparator.comparingInt(x -> x[2]));\n        g[startRow][startCol] = 0;\n        open.add(new int[]{startRow, startCol, h(startRow, startCol, endRow, endCol)});\n        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n        while (!open.isEmpty()) {\n            int[] cur = open.poll();\n            int r = cur[0], c = cur[1];\n            if (r == endRow && c == endCol) {\n                LinkedList<int[]> path = new LinkedList<>();\n                for (int[] p = {r, c}; p != null; p = from[p[0] * C + p[1]]) path.addFirst(p);\n                return path.toArray(new int[0][]);\n            }\n            if (cur[2] > g[r][c] + h(r, c, endRow, endCol)) continue;\n            for (int[] d : dirs) {\n                int nr = r + d[0], nc = c + d[1];\n                if (nr < 0 || nc < 0 || nr >= R || nc >= C || graph[nr][nc] == 1) continue;",
    "lang": "java",
    "font_size": 26,
    "filename": "AStarAlgorithm_part1.java",
-   "narration": "Here's the Java solution, starting with a star algorithm. It follows the steps we just described."
+   "narration": "We set g to max, push the start with its heuristic, and loop: pop, stop at the end, and for each open neighbour with a better g, update it, record from, and push with g plus h. Then rebuild the path."
   },
   {
    "kind": "code",
@@ -52,7 +116,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "AStarAlgorithm_part2.java",
-   "narration": "Continuing with h."
+   "narration": "We set g to max, push the start with its heuristic, and loop: pop, stop at the end, and for each open neighbour with a better g, update it, record from, and push with g plus h. Then rebuild the path."
   },
   {
    "kind": "bullets",
@@ -62,6 +126,24 @@
     "Space: O(w*h)"
    ],
    "narration": "Time is O of w times h log(w times h). Space is O of w times h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Heuristic must be admissible",
+    "Skip stale entries",
+    "Unreachable → []"
+   ],
+   "narration": "Manhattan distance is admissible on a four-direction grid."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Compare with Dijkstra"
+   ],
+   "narration": "Dijkstra is A star with a zero heuristic."
   },
   {
    "kind": "bullets",

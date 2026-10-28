@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Collect both leaf lists, compare → O(n + m) space",
+    "Lazy stacks → O(h1 + h2) space, early exit",
+    "Or link leaves in place"
+   ],
+   "narration": "Collecting both leaf lists works but uses linear space. Lazy generation with stacks uses only height space and can stop early."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Iterator per tree with a stack",
@@ -37,13 +47,66 @@
    "narration": "Step by step. First, iterator per tree with a stack. Second, advance to the next leaf. Third, compare values. Fourth, both must end together."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "tree 1 leaves: 4, 7, 8, 6",
+      "tree 2 leaves: 4, 7, 8, 6"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Compare leaves left to right",
+   "narration": "Two trees match if their leaves, read left to right, are the same sequence.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "two stacks: pop until a leaf; push right then left",
+      "compare one leaf at a time"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Generate leaves lazily with stacks",
+   "narration": "Use one stack per tree to produce the next leaf on demand, and compare leaf by leaf, stopping at the first mismatch.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "4 = 4, 7 = 7, 8 = 8, 6 = 6, both done → true"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "All equal → true",
+   "narration": "All four leaves match, and both run out together, so it's true.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class CompareLeafTraversal {\n    public static boolean compareLeafTraversal(BinaryTree a, BinaryTree b) {\n        ArrayDeque<BinaryTree> sa = new ArrayDeque<>(), sb = new ArrayDeque<>();\n        sa.push(a); sb.push(b);\n        while (true) {\n            BinaryTree la = nextLeaf(sa), lb = nextLeaf(sb);\n            if (la == null || lb == null) return la == lb;\n            if (la.value != lb.value) return false;\n        }\n    }\n\n    private static BinaryTree nextLeaf(ArrayDeque<BinaryTree> st) {\n        while (!st.isEmpty()) {\n            BinaryTree n = st.pop();\n            if (n.left == null && n.right == null) return n;\n            if (n.right != null) st.push(n.right);\n            if (n.left != null) st.push(n.left);\n        }\n        return null;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "CompareLeafTraversal.java",
-   "narration": "Here's the Java solution, starting with compare leaf traversal. It follows the steps we just described."
+   "narration": "Next leaf pops nodes, pushing right then left children, until it pops a leaf. The main loop compares leaves until either runs out, returning true only if both run out together."
   },
   {
    "kind": "bullets",
@@ -53,6 +116,24 @@
     "Space: O(h1 + h2)"
    ],
    "narration": "Time is O of n plus m. Space is O of h1 plus h2."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Different number of leaves → false",
+    "Single-node trees",
+    "Push right before left"
+   ],
+   "narration": "Push right before left so leaves come out left to right."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention early termination"
+   ],
+   "narration": "Point out the early exit on mismatch."
   },
   {
    "kind": "bullets",

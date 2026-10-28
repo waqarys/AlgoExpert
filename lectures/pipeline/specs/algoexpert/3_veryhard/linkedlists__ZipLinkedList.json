@@ -26,6 +26,15 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Array of nodes, two pointers → O(n) space",
+    "Middle + reverse + merge → O(1)"
+   ],
+   "narration": "Storing nodes in an array is simple but uses space. Find the middle, reverse the second half, and interleave in place."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Find the middle",
@@ -35,13 +44,100 @@
    "narration": "Step by step. First, find the middle. Second, reverse the second half. Third, alternate nodes from both halves."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+     ],
+     "ptr": {
+      "mid": 2
+     },
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Find the middle",
+   "narration": "Find the middle with slow and fast pointers.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      2,
+      3
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "first",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      6,
+      5,
+      4
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "second reversed",
+     "h": 1
+    }
+   ],
+   "caption": "Split and reverse the second half",
+   "narration": "Split there and reverse the second half.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      6,
+      2,
+      5,
+      3,
+      4
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Interleave",
+   "narration": "Interleave the two halves: one, six, two, five, three, four.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ZipLinkedList {\n    public static LinkedListNode zipLinkedList(LinkedListNode head) {\n        if (head == null || head.next == null) return head;\n        LinkedListNode slow = head, fast = head;\n        while (fast.next != null && fast.next.next != null) { slow = slow.next; fast = fast.next.next; }\n        LinkedListNode second = slow.next, prev = null;\n        slow.next = null;\n        while (second != null) { LinkedListNode n = second.next; second.next = prev; prev = second; second = n; }\n        LinkedListNode a = head, b = prev;\n        while (b != null) {\n            LinkedListNode an = a.next, bn = b.next;\n            a.next = b; b.next = an;\n            a = an; b = bn;\n        }\n        return head;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ZipLinkedList.java",
-   "narration": "Here's the Java solution, starting with zip linked list. It follows the steps we just described."
+   "narration": "We find the middle, cut, reverse the second half, then alternate links from each half."
   },
   {
    "kind": "bullets",
@@ -51,6 +147,24 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Cut the first half's tail",
+    "Odd lengths",
+    "Short lists"
+   ],
+   "narration": "Cut the first half's tail, or you'll create a cycle."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same as Reorder List"
+   ],
+   "narration": "This is reorder list."
   },
   {
    "kind": "bullets",

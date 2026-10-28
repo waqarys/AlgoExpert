@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Try all cycles → exponential",
+    "−log weights + Bellman–Ford → O(n³)",
+    "Floating-point tolerance"
+   ],
+   "narration": "Trying all cycles is exponential. Converting to minus log weights and detecting a negative cycle with Bellman-Ford is n cubed for a complete graph."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Weights are minus log of the rate",
@@ -36,13 +46,93 @@
    "narration": "Step by step. First, weights are minus log of the rate. Second, relax all edges n minus one times. Third, if any edge still relaxes, there's arbitrage."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       0.8631,
+       0.5903
+      ],
+      [
+       1.1586,
+       1,
+       0.6849
+      ],
+      [
+       1.6939,
+       1.46,
+       1
+      ]
+     ],
+     "hl": {},
+     "rowh": [
+      "USD",
+      "CAD",
+      "GBP"
+     ],
+     "colh": [
+      "",
+      "USD",
+      "CAD",
+      "GBP"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Exchange rates",
+   "narration": "Is there a cycle of trades that multiplies money above one?",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "product > 1 ⇔ Σ −log(rate) < 0",
+      "→ negative cycle detection"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Take −log: product > 1 becomes a negative cycle",
+   "narration": "Taking minus log turns multiplication into addition, and a product above one into a negative-weight cycle.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "USD→CAD→GBP→USD: 1.0013 > 1 ✓",
+      "Bellman–Ford still relaxing after n−1 passes → true"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Bellman–Ford finds it",
+   "narration": "Bellman-Ford keeps improving after n minus one passes, so there's a negative cycle: arbitrage. For example, USD to CAD to GBP and back gives 1.0013.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class DetectArbitrage {\n    public static boolean detectArbitrage(double[][] rates) {\n        int n = rates.length;\n        double[] dist = new double[n];\n        java.util.Arrays.fill(dist, Double.MAX_VALUE);\n        dist[0] = 0;\n        for (int it = 0; it < n; it++) {\n            boolean changed = false;\n            for (int u = 0; u < n; u++) for (int v = 0; v < n; v++) {\n                double w = -Math.log(rates[u][v]);\n                if (dist[u] + w < dist[v] - 1e-12) { dist[v] = dist[u] + w; changed = true; }\n            }\n            if (!changed) return false;\n        }\n        return true;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "DetectArbitrage.java",
-   "narration": "Here's the Java solution, starting with detect arbitrage. It follows the steps we just described."
+   "narration": "Distances start at max except zero. We relax every pair n times with minus log rates; if anything still changes on the last pass, return true."
   },
   {
    "kind": "bullets",
@@ -52,6 +142,24 @@
     "Space: O(n^2)"
    ],
    "narration": "Time is O of n cubed. Space is O of n squared."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Use an epsilon",
+    "Complete graph → n³",
+    "Start from any node"
+   ],
+   "narration": "Use a small epsilon in comparisons."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain the log transform"
+   ],
+   "narration": "The log transform is the key insight."
   },
   {
    "kind": "bullets",

@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Swap values → not allowed",
+    "Recursion → O(n) stack",
+    "Iterative with dummy → O(1)"
+   ],
+   "narration": "Swapping values is usually disallowed. Relinking pairs with a dummy head is constant space."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Dummy before head",
@@ -35,13 +45,122 @@
    "narration": "Step by step. First, dummy before head. Second, for each pair, rewire previous, first and second. Third, advance by two."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "ptr": {},
+     "hl": {
+      "0": "cur",
+      "1": "cur"
+     },
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "After 0 swaps",
+   "narration": "After 0 swaps. Next, swap 0 and 1 by relinking.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      0,
+      2,
+      3,
+      4,
+      5
+     ],
+     "ptr": {},
+     "hl": {
+      "2": "cur",
+      "3": "cur"
+     },
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "After 1 swaps",
+   "narration": "After 1 swaps. Next, swap 2 and 3 by relinking.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      0,
+      3,
+      2,
+      4,
+      5
+     ],
+     "ptr": {},
+     "hl": {
+      "4": "cur",
+      "5": "cur"
+     },
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "After 2 swaps",
+   "narration": "After 2 swaps. Next, swap 4 and 5 by relinking.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      0,
+      3,
+      2,
+      5,
+      4
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "After 3 swaps",
+   "narration": "After 3 swaps. Done.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class NodeSwap {\n    public static LinkedListNode nodeSwap(LinkedListNode head) {\n        LinkedListNode dummy = new LinkedListNode(0);\n        dummy.next = head;\n        LinkedListNode p = dummy;\n        while (p.next != null && p.next.next != null) {\n            LinkedListNode a = p.next, b = a.next;\n            a.next = b.next; b.next = a; p.next = b;\n            p = a;\n        }\n        return dummy.next;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "NodeSwap.java",
-   "narration": "Here's the Java solution, starting with node swap. It follows the steps we just described."
+   "narration": "With p at the dummy, while two nodes follow, we relink a and b: a's next to b's next, b's next to a, p's next to b, then move p to a."
   },
   {
    "kind": "bullets",
@@ -51,6 +170,23 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Odd length leaves last node",
+    "Return dummy.next"
+   ],
+   "narration": "An odd final node stays put."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: reverse in k-groups"
+   ],
+   "narration": "Generalises to reversing in groups of k."
   },
   {
    "kind": "bullets",

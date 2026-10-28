@@ -27,6 +27,15 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Greedy: repeatedly add route to largest unreachable set → O(V·(V+E))",
+    "SCC condensation + count zero in-degree → O(V + E)"
+   ],
+   "narration": "The greedy approach repeatedly searches. Condensing strongly connected components with Tarjan and counting sources is linear."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Find unreachable airports",
@@ -37,13 +46,67 @@
    "narration": "Step by step. First, find unreachable airports. Second, for each, count airports reachable only through it. Third, sort by that count. Fourth, greedily connect."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "airports + one-way routes; start LGA",
+      "goal: fewest new routes so every airport is reachable"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Fewest new routes from the start",
+   "narration": "We want the fewest extra one-way routes so every airport is reachable from the start.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "collapse strongly connected components",
+      "→ a DAG of components"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Collapse SCCs",
+   "narration": "First collapse strongly connected components, since airports inside one can already reach each other.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "count components with no incoming edge",
+      "(excluding the start's component) → answer"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Answer = sources other than start",
+   "narration": "In the component DAG, every component with no incoming edge, other than the start's, needs exactly one new route.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/3)",
    "code": "public class AirportConnections {\n    public static int airportConnections(List<String> airports, List<List<String>> routes, String start) {\n        Map<String, List<String>> g = new HashMap<>();\n        for (String a : airports) g.put(a, new ArrayList<>());\n        for (List<String> r : routes) g.get(r.get(0)).add(r.get(1));\n        Map<String, Integer> comp = tarjan(airports, g);\n        Set<Integer> hasIncoming = new HashSet<>();\n        for (List<String> r : routes) {\n            int a = comp.get(r.get(0)), b = comp.get(r.get(1));\n            if (a != b) hasIncoming.add(b);\n        }\n        Set<Integer> all = new HashSet<>(comp.values());\n        int count = 0;\n        for (int c : all) if (!hasIncoming.contains(c) && c != comp.get(start)) count++;\n        return count;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "AirportConnections_part1.java",
-   "narration": "Here's the Java solution, starting with airport connections. It follows the steps we just described."
+   "narration": "We build the graph, label components with Tarjan, mark components with incoming cross edges, and count the rest, excluding the start's."
   },
   {
    "kind": "code",
@@ -52,7 +115,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "AirportConnections_part2.java",
-   "narration": "Continuing with tarjan."
+   "narration": "We build the graph, label components with Tarjan, mark components with incoming cross edges, and count the rest, excluding the start's."
   },
   {
    "kind": "code",
@@ -61,7 +124,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "AirportConnections_part3.java",
-   "narration": "Continuing with strong."
+   "narration": "We build the graph, label components with Tarjan, mark components with incoming cross edges, and count the rest, excluding the start's."
   },
   {
    "kind": "bullets",
@@ -71,6 +134,24 @@
     "Space: O(a + r)"
    ],
    "narration": "Time is O of a plus r. Space is O of a plus r."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Exclude start's component",
+    "Self-loops",
+    "Already all reachable → 0"
+   ],
+   "narration": "Don't count the start's own component."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why sources suffice"
+   ],
+   "narration": "Explain why each source needs exactly one edge and that's enough."
   },
   {
    "kind": "bullets",

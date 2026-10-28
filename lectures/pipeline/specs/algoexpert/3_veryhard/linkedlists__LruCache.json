@@ -27,6 +27,15 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "List with linear search → O(n) ops",
+    "Hash map + doubly linked list → O(1) all ops"
+   ],
+   "narration": "A list needs a scan to find and move keys. A hash map pointing into a doubly linked list gives constant-time lookup, move-to-front and eviction."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Map keys to nodes",
@@ -37,13 +46,160 @@
    "narration": "Step by step. First, map keys to nodes. Second, move accessed nodes to the head. Third, evict the tail at capacity. Fourth, most recent key is the head."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      "b:2"
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "most → least recent",
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "put(b, 2)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "put b",
+   "narration": "Insert b and move it to the front.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      "a:1",
+      "b:2"
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "most → least recent",
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "put(a, 1)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "put a",
+   "narration": "Insert a and move it to the front.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      "c:3",
+      "a:1",
+      "b:2"
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "most → least recent",
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "put(c, 3)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "put c",
+   "narration": "Insert c and move it to the front.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      "a:1",
+      "c:3",
+      "b:2"
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "most → least recent",
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "get(a)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "get a",
+   "narration": "Read a and move it to the front.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      "d:4",
+      "a:1",
+      "c:3"
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "most → least recent",
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "put(d, 4) → evict b"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "put d, evict b",
+   "narration": "Insert d and move it to the front. Over capacity, so evict the least recent, b.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class LruCache {\n    private static class Node { String key; int value; Node prev, next; Node(String k, int v) { key = k; value = v; } }\n\n    private final int capacity;\n    private final Map<String, Node> map = new HashMap<>();\n    private final Node head = new Node(null, 0), tail = new Node(null, 0);\n\n    public LruCache(int capacity) {\n        this.capacity = Math.max(1, capacity);\n        head.next = tail; tail.prev = head;\n    }\n\n    public void insertKeyValuePair(String key, int value) {\n        Node n = map.get(key);\n        if (n != null) { n.value = value; moveToFront(n); return; }\n        if (map.size() == capacity) { Node lru = tail.prev; unlink(lru); map.remove(lru.key); }\n        n = new Node(key, value);\n        map.put(key, n);\n        addFront(n);\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "LruCache_part1.java",
-   "narration": "Here's the Java solution, starting with lru cache. It follows the steps we just described."
+   "narration": "Insert updates and moves an existing node, otherwise evicts the tail's previous node if full and adds a new node at the front. Get moves the node to the front and returns its value."
   },
   {
    "kind": "code",
@@ -52,7 +208,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "LruCache_part2.java",
-   "narration": "Continuing with get value from key, get most recent key, move to front."
+   "narration": "Insert updates and moves an existing node, otherwise evicts the tail's previous node if full and adds a new node at the front. Get moves the node to the front and returns its value."
   },
   {
    "kind": "bullets",
@@ -62,6 +218,24 @@
     "Space: O(capacity)"
    ],
    "narration": "Time is constant per op. Space is O of capacity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Update existing key moves it to front",
+    "Capacity ≥ 1",
+    "Sentinel head/tail"
+   ],
+   "narration": "Updating an existing key also refreshes it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention LinkedHashMap"
+   ],
+   "narration": "Java's linked hash map can do this with access order."
   },
   {
    "kind": "bullets",

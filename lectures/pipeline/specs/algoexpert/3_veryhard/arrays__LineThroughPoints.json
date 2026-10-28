@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Every pair defines a line, count points on it → O(n³)",
+    "Anchor + slope hash map → O(n²)",
+    "Reduce slopes by gcd to avoid floats"
+   ],
+   "narration": "Checking each pair's line against every point is cubic. Anchoring at each point and grouping the others by slope is quadratic."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. For each anchor, map slopes to counts",
@@ -36,13 +46,154 @@
    "narration": "Step by step. First, for each anchor, map slopes to counts. Second, normalise slopes with gcd and sign. Third, track the largest count plus one."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "1/1",
+       2
+      ],
+      [
+       "-3/1",
+       1
+      ],
+      [
+       "-5/3",
+       1
+      ],
+      [
+       "-1/3",
+       1
+      ],
+      [
+       "0/1",
+       1
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "slope dy/dx",
+      "points"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "anchor (1, 1): best line has 3 points",
+      "overall best 3"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Anchor (1, 1)",
+   "narration": "Anchor at (1, 1): group the other points by reduced slope. The biggest group plus the anchor gives 3 points on one line. Best so far 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "1/1",
+       1
+      ],
+      [
+       "-1/1",
+       3
+      ],
+      [
+       "1/0",
+       1
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "slope dy/dx",
+      "points"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "anchor (2, 2): best line has 4 points",
+      "overall best 4"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Anchor (2, 2)",
+   "narration": "Anchor at (2, 2): group the other points by reduced slope. The biggest group plus the anchor gives 4 points on one line. Best so far 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "-1/3",
+       1
+      ],
+      [
+       "-3/5",
+       1
+      ],
+      [
+       "-3/1",
+       1
+      ],
+      [
+       "2/1",
+       1
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "slope dy/dx",
+      "points"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "anchor (3, 3): best line has 2 points",
+      "overall best 4"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Anchor (3, 3)",
+   "narration": "Anchor at (3, 3): group the other points by reduced slope. The biggest group plus the anchor gives 2 points on one line. Best so far 4.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LineThroughPoints {\n    public static int lineThroughPoints(int[][] points) {\n        int best = Math.min(points.length, 1);\n        for (int i = 0; i < points.length; i++) {\n            Map<String, Integer> slopes = new HashMap<>();\n            for (int j = i + 1; j < points.length; j++) {\n                int dx = points[j][0] - points[i][0], dy = points[j][1] - points[i][1];\n                int g = gcd(Math.abs(dx), Math.abs(dy));\n                dx /= g; dy /= g;\n                if (dx < 0 || (dx == 0 && dy < 0)) { dx = -dx; dy = -dy; }\n                best = Math.max(best, slopes.merge(dx + \"/\" + dy, 1, Integer::sum) + 1);\n            }\n        }\n        return best;\n    }\n\n    private static int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LineThroughPoints.java",
-   "narration": "Here's the Java solution, starting with line through points. It follows the steps we just described."
+   "narration": "For each anchor, we compute reduced dx and dy to every later point, normalise the sign, count in a map, and track the best count plus one."
   },
   {
    "kind": "bullets",
@@ -52,6 +203,24 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n squared. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Use reduced (dx, dy), not floats",
+    "Normalise sign",
+    "Vertical lines"
+   ],
+   "narration": "Floating-point slopes are risky; use reduced integer pairs with normalised signs."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention duplicates handling"
+   ],
+   "narration": "If duplicates are allowed, count them separately."
   },
   {
    "kind": "bullets",

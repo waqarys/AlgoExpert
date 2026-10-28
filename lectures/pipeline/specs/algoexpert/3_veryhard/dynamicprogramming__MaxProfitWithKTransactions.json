@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Try all buy/sell combos → exponential",
+    "DP[t][d] with inner loop → O(k·n²)",
+    "Track best buy → O(k·n), two rows"
+   ],
+   "narration": "The naive DP checks every buy day for every sell day. Tracking the best value of previous profit minus price makes each row linear."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Rows for transactions, columns for days",
@@ -36,13 +46,159 @@
    "narration": "Step by step. First, rows for transactions, columns for days. Second, carry max of previous row minus price. Third, profit is max of skip or sell today. Fourth, two rows suffice."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      11,
+      3,
+      50,
+      60,
+      90
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "prices",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Prices; k = 2",
+   "narration": "Prices five, eleven, three, fifty, sixty, ninety; at most two transactions.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       6,
+       6,
+       47,
+       57,
+       87
+      ]
+     ],
+     "hl": {
+      "1,5": "ok"
+     },
+     "rowh": [
+      "0 tx",
+      "1 tx"
+     ],
+     "colh": [
+      "",
+      5,
+      11,
+      3,
+      50,
+      60,
+      90
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "best with 1 transactions: 87"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "1 transaction(s): 87",
+   "narration": "Row 1: the best profit by each day using at most 1 transactions. By the last day it's 87.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       6,
+       6,
+       47,
+       57,
+       87
+      ],
+      [
+       0,
+       6,
+       6,
+       53,
+       63,
+       93
+      ]
+     ],
+     "hl": {
+      "2,5": "ok"
+     },
+     "rowh": [
+      "0 tx",
+      "1 tx",
+      "2 tx"
+     ],
+     "colh": [
+      "",
+      5,
+      11,
+      3,
+      50,
+      60,
+      90
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "best with 2 transactions: 93"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "2 transaction(s): 93",
+   "narration": "Row 2: the best profit by each day using at most 2 transactions. By the last day it's 93.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MaxProfitWithKTransactions {\n    public static int maxProfitWithKTransactions(int[] prices, int k) {\n        if (prices.length == 0) return 0;\n        int[] prev = new int[prices.length], cur = new int[prices.length];\n        for (int t = 1; t <= k; t++) {\n            int bestBuy = Integer.MIN_VALUE;\n            for (int d = 0; d < prices.length; d++) {\n                bestBuy = Math.max(bestBuy, prev[d] - prices[d]);\n                cur[d] = Math.max(d > 0 ? cur[d - 1] : 0, bestBuy + prices[d]);\n            }\n            int[] tmp = prev; prev = cur; cur = tmp;\n        }\n        return prev[prices.length - 1];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MaxProfitWithKTransactions.java",
-   "narration": "Here's the Java solution, starting with max profit with k transactions. It follows the steps we just described."
+   "narration": "For each transaction count, we sweep days, updating best buy with prev profit minus price, and cur as the max of yesterday or selling today. Then swap rows."
   },
   {
    "kind": "bullets",
@@ -52,6 +208,24 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n times k. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "k ≥ n/2 → unlimited transactions",
+    "Empty prices → 0",
+    "Rolling rows"
+   ],
+   "narration": "If k is at least half the days, it's the unlimited case."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain bestBuy"
+   ],
+   "narration": "Explain best buy as the max of prior profit minus price."
   },
   {
    "kind": "bullets",

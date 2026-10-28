@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Naive matching → O(n·m)",
+    "KMP → O(n + m)",
+    "Failure table avoids re-scanning"
+   ],
+   "narration": "Naive matching can rescan the same text many times. KMP's failure table lets the text pointer only move forward, linear overall."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Build the prefix function of the pattern",
@@ -37,13 +47,89 @@
    "narration": "Step by step. First, build the prefix function of the pattern. Second, walk the text. Third, on mismatch, fall back via the table. Fourth, match when the pattern is complete."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "a",
+      "a",
+      "b",
+      "a",
+      "a",
+      "b"
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "array",
+     "values": [
+      0,
+      1,
+      0,
+      1,
+      2,
+      3
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "failure (longest proper prefix = suffix)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Build the failure table",
+   "narration": "The failure table stores, for each prefix, the longest proper prefix that's also a suffix.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "text: aabaaxaabaab",
+      "mismatch at x → jump using fail, don't restart"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "On mismatch, fall back via the table",
+   "narration": "Scanning the text, a mismatch doesn't restart from scratch; we fall back to the failure value and keep going.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "k reaches len(sub) → found ✓"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Match found",
+   "narration": "When the matched length reaches the pattern's length, we've found it.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class KnuthMorrisPrattAlgorithm {\n    public static boolean knuthMorrisPrattAlgorithm(String str, String sub) {\n        if (sub.isEmpty()) return true;\n        int[] fail = new int[sub.length()];\n        for (int i = 1, k = 0; i < sub.length(); i++) {\n            while (k > 0 && sub.charAt(i) != sub.charAt(k)) k = fail[k - 1];\n            if (sub.charAt(i) == sub.charAt(k)) k++;\n            fail[i] = k;\n        }\n        for (int i = 0, k = 0; i < str.length(); i++) {\n            while (k > 0 && str.charAt(i) != sub.charAt(k)) k = fail[k - 1];\n            if (str.charAt(i) == sub.charAt(k)) k++;\n            if (k == sub.length()) return true;\n        }\n        return false;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "KnuthMorrisPrattAlgorithm.java",
-   "narration": "Here's the Java solution, starting with knuth morris pratt algorithm. It follows the steps we just described."
+   "narration": "We build fail with a k pointer that falls back on mismatches. Then we scan the text with the same logic, returning true when k equals the pattern length."
   },
   {
    "kind": "bullets",
@@ -53,6 +139,24 @@
     "Space: O(m)"
    ],
    "narration": "Time is O of n plus m. Space is O of m."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Empty pattern → true",
+    "Build fail with the same loop",
+    "Off-by-one in fail[k−1]"
+   ],
+   "narration": "Building the table uses the same fallback loop as matching."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention Z-algorithm / Rabin–Karp"
+   ],
+   "narration": "Mention Rabin-Karp and the Z algorithm as alternatives."
   },
   {
    "kind": "bullets",

@@ -27,6 +27,15 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Check every substring → O(n² · m)",
+    "Sliding window with need counts → O(n + m)"
+   ],
+   "narration": "Checking every substring is quadratic or worse. A sliding window with a count of missing characters is linear."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Count needed characters",
@@ -37,13 +46,66 @@
    "narration": "Step by step. First, count needed characters. Second, expand right updating coverage. Third, shrink left while still covering. Fourth, track the smallest window."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "big: abcd$ef$axb$c$",
+      "small: $$abf"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Smallest window containing all chars of small",
+   "narration": "Find the smallest substring of big containing every character of small, with multiplicity.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "expand r until nothing is missing",
+      "then shrink l while still valid"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Expand right, shrink left",
+   "narration": "Expand the right end until nothing is missing, then shrink from the left while it stays valid, recording the best.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "answer: f$axb$"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Answer: f$axb$",
+   "narration": "The smallest such window is f, dollar, a, x, b, dollar.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SmallestSubstringContaining {\n    public static String smallestSubstringContaining(String big, String small) {\n        Map<Character, Integer> need = new HashMap<>();\n        for (char c : small.toCharArray()) need.merge(c, 1, Integer::sum);\n        int missing = small.length(), l = 0, bs = 0, be = Integer.MAX_VALUE;\n        for (int r = 0; r < big.length(); r++) {\n            char c = big.charAt(r);\n            if (need.containsKey(c)) { if (need.get(c) > 0) missing--; need.merge(c, -1, Integer::sum); }\n            while (missing == 0) {\n                if (r - l < be - bs) { bs = l; be = r; }\n                char d = big.charAt(l++);\n                if (need.containsKey(d)) { need.merge(d, 1, Integer::sum); if (need.get(d) > 0) missing++; }\n            }\n        }\n        return be == Integer.MAX_VALUE ? \"\" : big.substring(bs, be + 1);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SmallestSubstringContaining.java",
-   "narration": "Here's the Java solution, starting with smallest substring containing. It follows the steps we just described."
+   "narration": "We count needs, decrement missing as r covers needed characters, and while missing is zero record the window and advance l, restoring needs."
   },
   {
    "kind": "bullets",
@@ -53,6 +115,24 @@
     "Space: O(s)"
    ],
    "narration": "Time is O of b plus s. Space is O of s."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Multiplicity matters",
+    "None → ''",
+    "Track 'missing' to avoid map scans"
+   ],
+   "narration": "Duplicates in small must be matched in count."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same as Minimum Window Substring"
+   ],
+   "narration": "This is minimum window substring."
   },
   {
    "kind": "bullets",
