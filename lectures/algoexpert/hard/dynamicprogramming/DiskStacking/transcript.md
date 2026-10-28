@@ -1,0 +1,31 @@
+# AlgoExpert · Disk Stacking
+
+Video: [lecture.mp4](lecture.mp4) · Slides: [slides.pdf](slides.pdf) · Voice: en-US-GuyNeural
+
+## 1. Disk Stacking (0:00) — `slides/01.png`
+
+Let's solve Disk Stacking, a hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity.
+
+## 2. The problem (0:12) — `slides/02.png`
+
+Here's the problem. Disks width, depth, height ; stack them so each disk is strictly smaller in all three dimensions than the one below, maximising total height. Returns the chosen disks ordered from top (smallest) to bottom (largest).
+
+## 3. Intuition (0:27) — `slides/03.png`
+
+Sort disks by height; each disk's best stack is itself on top of the best compatible stack below.
+
+## 4. Approach (0:33) — `slides/04.png`
+
+Step by step. First, sort by height. Second, for each disk, check smaller earlier disks. Third, keep the best height and a predecessor link. Fourth, rebuild the stack.
+
+## 5. Java solution (0:48) — `slides/05.png`
+
+Here's the Java solution, starting with disk stacking. It follows the steps we just described.
+
+## 6. Complexity (0:55) — `slides/06.png`
+
+Time is O of n squared. Space is O of n.
+
+## 7. Recap (1:00) — `slides/07.png`
+
+To recap Disk Stacking: Sort disks by height; each disk's best stack is itself on top of the best compatible stack below. Try re-implementing it from scratch without looking.

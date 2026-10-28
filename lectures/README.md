@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (106)
+## AlgoExpert (122)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -161,3 +161,19 @@ Built with [`pipeline/`](pipeline/README.md).
 | medium / tries / Suffix Trie Construction | 0:59 | [mp4](algoexpert/medium/tries/SuffixTrieConstruction/lecture.mp4) | [pdf](algoexpert/medium/tries/SuffixTrieConstruction/slides.pdf) | [md](algoexpert/medium/tries/SuffixTrieConstruction/transcript.md) |
 | hard / arrays / Count Squares | 1:11 | [mp4](algoexpert/hard/arrays/CountSquares/lecture.mp4) | [pdf](algoexpert/hard/arrays/CountSquares/slides.pdf) | [md](algoexpert/hard/arrays/CountSquares/transcript.md) |
 | hard / arrays / Four Number Sum | 1:11 | [mp4](algoexpert/hard/arrays/FourNumberSum/lecture.mp4) | [pdf](algoexpert/hard/arrays/FourNumberSum/slides.pdf) | [md](algoexpert/hard/arrays/FourNumberSum/transcript.md) |
+| hard / arrays / Knight Connection | 1:07 | [mp4](algoexpert/hard/arrays/KnightConnection/lecture.mp4) | [pdf](algoexpert/hard/arrays/KnightConnection/slides.pdf) | [md](algoexpert/hard/arrays/KnightConnection/transcript.md) |
+| hard / arrays / Largest Range | 0:59 | [mp4](algoexpert/hard/arrays/LargestRange/lecture.mp4) | [pdf](algoexpert/hard/arrays/LargestRange/slides.pdf) | [md](algoexpert/hard/arrays/LargestRange/transcript.md) |
+| hard / arrays / Longest Subarray With Sum | 1:02 | [mp4](algoexpert/hard/arrays/LongestSubarrayWithSum/lecture.mp4) | [pdf](algoexpert/hard/arrays/LongestSubarrayWithSum/slides.pdf) | [md](algoexpert/hard/arrays/LongestSubarrayWithSum/transcript.md) |
+| hard / arrays / Min Rewards | 1:07 | [mp4](algoexpert/hard/arrays/MinRewards/lecture.mp4) | [pdf](algoexpert/hard/arrays/MinRewards/slides.pdf) | [md](algoexpert/hard/arrays/MinRewards/transcript.md) |
+| hard / arrays / Subarray Sort | 1:01 | [mp4](algoexpert/hard/arrays/SubarraySort/lecture.mp4) | [pdf](algoexpert/hard/arrays/SubarraySort/slides.pdf) | [md](algoexpert/hard/arrays/SubarraySort/transcript.md) |
+| hard / arrays / Zigzag Traverse | 1:03 | [mp4](algoexpert/hard/arrays/ZigzagTraverse/lecture.mp4) | [pdf](algoexpert/hard/arrays/ZigzagTraverse/slides.pdf) | [md](algoexpert/hard/arrays/ZigzagTraverse/transcript.md) |
+| hard / binarysearchtrees / Repair Bst | 1:06 | [mp4](algoexpert/hard/binarysearchtrees/RepairBst/lecture.mp4) | [pdf](algoexpert/hard/binarysearchtrees/RepairBst/slides.pdf) | [md](algoexpert/hard/binarysearchtrees/RepairBst/transcript.md) |
+| hard / binarysearchtrees / Same Bsts | 1:13 | [mp4](algoexpert/hard/binarysearchtrees/SameBsts/lecture.mp4) | [pdf](algoexpert/hard/binarysearchtrees/SameBsts/slides.pdf) | [md](algoexpert/hard/binarysearchtrees/SameBsts/transcript.md) |
+| hard / binarysearchtrees / Sum Bsts | 1:07 | [mp4](algoexpert/hard/binarysearchtrees/SumBsts/lecture.mp4) | [pdf](algoexpert/hard/binarysearchtrees/SumBsts/slides.pdf) | [md](algoexpert/hard/binarysearchtrees/SumBsts/transcript.md) |
+| hard / binarysearchtrees / Validate Three Nodes | 1:01 | [mp4](algoexpert/hard/binarysearchtrees/ValidateThreeNodes/lecture.mp4) | [pdf](algoexpert/hard/binarysearchtrees/ValidateThreeNodes/slides.pdf) | [md](algoexpert/hard/binarysearchtrees/ValidateThreeNodes/transcript.md) |
+| hard / binarytrees / Find Nodes Distance K | 1:06 | [mp4](algoexpert/hard/binarytrees/FindNodesDistanceK/lecture.mp4) | [pdf](algoexpert/hard/binarytrees/FindNodesDistanceK/slides.pdf) | [md](algoexpert/hard/binarytrees/FindNodesDistanceK/transcript.md) |
+| hard / binarytrees / Max Path Sum In Binary Tree | 0:59 | [mp4](algoexpert/hard/binarytrees/MaxPathSumInBinaryTree/lecture.mp4) | [pdf](algoexpert/hard/binarytrees/MaxPathSumInBinaryTree/slides.pdf) | [md](algoexpert/hard/binarytrees/MaxPathSumInBinaryTree/transcript.md) |
+| hard / dynamicprogramming / Dice Throws | 0:58 | [mp4](algoexpert/hard/dynamicprogramming/DiceThrows/lecture.mp4) | [pdf](algoexpert/hard/dynamicprogramming/DiceThrows/slides.pdf) | [md](algoexpert/hard/dynamicprogramming/DiceThrows/transcript.md) |
+| hard / dynamicprogramming / Disk Stacking | 1:11 | [mp4](algoexpert/hard/dynamicprogramming/DiskStacking/lecture.mp4) | [pdf](algoexpert/hard/dynamicprogramming/DiskStacking/slides.pdf) | [md](algoexpert/hard/dynamicprogramming/DiskStacking/transcript.md) |
+| hard / dynamicprogramming / Juice Bottling | 1:11 | [mp4](algoexpert/hard/dynamicprogramming/JuiceBottling/lecture.mp4) | [pdf](algoexpert/hard/dynamicprogramming/JuiceBottling/slides.pdf) | [md](algoexpert/hard/dynamicprogramming/JuiceBottling/transcript.md) |
+| hard / dynamicprogramming / Knapsack Problem | 1:04 | [mp4](algoexpert/hard/dynamicprogramming/KnapsackProblem/lecture.mp4) | [pdf](algoexpert/hard/dynamicprogramming/KnapsackProblem/slides.pdf) | [md](algoexpert/hard/dynamicprogramming/KnapsackProblem/transcript.md) |
