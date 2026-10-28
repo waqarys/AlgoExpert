@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (32)
+## AlgoExpert (42)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -87,3 +87,13 @@ Built with [`pipeline/`](pipeline/README.md).
 | easy / strings / Run Length Encoding | 0:59 | [mp4](algoexpert/easy/strings/RunLengthEncoding/lecture.mp4) | [pdf](algoexpert/easy/strings/RunLengthEncoding/slides.pdf) | [md](algoexpert/easy/strings/RunLengthEncoding/transcript.md) |
 | easy / strings / Semordnilap | 0:58 | [mp4](algoexpert/easy/strings/Semordnilap/lecture.mp4) | [pdf](algoexpert/easy/strings/Semordnilap/slides.pdf) | [md](algoexpert/easy/strings/Semordnilap/transcript.md) |
 | medium / arrays / Array Of Products | 1:05 | [mp4](algoexpert/medium/arrays/ArrayOfProducts/lecture.mp4) | [pdf](algoexpert/medium/arrays/ArrayOfProducts/slides.pdf) | [md](algoexpert/medium/arrays/ArrayOfProducts/transcript.md) |
+| medium / arrays / Best Seat | 1:04 | [mp4](algoexpert/medium/arrays/BestSeat/lecture.mp4) | [pdf](algoexpert/medium/arrays/BestSeat/slides.pdf) | [md](algoexpert/medium/arrays/BestSeat/transcript.md) |
+| medium / arrays / First Duplicate Value | 1:08 | [mp4](algoexpert/medium/arrays/FirstDuplicateValue/lecture.mp4) | [pdf](algoexpert/medium/arrays/FirstDuplicateValue/slides.pdf) | [md](algoexpert/medium/arrays/FirstDuplicateValue/transcript.md) |
+| medium / arrays / Longest Peak | 1:02 | [mp4](algoexpert/medium/arrays/LongestPeak/lecture.mp4) | [pdf](algoexpert/medium/arrays/LongestPeak/slides.pdf) | [md](algoexpert/medium/arrays/LongestPeak/transcript.md) |
+| medium / arrays / Majority Element | 1:02 | [mp4](algoexpert/medium/arrays/MajorityElement/lecture.mp4) | [pdf](algoexpert/medium/arrays/MajorityElement/slides.pdf) | [md](algoexpert/medium/arrays/MajorityElement/transcript.md) |
+| medium / arrays / Merge Overlapping Intervals | 1:01 | [mp4](algoexpert/medium/arrays/MergeOverlappingIntervals/lecture.mp4) | [pdf](algoexpert/medium/arrays/MergeOverlappingIntervals/slides.pdf) | [md](algoexpert/medium/arrays/MergeOverlappingIntervals/transcript.md) |
+| medium / arrays / Missing Numbers | 1:05 | [mp4](algoexpert/medium/arrays/MissingNumbers/lecture.mp4) | [pdf](algoexpert/medium/arrays/MissingNumbers/slides.pdf) | [md](algoexpert/medium/arrays/MissingNumbers/transcript.md) |
+| medium / arrays / Monotonic Array | 0:52 | [mp4](algoexpert/medium/arrays/MonotonicArray/lecture.mp4) | [pdf](algoexpert/medium/arrays/MonotonicArray/slides.pdf) | [md](algoexpert/medium/arrays/MonotonicArray/transcript.md) |
+| medium / arrays / Move Element To End | 1:02 | [mp4](algoexpert/medium/arrays/MoveElementToEnd/lecture.mp4) | [pdf](algoexpert/medium/arrays/MoveElementToEnd/slides.pdf) | [md](algoexpert/medium/arrays/MoveElementToEnd/transcript.md) |
+| medium / arrays / Smallest Difference | 1:02 | [mp4](algoexpert/medium/arrays/SmallestDifference/lecture.mp4) | [pdf](algoexpert/medium/arrays/SmallestDifference/slides.pdf) | [md](algoexpert/medium/arrays/SmallestDifference/transcript.md) |
+| medium / arrays / Spiral Traverse | 1:02 | [mp4](algoexpert/medium/arrays/SpiralTraverse/lecture.mp4) | [pdf](algoexpert/medium/arrays/SpiralTraverse/slides.pdf) | [md](algoexpert/medium/arrays/SpiralTraverse/transcript.md) |
