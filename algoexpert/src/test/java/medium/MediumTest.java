@@ -89,7 +89,7 @@ class MediumTest {
         assertEquals(6, BinaryTreeDiameter.binaryTreeDiameter(BinaryTree.fromLevelOrder(1, 3, 2, 7, 4, null, null, 8, null, null, 5, 9, null, null, 6)));
         assertEquals(0, BinaryTreeDiameter.binaryTreeDiameter(new BinaryTree(1)));
         BinaryTree s = BinaryTree.fromLevelOrder(1, 2, 3, 4, 5, null, null, 6);
-        assertEquals(2, FindSuccessor.findSuccessor(s, s.left.right).value == 1 ? 2 : -1);
+        assertEquals(1, FindSuccessor.findSuccessor(s, s.left.right).value);
         assertEquals(2, FindSuccessor.findSuccessor(s, s.left.left).value);
         assertNull(FindSuccessor.findSuccessor(s, s.right));
         assertTrue(HeightBalancedBinaryTree.heightBalancedBinaryTree(BinaryTree.fromLevelOrder(1, 2, 3, 4, 5, null, 6)));
@@ -213,7 +213,8 @@ class MediumTest {
         int[][] m = {{1, 4, 7, 12, 15, 1000}, {2, 5, 19, 31, 32, 1001}, {3, 8, 24, 33, 35, 1002}, {40, 41, 42, 44, 45, 1003}, {99, 100, 103, 106, 128, 1004}};
         assertArrayEquals(new int[]{3, 3}, SearchInSortedMatrix.searchInSortedMatrix(m, 44));
         assertArrayEquals(new int[]{-1, -1}, SearchInSortedMatrix.searchInSortedMatrix(m, 43));
-        assertArrayEquals(new int[]{0, 0, -1, -1, -1, 1, 1}, ThreeNumberSort.threeNumberSort(new int[]{1, 0, 0, -1, -1, 0, 1, 1}.clone().length == 8 ? new int[]{1, 0, -1, 0, -1, 1, -1} : null, new int[]{0, -1, 1}));
+        assertArrayEquals(new int[]{0, 0, -1, -1, -1, 1, 1}, ThreeNumberSort.threeNumberSort(new int[]{1, 0, -1, 0, -1, 1, -1}, new int[]{0, -1, 1}));
+        assertArrayEquals(new int[]{}, ThreeNumberSort.threeNumberSort(new int[]{}, new int[]{0, 1, 2}));
     }
 
     @Test void stacks() {
@@ -221,7 +222,7 @@ class MediumTest {
         assertFalse(BalancedBrackets.balancedBrackets("(]"));
         assertEquals(List.of(1, 3, 6, 7), SunsetViews.sunsetViews(new int[]{3, 5, 4, 4, 3, 1, 3, 2}, "EAST"));
         assertEquals(List.of(0, 1), SunsetViews.sunsetViews(new int[]{3, 5, 4, 4, 3, 1, 3, 2}, "WEST"));
-        assertEquals("772", BestDigits.bestDigits("462839", 3).substring(0, 0) + BestDigits.bestDigits("1772", 1));
+        assertEquals("772", BestDigits.bestDigits("1772", 1));
         assertEquals("6839", BestDigits.bestDigits("462839", 2));
         assertEquals(List.of(-5, -2, -1, 2, 3, 4), SortStack.sortStack(new ArrayList<>(List.of(-5, 2, -2, 4, 3, -1))));
         assertArrayEquals(new int[]{5, 6, 6, 6, 7, -1, 5}, NextGreaterElement.nextGreaterElement(new int[]{2, 5, -3, -4, 6, 7, 2}));
@@ -232,7 +233,6 @@ class MediumTest {
         assertEquals(5, s.getMin()); assertEquals(7, s.peek());
         assertEquals(2, ReversePolishNotation.reversePolishNotation(new String[]{"50", "3", "17", "+", "2", "-", "/"}));
         assertEquals(-1, ReversePolishNotation.reversePolishNotation(new String[]{"2", "3", "-"}));
-        assertArrayEquals(new int[]{-3, -7, 4}, CollidingAsteroids.collidingAsteroids(new int[]{-3, 5, -8, 6, 7, -4, -7}).length == 3 ? new int[]{-3, -7, 4} : null);
         assertArrayEquals(new int[]{-3, -8, 6}, CollidingAsteroids.collidingAsteroids(new int[]{-3, 5, -8, 6, 7, -4, -7}));
         assertArrayEquals(new int[]{}, CollidingAsteroids.collidingAsteroids(new int[]{5, -5}));
     }
@@ -243,10 +243,10 @@ class MediumTest {
         var g = GroupAnagrams.groupAnagrams(List.of("yo", "act", "flop", "tac", "foo", "cat", "oy", "olfp"));
         assertEquals(4, g.size());
         assertEquals(List.of("act", "tac", "cat"), g.get(1));
-        assertEquals(List.of("1.9.2.1", "1.9.2.1").size(), 2);
         var ips = ValidIpAddresses.validIPAddresses("1921680");
         assertEquals(11, ips.size());
-        assertTrue(ips.contains("192.168.0"+"") == false && ips.contains("19.216.8.0"));
+        assertTrue(ips.contains("19.216.8.0"));
+        assertFalse(ips.contains("192.168.0"));
         assertTrue(ValidIpAddresses.validIPAddresses("0000").contains("0.0.0.0"));
         assertEquals("best! the is AlgoExpert", ReverseWordsInString.reverseWordsInString("AlgoExpert is the best!"));
         assertEquals("b  a ", ReverseWordsInString.reverseWordsInString(" a  b"));
