@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Repeatedly delete '()', '[]', '{}' → O(n²)",
+    "Stack of openers → O(n)",
+    "Only brackets matter; ignore other chars"
+   ],
+   "narration": "Repeatedly deleting matched pairs is quadratic. A stack of opening brackets checks each closer against the most recent opener in linear time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Push openers",
@@ -37,13 +47,228 @@
    "narration": "Step by step. First, push openers. Second, on a closer, pop and compare. Third, ignore other characters. Fourth, valid if the stack ends empty."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "(",
+      "[",
+      "]",
+      ")",
+      "(",
+      ")",
+      "{",
+      "}",
+      "(",
+      "(",
+      ")",
+      ")"
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "stack",
+     "items": [
+      "("
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "'(': push",
+   "narration": "An opening bracket: push it.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "(",
+      "[",
+      "]",
+      ")",
+      "(",
+      ")",
+      "{",
+      "}",
+      "(",
+      "(",
+      ")",
+      ")"
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "stack",
+     "items": [
+      "("
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "']': pop & match",
+   "narration": "A closing bracket: it must match the top, so we pop.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "(",
+      "[",
+      "]",
+      ")",
+      "(",
+      ")",
+      "{",
+      "}",
+      "(",
+      "(",
+      ")",
+      ")"
+     ],
+     "hl": {
+      "3": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "stack",
+     "items": [
+      "(empty)"
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "')': pop & match",
+   "narration": "A closing bracket: it must match the top, so we pop.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "(",
+      "[",
+      "]",
+      ")",
+      "(",
+      ")",
+      "{",
+      "}",
+      "(",
+      "(",
+      ")",
+      ")"
+     ],
+     "hl": {
+      "6": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "stack",
+     "items": [
+      "{"
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "'{': push",
+   "narration": "An opening bracket: push it.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "(",
+      "[",
+      "]",
+      ")",
+      "(",
+      ")",
+      "{",
+      "}",
+      "(",
+      "(",
+      ")",
+      ")"
+     ],
+     "hl": {
+      "11": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "stack",
+     "items": [
+      "(empty)"
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "')': pop & match",
+   "narration": "A closing bracket: it must match the top, so we pop.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class BalancedBrackets {\n    public static boolean balancedBrackets(String s) {\n        ArrayDeque<Character> st = new ArrayDeque<>();\n        for (char c : s.toCharArray()) {\n            if (\"([{\".indexOf(c) >= 0) st.push(c);\n            else if (\")]}\".indexOf(c) >= 0) {\n                if (st.isEmpty() || \"([{\".indexOf(st.pop()) != \")]}\".indexOf(c)) return false;\n            }\n        }\n        return st.isEmpty();\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "BalancedBrackets.java",
-   "narration": "Here's the Java solution, starting with balanced brackets. It follows the steps we just described."
+   "narration": "We push openers. For closers, we fail if the stack is empty or the popped opener doesn't correspond. At the end the stack must be empty."
   },
   {
    "kind": "bullets",
@@ -53,6 +278,24 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Closer on empty stack → false",
+    "Leftover openers → false",
+    "Non-bracket characters ignored"
+   ],
+   "narration": "A closer with an empty stack fails, and leftover openers at the end fail too."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: minimum insertions to balance"
+   ],
+   "narration": "A follow-up asks for the minimum insertions to balance a string."
   },
   {
    "kind": "bullets",

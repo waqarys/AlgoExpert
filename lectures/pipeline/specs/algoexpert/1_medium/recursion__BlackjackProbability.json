@@ -28,6 +28,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Plain recursion re-explores the same hands → exponential",
+    "Memoise by hand value → O(target) states × 10 cards",
+    "Bottom-up DP works equally well"
+   ],
+   "narration": "Plain recursion explores the same hand totals repeatedly. Memoising by hand value makes it linear in the target, times ten cards."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. If the total exceeds the target, it's a bust",
@@ -38,13 +48,87 @@
    "narration": "Step by step. First, if the total exceeds the target, it's a bust. Second, if it reaches target minus four, stop. Third, otherwise average the ten draws. Fourth, memoise by total."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "0.450",
+      "0.500",
+      "stand",
+      "stand",
+      "stand",
+      "stand",
+      "stand"
+     ],
+     "hl": {
+      "1": "cur"
+     },
+     "ptr": {},
+     "label": "P(bust) for hands 15…21",
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "P(bust | 16) = 0.1 × Σ P(bust | 16 + card)",
+      "= 0.500"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Hand 16: P(bust) = 0.500",
+   "narration": "With a hand of 16, average over the ten possible cards. Hands of seventeen to twenty-one stand, and anything over twenty-one busts. That gives 0.500.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "0.450",
+      "0.500",
+      "stand",
+      "stand",
+      "stand",
+      "stand",
+      "stand"
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {},
+     "label": "P(bust) for hands 15…21",
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "P(bust | 15) = 0.1 × Σ P(bust | 15 + card)",
+      "= 0.450"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Hand 15: P(bust) = 0.450",
+   "narration": "With a hand of 15, average over the ten possible cards. Hands of seventeen to twenty-one stand, and anything over twenty-one busts. That gives 0.450.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class BlackjackProbability {\n    public static float blackjackProbability(int target, int startingHand) {\n        double p = bust(target, startingHand, new HashMap<>());\n        return Math.round(p * 1000) / 1000f;\n    }\n\n    private static double bust(int target, int hand, Map<Integer, Double> memo) {\n        if (hand > target) return 1;\n        if (hand + 4 >= target) return 0;\n        Double m = memo.get(hand);\n        if (m != null) return m;\n        double p = 0;\n        for (int c = 1; c <= 10; c++) p += 0.1 * bust(target, hand + c, memo);\n        memo.put(hand, p);\n        return p;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "BlackjackProbability.java",
-   "narration": "Here's the Java solution, starting with blackjack probability. It follows the steps we just described."
+   "narration": "Bust returns one above the target, zero when the dealer would stand, otherwise the memoised average of bust over the ten next cards. The answer is rounded to three decimals."
   },
   {
    "kind": "bullets",
@@ -54,6 +138,25 @@
     "Space: O(t)"
    ],
    "narration": "Time is O of t. Space is O of t."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Stand when hand ≥ target − 4",
+    "Each card 1–10 has probability 0.1",
+    "Round to 3 decimals at the end only"
+   ],
+   "narration": "The dealer stands at target minus four or more. Round only the final answer, not intermediate values."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain the state: just the hand total",
+    "Follow-up: realistic deck (cards without replacement)"
+   ],
+   "narration": "The state is only the hand total because cards are drawn with replacement. A real deck adds card counts to the state."
   },
   {
    "kind": "bullets",

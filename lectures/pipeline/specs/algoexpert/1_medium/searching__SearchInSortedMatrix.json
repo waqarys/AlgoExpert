@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Scan every cell → O(r·c)",
+    "Binary search each row → O(r log c)",
+    "Start top-right, eliminate a row or column per step → O(r + c)"
+   ],
+   "narration": "Scanning everything ignores the sorting. Binary-searching each row is better. Starting at the top-right corner, every comparison eliminates a whole row or column, so it's r plus c."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Start top-right",
@@ -37,13 +47,427 @@
    "narration": "Step by step. First, start top-right. Second, if too big, move left. Third, if too small, move down. Fourth, return the coordinates or minus ones."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       4,
+       7,
+       12,
+       15,
+       1000
+      ],
+      [
+       2,
+       5,
+       19,
+       31,
+       32,
+       1001
+      ],
+      [
+       3,
+       8,
+       24,
+       33,
+       35,
+       1002
+      ],
+      [
+       40,
+       41,
+       42,
+       44,
+       45,
+       1003
+      ],
+      [
+       99,
+       100,
+       103,
+       106,
+       128,
+       1004
+      ]
+     ],
+     "hl": {
+      "0,5": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "1000 > 44 → move left"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "(0,5) = 1000",
+   "narration": "At 1000: too big, so everything below is too, move left.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       4,
+       7,
+       12,
+       15,
+       1000
+      ],
+      [
+       2,
+       5,
+       19,
+       31,
+       32,
+       1001
+      ],
+      [
+       3,
+       8,
+       24,
+       33,
+       35,
+       1002
+      ],
+      [
+       40,
+       41,
+       42,
+       44,
+       45,
+       1003
+      ],
+      [
+       99,
+       100,
+       103,
+       106,
+       128,
+       1004
+      ]
+     ],
+     "hl": {
+      "0,4": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "15 < 44 → move down"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "(0,4) = 15",
+   "narration": "At 15: too small, so everything left is too, move down.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       4,
+       7,
+       12,
+       15,
+       1000
+      ],
+      [
+       2,
+       5,
+       19,
+       31,
+       32,
+       1001
+      ],
+      [
+       3,
+       8,
+       24,
+       33,
+       35,
+       1002
+      ],
+      [
+       40,
+       41,
+       42,
+       44,
+       45,
+       1003
+      ],
+      [
+       99,
+       100,
+       103,
+       106,
+       128,
+       1004
+      ]
+     ],
+     "hl": {
+      "1,4": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "32 < 44 → move down"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "(1,4) = 32",
+   "narration": "At 32: too small, so everything left is too, move down.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       4,
+       7,
+       12,
+       15,
+       1000
+      ],
+      [
+       2,
+       5,
+       19,
+       31,
+       32,
+       1001
+      ],
+      [
+       3,
+       8,
+       24,
+       33,
+       35,
+       1002
+      ],
+      [
+       40,
+       41,
+       42,
+       44,
+       45,
+       1003
+      ],
+      [
+       99,
+       100,
+       103,
+       106,
+       128,
+       1004
+      ]
+     ],
+     "hl": {
+      "2,4": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "35 < 44 → move down"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "(2,4) = 35",
+   "narration": "At 35: too small, so everything left is too, move down.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       4,
+       7,
+       12,
+       15,
+       1000
+      ],
+      [
+       2,
+       5,
+       19,
+       31,
+       32,
+       1001
+      ],
+      [
+       3,
+       8,
+       24,
+       33,
+       35,
+       1002
+      ],
+      [
+       40,
+       41,
+       42,
+       44,
+       45,
+       1003
+      ],
+      [
+       99,
+       100,
+       103,
+       106,
+       128,
+       1004
+      ]
+     ],
+     "hl": {
+      "3,4": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "45 > 44 → move left"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "(3,4) = 45",
+   "narration": "At 45: too big, so everything below is too, move left.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       4,
+       7,
+       12,
+       15,
+       1000
+      ],
+      [
+       2,
+       5,
+       19,
+       31,
+       32,
+       1001
+      ],
+      [
+       3,
+       8,
+       24,
+       33,
+       35,
+       1002
+      ],
+      [
+       40,
+       41,
+       42,
+       44,
+       45,
+       1003
+      ],
+      [
+       99,
+       100,
+       103,
+       106,
+       128,
+       1004
+      ]
+     ],
+     "hl": {
+      "3,3": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "44 = 44 → found"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "(3,3) = 44",
+   "narration": "At 44: found it.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SearchInSortedMatrix {\n    public static int[] searchInSortedMatrix(int[][] m, int target) {\n        int r = 0, c = m[0].length - 1;\n        while (r < m.length && c >= 0) {\n            if (m[r][c] == target) return new int[]{r, c};\n            if (m[r][c] > target) c--; else r++;\n        }\n        return new int[]{-1, -1};\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SearchInSortedMatrix.java",
-   "narration": "Here's the Java solution, starting with search in sorted matrix. It follows the steps we just described."
+   "narration": "We start at row zero and the last column. While in bounds, return on a match, move left if the value is too big, otherwise move down."
   },
   {
    "kind": "bullets",
@@ -53,6 +477,24 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n plus m. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Target absent → [−1, −1]",
+    "Bottom-left start also works",
+    "Top-left doesn't (both moves increase)"
+   ],
+   "narration": "Top-right or bottom-left both work, because one move increases and the other decreases. From top-left both increase, so you can't decide."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why the corner choice matters"
+   ],
+   "narration": "Explain why the corner matters; that's the insight."
   },
   {
    "kind": "bullets",

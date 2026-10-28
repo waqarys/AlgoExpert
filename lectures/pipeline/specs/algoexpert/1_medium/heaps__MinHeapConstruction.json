@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Insert one by one with siftUp → O(n log n)",
+    "Bottom-up siftDown from the last parent → O(n)",
+    "Most nodes are near the bottom and barely move"
+   ],
+   "narration": "Inserting elements one at a time costs n log n. Building bottom-up, sifting down from the last parent to the root, is linear, because most nodes sit near the bottom and move only a little."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Build by sifting down from the last parent",
@@ -35,13 +45,414 @@
    "narration": "Step by step. First, build by sifting down from the last parent. Second, insert at the end and sift up. Third, remove by swapping root with last and sifting down."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       30,
+       "1",
+       "2"
+      ],
+      "1": [
+       102,
+       "3",
+       "4"
+      ],
+      "2": [
+       23,
+       "5",
+       "6"
+      ],
+      "3": [
+       17,
+       "7",
+       null
+      ],
+      "4": [
+       18,
+       null,
+       null
+      ],
+      "5": [
+       9,
+       null,
+       null
+      ],
+      "6": [
+       44,
+       null,
+       null
+      ],
+      "7": [
+       12,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {},
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "array",
+     "values": [
+      30,
+      102,
+      23,
+      17,
+      18,
+      9,
+      44,
+      12
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Start: arbitrary array as a tree",
+   "narration": "View the array as a complete binary tree: children of index i are at two i plus one and two i plus two.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       30,
+       "1",
+       "2"
+      ],
+      "1": [
+       102,
+       "3",
+       "4"
+      ],
+      "2": [
+       23,
+       "5",
+       "6"
+      ],
+      "3": [
+       12,
+       "7",
+       null
+      ],
+      "4": [
+       18,
+       null,
+       null
+      ],
+      "5": [
+       9,
+       null,
+       null
+      ],
+      "6": [
+       44,
+       null,
+       null
+      ],
+      "7": [
+       17,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "3": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "array",
+     "values": [
+      30,
+      102,
+      23,
+      12,
+      18,
+      9,
+      44,
+      17
+     ],
+     "hl": {
+      "3": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "siftDown index 3 (value 17)",
+   "narration": "Sift down the value 17 at index 3, swapping with its smaller child until it's no bigger than both children.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       30,
+       "1",
+       "2"
+      ],
+      "1": [
+       102,
+       "3",
+       "4"
+      ],
+      "2": [
+       9,
+       "5",
+       "6"
+      ],
+      "3": [
+       12,
+       "7",
+       null
+      ],
+      "4": [
+       18,
+       null,
+       null
+      ],
+      "5": [
+       23,
+       null,
+       null
+      ],
+      "6": [
+       44,
+       null,
+       null
+      ],
+      "7": [
+       17,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "2": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "array",
+     "values": [
+      30,
+      102,
+      9,
+      12,
+      18,
+      23,
+      44,
+      17
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "siftDown index 2 (value 23)",
+   "narration": "Sift down the value 23 at index 2, swapping with its smaller child until it's no bigger than both children.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       30,
+       "1",
+       "2"
+      ],
+      "1": [
+       12,
+       "3",
+       "4"
+      ],
+      "2": [
+       9,
+       "5",
+       "6"
+      ],
+      "3": [
+       17,
+       "7",
+       null
+      ],
+      "4": [
+       18,
+       null,
+       null
+      ],
+      "5": [
+       23,
+       null,
+       null
+      ],
+      "6": [
+       44,
+       null,
+       null
+      ],
+      "7": [
+       102,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "1": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "array",
+     "values": [
+      30,
+      12,
+      9,
+      17,
+      18,
+      23,
+      44,
+      102
+     ],
+     "hl": {
+      "1": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "siftDown index 1 (value 102)",
+   "narration": "Sift down the value 102 at index 1, swapping with its smaller child until it's no bigger than both children.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       9,
+       "1",
+       "2"
+      ],
+      "1": [
+       12,
+       "3",
+       "4"
+      ],
+      "2": [
+       23,
+       "5",
+       "6"
+      ],
+      "3": [
+       17,
+       "7",
+       null
+      ],
+      "4": [
+       18,
+       null,
+       null
+      ],
+      "5": [
+       30,
+       null,
+       null
+      ],
+      "6": [
+       44,
+       null,
+       null
+      ],
+      "7": [
+       102,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "array",
+     "values": [
+      9,
+      12,
+      23,
+      17,
+      18,
+      30,
+      44,
+      102
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "siftDown index 0 (value 30)",
+   "narration": "Sift down the value 30 at index 0, swapping with its smaller child until it's no bigger than both children.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class MinHeapConstruction {\n    public static class MinHeap {\n        public final List<Integer> heap;\n\n        public MinHeap(List<Integer> array) { heap = buildHeap(new ArrayList<>(array)); }\n\n        public List<Integer> buildHeap(List<Integer> a) {\n            for (int i = (a.size() - 2) / 2; i >= 0; i--) siftDown(i, a.size() - 1, a);\n            return a;\n        }\n\n        public void siftDown(int i, int end, List<Integer> h) {\n            while (2 * i + 1 <= end) {\n                int c = 2 * i + 1;\n                if (c + 1 <= end && h.get(c + 1) < h.get(c)) c++;\n                if (h.get(c) >= h.get(i)) return;\n                java.util.Collections.swap(h, i, c);\n                i = c;\n            }\n        }\n\n        public void siftUp(int i, List<Integer> h) {",
    "lang": "java",
    "font_size": 26,
    "filename": "MinHeapConstruction_part1.java",
-   "narration": "Here's the Java solution, starting with min heap. It follows the steps we just described."
+   "narration": "Build heap sifts down from the last parent to index zero. Sift down picks the smaller child, stops if it isn't smaller, otherwise swaps and continues. Sift up swaps with the parent while the parent is bigger."
   },
   {
    "kind": "code",
@@ -50,7 +461,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "MinHeapConstruction_part2.java",
-   "narration": "Continuing with peek, remove, insert."
+   "narration": "Build heap sifts down from the last parent to index zero. Sift down picks the smaller child, stops if it isn't smaller, otherwise swaps and continues. Sift up swaps with the parent while the parent is bigger."
   },
   {
    "kind": "bullets",
@@ -60,6 +471,25 @@
     "Space: O(n)"
    ],
    "narration": "Time is build O of n, insert or remove O of log n, peek constant. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Last parent is (n − 2) / 2",
+    "Pick the smaller child",
+    "Remove: swap root with last, pop, siftDown"
+   ],
+   "narration": "The last parent is at n minus two over two. Always swap with the smaller child. Remove swaps the root with the last element, pops, and sifts down."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why build-heap is O(n)",
+    "Follow-up: k-th largest, merge k sorted lists"
+   ],
+   "narration": "Be ready to explain the linear build. Heaps power k-th largest and merging k sorted lists."
   },
   {
    "kind": "bullets",

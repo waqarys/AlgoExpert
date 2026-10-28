@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Store all ancestors of one node in a set, walk up the other → O(d) space",
+    "Equalise depths, then climb together → O(d) time, O(1) space",
+    "d = depth of the deeper node"
+   ],
+   "narration": "One approach stores all of one node's ancestors in a set, then walks up from the other until it finds one. Equalising depths and then climbing both in lockstep avoids extra memory."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Compute both depths",
@@ -36,13 +46,238 @@
    "narration": "Step by step. First, compute both depths. Second, lift the deeper one. Third, move both up until equal."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "A": [
+       "A",
+       "B",
+       "C"
+      ],
+      "B": [
+       "B",
+       "D",
+       "E"
+      ],
+      "C": [
+       "C",
+       "F",
+       "G"
+      ],
+      "D": [
+       "D",
+       "H",
+       "I"
+      ],
+      "E": [
+       "E",
+       null,
+       null
+      ],
+      "F": [
+       "F",
+       null,
+       null
+      ],
+      "G": [
+       "G",
+       null,
+       null
+      ],
+      "H": [
+       "H",
+       null,
+       null
+      ],
+      "I": [
+       "I",
+       null,
+       null
+      ]
+     },
+     "root": "A",
+     "hl": {
+      "E": "cur",
+      "I": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "depth(E) = 2, depth(I) = 3"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "Descendants E and I; depths 2 and 3",
+   "narration": "Find the youngest common ancestor of E and I. E is at depth two, I at depth three.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "A": [
+       "A",
+       "B",
+       "C"
+      ],
+      "B": [
+       "B",
+       "D",
+       "E"
+      ],
+      "C": [
+       "C",
+       "F",
+       "G"
+      ],
+      "D": [
+       "D",
+       "H",
+       "I"
+      ],
+      "E": [
+       "E",
+       null,
+       null
+      ],
+      "F": [
+       "F",
+       null,
+       null
+      ],
+      "G": [
+       "G",
+       null,
+       null
+      ],
+      "H": [
+       "H",
+       null,
+       null
+      ],
+      "I": [
+       "I",
+       null,
+       null
+      ]
+     },
+     "root": "A",
+     "hl": {
+      "E": "cur",
+      "D": "cur",
+      "I": "done"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "lift I one level → D"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "Lift the deeper one: I → D",
+   "narration": "First lift the deeper node, I, by one level to D, so both are at depth two.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "A": [
+       "A",
+       "B",
+       "C"
+      ],
+      "B": [
+       "B",
+       "D",
+       "E"
+      ],
+      "C": [
+       "C",
+       "F",
+       "G"
+      ],
+      "D": [
+       "D",
+       "H",
+       "I"
+      ],
+      "E": [
+       "E",
+       null,
+       null
+      ],
+      "F": [
+       "F",
+       null,
+       null
+      ],
+      "G": [
+       "G",
+       null,
+       null
+      ],
+      "H": [
+       "H",
+       null,
+       null
+      ],
+      "I": [
+       "I",
+       null,
+       null
+      ]
+     },
+     "root": "A",
+     "hl": {
+      "B": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "E → B, D → B: equal"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "Move both up: E → B, D → B → answer B",
+   "narration": "Now move both up together. E goes to B, D goes to B. They meet: the answer is B.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class YoungestCommonAncestor {\n    public static class AncestralTree {\n        public final char name;\n        public AncestralTree ancestor;\n        public AncestralTree(char name) { this.name = name; }\n    }\n\n    public static AncestralTree getYoungestCommonAncestor(AncestralTree top, AncestralTree a, AncestralTree b) {\n        int da = depth(a, top), db = depth(b, top);\n        while (da > db) { a = a.ancestor; da--; }\n        while (db > da) { b = b.ancestor; db--; }\n        while (a != b) { a = a.ancestor; b = b.ancestor; }\n        return a;\n    }\n\n    private static int depth(AncestralTree n, AncestralTree top) {\n        int d = 0;\n        while (n != top) { n = n.ancestor; d++; }\n        return d;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "YoungestCommonAncestor.java",
-   "narration": "Here's the Java solution, starting with ancestral tree. It follows the steps we just described."
+   "narration": "We compute both depths by walking up to the top. Then we lift the deeper node until depths match, and finally move both up together until they're the same node."
   },
   {
    "kind": "bullets",
@@ -52,6 +287,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of d. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "One node is the ancestor of the other",
+    "Both nodes are the same",
+    "The answer may be the top ancestor"
+   ],
+   "narration": "If one node is the ancestor of the other, the algorithm returns it naturally. The same node twice returns itself."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: binary tree without parent pointers (LCA)",
+    "Follow-up: many queries → binary lifting"
+   ],
+   "narration": "Without parent pointers, use the recursive lowest common ancestor. For many queries, binary lifting answers each in log time."
   },
   {
    "kind": "bullets",

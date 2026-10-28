@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Scan the stack for min/max → O(n)",
+    "Store (value, min, max) per entry → O(1) all ops",
+    "Extra O(n) space"
+   ],
+   "narration": "Scanning for min and max is linear per query. Storing the running min and max with each entry makes every operation constant time; popping automatically restores the old values."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Push value with updated min and max",
@@ -35,13 +45,228 @@
    "narration": "Step by step. First, push value with updated min and max. Second, pop removes both. Third, peek, getMin and getMax read the top."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       5,
+       5,
+       5
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "value",
+      "min",
+      "max"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "push 5",
+      "min = 5, max = 5"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "push 5 → min 5, max 5",
+   "narration": "Push 5. Each entry stores the min and max of everything at or below it, so the top answers min 5 and max 5 instantly.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       7,
+       5,
+       7
+      ],
+      [
+       5,
+       5,
+       5
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "value",
+      "min",
+      "max"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "push 7",
+      "min = 5, max = 7"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "push 7 → min 5, max 7",
+   "narration": "Push 7. Each entry stores the min and max of everything at or below it, so the top answers min 5 and max 7 instantly.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       2,
+       2,
+       7
+      ],
+      [
+       7,
+       5,
+       7
+      ],
+      [
+       5,
+       5,
+       5
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "value",
+      "min",
+      "max"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "push 2",
+      "min = 2, max = 7"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "push 2 → min 2, max 7",
+   "narration": "Push 2. Each entry stores the min and max of everything at or below it, so the top answers min 2 and max 7 instantly.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       7,
+       5,
+       7
+      ],
+      [
+       5,
+       5,
+       5
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "value",
+      "min",
+      "max"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "pop",
+      "min = 5, max = 7"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "pop → min 5, max 7",
+   "narration": "Pop. Each entry stores the min and max of everything at or below it, so the top answers min 5 and max 7 instantly.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       9,
+       5,
+       9
+      ],
+      [
+       7,
+       5,
+       7
+      ],
+      [
+       5,
+       5,
+       5
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "value",
+      "min",
+      "max"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "push 9",
+      "min = 5, max = 9"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "push 9 → min 5, max 9",
+   "narration": "Push 9. Each entry stores the min and max of everything at or below it, so the top answers min 5 and max 9 instantly.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MinMaxStackConstruction {\n    public static class MinMaxStack {\n        private final List<int[]> st = new ArrayList<>();\n\n        public int peek() { return st.get(st.size() - 1)[0]; }\n        public int pop() { return st.remove(st.size() - 1)[0]; }\n        public void push(int v) {\n            if (st.isEmpty()) st.add(new int[]{v, v, v});\n            else { int[] t = st.get(st.size() - 1); st.add(new int[]{v, Math.min(v, t[1]), Math.max(v, t[2])}); }\n        }\n        public int getMin() { return st.get(st.size() - 1)[1]; }\n        public int getMax() { return st.get(st.size() - 1)[2]; }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MinMaxStackConstruction.java",
-   "narration": "Here's the Java solution, starting with peek. It follows the steps we just described."
+   "narration": "Each push stores the value with the min and max of itself and the previous top. Peek and pop read the value; get min and get max read the top's stored fields."
   },
   {
    "kind": "bullets",
@@ -51,6 +276,23 @@
     "Space: O(n)"
    ],
    "narration": "Time is constant per op. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Empty stack behaviour",
+    "Pop restores previous min/max automatically"
+   ],
+   "narration": "Popping needs no special handling, because the entry below already stores the correct min and max."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: min-stack with O(1) extra space (encoding trick)"
+   ],
+   "narration": "A follow-up uses an encoding trick to avoid storing extra values."
   },
   {
    "kind": "bullets",

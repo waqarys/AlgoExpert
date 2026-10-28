@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Try all C(n, k) removals → exponential",
+    "Monotonic stack: pop smaller digits while removals remain → O(n)",
+    "Remove from the end if removals remain"
+   ],
+   "narration": "Trying every set of removals is exponential. A greedy monotonic stack pops smaller digits whenever a bigger one arrives, because a bigger digit earlier always makes a bigger number."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Push digits",
@@ -36,13 +46,194 @@
    "narration": "Step by step. First, push digits. Second, pop smaller tops while deletions remain. Third, trim extra from the end."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      "4"
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "read 4",
+      "removals left: 2"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "Read 4",
+   "narration": "Read 4. Keep it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      "6"
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "read 6: pop 4",
+      "removals left: 1"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "Read 6, remove 4",
+   "narration": "Read 6. It's bigger than 4 on the stack, so removing those makes the number larger.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      "2",
+      "6"
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "read 2",
+      "removals left: 1"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "Read 2",
+   "narration": "Read 2. Keep it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      "8",
+      "6"
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "read 8: pop 2",
+      "removals left: 0"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "Read 8, remove 2",
+   "narration": "Read 8. It's bigger than 2 on the stack, so removing those makes the number larger.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      "3",
+      "8",
+      "6"
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "read 3",
+      "removals left: 0"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "Read 3",
+   "narration": "Read 3. Keep it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      "9",
+      "3",
+      "8",
+      "6"
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "read 9",
+      "removals left: 0"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "Read 9",
+   "narration": "Read 9. Keep it.",
+   "layout": "cols"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class BestDigits {\n    public static String bestDigits(String number, int numDigits) {\n        ArrayDeque<Character> st = new ArrayDeque<>();\n        int k = numDigits;\n        for (char c : number.toCharArray()) {\n            while (k > 0 && !st.isEmpty() && st.peekLast() < c) { st.pollLast(); k--; }\n            st.addLast(c);\n        }\n        while (k-- > 0) st.pollLast();\n        StringBuilder sb = new StringBuilder();\n        for (char c : st) sb.append(c);\n        return sb.toString();\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "BestDigits.java",
-   "narration": "Here's the Java solution, starting with best digits. It follows the steps we just described."
+   "narration": "For each digit, while removals remain and the top is smaller, pop and decrement. Push the digit. Then pop from the end any remaining removals and join."
   },
   {
    "kind": "bullets",
@@ -52,6 +243,24 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Leftover removals: drop from the end",
+    "Equal digits: don't pop",
+    "Result length is n − k"
+   ],
+   "narration": "If removals remain after the scan, drop digits from the end."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mirror: Remove K Digits for the smallest number"
+   ],
+   "narration": "The mirror problem, remove k digits for the smallest number, flips the comparison."
   },
   {
    "kind": "bullets",

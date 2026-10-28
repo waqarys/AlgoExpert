@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Recursion over coins → exponential and double-counts orders",
+    "DP with coins in the OUTER loop → counts combinations",
+    "O(n · d) time, O(n) space"
+   ],
+   "narration": "Naive recursion is exponential and easily counts the same combination in different orders. Putting coins in the outer loop means each combination is built in a fixed coin order, so it's counted exactly once."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. ways of zero is one",
@@ -35,13 +45,117 @@
    "narration": "Step by step. First, ways of zero is one. Second, for each coin, for each amount, add ways of amount minus coin. Third, return ways of n."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "ways to make 0…6",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "ways[0] = 1 (use no coins)",
+   "narration": "There's exactly one way to make zero: use no coins.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "hl": {
+      "1": "ok",
+      "2": "ok",
+      "3": "ok",
+      "4": "ok",
+      "5": "ok",
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": "ways to make 0…6",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "after coin 1: ways[a] += ways[a − 1]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "After coin 1: [1, 1, 1, 1, 1, 1, 1]",
+   "narration": "Adding coin 1: every amount from 1 up gains the ways to make the remainder. With coins one and five, there are 1 ways to make six: six ones, or five plus one.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2
+     ],
+     "hl": {
+      "5": "ok",
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": "ways to make 0…6",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "after coin 5: ways[a] += ways[a − 5]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "After coin 5: [1, 1, 1, 1, 1, 2, 2]",
+   "narration": "Adding coin 5: every amount from 5 up gains the ways to make the remainder. With coins one and five, there are 2 ways to make six: six ones, or five plus one.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class NumberOfWaysToMakeChange {\n    public static int numberOfWaysToMakeChange(int n, int[] denoms) {\n        int[] ways = new int[n + 1];\n        ways[0] = 1;\n        for (int d : denoms) for (int a = d; a <= n; a++) ways[a] += ways[a - d];\n        return ways[n];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "NumberOfWaysToMakeChange.java",
-   "narration": "Here's the Java solution, starting with number of ways to make change. It follows the steps we just described."
+   "narration": "We set ways of zero to one. For each coin, for each amount from that coin to n, add the ways for amount minus coin. Return ways of n."
   },
   {
    "kind": "bullets",
@@ -51,6 +165,25 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n times d. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Loop order matters: amounts outer → counts permutations",
+    "ways[0] = 1",
+    "Large counts may overflow"
+   ],
+   "narration": "If you swap the loops you count permutations instead of combinations, a very common bug."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain combinations vs permutations",
+    "Follow-up: limited coin supply"
+   ],
+   "narration": "Explain the combination versus permutation distinction clearly. A follow-up limits how many of each coin you have."
   },
   {
    "kind": "bullets",

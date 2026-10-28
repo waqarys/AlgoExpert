@@ -28,6 +28,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Simulate passes by rescanning the whole matrix → O((w·h)²)",
+    "Multi-source BFS: one level per pass → O(w·h)",
+    "Zeros block propagation"
+   ],
+   "narration": "Simulating each pass by rescanning the whole matrix can be quadratic in the number of cells. Multi-source breadth-first search starts from all positives at once, and each BFS level is exactly one pass."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Queue all positives",
@@ -38,13 +48,228 @@
    "narration": "Step by step. First, queue all positives. Second, process one level per pass. Third, flip negative neighbours and enqueue them. Fourth, if negatives remain, return minus one."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       -1,
+       -3,
+       2,
+       0
+      ],
+      [
+       1,
+       -2,
+       -5,
+       -1,
+       -3
+      ],
+      [
+       3,
+       0,
+       0,
+       -4,
+       -1
+      ]
+     ],
+     "hl": {
+      "0,3": "ok",
+      "1,0": "ok",
+      "2,0": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Start: all positives in the queue",
+   "narration": "Every positive cell starts in the queue. Each pass, they flip their negative neighbours.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       -1,
+       3,
+       2,
+       0
+      ],
+      [
+       1,
+       2,
+       -5,
+       1,
+       -3
+      ],
+      [
+       3,
+       0,
+       0,
+       -4,
+       -1
+      ]
+     ],
+     "hl": {
+      "1,3": "cur",
+      "0,2": "cur",
+      "1,1": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Pass 1: 3 cell(s) flipped",
+   "narration": "Pass 1: 3 negative cells next to positives become positive. They join the queue for the next pass.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       1,
+       3,
+       2,
+       0
+      ],
+      [
+       1,
+       2,
+       5,
+       1,
+       3
+      ],
+      [
+       3,
+       0,
+       0,
+       4,
+       -1
+      ]
+     ],
+     "hl": {
+      "2,3": "cur",
+      "1,4": "cur",
+      "1,2": "cur",
+      "0,1": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Pass 2: 4 cell(s) flipped",
+   "narration": "Pass 2: 4 negative cells next to positives become positive. They join the queue for the next pass.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       1,
+       3,
+       2,
+       0
+      ],
+      [
+       1,
+       2,
+       5,
+       1,
+       3
+      ],
+      [
+       3,
+       0,
+       0,
+       4,
+       1
+      ]
+     ],
+     "hl": {
+      "2,4": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Pass 3: 1 cell(s) flipped",
+   "narration": "Pass 3: 1 negative cells next to positives become positive. They join the queue for the next pass.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       1,
+       3,
+       2,
+       0
+      ],
+      [
+       1,
+       2,
+       5,
+       1,
+       3
+      ],
+      [
+       3,
+       0,
+       0,
+       4,
+       1
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "No negatives left → 3 passes",
+   "narration": "No negatives remain, so the answer is 3 passes.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MinimumPassesOfMatrix {\n    public static int minimumPassesOfMatrix(int[][] m) {\n        ArrayDeque<int[]> q = new ArrayDeque<>();\n        for (int r = 0; r < m.length; r++) for (int c = 0; c < m[0].length; c++) if (m[r][c] > 0) q.add(new int[]{r, c});\n        int passes = 0;\n        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n        while (!q.isEmpty()) {\n            int size = q.size();\n            boolean flipped = false;\n            for (int i = 0; i < size; i++) {\n                int[] p = q.poll();\n                for (int[] d : dirs) {\n                    int r = p[0] + d[0], c = p[1] + d[1];\n                    if (r >= 0 && c >= 0 && r < m.length && c < m[0].length && m[r][c] < 0) {\n                        m[r][c] = -m[r][c]; q.add(new int[]{r, c}); flipped = true;\n                    }\n                }\n            }\n            if (flipped) passes++;\n        }\n        for (int[] row : m) for (int v : row) if (v < 0) return -1;\n        return passes;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "MinimumPassesOfMatrix.java",
-   "narration": "Here's the Java solution, starting with minimum passes of matrix. It follows the steps we just described."
+   "narration": "We enqueue all positive cells. Each round processes the current queue size, flips negative neighbours and enqueues them, and counts the pass if anything flipped. At the end, any remaining negative means minus one."
   },
   {
    "kind": "bullets",
@@ -54,6 +279,25 @@
     "Space: O(w*h)"
    ],
    "narration": "Time is O of w times h. Space is O of w times h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Negatives unreachable (walled by zeros) → −1",
+    "No negatives at all → 0",
+    "Only count passes that flip something"
+   ],
+   "narration": "If some negatives are surrounded by zeros, return minus one. With no negatives, the answer is zero, so only count passes that flip something."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same pattern: Rotting Oranges",
+    "Explain why BFS levels = passes"
+   ],
+   "narration": "This is the rotting oranges pattern. Explain that BFS levels correspond exactly to passes."
   },
   {
    "kind": "bullets",

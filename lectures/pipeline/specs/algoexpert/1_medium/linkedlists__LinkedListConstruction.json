@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Singly linked → removing needs the previous node (O(n))",
+    "Doubly linked: O(1) insert/remove given a node",
+    "Searching is still O(n)"
+   ],
+   "narration": "With a singly linked list, removing a node needs its predecessor, which means a scan. Doubly linked nodes know both neighbours, so inserting and removing a known node is constant time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Remove a node from its spot before reinserting",
@@ -36,13 +46,176 @@
    "narration": "Step by step. First, remove a node from its spot before reinserting. Second, update head and tail on the edges. Third, walk for position and value ops."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1
+     ],
+     "ptr": {
+      "head": 0,
+      "tail": 0
+     },
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "setHead(1)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "setHead(1)",
+   "narration": "Set head to one: the list was empty, so one is both head and tail.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      4
+     ],
+     "ptr": {
+      "head": 0,
+      "tail": 1
+     },
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "setTail(4)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "setTail(4)",
+   "narration": "Set tail to four: insert after the current tail.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      3,
+      4
+     ],
+     "ptr": {
+      "head": 0,
+      "tail": 2
+     },
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "insertBefore(4, 3)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "insertBefore(4, 3)",
+   "narration": "Insert three before four: rewire three's prev to one and next to four, then fix both neighbours.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      2,
+      3,
+      4
+     ],
+     "ptr": {
+      "head": 0,
+      "tail": 3
+     },
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "insertAtPosition(2, 2)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "insertAtPosition(2, 2)",
+   "narration": "Insert two at position two, walking from the head to the node currently there.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      2,
+      4
+     ],
+     "ptr": {
+      "head": 0,
+      "tail": 2
+     },
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "removeNodesWithValue(3)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "removeNodesWithValue(3)",
+   "narration": "Remove nodes with value three: unlink by connecting its prev and next, and clear its pointers.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/4)",
    "code": "public class LinkedListConstruction {\n    public static class Node {\n        public int value;\n        public Node prev, next;\n        public Node(int value) { this.value = value; }\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "LinkedListConstruction_part1.java",
-   "narration": "Here's the Java solution, starting with node. It follows the steps we just described."
+   "narration": "Set head and set tail handle the empty case and otherwise delegate to insert before or after. Insert before removes the node, wires its prev and next, and updates either head or the previous node's next."
   },
   {
    "kind": "code",
@@ -51,7 +224,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "LinkedListConstruction_part2.java",
-   "narration": "Continuing with set head, set tail, insert before."
+   "narration": "Set head and set tail handle the empty case and otherwise delegate to insert before or after. Insert before removes the node, wires its prev and next, and updates either head or the previous node's next."
   },
   {
    "kind": "code",
@@ -60,7 +233,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "LinkedListConstruction_part3.java",
-   "narration": "Continuing with insert after, insert at position, remove nodes with value."
+   "narration": "Set head and set tail handle the empty case and otherwise delegate to insert before or after. Insert before removes the node, wires its prev and next, and updates either head or the previous node's next."
   },
   {
    "kind": "code",
@@ -69,7 +242,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "LinkedListConstruction_part4.java",
-   "narration": "Continuing with remove, contains node with value."
+   "narration": "Set head and set tail handle the empty case and otherwise delegate to insert before or after. Insert before removes the node, wires its prev and next, and updates either head or the previous node's next."
   },
   {
    "kind": "bullets",
@@ -79,6 +252,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is constant for head or tail or insertBefore or After or remove, O of n for position or value ops. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Inserting a node already in the list: remove it first",
+    "Update head/tail when touching the ends",
+    "Clear removed node's pointers"
+   ],
+   "narration": "If the node being inserted is already in the list, remove it first. Always update head and tail when operating at the ends."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Draw pointer changes before coding",
+    "Used in LRU cache"
+   ],
+   "narration": "Draw the pointer changes before coding. This structure is the backbone of an LRU cache."
   },
   {
    "kind": "bullets",

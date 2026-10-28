@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: all subsets without neighbours → exponential",
+    "DP array best[i] → O(n) time, O(n) space",
+    "Only two previous values needed → O(1) space"
+   ],
+   "narration": "Trying every non-adjacent subset is exponential. A DP where best i is the max of best i minus one and best i minus two plus the value is linear, and only the last two values are ever needed."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Keep the best up to i minus one and i minus two",
@@ -35,13 +45,343 @@
    "narration": "Step by step. First, keep the best up to i minus one and i minus two. Second, choose the max of skip or take. Third, slide forward."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      75,
+      105,
+      120,
+      75,
+      90,
+      135
+     ],
+     "hl": {
+      "0": "ok"
+     },
+     "ptr": {
+      "i": 0
+     },
+     "label": "values",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      75,
+      "",
+      "",
+      "",
+      "",
+      ""
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {},
+     "label": "best sum up to i",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "max(skip 0, take 0 + 75)"
+     ],
+     "label": null,
+     "h": 0.4
+    }
+   ],
+   "caption": "best[0] = 75 (take 75)",
+   "narration": "At 75: skipping keeps 0; taking adds 75 to the best two back. Taking wins, so the best is 75.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      75,
+      105,
+      120,
+      75,
+      90,
+      135
+     ],
+     "hl": {
+      "1": "ok"
+     },
+     "ptr": {
+      "i": 1
+     },
+     "label": "values",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      75,
+      105,
+      "",
+      "",
+      "",
+      ""
+     ],
+     "hl": {
+      "1": "cur"
+     },
+     "ptr": {},
+     "label": "best sum up to i",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "max(skip 75, take 0 + 105)"
+     ],
+     "label": null,
+     "h": 0.4
+    }
+   ],
+   "caption": "best[1] = 105 (take 105)",
+   "narration": "At 105: skipping keeps 75; taking adds 105 to the best two back. Taking wins, so the best is 105.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      75,
+      105,
+      120,
+      75,
+      90,
+      135
+     ],
+     "hl": {
+      "2": "ok"
+     },
+     "ptr": {
+      "i": 2
+     },
+     "label": "values",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      75,
+      105,
+      195,
+      "",
+      "",
+      ""
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {},
+     "label": "best sum up to i",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "max(skip 105, take 75 + 120)"
+     ],
+     "label": null,
+     "h": 0.4
+    }
+   ],
+   "caption": "best[2] = 195 (take 120)",
+   "narration": "At 120: skipping keeps 105; taking adds 120 to the best two back. Taking wins, so the best is 195.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      75,
+      105,
+      120,
+      75,
+      90,
+      135
+     ],
+     "hl": {
+      "3": "bad"
+     },
+     "ptr": {
+      "i": 3
+     },
+     "label": "values",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      75,
+      105,
+      195,
+      195,
+      "",
+      ""
+     ],
+     "hl": {
+      "3": "cur"
+     },
+     "ptr": {},
+     "label": "best sum up to i",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "max(skip 195, take 105 + 75)"
+     ],
+     "label": null,
+     "h": 0.4
+    }
+   ],
+   "caption": "best[3] = 195 (skip 75)",
+   "narration": "At 75: skipping keeps 195; taking adds 75 to the best two back. Skipping wins, so the best stays 195.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      75,
+      105,
+      120,
+      75,
+      90,
+      135
+     ],
+     "hl": {
+      "4": "ok"
+     },
+     "ptr": {
+      "i": 4
+     },
+     "label": "values",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      75,
+      105,
+      195,
+      195,
+      285,
+      ""
+     ],
+     "hl": {
+      "4": "cur"
+     },
+     "ptr": {},
+     "label": "best sum up to i",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "max(skip 195, take 195 + 90)"
+     ],
+     "label": null,
+     "h": 0.4
+    }
+   ],
+   "caption": "best[4] = 285 (take 90)",
+   "narration": "At 90: skipping keeps 195; taking adds 90 to the best two back. Taking wins, so the best is 285.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      75,
+      105,
+      120,
+      75,
+      90,
+      135
+     ],
+     "hl": {
+      "5": "ok"
+     },
+     "ptr": {
+      "i": 5
+     },
+     "label": "values",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      75,
+      105,
+      195,
+      195,
+      285,
+      330
+     ],
+     "hl": {
+      "5": "cur"
+     },
+     "ptr": {},
+     "label": "best sum up to i",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "max(skip 285, take 195 + 135)"
+     ],
+     "label": null,
+     "h": 0.4
+    }
+   ],
+   "caption": "best[5] = 330 (take 135)",
+   "narration": "At 135: skipping keeps 285; taking adds 135 to the best two back. Taking wins, so the best is 330.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MaxSubsetSumNoAdjacent {\n    public static int maxSubsetSumNoAdjacent(int[] a) {\n        int prev = 0, cur = 0;\n        for (int x : a) { int next = Math.max(cur, prev + x); prev = cur; cur = next; }\n        return cur;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MaxSubsetSumNoAdjacent.java",
-   "narration": "Here's the Java solution, starting with max subset sum no adjacent. It follows the steps we just described."
+   "narration": "We keep prev and cur, both starting at zero. For each value, next is the max of cur and prev plus the value; then we slide: prev becomes cur and cur becomes next."
   },
   {
    "kind": "bullets",
@@ -51,6 +391,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Empty array → 0",
+    "Single element → itself",
+    "Negative numbers: allow choosing nothing (0)"
+   ],
+   "narration": "An empty array gives zero. With negatives, choosing nothing is allowed, which the zero initial values handle."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "This is House Robber",
+    "Follow-up: circular array (run twice)"
+   ],
+   "narration": "This is the classic house robber problem. The circular version runs the algorithm twice, excluding the first or last house."
   },
   {
    "kind": "bullets",

@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "All dot placements: at most 3·3·3 = 27 → O(1)",
+    "Validate each part",
+    "Input length > 12 → none"
+   ],
+   "narration": "There are at most twenty-seven ways to place three dots, so brute force is already constant time. The work is validating each part."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Try all positions for three dots",
@@ -35,13 +45,68 @@
    "narration": "Step by step. First, try all positions for three dots. Second, validate each part. Third, collect valid addresses."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "1.9.2.1680 ✗ (1680 > 255)",
+      "1.92.168.0 ✓",
+      "19.216.8.0 ✓"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Try three dot positions",
+   "narration": "Place three dots. Each part must be one to three digits, at most 255, with no leading zero.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "192.168.0 → but '0' fine; '01' ✗ (leading zero)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Leading zeros are invalid",
+   "narration": "Parts like zero one are invalid because of the leading zero, but a single zero is fine.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "1.9.216.80, 1.92.16.80, 1.92.168.0, 19.2.16.80, 19.2.168.0",
+      "19.21.6.80, 19.21.68.0, 19.216.8.0, 192.1.6.80, 192.1.68.0, 192.16.8.0"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "11 valid addresses",
+   "narration": "In total there are 11 valid addresses for one-nine-two-one-six-eight-zero.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ValidIpAddresses {\n    public static ArrayList<String> validIPAddresses(String s) {\n        ArrayList<String> out = new ArrayList<>();\n        for (int i = 1; i < Math.min(4, s.length()); i++)\n            for (int j = i + 1; j < Math.min(i + 4, s.length()); j++)\n                for (int k = j + 1; k < Math.min(j + 4, s.length()); k++) {\n                    String[] p = {s.substring(0, i), s.substring(i, j), s.substring(j, k), s.substring(k)};\n                    if (valid(p[0]) && valid(p[1]) && valid(p[2]) && valid(p[3])) out.add(String.join(\".\", p));\n                }\n        return out;\n    }\n\n    private static boolean valid(String p) {\n        if (p.isEmpty() || p.length() > 3 || (p.length() > 1 && p.charAt(0) == '0')) return false;\n        return Integer.parseInt(p) <= 255;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ValidIpAddresses.java",
-   "narration": "Here's the Java solution, starting with valid ip addresses. It follows the steps we just described."
+   "narration": "Three nested loops choose the dot positions, limited to three digits per part. Each split is kept if all four parts pass valid, which checks length, leading zero and the 255 limit."
   },
   {
    "kind": "bullets",
@@ -51,6 +116,24 @@
     "Space: O(1)"
    ],
    "narration": "Time is constant (bounded by 3^3 splits). Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Leading zeros",
+    "Parts > 255",
+    "Length < 4 or > 12"
+   ],
+   "narration": "Watch for leading zeros and parts over 255."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Show the bounded search clearly"
+   ],
+   "narration": "Explain why brute force is bounded and fine here."
   },
   {
    "kind": "bullets",

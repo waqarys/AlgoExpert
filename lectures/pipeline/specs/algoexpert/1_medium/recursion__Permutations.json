@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Build by inserting into every position → O(n!·n²)",
+    "Swap-based backtracking → O(n!·n)",
+    "Output size n! is the true lower bound"
+   ],
+   "narration": "Inserting each element into every position of smaller permutations works but copies a lot. Swap-based backtracking fixes one position at a time in place. Either way the output itself is n factorial."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Recurse on index i",
@@ -35,13 +45,223 @@
    "narration": "Step by step. First, recurse on index i. Second, swap each later element into position i. Third, recurse, then swap back."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      3
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "permutations: [[1, 2, 3]]"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Leaf → record [1, 2, 3]",
+   "narration": "All positions are fixed, so we record 1, 2, 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      3,
+      2
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "permutations: [[1, 2, 3], [1, 3, 2]]"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Leaf → record [1, 3, 2]",
+   "narration": "All positions are fixed, so we record 1, 3, 2.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      1,
+      3
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "permutations: [[1, 2, 3], [1, 3, 2], [2, 1, 3]]"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Leaf → record [2, 1, 3]",
+   "narration": "All positions are fixed, so we record 2, 1, 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      1
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "permutations: [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1]]"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Leaf → record [2, 3, 1]",
+   "narration": "All positions are fixed, so we record 2, 3, 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      2,
+      1
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "permutations: [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 2, 1]]"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Leaf → record [3, 2, 1]",
+   "narration": "All positions are fixed, so we record 3, 2, 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      1,
+      2
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "permutations: [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 2, 1], [3, 1, 2]]"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Leaf → record [3, 1, 2]",
+   "narration": "All positions are fixed, so we record 3, 1, 2.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class Permutations {\n    public static List<List<Integer>> getPermutations(List<Integer> array) {\n        List<List<Integer>> out = new ArrayList<>();\n        if (!array.isEmpty()) permute(0, new ArrayList<>(array), out);\n        return out;\n    }\n\n    private static void permute(int i, List<Integer> a, List<List<Integer>> out) {\n        if (i == a.size() - 1) { out.add(new ArrayList<>(a)); return; }\n        for (int j = i; j < a.size(); j++) { Collections.swap(a, i, j); permute(i + 1, a, out); Collections.swap(a, i, j); }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "Permutations.java",
-   "narration": "Here's the Java solution, starting with get permutations. It follows the steps we just described."
+   "narration": "If the array is non-empty we call permute from zero. At the last index we record a copy. Otherwise, for each j from i, swap i and j, recurse, and swap back."
   },
   {
    "kind": "bullets",
@@ -51,6 +271,25 @@
     "Space: O(n * n!)"
    ],
    "narration": "Time is O of n times n factorial. Space is O of n times n factorial."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Empty input → []",
+    "Undo the swap after recursing",
+    "Copy the array when recording"
+   ],
+   "narration": "Always undo the swap after recursing, and copy the array when you record it, or every result ends up the same list."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: duplicates → skip repeated values per position",
+    "Next permutation (lexicographic)"
+   ],
+   "narration": "With duplicates, skip values already used at a position. Next permutation is a common sibling question."
   },
   {
    "kind": "bullets",

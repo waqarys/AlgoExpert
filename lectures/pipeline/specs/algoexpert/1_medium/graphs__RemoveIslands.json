@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: DFS from each interior 1 to see if it reaches the border → O((w·h)²)",
+    "Flip the question: flood-fill from the border → O(w·h)",
+    "Mark safe cells in place (2), then rewrite"
+   ],
+   "narration": "Checking each interior one separately for a path to the border repeats work. Flipping the question, flood-filling from the border to mark safe cells, solves it in one linear pass."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Flood-fill from every border one, marking them safe",
@@ -36,13 +46,242 @@
    "narration": "Step by step. First, flood-fill from every border one, marking them safe. Second, turn the remaining ones into zeros. Third, restore the safe marks."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       1,
+       0,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       0,
+       1,
+       0,
+       1,
+       0
+      ],
+      [
+       1,
+       1,
+       0,
+       0,
+       1,
+       0
+      ],
+      [
+       1,
+       0,
+       1,
+       1,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "hl": {
+      "0,0": "ok",
+      "4,0": "ok",
+      "5,5": "ok",
+      "5,0": "ok",
+      "1,5": "ok",
+      "3,0": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Border 1s are safe (not islands)",
+   "narration": "Any one on the border, and anything connected to it, isn't an island. Start a flood fill from every border one.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       1,
+       0,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       0,
+       1,
+       0,
+       1,
+       0
+      ],
+      [
+       1,
+       1,
+       0,
+       0,
+       1,
+       0
+      ],
+      [
+       1,
+       0,
+       1,
+       1,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "hl": {
+      "2,4": "ok",
+      "4,0": "ok",
+      "3,4": "ok",
+      "1,5": "ok",
+      "3,1": "ok",
+      "1,3": "ok",
+      "5,5": "ok",
+      "0,0": "ok",
+      "1,4": "ok",
+      "3,0": "ok",
+      "5,0": "ok",
+      "1,1": "bad",
+      "2,2": "bad",
+      "4,2": "bad",
+      "4,3": "bad"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Flood fill done: red cells are islands",
+   "narration": "After the flood fill, the green ones are connected to the border. The red ones are islands.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       0,
+       0,
+       0,
+       1,
+       0
+      ],
+      [
+       1,
+       1,
+       0,
+       0,
+       1,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "hl": {
+      "1,1": "bad",
+      "2,2": "bad",
+      "4,2": "bad",
+      "4,3": "bad"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Islands removed",
+   "narration": "Turn the islands into zeros. Everything connected to the border stays.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class RemoveIslands {\n    public static int[][] removeIslands(int[][] m) {\n        int R = m.length, C = m[0].length;\n        ArrayDeque<int[]> st = new ArrayDeque<>();\n        for (int r = 0; r < R; r++) for (int c = 0; c < C; c++)\n            if ((r == 0 || c == 0 || r == R - 1 || c == C - 1) && m[r][c] == 1) { m[r][c] = 2; st.push(new int[]{r, c}); }\n        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n        while (!st.isEmpty()) {\n            int[] p = st.pop();\n            for (int[] d : dirs) {\n                int r = p[0] + d[0], c = p[1] + d[1];\n                if (r >= 0 && c >= 0 && r < R && c < C && m[r][c] == 1) { m[r][c] = 2; st.push(new int[]{r, c}); }\n            }\n        }\n        for (int[] row : m) for (int c = 0; c < C; c++) row[c] = row[c] == 2 ? 1 : 0;\n        return m;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "RemoveIslands.java",
-   "narration": "Here's the Java solution, starting with remove islands. It follows the steps we just described."
+   "narration": "We push every border one onto a stack and mark it two. Popping cells, we mark and push neighbouring ones. Finally, cells marked two become one and everything else becomes zero."
   },
   {
    "kind": "bullets",
@@ -52,6 +291,25 @@
     "Space: O(w*h)"
    ],
    "narration": "Time is O of w times h. Space is O of w times h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Diagonals don't connect (4-directional)",
+    "Recursive DFS can overflow on large grids → use a stack",
+    "Restore marks at the end"
+   ],
+   "narration": "Only four directions count. Use an explicit stack to avoid recursion depth problems, and convert the temporary marks back at the end."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same idea: Surrounded Regions",
+    "Follow-up: count islands (River Sizes)"
+   ],
+   "narration": "This is the surrounded regions pattern; counting islands is the River Sizes problem."
   },
   {
    "kind": "bullets",

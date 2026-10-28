@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Use an auxiliary stack → O(n²)",
+    "Recursion only (no extra structures) → O(n²) time, O(n) call stack",
+    "Insertion sort on a stack"
+   ],
+   "narration": "With only stack operations, this is insertion sort: sort the rest recursively, then insert the top into place. That's quadratic time and linear recursion depth."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Pop the top and sort the rest",
@@ -35,13 +45,209 @@
    "narration": "Step by step. First, pop the top and sort the rest. Second, insert it back. Third, insertion pops larger tops temporarily."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      1,
+      3,
+      4,
+      -2,
+      2,
+      -5
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "pop everything recursively…"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "Recursively pop until empty",
+   "narration": "Sort stack pops the top and recursively sorts the rest, until the stack is empty.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      -5
+     ],
+     "label": null,
+     "hl": {
+      "0": "cur"
+     },
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "insert -5 into sorted stack"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "Insert -5 into position",
+   "narration": "Unwinding, insert -5: pop larger tops, place it, and push them back.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      2,
+      -5
+     ],
+     "label": null,
+     "hl": {
+      "0": "cur"
+     },
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "insert 2 into sorted stack"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "Insert 2 into position",
+   "narration": "Unwinding, insert 2: pop larger tops, place it, and push them back.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      4,
+      2,
+      -2,
+      -5
+     ],
+     "label": null,
+     "hl": {
+      "0": "cur"
+     },
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "insert 4 into sorted stack"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "Insert 4 into position",
+   "narration": "Unwinding, insert 4: pop larger tops, place it, and push them back.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      4,
+      3,
+      2,
+      -2,
+      -5
+     ],
+     "label": null,
+     "hl": {
+      "1": "cur"
+     },
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "insert 3 into sorted stack"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "Insert 3 into position",
+   "narration": "Unwinding, insert 3: pop larger tops, place it, and push them back.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      4,
+      3,
+      2,
+      1,
+      -2,
+      -5
+     ],
+     "label": null,
+     "hl": {
+      "3": "cur"
+     },
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "insert 1 into sorted stack"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "Insert 1 into position",
+   "narration": "Unwinding, insert 1: pop larger tops, place it, and push them back.",
+   "layout": "cols"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SortStack {\n    public static ArrayList<Integer> sortStack(ArrayList<Integer> stack) {\n        if (stack.isEmpty()) return stack;\n        int top = stack.remove(stack.size() - 1);\n        sortStack(stack);\n        insert(stack, top);\n        return stack;\n    }\n\n    private static void insert(ArrayList<Integer> st, int v) {\n        if (st.isEmpty() || st.get(st.size() - 1) <= v) { st.add(v); return; }\n        int top = st.remove(st.size() - 1);\n        insert(st, v);\n        st.add(top);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SortStack.java",
-   "narration": "Here's the Java solution, starting with sort stack. It follows the steps we just described."
+   "narration": "Sort stack removes the top, sorts the rest, and inserts the top. Insert adds the value if the stack is empty or the top is smaller or equal; otherwise it removes the top, inserts recursively and pushes the top back."
   },
   {
    "kind": "bullets",
@@ -51,6 +257,24 @@
     "Space: O(n) recursion"
    ],
    "narration": "Time is O of n squared. Space is O of n recursion."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Base case: empty stack",
+    "Insert pops while top > value",
+    "Recursion depth = n"
+   ],
+   "narration": "Insert pops while the top is bigger than the value, places it, and pushes the popped values back."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention the auxiliary-stack iterative version"
+   ],
+   "narration": "Mention the iterative two-stack version as well."
   },
   {
    "kind": "bullets",

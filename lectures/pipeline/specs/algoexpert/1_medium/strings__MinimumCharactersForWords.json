@@ -26,6 +26,15 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Concatenate everything → too many chars",
+    "Per-char max frequency across words → O(total chars)"
+   ],
+   "narration": "Counting all characters together overcounts. What matters is, for each character, the maximum number of times any single word uses it."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Count characters per word",
@@ -35,13 +44,233 @@
    "narration": "Step by step. First, count characters per word. Second, keep the max per character. Third, emit each character that many times."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "h",
+       1
+      ],
+      [
+       "i",
+       1
+      ],
+      [
+       "s",
+       1
+      ],
+      [
+       "t",
+       1
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "char",
+      "max needed"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "after 'this'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "After 'this'",
+   "narration": "After this, each character's count is the max it needs in any single word.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "a",
+       1
+      ],
+      [
+       "h",
+       1
+      ],
+      [
+       "i",
+       1
+      ],
+      [
+       "s",
+       1
+      ],
+      [
+       "t",
+       2
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "char",
+      "max needed"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "after 'that'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "After 'that'",
+   "narration": "After that, each character's count is the max it needs in any single word.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "a",
+       1
+      ],
+      [
+       "d",
+       2
+      ],
+      [
+       "e",
+       2
+      ],
+      [
+       "h",
+       1
+      ],
+      [
+       "i",
+       1
+      ],
+      [
+       "s",
+       1
+      ],
+      [
+       "t",
+       2
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "char",
+      "max needed"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "after 'deed'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "After 'deed'",
+   "narration": "After deed, each character's count is the max it needs in any single word.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "!",
+       1
+      ],
+      [
+       "a",
+       1
+      ],
+      [
+       "d",
+       2
+      ],
+      [
+       "e",
+       2
+      ],
+      [
+       "h",
+       1
+      ],
+      [
+       "i",
+       1
+      ],
+      [
+       "m",
+       1
+      ],
+      [
+       "s",
+       1
+      ],
+      [
+       "t",
+       2
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "char",
+      "max needed"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "after 'them!'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "After 'them!'",
+   "narration": "After them!, each character's count is the max it needs in any single word.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MinimumCharactersForWords {\n    public static char[] minimumCharactersForWords(String[] words) {\n        TreeMap<Character, Integer> need = new TreeMap<>();\n        for (String w : words) {\n            TreeMap<Character, Integer> f = new TreeMap<>();\n            for (char c : w.toCharArray()) f.merge(c, 1, Integer::sum);\n            f.forEach((c, n) -> need.merge(c, n, Math::max));\n        }\n        List<Character> out = new ArrayList<>();\n        need.forEach((c, n) -> { for (int i = 0; i < n; i++) out.add(c); });\n        char[] r = new char[out.size()];\n        for (int i = 0; i < r.length; i++) r[i] = out.get(i);\n        return r;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MinimumCharactersForWords.java",
-   "narration": "Here's the Java solution, starting with minimum characters for words. It follows the steps we just described."
+   "narration": "For each word we count its characters and merge into need with max. Then we expand need into a character array."
   },
   {
    "kind": "bullets",
@@ -51,6 +280,24 @@
     "Space: O(c)"
    ],
    "narration": "Time is O of n times l. Space is O of c."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Take max, not sum",
+    "Special characters count",
+    "Output order doesn't matter"
+   ],
+   "narration": "Take the max per character, not the sum. Punctuation counts too."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: minimum chars to type words sequentially"
+   ],
+   "narration": "Explain why max is correct: one word at a time."
   },
   {
    "kind": "bullets",

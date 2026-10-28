@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Check every substring → O(n³)",
+    "DP table → O(n²) time and space",
+    "Expand around 2n − 1 centres → O(n²) time, O(1) space"
+   ],
+   "narration": "Checking every substring is cubic. A DP table is quadratic in time and space. Expanding around each of the two n minus one centres is quadratic time but constant space."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. For each index, expand odd and even centres",
@@ -35,13 +45,143 @@
    "narration": "Step by step. First, for each index, expand odd and even centres. Second, track the longest span. Third, return the substring."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "a",
+      "b",
+      "a",
+      "x",
+      "y",
+      "z",
+      "z",
+      "y",
+      "x",
+      "f"
+     ],
+     "hl": {
+      "0": "ok"
+     },
+     "ptr": {
+      "centre": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "odd centre at 0 → 'a'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "New best: 'a'",
+   "narration": "Expanding around the letter index 0 gives a, the longest so far.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "a",
+      "b",
+      "a",
+      "x",
+      "y",
+      "z",
+      "z",
+      "y",
+      "x",
+      "f"
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok"
+     },
+     "ptr": {
+      "centre": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "odd centre at 1 → 'aba'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "New best: 'aba'",
+   "narration": "Expanding around the letter index 1 gives a b a, the longest so far.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "a",
+      "b",
+      "a",
+      "x",
+      "y",
+      "z",
+      "z",
+      "y",
+      "x",
+      "f"
+     ],
+     "hl": {
+      "3": "ok",
+      "4": "ok",
+      "5": "ok",
+      "6": "ok",
+      "7": "ok",
+      "8": "ok"
+     },
+     "ptr": {
+      "centre": 5
+     },
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "even centre at 5 → 'xyzzyx'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "New best: 'xyzzyx'",
+   "narration": "Expanding around the gap after index 5 gives x y z z y x, the longest so far.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LongestPalindromicSubstring {\n    public static String longestPalindromicSubstring(String s) {\n        int bs = 0, be = 0;\n        for (int i = 0; i < s.length(); i++)\n            for (int j = i; j <= i + 1; j++) {\n                int l = i, r = j;\n                while (l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)) { l--; r++; }\n                if (r - l - 1 > be - bs) { bs = l + 1; be = r; }\n            }\n        return s.substring(bs, be);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LongestPalindromicSubstring.java",
-   "narration": "Here's the Java solution, starting with longest palindromic substring. It follows the steps we just described."
+   "narration": "For each i we expand from i,i and i,i plus one while the ends match, then compare the length r minus l minus one with the best and update."
   },
   {
    "kind": "bullets",
@@ -51,6 +191,24 @@
     "Space: O(n) output"
    ],
    "narration": "Time is O of n squared. Space is O of n output."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Even-length palindromes need gap centres",
+    "Single char string",
+    "Manacher's for O(n)"
+   ],
+   "narration": "Don't forget even-length palindromes, centred between letters."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention Manacher's algorithm"
+   ],
+   "narration": "Mention Manacher's algorithm for linear time."
   },
   {
    "kind": "bullets",

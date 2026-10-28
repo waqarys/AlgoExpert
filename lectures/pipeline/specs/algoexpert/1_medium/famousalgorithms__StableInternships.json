@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: check all n! matchings for stability",
+    "Gale–Shapley proposals → O(n²)",
+    "Precompute team rankings for O(1) comparisons"
+   ],
+   "narration": "Checking all n factorial matchings is hopeless. Gale-Shapley has interns propose in preference order, and each team keeps the best proposal so far. Each intern proposes at most n times, so it's quadratic."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Queue of free interns",
@@ -37,13 +47,428 @@
    "narration": "Step by step. First, queue of free interns. Second, each proposes to the next team on their list. Third, the team keeps the better intern. Fourth, rejected interns re-queue."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       1,
+       2
+      ],
+      [
+       0,
+       2,
+       1
+      ],
+      [
+       1,
+       2,
+       0
+      ]
+     ],
+     "hl": {},
+     "rowh": [
+      "intern 0",
+      "intern 1",
+      "intern 2"
+     ],
+     "colh": null,
+     "label": "intern preferences",
+     "h": 1,
+     "w": 0.33
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       2,
+       1,
+       0
+      ],
+      [
+       0,
+       1,
+       2
+      ],
+      [
+       0,
+       1,
+       2
+      ]
+     ],
+     "hl": {},
+     "rowh": [
+      "team 0",
+      "team 1",
+      "team 2"
+     ],
+     "colh": null,
+     "label": "team preferences",
+     "h": 1,
+     "w": 0.33
+    },
+    {
+     "type": "text",
+     "lines": [
+      "matches:",
+      "team 0 ↔ intern 0",
+      "team 1 ↔ –",
+      "team 2 ↔ –",
+      "free: [1, 2]"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.34,
+     "size": 18
+    }
+   ],
+   "caption": "Intern 0 proposes to team 0: team 0 was free → accepts intern 0",
+   "narration": "Intern 0 proposes to team 0, their next choice. Team 0 was free → accepts intern 0.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       1,
+       2
+      ],
+      [
+       0,
+       2,
+       1
+      ],
+      [
+       1,
+       2,
+       0
+      ]
+     ],
+     "hl": {},
+     "rowh": [
+      "intern 0",
+      "intern 1",
+      "intern 2"
+     ],
+     "colh": null,
+     "label": "intern preferences",
+     "h": 1,
+     "w": 0.33
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       2,
+       1,
+       0
+      ],
+      [
+       0,
+       1,
+       2
+      ],
+      [
+       0,
+       1,
+       2
+      ]
+     ],
+     "hl": {},
+     "rowh": [
+      "team 0",
+      "team 1",
+      "team 2"
+     ],
+     "colh": null,
+     "label": "team preferences",
+     "h": 1,
+     "w": 0.33
+    },
+    {
+     "type": "text",
+     "lines": [
+      "matches:",
+      "team 0 ↔ intern 1",
+      "team 1 ↔ –",
+      "team 2 ↔ –",
+      "free: [2, 0]"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.34,
+     "size": 18
+    }
+   ],
+   "caption": "Intern 1 proposes to team 0: team 0 prefers 1 over 0 → 0 is freed",
+   "narration": "Intern 1 proposes to team 0, their next choice. Team 0 prefers 1 over 0 → 0 is freed.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       1,
+       2
+      ],
+      [
+       0,
+       2,
+       1
+      ],
+      [
+       1,
+       2,
+       0
+      ]
+     ],
+     "hl": {},
+     "rowh": [
+      "intern 0",
+      "intern 1",
+      "intern 2"
+     ],
+     "colh": null,
+     "label": "intern preferences",
+     "h": 1,
+     "w": 0.33
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       2,
+       1,
+       0
+      ],
+      [
+       0,
+       1,
+       2
+      ],
+      [
+       0,
+       1,
+       2
+      ]
+     ],
+     "hl": {},
+     "rowh": [
+      "team 0",
+      "team 1",
+      "team 2"
+     ],
+     "colh": null,
+     "label": "team preferences",
+     "h": 1,
+     "w": 0.33
+    },
+    {
+     "type": "text",
+     "lines": [
+      "matches:",
+      "team 0 ↔ intern 1",
+      "team 1 ↔ intern 2",
+      "team 2 ↔ –",
+      "free: [0]"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.34,
+     "size": 18
+    }
+   ],
+   "caption": "Intern 2 proposes to team 1: team 1 was free → accepts intern 2",
+   "narration": "Intern 2 proposes to team 1, their next choice. Team 1 was free → accepts intern 2.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       1,
+       2
+      ],
+      [
+       0,
+       2,
+       1
+      ],
+      [
+       1,
+       2,
+       0
+      ]
+     ],
+     "hl": {},
+     "rowh": [
+      "intern 0",
+      "intern 1",
+      "intern 2"
+     ],
+     "colh": null,
+     "label": "intern preferences",
+     "h": 1,
+     "w": 0.33
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       2,
+       1,
+       0
+      ],
+      [
+       0,
+       1,
+       2
+      ],
+      [
+       0,
+       1,
+       2
+      ]
+     ],
+     "hl": {},
+     "rowh": [
+      "team 0",
+      "team 1",
+      "team 2"
+     ],
+     "colh": null,
+     "label": "team preferences",
+     "h": 1,
+     "w": 0.33
+    },
+    {
+     "type": "text",
+     "lines": [
+      "matches:",
+      "team 0 ↔ intern 1",
+      "team 1 ↔ intern 0",
+      "team 2 ↔ –",
+      "free: [2]"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.34,
+     "size": 18
+    }
+   ],
+   "caption": "Intern 0 proposes to team 1: team 1 prefers 0 over 2 → 2 is freed",
+   "narration": "Intern 0 proposes to team 1, their next choice. Team 1 prefers 0 over 2 → 2 is freed.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       1,
+       2
+      ],
+      [
+       0,
+       2,
+       1
+      ],
+      [
+       1,
+       2,
+       0
+      ]
+     ],
+     "hl": {},
+     "rowh": [
+      "intern 0",
+      "intern 1",
+      "intern 2"
+     ],
+     "colh": null,
+     "label": "intern preferences",
+     "h": 1,
+     "w": 0.33
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       2,
+       1,
+       0
+      ],
+      [
+       0,
+       1,
+       2
+      ],
+      [
+       0,
+       1,
+       2
+      ]
+     ],
+     "hl": {},
+     "rowh": [
+      "team 0",
+      "team 1",
+      "team 2"
+     ],
+     "colh": null,
+     "label": "team preferences",
+     "h": 1,
+     "w": 0.33
+    },
+    {
+     "type": "text",
+     "lines": [
+      "matches:",
+      "team 0 ↔ intern 1",
+      "team 1 ↔ intern 0",
+      "team 2 ↔ intern 2",
+      "free: []"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.34,
+     "size": 18
+    }
+   ],
+   "caption": "Intern 2 proposes to team 2: team 2 was free → accepts intern 2",
+   "narration": "Intern 2 proposes to team 2, their next choice. Team 2 was free → accepts intern 2.",
+   "layout": "cols"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class StableInternships {\n    public static int[][] stableInternships(int[][] interns, int[][] teams) {\n        int n = interns.length;\n        int[][] teamRank = new int[n][n];\n        for (int t = 0; t < n; t++) for (int r = 0; r < n; r++) teamRank[t][teams[t][r]] = r;\n        int[] teamMatch = new int[n], next = new int[n];\n        java.util.Arrays.fill(teamMatch, -1);\n        java.util.ArrayDeque<Integer> free = new java.util.ArrayDeque<>();\n        for (int i = 0; i < n; i++) free.add(i);\n        while (!free.isEmpty()) {\n            int i = free.poll(), t = interns[i][next[i]++];\n            int cur = teamMatch[t];\n            if (cur == -1) teamMatch[t] = i;\n            else if (teamRank[t][i] < teamRank[t][cur]) { teamMatch[t] = i; free.add(cur); }\n            else free.add(i);\n        }\n        int[][] out = new int[n][];\n        for (int t = 0; t < n; t++) out[teamMatch[t]] = new int[]{teamMatch[t], t};\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "StableInternships.java",
-   "narration": "Here's the Java solution, starting with stable internships. It follows the steps we just described."
+   "narration": "We build a rank table for teams, then a queue of free interns. Each free intern proposes to their next team. A free team accepts; otherwise the team keeps whichever intern it ranks higher and the other goes back in the queue. Finally we output intern-team pairs."
   },
   {
    "kind": "bullets",
@@ -53,6 +478,25 @@
     "Space: O(n^2)"
    ],
    "narration": "Time is O of n squared. Space is O of n squared."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Precompute rank[team][intern] for O(1) comparisons",
+    "Result is intern-optimal",
+    "Always terminates with a perfect matching"
+   ],
+   "narration": "Precompute each team's ranking of interns so comparisons are constant time. The result is the best stable matching for the proposing side."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why it's stable (no blocking pair)",
+    "Follow-up: who benefits — the proposing side"
+   ],
+   "narration": "Be ready to argue stability: no intern and team both prefer each other over their matches. The proposing side gets its best stable outcome."
   },
   {
    "kind": "bullets",

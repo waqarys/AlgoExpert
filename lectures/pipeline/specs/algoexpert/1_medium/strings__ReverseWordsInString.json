@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "split + reverse + join (library) → O(n)",
+    "Manual scan from the end collecting tokens → O(n)",
+    "In-place: reverse all, then reverse each word"
+   ],
+   "narration": "The library approach is fine but may lose spacing. Scanning from the end, collecting words and space runs, is linear. In place, reverse the whole string then each word."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Tokenise into words and spaces",
@@ -35,13 +45,90 @@
    "narration": "Step by step. First, tokenise into words and spaces. Second, reverse the token list. Third, join back."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "'AlgoExpert is the best!'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Input",
+   "narration": "Reverse the words, keeping the spaces exactly as they are.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "AlgoExpert",
+      "␣",
+      "is",
+      "␣",
+      "the",
+      "␣",
+      "best!"
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    }
+   ],
+   "caption": "Tokens: words and space runs",
+   "narration": "Split into words and runs of spaces.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "best!",
+      "␣",
+      "the",
+      "␣",
+      "is",
+      "␣",
+      "AlgoExpert"
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "'best! the is AlgoExpert'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Reverse token order",
+   "narration": "Reverse the tokens and join: best, is, the... reversed with spacing preserved.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ReverseWordsInString {\n    public static String reverseWordsInString(String s) {\n        StringBuilder out = new StringBuilder();\n        int end = s.length();\n        for (int i = s.length() - 1; i >= -1; i--) {\n            if (i == -1 || (s.charAt(i) == ' ') != (s.charAt(end - 1) == ' ')) {\n                out.append(s, i + 1, end);\n                end = i + 1;\n            }\n            if (end == 0) break;\n        }\n        return out.toString();\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ReverseWordsInString.java",
-   "narration": "Here's the Java solution, starting with reverse words in string. It follows the steps we just described."
+   "narration": "We scan from the end, and whenever we switch between space and non-space we append the token from i plus one to end, then move end."
   },
   {
    "kind": "bullets",
@@ -51,6 +138,24 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Multiple spaces preserved",
+    "Leading/trailing spaces",
+    "Empty string"
+   ],
+   "narration": "Preserve runs of spaces and leading or trailing spaces."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention the in-place two-reversal trick"
+   ],
+   "narration": "Mention the in-place two-reversal trick."
   },
   {
    "kind": "bullets",

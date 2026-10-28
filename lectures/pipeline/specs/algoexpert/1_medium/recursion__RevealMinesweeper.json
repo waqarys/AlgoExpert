@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Click a mine → X and stop",
+    "Count neighbours; if 0, flood-fill recursively",
+    "Each cell revealed once → O(w·h)"
+   ],
+   "narration": "If the click is a mine, mark it and stop. Otherwise count adjacent mines; if there are none, recursively reveal every neighbour. Each cell is revealed at most once."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. If a mine, mark X",
@@ -37,13 +47,283 @@
    "narration": "Step by step. First, if a mine, mark X. Second, count adjacent mines. Third, if zero, reveal neighbours recursively. Fourth, otherwise show the count."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "H",
+       "H",
+       "H",
+       "0"
+      ],
+      [
+       "H",
+       "M",
+       "H",
+       "H"
+      ],
+      [
+       "H",
+       "H",
+       "H",
+       "H"
+      ],
+      [
+       "H",
+       "H",
+       "H",
+       "M"
+      ]
+     ],
+     "hl": {
+      "0,3": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Reveal (0,3) → 0",
+   "narration": "Cell row 0, column 3 has 0 adjacent mines. Zero, so we reveal all its neighbours.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "H",
+       "H",
+       "1",
+       "0"
+      ],
+      [
+       "H",
+       "M",
+       "H",
+       "H"
+      ],
+      [
+       "H",
+       "H",
+       "H",
+       "H"
+      ],
+      [
+       "H",
+       "H",
+       "H",
+       "M"
+      ]
+     ],
+     "hl": {
+      "0,2": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Reveal (0,2) → 1",
+   "narration": "Cell row 0, column 2 has 1 adjacent mines. Non-zero, so we stop here.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "H",
+       "H",
+       "1",
+       "0"
+      ],
+      [
+       "H",
+       "M",
+       "1",
+       "H"
+      ],
+      [
+       "H",
+       "H",
+       "H",
+       "H"
+      ],
+      [
+       "H",
+       "H",
+       "H",
+       "M"
+      ]
+     ],
+     "hl": {
+      "1,2": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Reveal (1,2) → 1",
+   "narration": "Cell row 1, column 2 has 1 adjacent mines. Non-zero, so we stop here.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "H",
+       "H",
+       "1",
+       "0"
+      ],
+      [
+       "H",
+       "M",
+       "1",
+       "0"
+      ],
+      [
+       "H",
+       "H",
+       "H",
+       "H"
+      ],
+      [
+       "H",
+       "H",
+       "H",
+       "M"
+      ]
+     ],
+     "hl": {
+      "1,3": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Reveal (1,3) → 0",
+   "narration": "Cell row 1, column 3 has 0 adjacent mines. Zero, so we reveal all its neighbours.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "H",
+       "H",
+       "1",
+       "0"
+      ],
+      [
+       "H",
+       "M",
+       "1",
+       "0"
+      ],
+      [
+       "H",
+       "H",
+       "2",
+       "H"
+      ],
+      [
+       "H",
+       "H",
+       "H",
+       "M"
+      ]
+     ],
+     "hl": {
+      "2,2": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Reveal (2,2) → 2",
+   "narration": "Cell row 2, column 2 has 2 adjacent mines. Non-zero, so we stop here.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "H",
+       "H",
+       "1",
+       "0"
+      ],
+      [
+       "H",
+       "M",
+       "1",
+       "0"
+      ],
+      [
+       "H",
+       "H",
+       "2",
+       "1"
+      ],
+      [
+       "H",
+       "H",
+       "H",
+       "M"
+      ]
+     ],
+     "hl": {
+      "2,3": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Reveal (2,3) → 1",
+   "narration": "Cell row 2, column 3 has 1 adjacent mines. Non-zero, so we stop here.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class RevealMinesweeper {\n    public static String[][] revealMinesweeper(String[][] board, int row, int col) {\n        if (board[row][col].equals(\"M\")) { board[row][col] = \"X\"; return board; }\n        reveal(board, row, col);\n        return board;\n    }\n\n    private static void reveal(String[][] b, int r, int c) {\n        if (!b[r][c].equals(\"H\")) return;\n        int mines = 0;\n        for (int dr = -1; dr <= 1; dr++) for (int dc = -1; dc <= 1; dc++) {\n            int nr = r + dr, nc = c + dc;\n            if ((dr != 0 || dc != 0) && nr >= 0 && nc >= 0 && nr < b.length && nc < b[0].length && b[nr][nc].equals(\"M\")) mines++;\n        }\n        b[r][c] = String.valueOf(mines);\n        if (mines > 0) return;\n        for (int dr = -1; dr <= 1; dr++) for (int dc = -1; dc <= 1; dc++) {\n            int nr = r + dr, nc = c + dc;\n            if (nr >= 0 && nc >= 0 && nr < b.length && nc < b[0].length) reveal(b, nr, nc);\n        }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "RevealMinesweeper.java",
-   "narration": "Here's the Java solution, starting with reveal minesweeper. It follows the steps we just described."
+   "narration": "If the clicked cell is a mine we mark it X. Reveal returns for non-hidden cells, counts mines in the eight neighbours, writes the count, and recurses on neighbours only when the count is zero."
   },
   {
    "kind": "bullets",
@@ -53,6 +333,25 @@
     "Space: O(w*h)"
    ],
    "narration": "Time is O of w times h. Space is O of w times h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "8-directional neighbours",
+    "Only recurse on hidden cells (no re-visits)",
+    "Only recurse from zeros"
+   ],
+   "narration": "Neighbours include diagonals. Only hidden cells recurse, which prevents infinite loops, and only zero cells spread."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention BFS to avoid deep recursion",
+    "Follow-up: generate a board, first click safe"
+   ],
+   "narration": "On huge boards, a queue avoids deep recursion."
   },
   {
    "kind": "bullets",

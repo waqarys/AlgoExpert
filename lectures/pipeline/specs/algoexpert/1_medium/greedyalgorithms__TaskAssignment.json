@@ -28,6 +28,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: try every pairing → (2k)! / (2^k · k!)",
+    "Greedy: sort, pair ends → O(n log n)",
+    "Exchange argument proves optimality"
+   ],
+   "narration": "Trying every pairing explodes combinatorially. Sorting and pairing the shortest with the longest balances the load in n log n. An exchange argument shows any other pairing can't lower the maximum."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Sort task indices by duration",
@@ -37,13 +47,168 @@
    "narration": "Step by step. First, sort task indices by duration. Second, pair the ends moving inward. Third, return the index pairs."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      3,
+      5,
+      3,
+      1,
+      4
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "task durations",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      0,
+      4,
+      1,
+      3,
+      5,
+      2
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "indices sorted by duration",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Sort task indices by duration",
+   "narration": "Sort the task indices by duration, keeping the original indices so we can report them.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      3,
+      3,
+      4,
+      5
+     ],
+     "hl": {
+      "0": "ok",
+      "5": "ok"
+     },
+     "ptr": {},
+     "label": "sorted durations",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "worker 1: tasks 0 & 2 → 1 + 5 = 6"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Pair shortest with longest: 1 + 5",
+   "narration": "Worker 1 gets the shortest remaining task, 1, with the longest, 5, for a total of 6.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      3,
+      3,
+      4,
+      5
+     ],
+     "hl": {
+      "1": "ok",
+      "4": "ok",
+      "0": "done",
+      "5": "done"
+     },
+     "ptr": {},
+     "label": "sorted durations",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "worker 2: tasks 4 & 5 → 1 + 4 = 5"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Pair shortest with longest: 1 + 4",
+   "narration": "Worker 2 gets the shortest remaining task, 1, with the longest, 4, for a total of 5.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      3,
+      3,
+      4,
+      5
+     ],
+     "hl": {
+      "2": "ok",
+      "3": "ok",
+      "0": "done",
+      "1": "done",
+      "4": "done",
+      "5": "done"
+     },
+     "ptr": {},
+     "label": "sorted durations",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "worker 3: tasks 1 & 3 → 3 + 3 = 6"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Pair shortest with longest: 3 + 3",
+   "narration": "Worker 3 gets the shortest remaining task, 3, with the longest, 3, for a total of 6.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class TaskAssignment {\n    public static List<List<Integer>> taskAssignment(int k, List<Integer> tasks) {\n        List<Integer> idx = new ArrayList<>();\n        for (int i = 0; i < tasks.size(); i++) idx.add(i);\n        idx.sort(Comparator.comparingInt(tasks::get));\n        List<List<Integer>> out = new ArrayList<>();\n        for (int i = 0; i < k; i++) out.add(List.of(idx.get(i), idx.get(idx.size() - 1 - i)));\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "TaskAssignment.java",
-   "narration": "Here's the Java solution, starting with task assignment. It follows the steps we just described."
+   "narration": "We build a list of indices, sort it by task duration, and for i from zero to k pair the i-th smallest with the i-th largest."
   },
   {
    "kind": "bullets",
@@ -53,6 +218,25 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n log n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Keep original indices (sort indices, not values)",
+    "Duplicate durations",
+    "Exactly 2k tasks"
+   ],
+   "narration": "Sort indices rather than values, so duplicates still map to the right task numbers."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Sketch the exchange argument",
+    "Follow-up: workers take more than two tasks (harder, partition-like)"
+   ],
+   "narration": "Sketch the exchange argument briefly. If each worker can take more than two tasks, it becomes a much harder partition problem."
   },
   {
    "kind": "bullets",

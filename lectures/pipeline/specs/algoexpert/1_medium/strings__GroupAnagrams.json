@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Compare every pair with a frequency check → O(w²·n)",
+    "Sorted-letters key in a hash map → O(w · n log n)",
+    "Count-array key → O(w · n)"
+   ],
+   "narration": "Comparing every pair of words is quadratic. Using the sorted letters as a hash key groups anagrams in one pass. A 26-letter count key avoids the sort."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Sort each word's letters",
@@ -35,13 +45,227 @@
    "narration": "Step by step. First, sort each word's letters. Second, group words by that key. Third, return the groups."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "oy",
+       "yo"
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "sorted key",
+      "words"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "'yo' → key 'oy'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'yo' → 'oy'",
+   "narration": "Sort the letters of yo to get the key oy, and add it to that group.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "oy",
+       "yo"
+      ],
+      [
+       "act",
+       "act, tac"
+      ],
+      [
+       "flop",
+       "flop"
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "sorted key",
+      "words"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "'tac' → key 'act'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'tac' → 'act'",
+   "narration": "Sort the letters of tac to get the key act, and add it to that group.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "oy",
+       "yo"
+      ],
+      [
+       "act",
+       "act, tac, cat"
+      ],
+      [
+       "flop",
+       "flop"
+      ],
+      [
+       "foo",
+       "foo"
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "sorted key",
+      "words"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "'cat' → key 'act'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'cat' → 'act'",
+   "narration": "Sort the letters of cat to get the key act, and add it to that group.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "oy",
+       "yo, oy"
+      ],
+      [
+       "act",
+       "act, tac, cat"
+      ],
+      [
+       "flop",
+       "flop"
+      ],
+      [
+       "foo",
+       "foo"
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "sorted key",
+      "words"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "'oy' → key 'oy'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'oy' → 'oy'",
+   "narration": "Sort the letters of oy to get the key oy, and add it to that group.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "oy",
+       "yo, oy"
+      ],
+      [
+       "act",
+       "act, tac, cat"
+      ],
+      [
+       "flop",
+       "flop, olfp"
+      ],
+      [
+       "foo",
+       "foo"
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "sorted key",
+      "words"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "'olfp' → key 'flop'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'olfp' → 'flop'",
+   "narration": "Sort the letters of olfp to get the key flop, and add it to that group.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class GroupAnagrams {\n    public static List<List<String>> groupAnagrams(List<String> words) {\n        Map<String, List<String>> groups = new LinkedHashMap<>();\n        for (String w : words) {\n            char[] c = w.toCharArray();\n            Arrays.sort(c);\n            groups.computeIfAbsent(new String(c), k -> new ArrayList<>()).add(w);\n        }\n        return new ArrayList<>(groups.values());\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "GroupAnagrams.java",
-   "narration": "Here's the Java solution, starting with group anagrams. It follows the steps we just described."
+   "narration": "For each word we sort its characters to form a key, and add the word to that key's list in a linked hash map, then return the lists."
   },
   {
    "kind": "bullets",
@@ -51,6 +275,24 @@
     "Space: O(w * n)"
    ],
    "narration": "Time is O of w times n log n. Space is O of w times n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Empty list → []",
+    "Keep insertion order if required",
+    "Case sensitivity"
+   ],
+   "narration": "Handle the empty list, and decide on case sensitivity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention the count-key optimisation"
+   ],
+   "narration": "Mention the count-array key as a further optimisation."
   },
   {
    "kind": "bullets",
