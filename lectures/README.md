@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 3:43 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 5:26 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (175)
+## AlgoExpert (191)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -134,6 +134,22 @@ Built with [`pipeline/`](pipeline/README.md).
 | medium / heaps / Min Heap Construction | 2:29 | [mp4](algoexpert/medium/heaps/MinHeapConstruction/lecture.mp4) | [pdf](algoexpert/medium/heaps/MinHeapConstruction/slides.pdf) | [md](algoexpert/medium/heaps/MinHeapConstruction/transcript.md) |
 | medium / linkedlists / Linked List Construction | 2:51 | [mp4](algoexpert/medium/linkedlists/LinkedListConstruction/lecture.mp4) | [pdf](algoexpert/medium/linkedlists/LinkedListConstruction/slides.pdf) | [md](algoexpert/medium/linkedlists/LinkedListConstruction/transcript.md) |
 | medium / linkedlists / Merging Linked Lists | 2:06 | [mp4](algoexpert/medium/linkedlists/MergingLinkedLists/lecture.mp4) | [pdf](algoexpert/medium/linkedlists/MergingLinkedLists/slides.pdf) | [md](algoexpert/medium/linkedlists/MergingLinkedLists/transcript.md) |
+| medium / linkedlists / Remove Kth Node From End | 2:00 | [mp4](algoexpert/medium/linkedlists/RemoveKthNodeFromEnd/lecture.mp4) | [pdf](algoexpert/medium/linkedlists/RemoveKthNodeFromEnd/slides.pdf) | [md](algoexpert/medium/linkedlists/RemoveKthNodeFromEnd/transcript.md) |
+| medium / linkedlists / Sum Of Linked Lists | 1:47 | [mp4](algoexpert/medium/linkedlists/SumOfLinkedLists/lecture.mp4) | [pdf](algoexpert/medium/linkedlists/SumOfLinkedLists/slides.pdf) | [md](algoexpert/medium/linkedlists/SumOfLinkedLists/transcript.md) |
+| medium / recursion / Blackjack Probability | 2:04 | [mp4](algoexpert/medium/recursion/BlackjackProbability/lecture.mp4) | [pdf](algoexpert/medium/recursion/BlackjackProbability/slides.pdf) | [md](algoexpert/medium/recursion/BlackjackProbability/transcript.md) |
+| medium / recursion / Permutations | 2:02 | [mp4](algoexpert/medium/recursion/Permutations/lecture.mp4) | [pdf](algoexpert/medium/recursion/Permutations/slides.pdf) | [md](algoexpert/medium/recursion/Permutations/transcript.md) |
+| medium / recursion / Phone Number Mnemonics | 1:47 | [mp4](algoexpert/medium/recursion/PhoneNumberMnemonics/lecture.mp4) | [pdf](algoexpert/medium/recursion/PhoneNumberMnemonics/slides.pdf) | [md](algoexpert/medium/recursion/PhoneNumberMnemonics/transcript.md) |
+| medium / recursion / Powerset | 1:51 | [mp4](algoexpert/medium/recursion/Powerset/lecture.mp4) | [pdf](algoexpert/medium/recursion/Powerset/slides.pdf) | [md](algoexpert/medium/recursion/Powerset/transcript.md) |
+| medium / recursion / Reveal Minesweeper | 2:19 | [mp4](algoexpert/medium/recursion/RevealMinesweeper/lecture.mp4) | [pdf](algoexpert/medium/recursion/RevealMinesweeper/slides.pdf) | [md](algoexpert/medium/recursion/RevealMinesweeper/transcript.md) |
+| medium / recursion / Staircase Traversal | 1:50 | [mp4](algoexpert/medium/recursion/StaircaseTraversal/lecture.mp4) | [pdf](algoexpert/medium/recursion/StaircaseTraversal/slides.pdf) | [md](algoexpert/medium/recursion/StaircaseTraversal/transcript.md) |
+| medium / searching / Search In Sorted Matrix | 2:04 | [mp4](algoexpert/medium/searching/SearchInSortedMatrix/lecture.mp4) | [pdf](algoexpert/medium/searching/SearchInSortedMatrix/slides.pdf) | [md](algoexpert/medium/searching/SearchInSortedMatrix/transcript.md) |
+| medium / sorting / Three Number Sort | 1:51 | [mp4](algoexpert/medium/sorting/ThreeNumberSort/lecture.mp4) | [pdf](algoexpert/medium/sorting/ThreeNumberSort/slides.pdf) | [md](algoexpert/medium/sorting/ThreeNumberSort/transcript.md) |
+| medium / stacks / Balanced Brackets | 1:41 | [mp4](algoexpert/medium/stacks/BalancedBrackets/lecture.mp4) | [pdf](algoexpert/medium/stacks/BalancedBrackets/slides.pdf) | [md](algoexpert/medium/stacks/BalancedBrackets/transcript.md) |
+| medium / stacks / Best Digits | 1:56 | [mp4](algoexpert/medium/stacks/BestDigits/lecture.mp4) | [pdf](algoexpert/medium/stacks/BestDigits/slides.pdf) | [md](algoexpert/medium/stacks/BestDigits/transcript.md) |
+| medium / stacks / Colliding Asteroids | 2:00 | [mp4](algoexpert/medium/stacks/CollidingAsteroids/lecture.mp4) | [pdf](algoexpert/medium/stacks/CollidingAsteroids/slides.pdf) | [md](algoexpert/medium/stacks/CollidingAsteroids/transcript.md) |
+| medium / stacks / Min Max Stack Construction | 2:10 | [mp4](algoexpert/medium/stacks/MinMaxStackConstruction/lecture.mp4) | [pdf](algoexpert/medium/stacks/MinMaxStackConstruction/slides.pdf) | [md](algoexpert/medium/stacks/MinMaxStackConstruction/transcript.md) |
+| medium / stacks / Next Greater Element | 1:54 | [mp4](algoexpert/medium/stacks/NextGreaterElement/lecture.mp4) | [pdf](algoexpert/medium/stacks/NextGreaterElement/slides.pdf) | [md](algoexpert/medium/stacks/NextGreaterElement/transcript.md) |
+| medium / stacks / Reverse Polish Notation | 1:55 | [mp4](algoexpert/medium/stacks/ReversePolishNotation/lecture.mp4) | [pdf](algoexpert/medium/stacks/ReversePolishNotation/slides.pdf) | [md](algoexpert/medium/stacks/ReversePolishNotation/transcript.md) |
 | hard / arrays / Count Squares | 1:11 | [mp4](algoexpert/hard/arrays/CountSquares/lecture.mp4) | [pdf](algoexpert/hard/arrays/CountSquares/slides.pdf) | [md](algoexpert/hard/arrays/CountSquares/transcript.md) |
 | hard / arrays / Four Number Sum | 1:11 | [mp4](algoexpert/hard/arrays/FourNumberSum/lecture.mp4) | [pdf](algoexpert/hard/arrays/FourNumberSum/slides.pdf) | [md](algoexpert/hard/arrays/FourNumberSum/transcript.md) |
 | hard / arrays / Knight Connection | 1:07 | [mp4](algoexpert/hard/arrays/KnightConnection/lecture.mp4) | [pdf](algoexpert/hard/arrays/KnightConnection/slides.pdf) | [md](algoexpert/hard/arrays/KnightConnection/transcript.md) |
