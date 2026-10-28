@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (62)
+## AlgoExpert (72)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -117,3 +117,13 @@ Built with [`pipeline/`](pipeline/README.md).
 | medium / dynamicprogramming / Max Subset Sum No Adjacent | 0:58 | [mp4](algoexpert/medium/dynamicprogramming/MaxSubsetSumNoAdjacent/lecture.mp4) | [pdf](algoexpert/medium/dynamicprogramming/MaxSubsetSumNoAdjacent/slides.pdf) | [md](algoexpert/medium/dynamicprogramming/MaxSubsetSumNoAdjacent/transcript.md) |
 | medium / dynamicprogramming / Min Number Of Coins For Change | 0:57 | [mp4](algoexpert/medium/dynamicprogramming/MinNumberOfCoinsForChange/lecture.mp4) | [pdf](algoexpert/medium/dynamicprogramming/MinNumberOfCoinsForChange/slides.pdf) | [md](algoexpert/medium/dynamicprogramming/MinNumberOfCoinsForChange/transcript.md) |
 | medium / dynamicprogramming / Number Of Ways To Make Change | 0:59 | [mp4](algoexpert/medium/dynamicprogramming/NumberOfWaysToMakeChange/lecture.mp4) | [pdf](algoexpert/medium/dynamicprogramming/NumberOfWaysToMakeChange/slides.pdf) | [md](algoexpert/medium/dynamicprogramming/NumberOfWaysToMakeChange/transcript.md) |
+| medium / dynamicprogramming / Number Of Ways To Traverse Graph | 1:09 | [mp4](algoexpert/medium/dynamicprogramming/NumberOfWaysToTraverseGraph/lecture.mp4) | [pdf](algoexpert/medium/dynamicprogramming/NumberOfWaysToTraverseGraph/slides.pdf) | [md](algoexpert/medium/dynamicprogramming/NumberOfWaysToTraverseGraph/transcript.md) |
+| medium / famousalgorithms / Kadanes Algorithm | 0:59 | [mp4](algoexpert/medium/famousalgorithms/KadanesAlgorithm/lecture.mp4) | [pdf](algoexpert/medium/famousalgorithms/KadanesAlgorithm/slides.pdf) | [md](algoexpert/medium/famousalgorithms/KadanesAlgorithm/transcript.md) |
+| medium / famousalgorithms / Stable Internships | 1:07 | [mp4](algoexpert/medium/famousalgorithms/StableInternships/lecture.mp4) | [pdf](algoexpert/medium/famousalgorithms/StableInternships/slides.pdf) | [md](algoexpert/medium/famousalgorithms/StableInternships/transcript.md) |
+| medium / famousalgorithms / Union Find | 1:04 | [mp4](algoexpert/medium/famousalgorithms/UnionFind/lecture.mp4) | [pdf](algoexpert/medium/famousalgorithms/UnionFind/slides.pdf) | [md](algoexpert/medium/famousalgorithms/UnionFind/transcript.md) |
+| medium / graphs / Breadth First Search | 0:54 | [mp4](algoexpert/medium/graphs/BreadthFirstSearch/lecture.mp4) | [pdf](algoexpert/medium/graphs/BreadthFirstSearch/slides.pdf) | [md](algoexpert/medium/graphs/BreadthFirstSearch/transcript.md) |
+| medium / graphs / Cycle In Graph | 1:00 | [mp4](algoexpert/medium/graphs/CycleInGraph/lecture.mp4) | [pdf](algoexpert/medium/graphs/CycleInGraph/slides.pdf) | [md](algoexpert/medium/graphs/CycleInGraph/transcript.md) |
+| medium / graphs / Minimum Passes Of Matrix | 1:10 | [mp4](algoexpert/medium/graphs/MinimumPassesOfMatrix/lecture.mp4) | [pdf](algoexpert/medium/graphs/MinimumPassesOfMatrix/slides.pdf) | [md](algoexpert/medium/graphs/MinimumPassesOfMatrix/transcript.md) |
+| medium / graphs / Remove Islands | 1:03 | [mp4](algoexpert/medium/graphs/RemoveIslands/lecture.mp4) | [pdf](algoexpert/medium/graphs/RemoveIslands/slides.pdf) | [md](algoexpert/medium/graphs/RemoveIslands/transcript.md) |
+| medium / graphs / River Sizes | 0:59 | [mp4](algoexpert/medium/graphs/RiverSizes/lecture.mp4) | [pdf](algoexpert/medium/graphs/RiverSizes/slides.pdf) | [md](algoexpert/medium/graphs/RiverSizes/transcript.md) |
+| medium / graphs / Single Cycle Check | 1:03 | [mp4](algoexpert/medium/graphs/SingleCycleCheck/lecture.mp4) | [pdf](algoexpert/medium/graphs/SingleCycleCheck/slides.pdf) | [md](algoexpert/medium/graphs/SingleCycleCheck/transcript.md) |
