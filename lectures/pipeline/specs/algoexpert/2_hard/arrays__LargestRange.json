@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Sort then scan → O(n log n)",
+    "Hash set + only expand from range starts → O(n)",
+    "Each number visited at most twice"
+   ],
+   "narration": "Sorting and scanning for consecutive runs is n log n. With a hash set, expand only from numbers with no predecessor; each number is touched at most twice, so it's linear."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Put all numbers in a set",
@@ -35,13 +45,148 @@
    "narration": "Step by step. First, put all numbers in a set. Second, for each number without number minus one, extend upward. Third, track the longest run's bounds."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      10,
+      11,
+      12,
+      15
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok",
+      "4": "ok",
+      "5": "ok",
+      "6": "ok",
+      "7": "ok"
+     },
+     "ptr": {},
+     "label": "set (shown sorted for readability)",
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "0 starts a range (no -1) → [0, 7]",
+      "best = [0, 7]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Range starting at 0: [0, 7]",
+   "narration": "0 has no predecessor, so it starts a range. Walking up gives 0 to 7. The best so far is 0 to 7.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      10,
+      11,
+      12,
+      15
+     ],
+     "hl": {
+      "8": "ok",
+      "9": "ok",
+      "10": "ok"
+     },
+     "ptr": {},
+     "label": "set (shown sorted for readability)",
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "10 starts a range (no 9) → [10, 12]",
+      "best = [0, 7]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Range starting at 10: [10, 12]",
+   "narration": "10 has no predecessor, so it starts a range. Walking up gives 10 to 12. The best so far is 0 to 7.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      10,
+      11,
+      12,
+      15
+     ],
+     "hl": {
+      "11": "ok"
+     },
+     "ptr": {},
+     "label": "set (shown sorted for readability)",
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "15 starts a range (no 14) → [15, 15]",
+      "best = [0, 7]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Range starting at 15: [15, 15]",
+   "narration": "15 has no predecessor, so it starts a range. Walking up gives 15 to 15. The best so far is 0 to 7.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LargestRange {\n    public static int[] largestRange(int[] a) {\n        Set<Integer> s = new HashSet<>();\n        for (int x : a) s.add(x);\n        int[] best = {a[0], a[0]};\n        for (int x : s) {\n            if (s.contains(x - 1)) continue;\n            int y = x;\n            while (s.contains(y + 1)) y++;\n            if (y - x > best[1] - best[0]) best = new int[]{x, y};\n        }\n        return best;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LargestRange.java",
-   "narration": "Here's the Java solution, starting with largest range. It follows the steps we just described."
+   "narration": "We put everything in a set. For each value with no predecessor, we walk up while the next exists, and keep the widest range."
   },
   {
    "kind": "bullets",
@@ -51,6 +196,24 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Duplicates",
+    "Single element → [x, x]",
+    "Only start from range beginnings, or it's O(n²)"
+   ],
+   "narration": "If you expand from every number, it's quadratic. Only start where x minus one is missing."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same as Longest Consecutive Sequence"
+   ],
+   "narration": "This is the longest consecutive sequence problem."
   },
   {
    "kind": "bullets",

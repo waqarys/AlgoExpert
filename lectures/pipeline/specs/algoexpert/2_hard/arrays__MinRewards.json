@@ -28,6 +28,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: repeat fixes until stable → O(n²)",
+    "Expand from local minima → O(n)",
+    "Two passes (left, right) → O(n)"
+   ],
+   "narration": "Repeatedly fixing violations is quadratic. Two passes, one for each direction, satisfy left and right constraints in linear time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Everyone starts with one",
@@ -38,13 +48,194 @@
    "narration": "Step by step. First, everyone starts with one. Second, left to right, give one more than a lower left neighbour. Third, right to left, ensure one more than a lower right neighbour. Fourth, sum the rewards."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      8,
+      4,
+      2,
+      1,
+      3,
+      6,
+      7,
+      9,
+      5
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "scores",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "rewards",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Start: everyone gets 1",
+   "narration": "Everyone starts with one reward.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      8,
+      4,
+      2,
+      1,
+      3,
+      6,
+      7,
+      9,
+      5
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "scores",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      1,
+      1,
+      2,
+      3,
+      4,
+      5,
+      1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "rewards after left→right",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Left pass: beat left neighbour → +1",
+   "narration": "Left to right: if a student beats their left neighbour, give them one more than that neighbour.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      8,
+      4,
+      2,
+      1,
+      3,
+      6,
+      7,
+      9,
+      5
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "scores",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      4,
+      3,
+      2,
+      1,
+      2,
+      3,
+      4,
+      5,
+      1
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": "rewards after right→left",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Right pass: beat right neighbour → max(own, right + 1)",
+   "narration": "Right to left: if a student beats their right neighbour, take the max of what they have and one more than the right neighbour.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      4,
+      3,
+      2,
+      1,
+      2,
+      3,
+      4,
+      5,
+      1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "sum = 25"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Total = 25",
+   "narration": "Summing gives 25 rewards, the minimum that satisfies both neighbours.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MinRewards {\n    public static int minRewards(int[] scores) {\n        int n = scores.length;\n        int[] r = new int[n];\n        java.util.Arrays.fill(r, 1);\n        for (int i = 1; i < n; i++) if (scores[i] > scores[i - 1]) r[i] = r[i - 1] + 1;\n        for (int i = n - 2; i >= 0; i--) if (scores[i] > scores[i + 1]) r[i] = Math.max(r[i], r[i + 1] + 1);\n        int sum = 0;\n        for (int x : r) sum += x;\n        return sum;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MinRewards.java",
-   "narration": "Here's the Java solution, starting with min rewards. It follows the steps we just described."
+   "narration": "We fill rewards with one, sweep left giving one more than the left neighbour when higher, sweep right taking the max with right plus one, and sum."
   },
   {
    "kind": "bullets",
@@ -54,6 +245,24 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Use max in the second pass",
+    "Scores are unique",
+    "Single student → 1"
+   ],
+   "narration": "In the second pass, take the max, or you'll undo the left pass."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same as LeetCode Candy"
+   ],
+   "narration": "This is the candy problem."
   },
   {
    "kind": "bullets",

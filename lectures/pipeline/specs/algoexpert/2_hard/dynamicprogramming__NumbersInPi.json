@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Try every split → exponential",
+    "Memoised suffix DP → O(n² + m)",
+    "Hash set for O(1) lookups"
+   ],
+   "narration": "Trying every split is exponential. A DP over suffixes, the fewest spaces from index i onward, is quadratic with a hash set of numbers."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Put numbers in a set",
@@ -37,13 +47,243 @@
    "narration": "Step by step. First, put numbers in a set. Second, from each start, try every prefix in the set. Third, recurse on the rest with memo. Fourth, spaces equal pieces minus one."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "3",
+      "1",
+      "4",
+      "1",
+      "5",
+      "9",
+      "2"
+     ],
+     "hl": {
+      "6": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "array",
+     "values": [
+      "∞",
+      "∞",
+      "∞",
+      "∞",
+      "∞",
+      "∞",
+      0,
+      -1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "min spaces from i",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "i=6: 0",
+   "narration": "From index 6, try every favourite number starting here: the fewest spaces for the rest is 0.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "3",
+      "1",
+      "4",
+      "1",
+      "5",
+      "9",
+      "2"
+     ],
+     "hl": {
+      "5": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "array",
+     "values": [
+      "∞",
+      "∞",
+      "∞",
+      "∞",
+      "∞",
+      1,
+      0,
+      -1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "min spaces from i",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "i=5: 1",
+   "narration": "From index 5, try every favourite number starting here: the fewest spaces for the rest is 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "3",
+      "1",
+      "4",
+      "1",
+      "5",
+      "9",
+      "2"
+     ],
+     "hl": {
+      "4": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "array",
+     "values": [
+      "∞",
+      "∞",
+      "∞",
+      "∞",
+      2,
+      1,
+      0,
+      -1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "min spaces from i",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "i=4: 2",
+   "narration": "From index 4, try every favourite number starting here: the fewest spaces for the rest is 2.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "3",
+      "1",
+      "4",
+      "1",
+      "5",
+      "9",
+      "2"
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "array",
+     "values": [
+      "∞",
+      "∞",
+      1,
+      "∞",
+      2,
+      1,
+      0,
+      -1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "min spaces from i",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "i=2: 1",
+   "narration": "From index 2, try every favourite number starting here: the fewest spaces for the rest is 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "3",
+      "1",
+      "4",
+      "1",
+      "5",
+      "9",
+      "2"
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "array",
+     "values": [
+      2,
+      "∞",
+      1,
+      "∞",
+      2,
+      1,
+      0,
+      -1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "min spaces from i",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "i=0: 2",
+   "narration": "From index 0, try every favourite number starting here: the fewest spaces for the rest is 2.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class NumbersInPi {\n    public static int numbersInPi(String pi, String[] numbers) {\n        Set<String> set = new HashSet<>(Arrays.asList(numbers));\n        int n = pi.length();\n        int[] dp = new int[n + 1];\n        Arrays.fill(dp, Integer.MAX_VALUE);\n        dp[n] = -1;\n        for (int i = n - 1; i >= 0; i--)\n            for (int j = i + 1; j <= n; j++)\n                if (dp[j] != Integer.MAX_VALUE && set.contains(pi.substring(i, j))) dp[i] = Math.min(dp[i], dp[j] + 1);\n        return dp[0] == Integer.MAX_VALUE ? -1 : dp[0];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "NumbersInPi.java",
-   "narration": "Here's the Java solution, starting with numbers in pi. It follows the steps we just described."
+   "narration": "Dp of n is minus one. From the end backward, for each j, if the rest is solvable and pi from i to j is a favourite, take dp j plus one. Return dp zero or minus one."
   },
   {
    "kind": "bullets",
@@ -53,6 +293,24 @@
     "Space: O(n + m)"
    ],
    "narration": "Time is O of n cubed plus m. Space is O of n plus m."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "dp[n] = −1 (no space after the last number)",
+    "Impossible → −1",
+    "Substring cost"
+   ],
+   "narration": "Seed the end with minus one, because there's no space after the last number."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same as Word Break (min pieces)"
+   ],
+   "narration": "This is word break, minimising the pieces."
   },
   {
    "kind": "bullets",

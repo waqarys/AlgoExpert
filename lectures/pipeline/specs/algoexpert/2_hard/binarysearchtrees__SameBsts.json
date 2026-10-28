@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Build both BSTs and compare → O(n²) worst",
+    "Split into smaller/larger lists recursively → O(n²) time and space",
+    "Index-based recursion with bounds → O(n²) time, O(d) space"
+   ],
+   "narration": "Building both trees and comparing is straightforward. Without building, we can recursively compare roots and split each array into smaller and larger values. Passing indices and bounds avoids copying."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Compare first elements and lengths",
@@ -36,13 +46,198 @@
    "narration": "Step by step. First, compare first elements and lengths. Second, split each into smaller and bigger-or-equal lists keeping order. Third, recurse on both halves."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      10,
+      15,
+      8,
+      12,
+      94,
+      81,
+      5,
+      2,
+      11
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "array A",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      10,
+      8,
+      5,
+      15,
+      2,
+      12,
+      11,
+      94,
+      81
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "array B",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Same root? 10 = 10 ✓",
+   "narration": "Both arrays start with ten, so the roots match.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      8,
+      5,
+      2
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "A: smaller than 10",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      8,
+      5,
+      2
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "B: smaller than 10",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Left subtrees: [8, 5, 2] vs [8, 5, 2]",
+   "narration": "Values smaller than ten, in order, form the left subtree. Both start with eight; recurse.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      15,
+      12,
+      94,
+      81,
+      11
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "A: ≥ 10",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      15,
+      12,
+      11,
+      94,
+      81
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "B: ≥ 10",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Right subtrees: first is 15 in both",
+   "narration": "Values at least ten form the right subtree. Both begin with fifteen. Recursing all the way, everything matches.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       "2",
+       "1"
+      ],
+      "1": [
+       15,
+       "3",
+       "4"
+      ],
+      "2": [
+       8,
+       "6",
+       null
+      ],
+      "3": [
+       12,
+       "8",
+       null
+      ],
+      "4": [
+       94,
+       "5",
+       null
+      ],
+      "5": [
+       81,
+       null,
+       null
+      ],
+      "6": [
+       5,
+       "7",
+       null
+      ],
+      "7": [
+       2,
+       null,
+       null
+      ],
+      "8": [
+       11,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {},
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Same BST",
+   "narration": "So both arrays build exactly this BST, without us ever building it.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class SameBsts {\n    public static boolean sameBsts(List<Integer> a, List<Integer> b) {\n        if (a.size() != b.size()) return false;\n        if (a.isEmpty()) return true;\n        return same(a, b, 0, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);\n    }\n\n    private static boolean same(List<Integer> a, List<Integer> b, int ia, int ib, int min, int max) {\n        if (ia == -1 || ib == -1) return ia == ib;\n        if (!a.get(ia).equals(b.get(ib))) return false;\n        int v = a.get(ia);\n        return same(a, b, smaller(a, ia, min), smaller(b, ib, min), min, v)\n                && same(a, b, bigger(a, ia, max), bigger(b, ib, max), v, max);\n    }\n\n    private static int smaller(List<Integer> x, int start, int min) {\n        for (int i = start + 1; i < x.size(); i++) if (x.get(i) < x.get(start) && x.get(i) >= min) return i;\n        return -1;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "SameBsts_part1.java",
-   "narration": "Here's the Java solution, starting with same bsts. It follows the steps we just described."
+   "narration": "Same compares the current roots, then recurses on the first smaller element in range and the first bigger element in range, for both arrays, narrowing the min and max bounds."
   },
   {
    "kind": "code",
@@ -51,7 +246,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "SameBsts_part2.java",
-   "narration": "Continuing with bigger."
+   "narration": "Same compares the current roots, then recurses on the first smaller element in range and the first bigger element in range, for both arrays, narrowing the min and max bounds."
   },
   {
    "kind": "bullets",
@@ -61,6 +256,24 @@
     "Space: O(d)"
    ],
    "narration": "Time is O of n squared. Space is O of d."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Duplicates go right (≥)",
+    "Different lengths → false",
+    "Empty arrays → true"
+   ],
+   "narration": "Duplicates go to the right subtree. Different lengths mean different trees."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why relative order within subtrees matters"
+   ],
+   "narration": "Explain that only relative order within each subtree matters."
   },
   {
    "kind": "bullets",

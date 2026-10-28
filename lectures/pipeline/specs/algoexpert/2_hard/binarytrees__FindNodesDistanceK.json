@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Treat as graph: add parent pointers, BFS k levels → O(n)",
+    "Recursive distance-from-target approach also O(n)",
+    "Seen set prevents going back"
+   ],
+   "narration": "A tree only lets you go down, but distance can go up too. Recording parents turns it into an undirected graph, and BFS k levels from the target gives the answer in linear time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Map each node to its parent",
@@ -37,13 +47,203 @@
    "narration": "Step by step. First, map each node to its parent. Second, find the target. Third, bFS over left, right and parent. Fourth, collect nodes at distance k."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       null,
+       "6"
+      ],
+      "3": [
+       4,
+       null,
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "6": [
+       6,
+       "13",
+       "14"
+      ],
+      "13": [
+       7,
+       null,
+       null
+      ],
+      "14": [
+       8,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "2": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Target = 3, k = 2: start BFS at 3",
+   "narration": "We want nodes at distance two from three. First record each node's parent, then BFS from three.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       null,
+       "6"
+      ],
+      "3": [
+       4,
+       null,
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "6": [
+       6,
+       "13",
+       "14"
+      ],
+      "13": [
+       7,
+       null,
+       null
+      ],
+      "14": [
+       8,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "2": "cur",
+      "6": "ok",
+      "0": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Distance 1: [6, 1]",
+   "narration": "At distance 1, moving to children and to the parent, we reach 6, 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       null,
+       "6"
+      ],
+      "3": [
+       4,
+       null,
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "6": [
+       6,
+       "13",
+       "14"
+      ],
+      "13": [
+       7,
+       null,
+       null
+      ],
+      "14": [
+       8,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "6": "done",
+      "13": "ok",
+      "2": "cur",
+      "14": "ok",
+      "0": "done",
+      "1": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Distance 2: [7, 8, 2]",
+   "narration": "At distance 2, moving to children and to the parent, we reach 7, 8, 2.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class FindNodesDistanceK {\n    public static ArrayList<Integer> findNodesDistanceK(BinaryTree tree, int target, int k) {\n        Map<BinaryTree, BinaryTree> parent = new HashMap<>();\n        BinaryTree start = null;\n        ArrayDeque<BinaryTree> st = new ArrayDeque<>();\n        st.push(tree);\n        while (!st.isEmpty()) {\n            BinaryTree n = st.pop();\n            if (n.value == target) start = n;\n            for (BinaryTree c : new BinaryTree[]{n.left, n.right}) if (c != null) { parent.put(c, n); st.push(c); }\n        }\n        ArrayList<Integer> out = new ArrayList<>();\n        if (start == null) return out;\n        Set<BinaryTree> seen = new HashSet<>();\n        ArrayDeque<BinaryTree> q = new ArrayDeque<>();\n        q.add(start); seen.add(start);\n        for (int d = 0; d < k && !q.isEmpty(); d++) {\n            for (int s = q.size(); s > 0; s--) {\n                BinaryTree n = q.poll();\n                for (BinaryTree c : new BinaryTree[]{n.left, n.right, parent.get(n)})\n                    if (c != null && seen.add(c)) q.add(c);\n            }\n        }\n        for (BinaryTree n : q) out.add(n.value);\n        return out;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "FindNodesDistanceK.java",
-   "narration": "Here's the Java solution, starting with find nodes distance k. It follows the steps we just described."
+   "narration": "We DFS to build the parent map and locate the target, then BFS k levels, enqueuing unseen children and parent, and return the values in the queue."
   },
   {
    "kind": "bullets",
@@ -53,6 +253,24 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Target not found → []",
+    "k = 0 → [target]",
+    "Visited set to avoid bouncing back"
+   ],
+   "narration": "If k is zero, return the target itself. The seen set stops you from walking back along the same edge."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention the recursive O(1)-extra-space version"
+   ],
+   "narration": "There's also a recursive solution without parent maps."
   },
   {
    "kind": "bullets",

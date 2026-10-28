@@ -27,6 +27,15 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "For each node validate subtree, then sum → O(n²)",
+    "Single post-order pass returning (isBst, size, min, max, sum) → O(n)"
+   ],
+   "narration": "Validating each subtree separately is quadratic. One post-order pass that returns validity, size, min, max and sum lets every node decide in constant time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Return validity, size, sum, min and max from each subtree",
@@ -36,13 +45,312 @@
    "narration": "Step by step. First, return validity, size, sum, min and max from each subtree. Second, combine at the parent. Third, add sums of valid BSTs with three or more nodes."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       8,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       2,
+       null,
+       "6"
+      ],
+      "3": [
+       3,
+       null,
+       null
+      ],
+      "4": [
+       7,
+       "9",
+       "10"
+      ],
+      "6": [
+       1,
+       null,
+       null
+      ],
+      "9": [
+       6,
+       null,
+       null
+      ],
+      "10": [
+       9,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {},
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.6
+    },
+    {
+     "type": "text",
+     "lines": [
+      "post-order: each node returns",
+      "(isBst, size, min, max, sum)"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.4,
+     "size": 18
+    }
+   ],
+   "caption": "Post-order: return BST info upward",
+   "narration": "Each node returns whether its subtree is a BST, its size, min, max and sum, computed from its children.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       8,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       2,
+       null,
+       "6"
+      ],
+      "3": [
+       3,
+       null,
+       null
+      ],
+      "4": [
+       7,
+       "9",
+       "10"
+      ],
+      "6": [
+       1,
+       null,
+       null
+      ],
+      "9": [
+       6,
+       null,
+       null
+      ],
+      "10": [
+       9,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "4": "ok",
+      "9": "ok",
+      "10": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.6
+    },
+    {
+     "type": "text",
+     "lines": [
+      "subtree 7: {6, 7, 9}",
+      "BST, size 3 → sum 22"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.4
+    }
+   ],
+   "caption": "Subtree at 7 is a BST of size 3 → 22",
+   "narration": "The subtree rooted at seven, with six and nine, is a BST with three nodes, sum twenty-two.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       8,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       2,
+       null,
+       "6"
+      ],
+      "3": [
+       3,
+       null,
+       null
+      ],
+      "4": [
+       7,
+       "9",
+       "10"
+      ],
+      "6": [
+       1,
+       null,
+       null
+      ],
+      "9": [
+       6,
+       null,
+       null
+      ],
+      "10": [
+       9,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "1": "ok",
+      "3": "ok",
+      "4": "ok",
+      "9": "ok",
+      "10": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.6
+    },
+    {
+     "type": "text",
+     "lines": [
+      "subtree 5: 3 < 5 ≤ 6 ✓",
+      "BST, size 5 → sum 30",
+      "(replaces the 22 inside it)"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.4,
+     "size": 18
+    }
+   ],
+   "caption": "Subtree at 5 is a bigger BST → 30",
+   "narration": "At five, the left max is three and the right min is six, so it's a BST of five nodes summing to thirty. That replaces the twenty-two we counted inside it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       8,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       2,
+       null,
+       "6"
+      ],
+      "3": [
+       3,
+       null,
+       null
+      ],
+      "4": [
+       7,
+       "9",
+       "10"
+      ],
+      "6": [
+       1,
+       null,
+       null
+      ],
+      "9": [
+       6,
+       null,
+       null
+      ],
+      "10": [
+       9,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "2": "bad",
+      "6": "bad",
+      "0": "bad"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.6
+    },
+    {
+     "type": "text",
+     "lines": [
+      "subtree 2: right child 1 < 2 ✗",
+      "root 8: right side invalid ✗",
+      "answer = 30"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.4,
+     "size": 18
+    }
+   ],
+   "caption": "Other subtrees fail → answer 30",
+   "narration": "Two has a right child of one, which breaks the BST rule, so the root fails too. The answer is thirty.",
+   "layout": "cols"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SumBsts {\n    public static int sumBsts(BinaryTree t) { long[] total = {0}; info(t, total); return (int) total[0]; }\n\n    /** returns {isBst, size, min, max, sum} */\n    private static long[] info(BinaryTree t, long[] total) {\n        if (t == null) return new long[]{1, 0, Long.MAX_VALUE, Long.MIN_VALUE, 0};\n        long[] l = info(t.left, total), r = info(t.right, total);\n        boolean bst = l[0] == 1 && r[0] == 1 && l[3] < t.value && t.value <= r[2];\n        long size = l[1] + r[1] + 1, sum = l[4] + r[4] + t.value;\n        if (bst && size >= 3) {\n            total[0] += sum;\n            // children already counted? subtract their counted contributions to avoid double counting\n            if (l[1] >= 3) total[0] -= l[4];\n            if (r[1] >= 3) total[0] -= r[4];\n        }\n        return new long[]{bst ? 1 : 0, size, Math.min(l[2], t.value), Math.max(r[3], t.value), sum};\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SumBsts.java",
-   "narration": "Here's the Java solution, starting with sum bsts. It follows the steps we just described."
+   "narration": "Info recurses on both children, decides BST status from their max and min, and when the subtree is a BST of size three or more adds its sum, subtracting children already counted. It returns the tuple."
   },
   {
    "kind": "bullets",
@@ -52,6 +360,24 @@
     "Space: O(h)"
    ],
    "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Only BSTs with ≥ 3 nodes count",
+    "Don't double count nested BSTs",
+    "Empty subtree = valid, size 0"
+   ],
+   "narration": "Only subtrees with at least three nodes count, and a larger valid BST replaces the contributions of the smaller ones inside it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "State the returned tuple clearly"
+   ],
+   "narration": "State the tuple you return from each call clearly; it's the whole trick."
   },
   {
    "kind": "bullets",

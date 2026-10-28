@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Recurse over each die's face → O(sides^dice)",
+    "DP over (dice, total) → O(dice · target · sides)",
+    "Rolling array"
+   ],
+   "narration": "Trying every face combination is sides to the power dice. A DP over number of dice and total counts them in dice times target times sides."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. ways for total zero with no dice is one",
@@ -36,13 +46,96 @@
    "narration": "Step by step. First, ways for total zero with no dice is one. Second, for each die, roll every face. Third, shift counts forward. Fourth, read ways of target."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "ways to reach each total (0 dice)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "0 dice: one way to make 0",
+   "narration": "With zero dice, there's one way to make a total of zero.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "ways after 1 dice",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "After die 1: ways[7] = 0",
+   "narration": "Adding die 1, each total spreads to the next one to six totals. Now there are 0 ways to make seven.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+     ],
+     "hl": {
+      "7": "ok"
+     },
+     "ptr": {},
+     "label": "ways after 2 dice",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "After die 2: ways[7] = 6",
+   "narration": "Adding die 2, each total spreads to the next one to six totals. Now there are 6 ways to make seven.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class DiceThrows {\n    public static int diceThrows(int numDice, int numSides, int target) {\n        long[] ways = new long[target + 1];\n        ways[0] = 1;\n        for (int d = 0; d < numDice; d++) {\n            long[] next = new long[target + 1];\n            for (int t = 0; t <= target; t++) if (ways[t] != 0)\n                for (int s = 1; s <= numSides && t + s <= target; s++) next[t + s] += ways[t];\n            ways = next;\n        }\n        return (int) ways[target];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "DiceThrows.java",
-   "narration": "Here's the Java solution, starting with dice throws. It follows the steps we just described."
+   "narration": "Ways starts with one at zero. For each die, a new array spreads every reachable total to total plus one through total plus sides. Return ways of target."
   },
   {
    "kind": "bullets",
@@ -52,6 +145,24 @@
     "Space: O(t)"
    ],
    "narration": "Time is O of d times t times s. Space is O of t."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Target out of range → 0",
+    "Use long / mod for big counts",
+    "Skip zero entries"
+   ],
+   "narration": "Targets below the number of dice or above dice times sides have zero ways."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: probability = ways / sides^dice"
+   ],
+   "narration": "Dividing by sides to the dice gives the probability."
   },
   {
    "kind": "bullets",

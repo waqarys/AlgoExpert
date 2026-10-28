@@ -14,18 +14,54 @@ Here's the problem. Non-negative ints; start, end of the longest subarray summin
 
 Values are non-negative, so a sliding window grows to add and shrinks to subtract.
 
-## 4. Approach (0:27) — `slides/04.png`
+## 4. Brute force vs optimal (0:27) — `slides/04.png`
+
+Checking every subarray is quadratic. Since values are non-negative, a sliding window works: grow right, shrink left when the sum is too big, in linear time.
+
+## 5. Approach (0:37) — `slides/05.png`
 
 Step by step. First, expand the right edge adding values. Second, shrink from the left while the sum is too big. Third, record the longest window equal to target.
 
-## 5. Java solution (0:40) — `slides/05.png`
+## 6. Worked example (0:50) — `slides/06.png`
 
-Here's the Java solution, starting with longest subarray with sum. It follows the steps we just described.
+Extend to 1; the window sum is 1.
 
-## 6. Complexity (0:48) — `slides/06.png`
+## 7. Worked example (0:54) — `slides/07.png`
+
+Extend to 3; the window sum is 6.
+
+## 8. Worked example (0:58) — `slides/08.png`
+
+Extend to 3; the window sum is 10. Best so far: indices 0 to 3.
+
+## 9. Worked example (1:05) — `slides/09.png`
+
+Extend to 3; the window sum is 10. Best so far: indices 0 to 3.
+
+## 10. Worked example (1:12) — `slides/10.png`
+
+Extend to 2; the window sum is 9. Best so far: indices 0 to 3.
+
+## 11. Worked example (1:19) — `slides/11.png`
+
+Extend to 2; the window sum is 9. Best so far: indices 4 to 8.
+
+## 12. Java solution (1:25) — `slides/12.png`
+
+We grow r, add a r, shrink from l while the sum exceeds target, and record the window when it matches and is longer.
+
+## 13. Complexity (1:33) — `slides/13.png`
 
 Time is O of n. Space is constant.
 
-## 7. Recap (0:51) — `slides/07.png`
+## 14. Edge cases & pitfalls (1:36) — `slides/14.png`
+
+The window only works because values are non-negative; zeros can extend a match. With negatives, use prefix sums and a hash map.
+
+## 15. Interview tips & follow-ups (1:46) — `slides/15.png`
+
+Mention the prefix-sum and hash-map version for negative numbers.
+
+## 16. Recap (1:50) — `slides/16.png`
 
 To recap Longest Subarray With Sum: Values are non-negative, so a sliding window grows to add and shrinks to subtract. Try re-implementing it from scratch without looking.

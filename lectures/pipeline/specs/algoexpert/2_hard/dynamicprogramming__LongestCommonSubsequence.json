@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: all subsequences of one string → O(2ⁿ · m)",
+    "DP over prefixes → O(n·m)",
+    "Backtrack to recover the sequence"
+   ],
+   "narration": "Enumerating subsequences is exponential. A DP over prefixes is n times m, and backtracking recovers the actual letters."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Build the LCS length table",
@@ -36,13 +46,282 @@
    "narration": "Step by step. First, build the LCS length table. Second, equal characters add one to the diagonal. Third, otherwise take the max of top or left. Fourth, backtrack to recover the letters."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      [
+       0,
+       1,
+       1,
+       2,
+       2,
+       3,
+       3,
+       3
+      ],
+      [
+       0,
+       1,
+       1,
+       2,
+       2,
+       3,
+       3,
+       4
+      ]
+     ],
+     "hl": {
+      "1,5": "ok",
+      "2,1": "ok",
+      "5,3": "ok",
+      "6,5": "ok",
+      "7,7": "ok"
+     },
+     "rowh": [
+      "",
+      "Z",
+      "X",
+      "V",
+      "V",
+      "Y",
+      "Z",
+      "W"
+     ],
+     "colh": [
+      "",
+      "",
+      "X",
+      "K",
+      "Y",
+      "K",
+      "Z",
+      "P",
+      "W"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Fill: match → diagonal + 1, else max(up, left)",
+   "narration": "Fill the table: matching letters take the diagonal plus one; otherwise the max of above and left. Green cells are matches.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      [
+       0,
+       1,
+       1,
+       2,
+       2,
+       3,
+       3,
+       3
+      ],
+      [
+       0,
+       1,
+       1,
+       2,
+       2,
+       3,
+       3,
+       4
+      ]
+     ],
+     "hl": {
+      "7,7": "cur",
+      "6,6": "cur",
+      "6,5": "cur",
+      "5,4": "cur",
+      "5,3": "cur",
+      "4,2": "cur",
+      "3,2": "cur",
+      "2,2": "cur",
+      "2,1": "cur"
+     },
+     "rowh": [
+      "",
+      "Z",
+      "X",
+      "V",
+      "V",
+      "Y",
+      "Z",
+      "W"
+     ],
+     "colh": [
+      "",
+      "",
+      "X",
+      "K",
+      "Y",
+      "K",
+      "Z",
+      "P",
+      "W"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Backtrack from the bottom-right",
+   "narration": "Backtrack from the bottom-right: on a match, take the letter and go diagonally; otherwise move toward the larger neighbour.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "LCS = XYZW (length 4)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "LCS = XYZW",
+   "narration": "The longest common subsequence is X, Y, Z, W, length 4.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LongestCommonSubsequence {\n    public static List<Character> longestCommonSubsequence(String a, String b) {\n        int n = a.length(), m = b.length();\n        int[][] dp = new int[n + 1][m + 1];\n        for (int i = 1; i <= n; i++) for (int j = 1; j <= m; j++)\n            dp[i][j] = a.charAt(i - 1) == b.charAt(j - 1) ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1]);\n        List<Character> out = new ArrayList<>();\n        int i = n, j = m;\n        while (i > 0 && j > 0) {\n            if (a.charAt(i - 1) == b.charAt(j - 1)) { out.add(0, a.charAt(i - 1)); i--; j--; }\n            else if (dp[i - 1][j] >= dp[i][j - 1]) i--; else j--;\n        }\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LongestCommonSubsequence.java",
-   "narration": "Here's the Java solution, starting with longest common subsequence. It follows the steps we just described."
+   "narration": "We fill the table with the match-or-max rule, then walk back from n, m, prepending matching characters."
   },
   {
    "kind": "bullets",
@@ -52,6 +331,24 @@
     "Space: O(n*m)"
    ],
    "narration": "Time is O of n times m. Space is O of n times m."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Off-by-one with the padding row/column",
+    "Ties in backtracking: any choice valid",
+    "Empty string → []"
+   ],
+   "narration": "Mind the padding row and column. Ties during backtracking can go either way."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Relate to edit distance and diff tools"
+   ],
+   "narration": "Relate it to diff tools and edit distance."
   },
   {
    "kind": "bullets",

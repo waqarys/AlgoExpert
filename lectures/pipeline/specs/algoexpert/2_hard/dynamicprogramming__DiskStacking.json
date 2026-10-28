@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Try all subsets/orders → exponential",
+    "Sort by height, LIS-style DP → O(n²)",
+    "Back-pointers rebuild the stack"
+   ],
+   "narration": "Trying every order is exponential. Sorting by height and running a longest-increasing-subsequence style DP over strictly smaller disks is quadratic."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Sort by height",
@@ -37,13 +47,381 @@
    "narration": "Step by step. First, sort by height. Second, for each disk, check smaller earlier disks. Third, keep the best height and a predecessor link. Fourth, rebuild the stack."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       3,
+       1,
+       1
+      ],
+      [
+       2,
+       1,
+       2,
+       ""
+      ],
+      [
+       3,
+       2,
+       3,
+       ""
+      ],
+      [
+       2,
+       3,
+       4,
+       ""
+      ],
+      [
+       4,
+       4,
+       5,
+       ""
+      ],
+      [
+       2,
+       2,
+       8,
+       ""
+      ]
+     ],
+     "hl": {
+      "0,3": "cur"
+     },
+     "rowh": null,
+     "colh": [
+      "w",
+      "d",
+      "h",
+      "best height"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "disk [1, 3, 1]: best stack height 1"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Disk [1, 3, 1]: 1",
+   "narration": "Disk [1, 3, 1]: the tallest stack with it on the bottom is 1, alone.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       3,
+       1,
+       1
+      ],
+      [
+       2,
+       1,
+       2,
+       2
+      ],
+      [
+       3,
+       2,
+       3,
+       ""
+      ],
+      [
+       2,
+       3,
+       4,
+       ""
+      ],
+      [
+       4,
+       4,
+       5,
+       ""
+      ],
+      [
+       2,
+       2,
+       8,
+       ""
+      ]
+     ],
+     "hl": {
+      "1,3": "cur"
+     },
+     "rowh": null,
+     "colh": [
+      "w",
+      "d",
+      "h",
+      "best height"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "disk [2, 1, 2]: best stack height 2"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Disk [2, 1, 2]: 2",
+   "narration": "Disk [2, 1, 2]: the tallest stack with it on the bottom is 2, alone.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       3,
+       1,
+       1
+      ],
+      [
+       2,
+       1,
+       2,
+       2
+      ],
+      [
+       3,
+       2,
+       3,
+       5
+      ],
+      [
+       2,
+       3,
+       4,
+       ""
+      ],
+      [
+       4,
+       4,
+       5,
+       ""
+      ],
+      [
+       2,
+       2,
+       8,
+       ""
+      ]
+     ],
+     "hl": {
+      "2,3": "cur"
+     },
+     "rowh": null,
+     "colh": [
+      "w",
+      "d",
+      "h",
+      "best height"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "disk [3, 2, 3]: best stack height 5"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Disk [3, 2, 3]: 5",
+   "narration": "Disk [3, 2, 3]: the tallest stack with it on the bottom is 5, placing it under [2, 1, 2].",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       3,
+       1,
+       1
+      ],
+      [
+       2,
+       1,
+       2,
+       2
+      ],
+      [
+       3,
+       2,
+       3,
+       5
+      ],
+      [
+       2,
+       3,
+       4,
+       4
+      ],
+      [
+       4,
+       4,
+       5,
+       10
+      ],
+      [
+       2,
+       2,
+       8,
+       ""
+      ]
+     ],
+     "hl": {
+      "4,3": "cur"
+     },
+     "rowh": null,
+     "colh": [
+      "w",
+      "d",
+      "h",
+      "best height"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "disk [4, 4, 5]: best stack height 10"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Disk [4, 4, 5]: 10",
+   "narration": "Disk [4, 4, 5]: the tallest stack with it on the bottom is 10, placing it under [3, 2, 3].",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       3,
+       1,
+       1
+      ],
+      [
+       2,
+       1,
+       2,
+       2
+      ],
+      [
+       3,
+       2,
+       3,
+       5
+      ],
+      [
+       2,
+       3,
+       4,
+       4
+      ],
+      [
+       4,
+       4,
+       5,
+       10
+      ],
+      [
+       2,
+       2,
+       8,
+       8
+      ]
+     ],
+     "hl": {
+      "5,3": "cur"
+     },
+     "rowh": null,
+     "colh": [
+      "w",
+      "d",
+      "h",
+      "best height"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "disk [2, 2, 8]: best stack height 8"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Disk [2, 2, 8]: 8",
+   "narration": "Disk [2, 2, 8]: the tallest stack with it on the bottom is 8, alone.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "stack: [[2, 1, 2], [3, 2, 3], [4, 4, 5]]",
+      "height 10"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Best stack height 10",
+   "narration": "Following the back-pointers gives [[2, 1, 2], [3, 2, 3], [4, 4, 5]], height 10.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class DiskStacking {\n    public static List<Integer[]> diskStacking(List<Integer[]> disks) {\n        List<Integer[]> d = new ArrayList<>(disks);\n        d.sort(Comparator.comparingInt(x -> x[2]));\n        int n = d.size(), best = 0;\n        int[] h = new int[n], prev = new int[n];\n        for (int i = 0; i < n; i++) {\n            h[i] = d.get(i)[2];\n            prev[i] = -1;\n            for (int j = 0; j < i; j++) {\n                Integer[] a = d.get(j), b = d.get(i);\n                if (a[0] < b[0] && a[1] < b[1] && a[2] < b[2] && h[j] + b[2] > h[i]) { h[i] = h[j] + b[2]; prev[i] = j; }\n            }\n            if (h[i] > h[best]) best = i;\n        }\n        LinkedList<Integer[]> out = new LinkedList<>();\n        for (int i = best; i != -1; i = prev[i]) out.addFirst(d.get(i));\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "DiskStacking.java",
-   "narration": "Here's the Java solution, starting with disk stacking. It follows the steps we just described."
+   "narration": "We sort by height. For each disk, start with its own height, and for each earlier strictly smaller disk extend if taller. Track the best index, then follow prev to build the answer."
   },
   {
    "kind": "bullets",
@@ -53,6 +431,24 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n squared. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "All three dimensions strictly smaller",
+    "Sorting by one dimension is enough",
+    "Track prev to rebuild"
+   ],
+   "narration": "All three dimensions must be strictly smaller."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Relate to Box Stacking / LIS"
+   ],
+   "narration": "Relate it to longest increasing subsequence."
   },
   {
    "kind": "bullets",

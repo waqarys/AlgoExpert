@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: four loops → O(n⁴)",
+    "Sort + two pointers → O(n³)",
+    "Pair-sum hash map → O(n²) average"
+   ],
+   "narration": "Four nested loops is n to the fourth. Fixing two and two-pointering the rest is cubic. Storing pair sums in a hash map gives quadratic average time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. For each i, look at pairs i with j after it and check target minus their sum in the map",
@@ -36,13 +46,179 @@
    "narration": "Step by step. First, for each i, look at pairs i with j after it and check target minus their sum in the map. Second, then add pairs k with i, k before i, to the map. Third, this ordering prevents reusing indices."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      7,
+      6,
+      4,
+      -1,
+      1,
+      2
+     ],
+     "hl": {
+      "1": "cur",
+      "0": "done"
+     },
+     "ptr": {
+      "i": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "quads found: none",
+      "pair sums stored: [13]"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "i = 1: look ahead, then store pairs ending at 6",
+   "narration": "At index 1, value 6: we look for pairs after it whose sum plus a stored earlier pair makes sixteen, finding nothing yet. Then we store every pair that ends at 6.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      7,
+      6,
+      4,
+      -1,
+      1,
+      2
+     ],
+     "hl": {
+      "2": "cur",
+      "0": "done",
+      "1": "done"
+     },
+     "ptr": {
+      "i": 2
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "quads found: [[7, 6, 4, -1]]",
+      "pair sums stored: [10, 11, 13]"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "i = 2: look ahead, then store pairs ending at 4",
+   "narration": "At index 2, value 4: we look for pairs after it whose sum plus a stored earlier pair makes sixteen, finding [[7, 6, 4, -1]]. Then we store every pair that ends at 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      7,
+      6,
+      4,
+      -1,
+      1,
+      2
+     ],
+     "hl": {
+      "3": "cur",
+      "0": "done",
+      "1": "done",
+      "2": "done"
+     },
+     "ptr": {
+      "i": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "quads found: none",
+      "pair sums stored: [3, 5, 6, 10, 11, 13]"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "i = 3: look ahead, then store pairs ending at -1",
+   "narration": "At index 3, value -1: we look for pairs after it whose sum plus a stored earlier pair makes sixteen, finding nothing yet. Then we store every pair that ends at -1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      7,
+      6,
+      4,
+      -1,
+      1,
+      2
+     ],
+     "hl": {
+      "4": "cur",
+      "0": "done",
+      "1": "done",
+      "2": "done",
+      "3": "done"
+     },
+     "ptr": {
+      "i": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "quads found: [[7, 6, 1, 2]]",
+      "pair sums stored: [0, 3, 5, 6, 7, 8, 10, 11, 13]"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "i = 4: look ahead, then store pairs ending at 1",
+   "narration": "At index 4, value 1: we look for pairs after it whose sum plus a stored earlier pair makes sixteen, finding [[7, 6, 1, 2]]. Then we store every pair that ends at 1.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class FourNumberSum {\n    public static List<Integer[]> fourNumberSum(int[] a, int target) {\n        Map<Integer, List<int[]>> pairs = new HashMap<>();\n        List<Integer[]> out = new ArrayList<>();\n        for (int i = 1; i < a.length - 1; i++) {\n            for (int j = i + 1; j < a.length; j++) {\n                List<int[]> ps = pairs.get(target - a[i] - a[j]);\n                if (ps != null) for (int[] p : ps) out.add(new Integer[]{p[0], p[1], a[i], a[j]});\n            }\n            for (int k = 0; k < i; k++) pairs.computeIfAbsent(a[i] + a[k], x -> new ArrayList<>()).add(new int[]{a[k], a[i]});\n        }\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "FourNumberSum.java",
-   "narration": "Here's the Java solution, starting with four number sum. It follows the steps we just described."
+   "narration": "For each i from one, we look at every j after i and add each stored pair summing to target minus a i minus a j. Then we store all pairs of earlier elements with a i."
   },
   {
    "kind": "bullets",
@@ -52,6 +228,25 @@
     "Space: O(n^2)"
    ],
    "narration": "Time is O of n squared avg. Space is O of n squared."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Only store pairs *before* i to avoid reusing elements",
+    "Worst case O(n³) when many pairs share a sum",
+    "Distinct quadruplets only"
+   ],
+   "narration": "Add pairs ending at i only after looking ahead from i, so the two halves never overlap and each quadruplet is found once."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain the look-ahead/store ordering",
+    "Follow-up: k-sum generalisation"
+   ],
+   "narration": "The ordering trick is the heart of the solution; explain it. The k-sum generalisation recurses down to two-sum."
   },
   {
    "kind": "bullets",

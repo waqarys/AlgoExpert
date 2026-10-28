@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: all i<j<k<l → O(n⁴)",
+    "Four DP arrays → O(n)",
+    "Four running scalars → O(1) space"
+   ],
+   "narration": "Checking every quadruple is n to the fourth. Building the expression in stages, max a, then max a minus b, and so on, is linear, and four running values suffice."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Four arrays of running bests",
@@ -36,13 +46,301 @@
    "narration": "Step by step. First, four arrays of running bests. Second, each layer uses the previous layer up to the index before. Third, return the last layer's max."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      6,
+      1,
+      -3,
+      2,
+      7
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       3,
+       "–",
+       "–",
+       "–"
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "max a",
+      "max a−b",
+      "max a−b+c",
+      "max a−b+c−d"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "i=0: best a−b+c−d = –",
+   "narration": "At 3, update each stage from the previous one, right to left. The best full expression so far is –.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      6,
+      1,
+      -3,
+      2,
+      7
+     ],
+     "hl": {
+      "1": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       6,
+       -3,
+       "–",
+       "–"
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "max a",
+      "max a−b",
+      "max a−b+c",
+      "max a−b+c−d"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "i=1: best a−b+c−d = –",
+   "narration": "At 6, update each stage from the previous one, right to left. The best full expression so far is –.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      6,
+      1,
+      -3,
+      2,
+      7
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       6,
+       5,
+       -2,
+       "–"
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "max a",
+      "max a−b",
+      "max a−b+c",
+      "max a−b+c−d"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "i=2: best a−b+c−d = –",
+   "narration": "At 1, update each stage from the previous one, right to left. The best full expression so far is –.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      6,
+      1,
+      -3,
+      2,
+      7
+     ],
+     "hl": {
+      "3": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       6,
+       9,
+       2,
+       1
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "max a",
+      "max a−b",
+      "max a−b+c",
+      "max a−b+c−d"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "i=3: best a−b+c−d = 1",
+   "narration": "At -3, update each stage from the previous one, right to left. The best full expression so far is 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      6,
+      1,
+      -3,
+      2,
+      7
+     ],
+     "hl": {
+      "4": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       6,
+       9,
+       11,
+       1
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "max a",
+      "max a−b",
+      "max a−b+c",
+      "max a−b+c−d"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "i=4: best a−b+c−d = 1",
+   "narration": "At 2, update each stage from the previous one, right to left. The best full expression so far is 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      6,
+      1,
+      -3,
+      2,
+      7
+     ],
+     "hl": {
+      "5": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       7,
+       9,
+       16,
+       4
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "max a",
+      "max a−b",
+      "max a−b+c",
+      "max a−b+c−d"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "i=5: best a−b+c−d = 4",
+   "narration": "At 7, update each stage from the previous one, right to left. The best full expression so far is 4.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MaximizeExpression {\n    public static int maximizeExpression(int[] a) {\n        if (a.length < 4) return 0;\n        long s1 = Long.MIN_VALUE / 4, s2 = Long.MIN_VALUE / 4, s3 = Long.MIN_VALUE / 4, s4 = Long.MIN_VALUE / 4;\n        for (int i = 0; i < a.length; i++) {\n            if (i >= 3) s4 = Math.max(s4, s3 - a[i]);\n            if (i >= 2) s3 = Math.max(s3, s2 + a[i]);\n            if (i >= 1) s2 = Math.max(s2, s1 - a[i]);\n            s1 = Math.max(s1, a[i]);\n        }\n        return (int) s4;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MaximizeExpression.java",
-   "narration": "Here's the Java solution, starting with maximize expression. It follows the steps we just described."
+   "narration": "We keep four stage values. For each index, update stage four from three minus x, three from two plus x, two from one minus x, and one from x."
   },
   {
    "kind": "bullets",
@@ -52,6 +350,24 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Fewer than 4 elements → 0",
+    "Update later stages before earlier ones",
+    "Avoid overflow with sentinels"
+   ],
+   "narration": "With fewer than four elements, return zero. Update in reverse stage order so each uses the previous index's values."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain the staged DP"
+   ],
+   "narration": "Explain the staged DP; it generalises to any alternating expression."
   },
   {
    "kind": "bullets",
