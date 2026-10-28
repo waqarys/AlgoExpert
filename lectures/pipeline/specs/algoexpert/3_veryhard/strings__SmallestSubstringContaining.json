@@ -52,8 +52,8 @@
     {
      "type": "text",
      "lines": [
-      "big: abcd＄ef＄axb＄c＄",
-      "small: ＄＄abf"
+      "big: abcd\\$ef\\$axb\\$c\\$",
+      "small: \\$\\$abf"
      ],
      "label": null,
      "h": 0.6
@@ -88,13 +88,13 @@
     {
      "type": "text",
      "lines": [
-      "answer: f＄axb＄"
+      "answer: f\\$axb\\$"
      ],
      "label": null,
      "h": 0.6
     }
    ],
-   "caption": "Answer: f＄axb＄",
+   "caption": "Answer: f\\$axb\\$",
    "narration": "The smallest such window is f, dollar, a, x, b, dollar.",
    "layout": "rows"
   },
