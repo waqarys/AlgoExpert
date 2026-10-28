@@ -15,6 +15,7 @@ import veryhard.recursion.*;
 import veryhard.searching.*;
 import veryhard.sorting.*;
 import veryhard.strings.*;
+import veryhard.tries.StringsMadeUpOfStrings;
 
 import java.util.ArrayList;
 import java.util.List;
