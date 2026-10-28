@@ -1,6 +1,6 @@
 import numpy as np
 TITLE = "MLExpert · Linear Regression"
-OUT = "mlexpert/linear_regression"
+OUT = "mlexpert/02_linear_regression"
 rng = np.random.default_rng(0)
 X = rng.uniform(0, 10, 40); Y = 2.5 * X + 4 + rng.normal(0, 3, 40)
 
@@ -34,7 +34,7 @@ SLIDES = [
       equations=[r"$L(\theta)=\frac{1}{n}\|X_b\theta-y\|^2$", r"$\theta=(X_b^\top X_b+\lambda I')^{-1}X_b^\top y$"],
       bullets=["Append a column of ones so the bias lives inside θ", "Set the gradient to zero → solve one linear system"],
       narration="Way one is exact. Append a column of ones to X so the bias becomes just another weight. The loss is a smooth bowl, so we set its gradient to zero and get the normal equation. The optional lambda term adds ridge regularisation, and we don't penalise the bias."),
- dict(kind="code", heading="Closed form in NumPy", code='''
+ dict(kind="code", heading="Closed form in NumPy", filename="closed_form.py", code='''
 Xb = np.hstack([X, np.ones((n, 1))])        # add bias column
 reg = self.l2 * np.eye(d + 1)
 reg[-1, -1] = 0                             # don't regularise bias
@@ -44,7 +44,7 @@ self.w, self.b = theta[:-1], theta[-1]
  dict(kind="plot", heading="Way 2: gradient descent", draw=gd,
       bullets=[r"$\nabla_w = \frac{2}{n}X^\top(Xw+b-y)$", r"$w \leftarrow w-\eta\,\nabla_w$", "Repeat for many epochs"],
       narration="Way two is iterative. Start with zero weights, compute the error, and step each weight against its gradient, scaled by the learning rate. The loss drops quickly, as the curve shows. This scales to huge datasets where solving a big matrix system is too expensive."),
- dict(kind="code", heading="Gradient descent loop", code='''
+ dict(kind="code", heading="Gradient descent loop", filename="gradient_descent.py", code='''
 self.w, self.b = np.zeros(d), 0.0
 for _ in range(self.epochs):
     err = X @ self.w + self.b - y
