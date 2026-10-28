@@ -19,13 +19,32 @@
    "narration": "Here's the problem. Pattern of 'x'/'y'; find substrings x and y so substituting yields str. Returns x, y (empty strings if unused) or if impossible. Normalise so pattern starts with 'x', then try every length of x."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Fix the length of x; the length of y follows from the counts, so test each candidate."
+   ],
+   "narration": "Fix the length of x; the length of y follows from the counts, so test each candidate."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Normalise so the pattern starts with x",
+    "2. Count x and y",
+    "3. For each length of x, derive length of y",
+    "4. Build and compare"
+   ],
+   "narration": "Step by step. First, normalise so the pattern starts with x. Second, count x and y. Third, for each length of x, derive length of y. Fourth, build and compare."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class PatternMatcher {\n    public static String[] patternMatcher(String pattern, String str) {\n        if (pattern.length() > str.length()) return new String[]{};\n        boolean swapped = pattern.charAt(0) != 'x';\n        String p = swapped ? pattern.replace('x', '#').replace('y', 'x').replace('#', 'y') : pattern;\n        int cx = 0, cy = 0, firstY = -1;\n        for (int i = 0; i < p.length(); i++) {\n            if (p.charAt(i) == 'x') cx++; else { cy++; if (firstY == -1) firstY = i; }\n        }\n        for (int lx = 1; lx * cx <= str.length(); lx++) {\n            int rest = str.length() - lx * cx;\n            if (cy == 0 ? rest != 0 : rest % cy != 0) continue;\n            int ly = cy == 0 ? 0 : rest / cy;\n            String x = str.substring(0, lx);\n            String y = cy == 0 ? \"\" : str.substring(firstY * lx, firstY * lx + ly);\n            StringBuilder sb = new StringBuilder();\n            for (char c : p.toCharArray()) sb.append(c == 'x' ? x : y);\n            if (sb.toString().equals(str)) return swapped ? new String[]{y, x} : new String[]{x, y};\n        }\n        return new String[]{};\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "PatternMatcher.java",
-   "narration": "Here's the Java solution, starting with pattern matcher. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with pattern matcher. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -40,10 +59,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Pattern of 'x'/'y'; find substrings x and y so substituting yields `str`.",
+    "Fix the length of x; the length of y follows from the counts, so test each candidate.",
     "Complexity: O(n^2 + m)"
    ],
-   "narration": "To recap Pattern Matcher: Pattern of 'x'/'y'; find substrings x and y so substituting yields str. Try re-implementing it from scratch without looking."
+   "narration": "To recap Pattern Matcher: Fix the length of x; the length of y follows from the counts, so test each candidate. Try re-implementing it from scratch without looking."
   }
  ]
 }

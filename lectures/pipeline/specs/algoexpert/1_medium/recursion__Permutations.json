@@ -17,13 +17,31 @@
    "narration": "Here's the problem. All orderings of a list of distinct ints (empty input yields an empty list)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Build permutations by swapping each remaining element into the current position."
+   ],
+   "narration": "Build permutations by swapping each remaining element into the current position."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Recurse on index i",
+    "2. Swap each later element into position i",
+    "3. Recurse, then swap back"
+   ],
+   "narration": "Step by step. First, recurse on index i. Second, swap each later element into position i. Third, recurse, then swap back."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class Permutations {\n    public static List<List<Integer>> getPermutations(List<Integer> array) {\n        List<List<Integer>> out = new ArrayList<>();\n        if (!array.isEmpty()) permute(0, new ArrayList<>(array), out);\n        return out;\n    }\n\n    private static void permute(int i, List<Integer> a, List<List<Integer>> out) {\n        if (i == a.size() - 1) { out.add(new ArrayList<>(a)); return; }\n        for (int j = i; j < a.size(); j++) { Collections.swap(a, i, j); permute(i + 1, a, out); Collections.swap(a, i, j); }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "Permutations.java",
-   "narration": "Here's the Java solution, starting with get permutations. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with get permutations. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "All orderings of a list of distinct ints (empty input yields an empty list).",
+    "Build permutations by swapping each remaining element into the current position.",
     "Complexity: O(n * n!)"
    ],
-   "narration": "To recap Permutations: All orderings of a list of distinct ints (empty input yields an empty list). Try re-implementing it from scratch without looking."
+   "narration": "To recap Permutations: Build permutations by swapping each remaining element into the current position. Try re-implementing it from scratch without looking."
   }
  ]
 }

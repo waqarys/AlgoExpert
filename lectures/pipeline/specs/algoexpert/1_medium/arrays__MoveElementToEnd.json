@@ -17,13 +17,32 @@
    "narration": "Here's the problem. In place, move every occurrence of toMove to the end (other order irrelevant)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Two pointers: move the target from the left end out of the way by swapping with non-targets from the right."
+   ],
+   "narration": "Two pointers: move the target from the left end out of the way by swapping with non-targets from the right."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Left and right pointers",
+    "2. Skip targets already at the right",
+    "3. Swap a target on the left with a non-target on the right",
+    "4. Meet in the middle"
+   ],
+   "narration": "Step by step. First, left and right pointers. Second, skip targets already at the right. Third, swap a target on the left with a non-target on the right. Fourth, meet in the middle."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MoveElementToEnd {\n    public static List<Integer> moveElementToEnd(List<Integer> array, int toMove) {\n        int l = 0, r = array.size() - 1;\n        while (l < r) {\n            while (l < r && array.get(r) == toMove) r--;\n            if (array.get(l) == toMove) Collections.swap(array, l, r);\n            l++;\n        }\n        return array;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MoveElementToEnd.java",
-   "narration": "Here's the Java solution, starting with move element to end. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with move element to end. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "In place, move every occurrence of `toMove` to the end (other order irrelevant).",
+    "Two pointers: move the target from the left end out of the way by swapping with non-targets from the right.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Move Element To End: In place, move every occurrence of toMove to the end (other order irrelevant). Try re-implementing it from scratch without looking."
+   "narration": "To recap Move Element To End: Two pointers: move the target from the left end out of the way by swapping with non-targets from the right. Try re-implementing it from scratch without looking."
   }
  ]
 }

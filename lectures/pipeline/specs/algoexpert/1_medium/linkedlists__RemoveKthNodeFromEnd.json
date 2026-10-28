@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Remove in place (list length over equals 2, k valid). If the head is removed, the head node takes its successor's value so the reference stays valid."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Keep a gap of k between two pointers so the leading one hits the end when the trailing one is just before the target."
+   ],
+   "narration": "Keep a gap of k between two pointers so the leading one hits the end when the trailing one is just before the target."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Advance the lead k steps",
+    "2. Move both until the lead ends",
+    "3. Unlink the target, handling the head"
+   ],
+   "narration": "Step by step. First, advance the lead k steps. Second, move both until the lead ends. Third, unlink the target, handling the head."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class RemoveKthNodeFromEnd {\n    public static void removeKthNodeFromEnd(LinkedListNode head, int k) {\n        LinkedListNode fast = head, slow = head;\n        for (int i = 0; i < k; i++) fast = fast.next;\n        if (fast == null) { head.value = head.next.value; head.next = head.next.next; return; }\n        while (fast.next != null) { fast = fast.next; slow = slow.next; }\n        slow.next = slow.next.next;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "RemoveKthNodeFromEnd.java",
-   "narration": "Here's the Java solution, starting with remove kth node from end. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with remove kth node from end. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Remove in place (list length >= 2, k valid).",
+    "Keep a gap of k between two pointers so the leading one hits the end when the trailing one is just before the target.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Remove Kth Node From End: Remove in place (list length over equals 2, k valid). Try re-implementing it from scratch without looking."
+   "narration": "To recap Remove Kth Node From End: Keep a gap of k between two pointers so the leading one hits the end when the trailing one is just before the target. Try re-implementing it from scratch without looking."
   }
  ]
 }

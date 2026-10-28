@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Minimum number of new one-way routes from the starting airport so every airport is reachable. Collapse strongly connected components (Tarjan) and count SCCs with in-degree 0, excluding the one containing the start."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Only unreachable airports matter; pick those that unlock the most others first."
+   ],
+   "narration": "Only unreachable airports matter; pick those that unlock the most others first."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Find unreachable airports",
+    "2. For each, count airports reachable only through it",
+    "3. Sort by that count",
+    "4. Greedily connect"
+   ],
+   "narration": "Step by step. First, find unreachable airports. Second, for each, count airports reachable only through it. Third, sort by that count. Fourth, greedily connect."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/3)",
    "code": "public class AirportConnections {\n    public static int airportConnections(List<String> airports, List<List<String>> routes, String start) {\n        Map<String, List<String>> g = new HashMap<>();\n        for (String a : airports) g.put(a, new ArrayList<>());\n        for (List<String> r : routes) g.get(r.get(0)).add(r.get(1));\n        Map<String, Integer> comp = tarjan(airports, g);\n        Set<Integer> hasIncoming = new HashSet<>();\n        for (List<String> r : routes) {\n            int a = comp.get(r.get(0)), b = comp.get(r.get(1));\n            if (a != b) hasIncoming.add(b);\n        }\n        Set<Integer> all = new HashSet<>(comp.values());\n        int count = 0;\n        for (int c : all) if (!hasIncoming.contains(c) && c != comp.get(start)) count++;\n        return count;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "AirportConnections_part1.java",
-   "narration": "Here's the Java solution, starting with airport connections. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with airport connections. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -57,10 +76,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Minimum number of new one-way routes from the starting airport so every airport is reachable.",
+    "Only unreachable airports matter; pick those that unlock the most others first.",
     "Complexity: O(a + r)"
    ],
-   "narration": "To recap Airport Connections: Minimum number of new one-way routes from the starting airport so every airport is reachable. Try re-implementing it from scratch without looking."
+   "narration": "To recap Airport Connections: Only unreachable airports matter; pick those that unlock the most others first. Try re-implementing it from scratch without looking."
   }
  ]
 }

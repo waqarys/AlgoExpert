@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Return node names of a tree-like graph level by level."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Breadth-first search visits nodes level by level using a queue."
+   ],
+   "narration": "Breadth-first search visits nodes level by level using a queue."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Enqueue the root",
+    "2. Pop, record the name, enqueue children",
+    "3. Repeat until the queue is empty"
+   ],
+   "narration": "Step by step. First, enqueue the root. Second, pop, record the name, enqueue children. Third, repeat until the queue is empty."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class BreadthFirstSearch {\n    public static class Node {\n        public final String name;\n        public final List<Node> children = new ArrayList<>();\n        public Node(String name) { this.name = name; }\n        public Node addChild(String n) { children.add(new Node(n)); return this; }\n\n        public List<String> breadthFirstSearch(List<String> out) {\n            ArrayDeque<Node> q = new ArrayDeque<>();\n            q.add(this);\n            while (!q.isEmpty()) { Node c = q.poll(); out.add(c.name); q.addAll(c.children); }\n            return out;\n        }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "BreadthFirstSearch.java",
-   "narration": "Here's the Java solution, starting with node. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with node. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Return node names of a tree-like graph level by level.",
+    "Breadth-first search visits nodes level by level using a queue.",
     "Complexity: O(v + e)"
    ],
-   "narration": "To recap Breadth First Search: Return node names of a tree-like graph level by level. Try re-implementing it from scratch without looking."
+   "narration": "To recap Breadth First Search: Breadth-first search visits nodes level by level using a queue. Try re-implementing it from scratch without looking."
   }
  ]
 }

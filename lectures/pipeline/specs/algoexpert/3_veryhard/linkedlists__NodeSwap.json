@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Swap every pair of adjacent nodes (not values); return the new head."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Swap pairs by rewiring three links at a time, using a dummy head."
+   ],
+   "narration": "Swap pairs by rewiring three links at a time, using a dummy head."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Dummy before head",
+    "2. For each pair, rewire previous, first and second",
+    "3. Advance by two"
+   ],
+   "narration": "Step by step. First, dummy before head. Second, for each pair, rewire previous, first and second. Third, advance by two."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class NodeSwap {\n    public static LinkedListNode nodeSwap(LinkedListNode head) {\n        LinkedListNode dummy = new LinkedListNode(0);\n        dummy.next = head;\n        LinkedListNode p = dummy;\n        while (p.next != null && p.next.next != null) {\n            LinkedListNode a = p.next, b = a.next;\n            a.next = b.next; b.next = a; p.next = b;\n            p = a;\n        }\n        return dummy.next;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "NodeSwap.java",
-   "narration": "Here's the Java solution, starting with node swap. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with node swap. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Swap every pair of adjacent nodes (not values); return the new head.",
+    "Swap pairs by rewiring three links at a time, using a dummy head.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Node Swap: Swap every pair of adjacent nodes (not values); return the new head. Try re-implementing it from scratch without looking."
+   "narration": "To recap Node Swap: Swap pairs by rewiring three links at a time, using a dummy head. Try re-implementing it from scratch without looking."
   }
  ]
 }

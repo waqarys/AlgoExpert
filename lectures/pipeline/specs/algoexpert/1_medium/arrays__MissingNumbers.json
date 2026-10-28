@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Array holds 1..n plus 2 with two numbers missing; return them ascending. Split by the average of the two missing values and sum each half."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "The numbers one to n plus two sum to a known total; the missing pair splits around their average."
+   ],
+   "narration": "The numbers one to n plus two sum to a known total; the missing pair splits around their average."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Compute the missing sum",
+    "2. Split at the average",
+    "3. Sum the expected and actual values below it",
+    "4. The difference gives one number, the rest gives the other"
+   ],
+   "narration": "Step by step. First, compute the missing sum. Second, split at the average. Third, sum the expected and actual values below it. Fourth, the difference gives one number, the rest gives the other."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MissingNumbers {\n    public static int[] missingNumbers(int[] nums) {\n        int n = nums.length + 2;\n        long total = (long) n * (n + 1) / 2;\n        for (int x : nums) total -= x;\n        long avg = total / 2, lowExpected = avg * (avg + 1) / 2, lowActual = 0;\n        for (int x : nums) if (x <= avg) lowActual += x;\n        int a = (int) (lowExpected - lowActual);\n        return new int[]{a, (int) (total - a)};\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MissingNumbers.java",
-   "narration": "Here's the Java solution, starting with missing numbers. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with missing numbers. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Array holds 1..n+2 with two numbers missing; return them ascending.",
+    "The numbers one to n plus two sum to a known total; the missing pair splits around their average.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Missing Numbers: Array holds 1..n plus 2 with two numbers missing; return them ascending. Try re-implementing it from scratch without looking."
+   "narration": "To recap Missing Numbers: The numbers one to n plus two sum to a known total; the missing pair splits around their average. Try re-implementing it from scratch without looking."
   }
  ]
 }

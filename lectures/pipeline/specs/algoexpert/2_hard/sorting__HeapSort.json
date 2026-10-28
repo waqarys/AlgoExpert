@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Build a max-heap in place then repeatedly move the max to the end."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Build a max-heap in place, then repeatedly move the maximum to the end and restore the heap."
+   ],
+   "narration": "Build a max-heap in place, then repeatedly move the maximum to the end and restore the heap."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Heapify from the last parent down",
+    "2. Swap root with the last element",
+    "3. Sift down within the shrinking heap"
+   ],
+   "narration": "Step by step. First, heapify from the last parent down. Second, swap root with the last element. Third, sift down within the shrinking heap."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class HeapSort {\n    public static int[] heapSort(int[] a) {\n        for (int i = a.length / 2 - 1; i >= 0; i--) sift(a, i, a.length);\n        for (int end = a.length - 1; end > 0; end--) { int t = a[0]; a[0] = a[end]; a[end] = t; sift(a, 0, end); }\n        return a;\n    }\n\n    private static void sift(int[] a, int i, int n) {\n        while (2 * i + 1 < n) {\n            int c = 2 * i + 1;\n            if (c + 1 < n && a[c + 1] > a[c]) c++;\n            if (a[i] >= a[c]) return;\n            int t = a[i]; a[i] = a[c]; a[c] = t;\n            i = c;\n        }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "HeapSort.java",
-   "narration": "Here's the Java solution, starting with heap sort. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with heap sort. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Build a max-heap in place then repeatedly move the max to the end.",
+    "Build a max-heap in place, then repeatedly move the maximum to the end and restore the heap.",
     "Complexity: O(n log n)"
    ],
-   "narration": "To recap Heap Sort: Build a max-heap in place then repeatedly move the max to the end. Try re-implementing it from scratch without looking."
+   "narration": "To recap Heap Sort: Build a max-heap in place, then repeatedly move the maximum to the end and restore the heap. Try re-implementing it from scratch without looking."
   }
  ]
 }

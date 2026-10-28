@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Can removing one edge split the tree into two parts with equal sums? Return that half-sum, else 0."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "We need a subtree whose sum is exactly half the total."
+   ],
+   "narration": "We need a subtree whose sum is exactly half the total."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Compute the total sum",
+    "2. If odd, it can't split",
+    "3. Post-order subtree sums",
+    "4. Return true if any subtree equals half"
+   ],
+   "narration": "Step by step. First, compute the total sum. Second, if odd, it can't split. Third, post-order subtree sums. Fourth, return true if any subtree equals half."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SplitBinaryTree {\n    public static int splitBinaryTree(BinaryTree t) {\n        int total = sum(t);\n        if (total % 2 != 0) return 0;\n        boolean[] found = {false};\n        check(t, total / 2, found, true);\n        return found[0] ? total / 2 : 0;\n    }\n\n    private static int sum(BinaryTree t) { return t == null ? 0 : t.value + sum(t.left) + sum(t.right); }\n\n    private static int check(BinaryTree t, int half, boolean[] found, boolean root) {\n        if (t == null) return 0;\n        int s = t.value + check(t.left, half, found, false) + check(t.right, half, found, false);\n        if (!root && s == half) found[0] = true;\n        return s;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SplitBinaryTree.java",
-   "narration": "Here's the Java solution, starting with split binary tree. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with split binary tree. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Can removing one edge split the tree into two parts with equal sums?",
+    "We need a subtree whose sum is exactly half the total.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Split Binary Tree: Can removing one edge split the tree into two parts with equal sums? Try re-implementing it from scratch without looking."
+   "narration": "To recap Split Binary Tree: We need a subtree whose sum is exactly half the total. Try re-implementing it from scratch without looking."
   }
  ]
 }

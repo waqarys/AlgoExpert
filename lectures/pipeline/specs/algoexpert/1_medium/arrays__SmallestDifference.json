@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Pick one number from each array with the smallest absolute difference; return a, b ."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Sort both arrays, then walk them together, always advancing the smaller value to close the gap."
+   ],
+   "narration": "Sort both arrays, then walk them together, always advancing the smaller value to close the gap."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Sort both",
+    "2. Compare current values and record the gap",
+    "3. Advance the pointer at the smaller value",
+    "4. Stop early on zero"
+   ],
+   "narration": "Step by step. First, sort both. Second, compare current values and record the gap. Third, advance the pointer at the smaller value. Fourth, stop early on zero."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SmallestDifference {\n    public static int[] smallestDifference(int[] a, int[] b) {\n        Arrays.sort(a);\n        Arrays.sort(b);\n        int i = 0, j = 0;\n        long best = Long.MAX_VALUE;\n        int[] pair = new int[2];\n        while (i < a.length && j < b.length) {\n            long d = Math.abs((long) a[i] - b[j]);\n            if (d < best) { best = d; pair = new int[]{a[i], b[j]}; }\n            if (a[i] < b[j]) i++; else if (a[i] > b[j]) j++; else break;\n        }\n        return pair;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SmallestDifference.java",
-   "narration": "Here's the Java solution, starting with smallest difference. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with smallest difference. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Pick one number from each array with the smallest absolute difference; return [a, b].",
+    "Sort both arrays, then walk them together, always advancing the smaller value to close the gap.",
     "Complexity: O(n log n + m log m)"
    ],
-   "narration": "To recap Smallest Difference: Pick one number from each array with the smallest absolute difference; return a, b . Try re-implementing it from scratch without looking."
+   "narration": "To recap Smallest Difference: Sort both arrays, then walk them together, always advancing the smaller value to close the gap. Try re-implementing it from scratch without looking."
   }
  ]
 }

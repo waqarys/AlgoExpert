@@ -19,13 +19,32 @@
    "narration": "Here's the problem. Blocks list which buildings (reqs) they contain. Choose the block minimising the farthest distance you'd walk to reach any required building. Precompute nearest distance per req with a left and right sweep."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "For each requirement, precompute the distance from every block to its nearest building, with a left and a right sweep."
+   ],
+   "narration": "For each requirement, precompute the distance from every block to its nearest building, with a left and a right sweep."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. For each requirement, sweep left to right and right to left",
+    "2. Store min distances",
+    "3. For each block, take the max over requirements",
+    "4. Pick the block with the smallest max"
+   ],
+   "narration": "Step by step. First, for each requirement, sweep left to right and right to left. Second, store min distances. Third, for each block, take the max over requirements. Fourth, pick the block with the smallest max."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ApartmentHunting {\n    public static int apartmentHunting(List<Map<String, Boolean>> blocks, String[] reqs) {\n        int n = blocks.size();\n        int[] worst = new int[n];\n        for (String r : reqs) {\n            int[] d = new int[n];\n            int last = -1_000_000;\n            for (int i = 0; i < n; i++) { if (blocks.get(i).getOrDefault(r, false)) last = i; d[i] = i - last; }\n            last = 2_000_000;\n            for (int i = n - 1; i >= 0; i--) { if (blocks.get(i).getOrDefault(r, false)) last = i; d[i] = Math.min(d[i], last - i); }\n            for (int i = 0; i < n; i++) worst[i] = Math.max(worst[i], d[i]);\n        }\n        int best = 0;\n        for (int i = 1; i < n; i++) if (worst[i] < worst[best]) best = i;\n        return best;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ApartmentHunting.java",
-   "narration": "Here's the Java solution, starting with apartment hunting. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with apartment hunting. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -40,10 +59,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Blocks list which buildings (reqs) they contain.",
+    "For each requirement, precompute the distance from every block to its nearest building, with a left and a right sweep.",
     "Complexity: O(b*r)"
    ],
-   "narration": "To recap Apartment Hunting: Blocks list which buildings (reqs) they contain. Try re-implementing it from scratch without looking."
+   "narration": "To recap Apartment Hunting: For each requirement, precompute the distance from every block to its nearest building, with a left and a right sweep. Try re-implementing it from scratch without looking."
   }
  ]
 }

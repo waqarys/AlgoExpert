@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Shortest substring of big containing every character of small (with multiplicity), or \"\". Sliding window."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A sliding window expands until it covers all needed characters, then shrinks to the minimum."
+   ],
+   "narration": "A sliding window expands until it covers all needed characters, then shrinks to the minimum."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Count needed characters",
+    "2. Expand right updating coverage",
+    "3. Shrink left while still covering",
+    "4. Track the smallest window"
+   ],
+   "narration": "Step by step. First, count needed characters. Second, expand right updating coverage. Third, shrink left while still covering. Fourth, track the smallest window."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SmallestSubstringContaining {\n    public static String smallestSubstringContaining(String big, String small) {\n        Map<Character, Integer> need = new HashMap<>();\n        for (char c : small.toCharArray()) need.merge(c, 1, Integer::sum);\n        int missing = small.length(), l = 0, bs = 0, be = Integer.MAX_VALUE;\n        for (int r = 0; r < big.length(); r++) {\n            char c = big.charAt(r);\n            if (need.containsKey(c)) { if (need.get(c) > 0) missing--; need.merge(c, -1, Integer::sum); }\n            while (missing == 0) {\n                if (r - l < be - bs) { bs = l; be = r; }\n                char d = big.charAt(l++);\n                if (need.containsKey(d)) { need.merge(d, 1, Integer::sum); if (need.get(d) > 0) missing++; }\n            }\n        }\n        return be == Integer.MAX_VALUE ? \"\" : big.substring(bs, be + 1);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SmallestSubstringContaining.java",
-   "narration": "Here's the Java solution, starting with smallest substring containing. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with smallest substring containing. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Shortest substring of `big` containing every character of `small` (with multiplicity), or \"\".",
+    "A sliding window expands until it covers all needed characters, then shrinks to the minimum.",
     "Complexity: O(b + s)"
    ],
-   "narration": "To recap Smallest Substring Containing: Shortest substring of big containing every character of small (with multiplicity), or \"\". Try re-implementing it from scratch without looking."
+   "narration": "To recap Smallest Substring Containing: A sliding window expands until it covers all needed characters, then shrinks to the minimum. Try re-implementing it from scratch without looking."
   }
  ]
 }

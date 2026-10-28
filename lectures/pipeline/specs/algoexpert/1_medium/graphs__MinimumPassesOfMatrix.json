@@ -19,13 +19,32 @@
    "narration": "Here's the problem. Each pass, every negative adjacent to a positive flips sign. Return the number of passes to clear all negatives, or -1 if impossible. Multi-source BFS by levels."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Multi-source BFS: each pass, positives flip their negative neighbours."
+   ],
+   "narration": "Multi-source BFS: each pass, positives flip their negative neighbours."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Queue all positives",
+    "2. Process one level per pass",
+    "3. Flip negative neighbours and enqueue them",
+    "4. If negatives remain, return minus one"
+   ],
+   "narration": "Step by step. First, queue all positives. Second, process one level per pass. Third, flip negative neighbours and enqueue them. Fourth, if negatives remain, return minus one."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MinimumPassesOfMatrix {\n    public static int minimumPassesOfMatrix(int[][] m) {\n        ArrayDeque<int[]> q = new ArrayDeque<>();\n        for (int r = 0; r < m.length; r++) for (int c = 0; c < m[0].length; c++) if (m[r][c] > 0) q.add(new int[]{r, c});\n        int passes = 0;\n        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n        while (!q.isEmpty()) {\n            int size = q.size();\n            boolean flipped = false;\n            for (int i = 0; i < size; i++) {\n                int[] p = q.poll();\n                for (int[] d : dirs) {\n                    int r = p[0] + d[0], c = p[1] + d[1];\n                    if (r >= 0 && c >= 0 && r < m.length && c < m[0].length && m[r][c] < 0) {\n                        m[r][c] = -m[r][c]; q.add(new int[]{r, c}); flipped = true;\n                    }\n                }\n            }\n            if (flipped) passes++;\n        }\n        for (int[] row : m) for (int v : row) if (v < 0) return -1;\n        return passes;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "MinimumPassesOfMatrix.java",
-   "narration": "Here's the Java solution, starting with minimum passes of matrix. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with minimum passes of matrix. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -40,10 +59,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Each pass, every negative adjacent to a positive flips sign.",
+    "Multi-source BFS: each pass, positives flip their negative neighbours.",
     "Complexity: O(w*h)"
    ],
-   "narration": "To recap Minimum Passes Of Matrix: Each pass, every negative adjacent to a positive flips sign. Try re-implementing it from scratch without looking."
+   "narration": "To recap Minimum Passes Of Matrix: Multi-source BFS: each pass, positives flip their negative neighbours. Try re-implementing it from scratch without looking."
   }
  ]
 }

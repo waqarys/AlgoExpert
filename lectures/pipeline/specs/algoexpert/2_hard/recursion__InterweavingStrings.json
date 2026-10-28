@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Can three be formed by interleaving one and two keeping each one's order?"
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each prefix pair of the two strings either explains the next character of three or not, so memoise by indices."
+   ],
+   "narration": "Each prefix pair of the two strings either explains the next character of three or not, so memoise by indices."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Recursive i and j into one and two",
+    "2. Next character of three must come from one or the other",
+    "3. Memoise failed states",
+    "4. Succeed when all are used"
+   ],
+   "narration": "Step by step. First, recursive i and j into one and two. Second, next character of three must come from one or the other. Third, memoise failed states. Fourth, succeed when all are used."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class InterweavingStrings {\n    public static boolean interweavingStrings(String one, String two, String three) {\n        int n = one.length(), m = two.length();\n        if (n + m != three.length()) return false;\n        boolean[] dp = new boolean[m + 1];\n        for (int i = 0; i <= n; i++)\n            for (int j = 0; j <= m; j++) {\n                if (i == 0 && j == 0) { dp[0] = true; continue; }\n                boolean fromOne = i > 0 && dp[j] && one.charAt(i - 1) == three.charAt(i + j - 1);\n                boolean fromTwo = j > 0 && dp[j - 1] && two.charAt(j - 1) == three.charAt(i + j - 1);\n                dp[j] = fromOne || fromTwo;\n            }\n        return dp[m];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "InterweavingStrings.java",
-   "narration": "Here's the Java solution, starting with interweaving strings. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with interweaving strings. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Can `three` be formed by interleaving `one` and `two` keeping each one's order?",
+    "Each prefix pair of the two strings either explains the next character of three or not, so memoise by indices.",
     "Complexity: O(n*m)"
    ],
-   "narration": "To recap Interweaving Strings: Can three be formed by interleaving one and two keeping each one's order? Try re-implementing it from scratch without looking."
+   "narration": "To recap Interweaving Strings: Each prefix pair of the two strings either explains the next character of three or not, so memoise by indices. Try re-implementing it from scratch without looking."
   }
  ]
 }

@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Lists store digits least-significant first; return their sum in the same format."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Add digit by digit like grade school, carrying into the next node."
+   ],
+   "narration": "Add digit by digit like grade school, carrying into the next node."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Walk both lists together",
+    "2. Sum digits plus carry",
+    "3. Create a node with the ones digit",
+    "4. Carry the rest"
+   ],
+   "narration": "Step by step. First, walk both lists together. Second, sum digits plus carry. Third, create a node with the ones digit. Fourth, carry the rest."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SumOfLinkedLists {\n    public static LinkedListNode sumOfLinkedLists(LinkedListNode a, LinkedListNode b) {\n        LinkedListNode dummy = new LinkedListNode(0), cur = dummy;\n        int carry = 0;\n        while (a != null || b != null || carry != 0) {\n            int s = carry + (a == null ? 0 : a.value) + (b == null ? 0 : b.value);\n            cur.next = new LinkedListNode(s % 10);\n            cur = cur.next;\n            carry = s / 10;\n            if (a != null) a = a.next;\n            if (b != null) b = b.next;\n        }\n        return dummy.next;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SumOfLinkedLists.java",
-   "narration": "Here's the Java solution, starting with sum of linked lists. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with sum of linked lists. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Lists store digits least-significant first; return their sum in the same format.",
+    "Add digit by digit like grade school, carrying into the next node.",
     "Complexity: O(max(n, m))"
    ],
-   "narration": "To recap Sum Of Linked Lists: Lists store digits least-significant first; return their sum in the same format. Try re-implementing it from scratch without looking."
+   "narration": "To recap Sum Of Linked Lists: Add digit by digit like grade school, carrying into the next node. Try re-implementing it from scratch without looking."
   }
  ]
 }

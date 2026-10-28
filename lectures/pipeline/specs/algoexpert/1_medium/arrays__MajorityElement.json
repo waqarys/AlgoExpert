@@ -17,13 +17,32 @@
    "narration": "Here's the problem. An element occurs in more than half the array; find it (Boyer-Moore voting)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Boyer-Moore voting: pair off different values; the majority survives the cancellation."
+   ],
+   "narration": "Boyer-Moore voting: pair off different values; the majority survives the cancellation."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Keep a candidate and a count",
+    "2. Same value increments, different decrements",
+    "3. When the count hits zero, adopt the current value",
+    "4. The final candidate is the answer"
+   ],
+   "narration": "Step by step. First, keep a candidate and a count. Second, same value increments, different decrements. Third, when the count hits zero, adopt the current value. Fourth, the final candidate is the answer."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MajorityElement {\n    public static int majorityElement(int[] a) {\n        int cand = 0, count = 0;\n        for (int x : a) {\n            if (count == 0) cand = x;\n            count += (x == cand) ? 1 : -1;\n        }\n        return cand;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MajorityElement.java",
-   "narration": "Here's the Java solution, starting with majority element. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with majority element. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "An element occurs in more than half the array; find it (Boyer-Moore voting).",
+    "Boyer-Moore voting: pair off different values; the majority survives the cancellation.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Majority Element: An element occurs in more than half the array; find it (Boyer-Moore voting). Try re-implementing it from scratch without looking."
+   "narration": "To recap Majority Element: Boyer-Moore voting: pair off different values; the majority survives the cancellation. Try re-implementing it from scratch without looking."
   }
  ]
 }

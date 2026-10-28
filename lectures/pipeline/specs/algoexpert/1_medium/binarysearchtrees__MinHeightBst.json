@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Build a BST of minimal height from a sorted list of distinct ints (pick middle as root)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Choosing the middle element as the root keeps both halves balanced."
+   ],
+   "narration": "Choosing the middle element as the root keeps both halves balanced."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Take the middle of the sorted range as the root",
+    "2. Recurse on the left half",
+    "3. Recurse on the right half"
+   ],
+   "narration": "Step by step. First, take the middle of the sorted range as the root. Second, recurse on the left half. Third, recurse on the right half."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MinHeightBst {\n    public static BST minHeightBst(List<Integer> a) { return build(a, 0, a.size() - 1); }\n\n    private static BST build(List<Integer> a, int lo, int hi) {\n        if (lo > hi) return null;\n        int mid = (lo + hi) / 2;\n        BST n = new BST(a.get(mid));\n        n.left = build(a, lo, mid - 1);\n        n.right = build(a, mid + 1, hi);\n        return n;\n    }\n\n    public static int height(BST t) { return t == null ? 0 : 1 + Math.max(height(t.left), height(t.right)); }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MinHeightBst.java",
-   "narration": "Here's the Java solution, starting with min height bst. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with min height bst. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Build a BST of minimal height from a sorted list of distinct ints (pick middle as root).",
+    "Choosing the middle element as the root keeps both halves balanced.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Min Height Bst: Build a BST of minimal height from a sorted list of distinct ints (pick middle as root). Try re-implementing it from scratch without looking."
+   "narration": "To recap Min Height Bst: Choosing the middle element as the root keeps both halves balanced. Try re-implementing it from scratch without looking."
   }
  ]
 }

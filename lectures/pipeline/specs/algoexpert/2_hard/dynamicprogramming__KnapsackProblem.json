@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Items are value, weight . Returns maxValue , item indices ."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each item is taken or skipped; a table over items and capacities captures every choice."
+   ],
+   "narration": "Each item is taken or skipped; a table over items and capacities captures every choice."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Row per item, column per capacity",
+    "2. Skip copies the row above",
+    "3. Take adds the value to the row above at capacity minus weight",
+    "4. Backtrack to list items"
+   ],
+   "narration": "Step by step. First, row per item, column per capacity. Second, skip copies the row above. Third, take adds the value to the row above at capacity minus weight. Fourth, backtrack to list items."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class KnapsackProblem {\n    public static List<List<Integer>> knapsackProblem(int[][] items, int capacity) {\n        int n = items.length;\n        int[][] dp = new int[n + 1][capacity + 1];\n        for (int i = 1; i <= n; i++) for (int c = 0; c <= capacity; c++) {\n            dp[i][c] = dp[i - 1][c];\n            int w = items[i - 1][1];\n            if (w <= c) dp[i][c] = Math.max(dp[i][c], dp[i - 1][c - w] + items[i - 1][0]);\n        }\n        List<Integer> chosen = new ArrayList<>();\n        for (int i = n, c = capacity; i > 0; i--)\n            if (dp[i][c] != dp[i - 1][c]) { chosen.add(0, i - 1); c -= items[i - 1][1]; }\n        return List.of(List.of(dp[n][capacity]), chosen);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "KnapsackProblem.java",
-   "narration": "Here's the Java solution, starting with knapsack problem. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with knapsack problem. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Items are [value, weight].",
+    "Each item is taken or skipped; a table over items and capacities captures every choice.",
     "Complexity: O(n*c)"
    ],
-   "narration": "To recap Knapsack Problem: Items are value, weight . Try re-implementing it from scratch without looking."
+   "narration": "To recap Knapsack Problem: Each item is taken or skipped; a table over items and capacities captures every choice. Try re-implementing it from scratch without looking."
   }
  ]
 }

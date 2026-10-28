@@ -18,13 +18,32 @@
    "narration": "Here's the problem. For each small string, does it occur in the big string? Trie of small strings, scanned from every start position of the big string."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Put the small strings in a trie, then walk it from each position of the big string."
+   ],
+   "narration": "Put the small strings in a trie, then walk it from each position of the big string."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Build a trie",
+    "2. Start a walk at each index of the big string",
+    "3. Mark words found",
+    "4. Return booleans"
+   ],
+   "narration": "Step by step. First, build a trie. Second, start a walk at each index of the big string. Third, mark words found. Fourth, return booleans."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MultiStringSearch {\n    private static class Trie { Map<Character, Trie> next = new HashMap<>(); String word; }\n\n    public static List<Boolean> multiStringSearch(String big, String[] smalls) {\n        Trie root = new Trie();\n        for (String s : smalls) {\n            Trie t = root;\n            for (char c : s.toCharArray()) t = t.next.computeIfAbsent(c, k -> new Trie());\n            t.word = s;\n        }\n        Set<String> found = new HashSet<>();\n        for (int i = 0; i < big.length(); i++) {\n            Trie t = root;\n            for (int j = i; j < big.length(); j++) {\n                t = t.next.get(big.charAt(j));\n                if (t == null) break;\n                if (t.word != null) found.add(t.word);\n            }\n        }\n        List<Boolean> out = new ArrayList<>();\n        for (String s : smalls) out.add(found.contains(s));\n        return out;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "MultiStringSearch.java",
-   "narration": "Here's the Java solution, starting with multi string search. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with multi string search. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "For each small string, does it occur in the big string?",
+    "Put the small strings in a trie, then walk it from each position of the big string.",
     "Complexity: O(ns + bs) where b is the big length, s the longest small"
    ],
-   "narration": "To recap Multi String Search: For each small string, does it occur in the big string? Try re-implementing it from scratch without looking."
+   "narration": "To recap Multi String Search: Put the small strings in a trie, then walk it from each position of the big string. Try re-implementing it from scratch without looking."
   }
  ]
 }

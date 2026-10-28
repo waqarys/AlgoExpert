@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Non-negative ints; start, end of the longest subarray summing to target, or if none. Sliding window."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Values are non-negative, so a sliding window grows to add and shrinks to subtract."
+   ],
+   "narration": "Values are non-negative, so a sliding window grows to add and shrinks to subtract."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Expand the right edge adding values",
+    "2. Shrink from the left while the sum is too big",
+    "3. Record the longest window equal to target"
+   ],
+   "narration": "Step by step. First, expand the right edge adding values. Second, shrink from the left while the sum is too big. Third, record the longest window equal to target."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LongestSubarrayWithSum {\n    public static int[] longestSubarrayWithSum(int[] a, int target) {\n        int[] best = {};\n        int l = 0, sum = 0;\n        for (int r = 0; r < a.length; r++) {\n            sum += a[r];\n            while (sum > target && l < r) sum -= a[l++];\n            if (sum == target && (best.length == 0 || r - l > best[1] - best[0])) best = new int[]{l, r};\n        }\n        return best;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LongestSubarrayWithSum.java",
-   "narration": "Here's the Java solution, starting with longest subarray with sum. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with longest subarray with sum. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Non-negative ints; [start, end] of the longest subarray summing to target, or [] if none.",
+    "Values are non-negative, so a sliding window grows to add and shrinks to subtract.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Longest Subarray With Sum: Non-negative ints; start, end of the longest subarray summing to target, or if none. Try re-implementing it from scratch without looking."
+   "narration": "To recap Longest Subarray With Sum: Values are non-negative, so a sliding window grows to add and shrinks to subtract. Try re-implementing it from scratch without looking."
   }
  ]
 }

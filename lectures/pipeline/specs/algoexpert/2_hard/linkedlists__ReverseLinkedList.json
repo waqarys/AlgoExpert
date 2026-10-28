@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Reverse in place and return the new head."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Flip each link to point backwards, keeping three pointers so nothing is lost."
+   ],
+   "narration": "Flip each link to point backwards, keeping three pointers so nothing is lost."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Previous starts null",
+    "2. Save next, point current at previous",
+    "3. Advance both",
+    "4. Previous is the new head"
+   ],
+   "narration": "Step by step. First, previous starts null. Second, save next, point current at previous. Third, advance both. Fourth, previous is the new head."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ReverseLinkedList {\n    public static LinkedListNode reverseLinkedList(LinkedListNode head) {\n        LinkedListNode prev = null;\n        while (head != null) { LinkedListNode n = head.next; head.next = prev; prev = head; head = n; }\n        return prev;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ReverseLinkedList.java",
-   "narration": "Here's the Java solution, starting with reverse linked list. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with reverse linked list. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Reverse in place and return the new head.",
+    "Flip each link to point backwards, keeping three pointers so nothing is lost.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Reverse Linked List: Reverse in place and return the new head. Try re-implementing it from scratch without looking."
+   "narration": "To recap Reverse Linked List: Flip each link to point backwards, keeping three pointers so nothing is lost. Try re-implementing it from scratch without looking."
   }
  ]
 }

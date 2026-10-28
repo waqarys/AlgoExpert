@@ -18,13 +18,31 @@
    "narration": "Here's the problem. First and last index of target in a sorted array, -1, -1 if absent. Two modified binary searches."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Two binary searches: one biased left for the first occurrence, one biased right for the last."
+   ],
+   "narration": "Two binary searches: one biased left for the first occurrence, one biased right for the last."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Search keeping left on matches",
+    "2. Search keeping right on matches",
+    "3. Return both indices or minus ones"
+   ],
+   "narration": "Step by step. First, search keeping left on matches. Second, search keeping right on matches. Third, return both indices or minus ones."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SearchForRange {\n    public static int[] searchForRange(int[] a, int t) {\n        int l = bound(a, t), r = bound(a, t + 1) - 1;\n        return l <= r && l < a.length && a[l] == t ? new int[]{l, r} : new int[]{-1, -1};\n    }\n\n    private static int bound(int[] a, int t) {\n        int lo = 0, hi = a.length;\n        while (lo < hi) { int m = (lo + hi) >>> 1; if (a[m] < t) lo = m + 1; else hi = m; }\n        return lo;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SearchForRange.java",
-   "narration": "Here's the Java solution, starting with search for range. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with search for range. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "First and last index of target in a sorted array, [-1, -1] if absent.",
+    "Two binary searches: one biased left for the first occurrence, one biased right for the last.",
     "Complexity: O(log n)"
    ],
-   "narration": "To recap Search For Range: First and last index of target in a sorted array, -1, -1 if absent. Try re-implementing it from scratch without looking."
+   "narration": "To recap Search For Range: Two binary searches: one biased left for the first occurrence, one biased right for the last. Try re-implementing it from scratch without looking."
   }
  ]
 }

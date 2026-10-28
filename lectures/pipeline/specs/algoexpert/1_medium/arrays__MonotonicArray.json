@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Is the array entirely non-increasing or entirely non-decreasing?"
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "An array is monotonic if it never goes both up and down."
+   ],
+   "narration": "An array is monotonic if it never goes both up and down."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Track two flags, non-increasing and non-decreasing",
+    "2. Clear the opposite flag on each rise or fall",
+    "3. Return true if either flag survives"
+   ],
+   "narration": "Step by step. First, track two flags, non-increasing and non-decreasing. Second, clear the opposite flag on each rise or fall. Third, return true if either flag survives."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MonotonicArray {\n    public static boolean isMonotonic(int[] a) {\n        boolean inc = true, dec = true;\n        for (int i = 1; i < a.length; i++) {\n            if (a[i] < a[i - 1]) inc = false;\n            if (a[i] > a[i - 1]) dec = false;\n        }\n        return inc || dec;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MonotonicArray.java",
-   "narration": "Here's the Java solution, starting with is monotonic. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with is monotonic. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Is the array entirely non-increasing or entirely non-decreasing?",
+    "An array is monotonic if it never goes both up and down.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Monotonic Array: Is the array entirely non-increasing or entirely non-decreasing? Try re-implementing it from scratch without looking."
+   "narration": "To recap Monotonic Array: An array is monotonic if it never goes both up and down. Try re-implementing it from scratch without looking."
   }
  ]
 }

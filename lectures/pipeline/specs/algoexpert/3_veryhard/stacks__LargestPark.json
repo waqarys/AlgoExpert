@@ -19,13 +19,31 @@
    "narration": "Here's the problem. Boolean matrix where false is free land and true is in use. Area of the largest all-free rectangle (0 if none). For each row build a histogram of consecutive free cells above and take the largest rectangle in it with a monotonic stack."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Treat each row as a histogram of free heights and apply the largest rectangle in histogram."
+   ],
+   "narration": "Treat each row as a histogram of free heights and apply the largest rectangle in histogram."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Update column heights per row",
+    "2. Run the monotonic stack",
+    "3. Track the max area"
+   ],
+   "narration": "Step by step. First, update column heights per row. Second, run the monotonic stack. Third, track the max area."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class LargestPark {\n    public static int largestPark(boolean[][] land) {\n        if (land.length == 0) return 0;\n        int[] heights = new int[land[0].length];\n        int best = 0;\n        for (boolean[] row : land) {\n            for (int c = 0; c < row.length; c++) heights[c] = row[c] ? 0 : heights[c] + 1;\n            best = Math.max(best, largestRectangle(heights));\n        }\n        return best;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "LargestPark_part1.java",
-   "narration": "Here's the Java solution, starting with largest park. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with largest park. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -49,10 +67,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Boolean matrix where false is free land and true is in use.",
+    "Treat each row as a histogram of free heights and apply the largest rectangle in histogram.",
     "Complexity: O(w*h)"
    ],
-   "narration": "To recap Largest Park: Boolean matrix where false is free land and true is in use. Try re-implementing it from scratch without looking."
+   "narration": "To recap Largest Park: Treat each row as a histogram of free heights and apply the largest rectangle in histogram. Try re-implementing it from scratch without looking."
   }
  ]
 }

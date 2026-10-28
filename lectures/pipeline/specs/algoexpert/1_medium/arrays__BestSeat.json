@@ -18,13 +18,31 @@
    "narration": "Here's the problem. A row of seats (1 taken, 0 free; both ends taken). Return the index of the free seat with the most space on both sides (centre of the widest gap, leftmost on ties), or -1."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "The best seat is the middle of the longest run of empty seats between occupied ones."
+   ],
+   "narration": "The best seat is the middle of the longest run of empty seats between occupied ones."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Scan for runs of zeros between ones",
+    "2. Track the longest run",
+    "3. Return its middle index, or minus one if none"
+   ],
+   "narration": "Step by step. First, scan for runs of zeros between ones. Second, track the longest run. Third, return its middle index, or minus one if none."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class BestSeat {\n    public static int bestSeat(int[] seats) {\n        int best = -1, bestGap = 0, l = 0;\n        while (l < seats.length) {\n            int r = l + 1;\n            while (r < seats.length && seats[r] == 0) r++;\n            int gap = r - l - 1;\n            if (gap > bestGap) { bestGap = gap; best = (l + r) / 2; }\n            l = r;\n        }\n        return best;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "BestSeat.java",
-   "narration": "Here's the Java solution, starting with best seat. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with best seat. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "A row of seats (1 taken, 0 free; both ends taken).",
+    "The best seat is the middle of the longest run of empty seats between occupied ones.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Best Seat: A row of seats (1 taken, 0 free; both ends taken). Try re-implementing it from scratch without looking."
+   "narration": "To recap Best Seat: The best seat is the middle of the longest run of empty seats between occupied ones. Try re-implementing it from scratch without looking."
   }
  ]
 }

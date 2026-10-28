@@ -19,13 +19,32 @@
    "narration": "Here's the problem. Sign is direction ( plus right, - left), magnitude is size. When they meet the smaller explodes (both if equal). Return survivors."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Simulate collisions with a stack of surviving asteroids."
+   ],
+   "narration": "Simulate collisions with a stack of surviving asteroids."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Right movers push",
+    "2. A left mover destroys smaller right movers on top",
+    "3. Equal sizes destroy both",
+    "4. Survivors remain"
+   ],
+   "narration": "Step by step. First, right movers push. Second, a left mover destroys smaller right movers on top. Third, equal sizes destroy both. Fourth, survivors remain."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class CollidingAsteroids {\n    public static int[] collidingAsteroids(int[] asteroids) {\n        ArrayDeque<Integer> st = new ArrayDeque<>();\n        for (int a : asteroids) {\n            boolean alive = true;\n            while (alive && a < 0 && !st.isEmpty() && st.peekLast() > 0) {\n                int top = st.peekLast();\n                if (top < -a) st.pollLast();\n                else { if (top == -a) st.pollLast(); alive = false; }\n            }\n            if (alive) st.addLast(a);\n        }\n        return st.stream().mapToInt(Integer::intValue).toArray();\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "CollidingAsteroids.java",
-   "narration": "Here's the Java solution, starting with colliding asteroids. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with colliding asteroids. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -40,10 +59,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Sign is direction (+ right, - left), magnitude is size.",
+    "Simulate collisions with a stack of surviving asteroids.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Colliding Asteroids: Sign is direction ( plus right, - left), magnitude is size. Try re-implementing it from scratch without looking."
+   "narration": "To recap Colliding Asteroids: Simulate collisions with a stack of surviving asteroids. Try re-implementing it from scratch without looking."
   }
  ]
 }

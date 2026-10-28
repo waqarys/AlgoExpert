@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Minimum spaces to split the digit string into numbers all from the given list, or -1. DP over suffixes."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Find the fewest pieces to cover each suffix of the digits with favourite numbers, using memoisation."
+   ],
+   "narration": "Find the fewest pieces to cover each suffix of the digits with favourite numbers, using memoisation."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Put numbers in a set",
+    "2. From each start, try every prefix in the set",
+    "3. Recurse on the rest with memo",
+    "4. Spaces equal pieces minus one"
+   ],
+   "narration": "Step by step. First, put numbers in a set. Second, from each start, try every prefix in the set. Third, recurse on the rest with memo. Fourth, spaces equal pieces minus one."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class NumbersInPi {\n    public static int numbersInPi(String pi, String[] numbers) {\n        Set<String> set = new HashSet<>(Arrays.asList(numbers));\n        int n = pi.length();\n        int[] dp = new int[n + 1];\n        Arrays.fill(dp, Integer.MAX_VALUE);\n        dp[n] = -1;\n        for (int i = n - 1; i >= 0; i--)\n            for (int j = i + 1; j <= n; j++)\n                if (dp[j] != Integer.MAX_VALUE && set.contains(pi.substring(i, j))) dp[i] = Math.min(dp[i], dp[j] + 1);\n        return dp[0] == Integer.MAX_VALUE ? -1 : dp[0];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "NumbersInPi.java",
-   "narration": "Here's the Java solution, starting with numbers in pi. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with numbers in pi. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Minimum spaces to split the digit string into numbers all from the given list, or -1.",
+    "Find the fewest pieces to cover each suffix of the digits with favourite numbers, using memoisation.",
     "Complexity: O(n^3 + m)"
    ],
-   "narration": "To recap Numbers In Pi: Minimum spaces to split the digit string into numbers all from the given list, or -1. Try re-implementing it from scratch without looking."
+   "narration": "To recap Numbers In Pi: Find the fewest pieces to cover each suffix of the digits with favourite numbers, using memoisation. Try re-implementing it from scratch without looking."
   }
  ]
 }

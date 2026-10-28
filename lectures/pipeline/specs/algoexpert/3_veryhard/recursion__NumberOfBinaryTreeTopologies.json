@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Number of structurally distinct binary trees with n nodes (Catalan)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Pick how many nodes go left; the counts multiply, giving the Catalan numbers."
+   ],
+   "narration": "Pick how many nodes go left; the counts multiply, giving the Catalan numbers."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. ways of zero is one",
+    "2. For each n, sum left times right counts",
+    "3. Return ways of n"
+   ],
+   "narration": "Step by step. First, ways of zero is one. Second, for each n, sum left times right counts. Third, return ways of n."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class NumberOfBinaryTreeTopologies {\n    public static long numberOfBinaryTreeTopologies(int n) {\n        long[] c = new long[n + 1];\n        c[0] = 1;\n        for (int m = 1; m <= n; m++) for (int l = 0; l < m; l++) c[m] += c[l] * c[m - 1 - l];\n        return c[n];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "NumberOfBinaryTreeTopologies.java",
-   "narration": "Here's the Java solution, starting with number of binary tree topologies. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with number of binary tree topologies. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Number of structurally distinct binary trees with n nodes (Catalan).",
+    "Pick how many nodes go left; the counts multiply, giving the Catalan numbers.",
     "Complexity: O(n^2)"
    ],
-   "narration": "To recap Number Of Binary Tree Topologies: Number of structurally distinct binary trees with n nodes (Catalan). Try re-implementing it from scratch without looking."
+   "narration": "To recap Number Of Binary Tree Topologies: Pick how many nodes go left; the counts multiply, giving the Catalan numbers. Try re-implementing it from scratch without looking."
   }
  ]
 }

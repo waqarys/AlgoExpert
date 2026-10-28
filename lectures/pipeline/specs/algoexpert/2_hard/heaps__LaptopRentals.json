@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Given start, end) rental intervals, minimum number of laptops needed so nobody waits."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "The number of laptops needed equals the maximum number of overlapping rentals."
+   ],
+   "narration": "The number of laptops needed equals the maximum number of overlapping rentals."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Sort starts and ends separately",
+    "2. Sweep with two pointers",
+    "3. A start before the next end needs a laptop",
+    "4. Otherwise reuse one"
+   ],
+   "narration": "Step by step. First, sort starts and ends separately. Second, sweep with two pointers. Third, a start before the next end needs a laptop. Fourth, otherwise reuse one."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LaptopRentals {\n    public static int laptopRentals(int[][] times) {\n        int[][] t = times.clone();\n        Arrays.sort(t, (a, b) -> Integer.compare(a[0], b[0]));\n        PriorityQueue<Integer> ends = new PriorityQueue<>();\n        for (int[] iv : t) {\n            if (!ends.isEmpty() && ends.peek() <= iv[0]) ends.poll();\n            ends.add(iv[1]);\n        }\n        return ends.size();\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LaptopRentals.java",
-   "narration": "Here's the Java solution, starting with laptop rentals. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with laptop rentals. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Given [start, end) rental intervals, minimum number of laptops needed so nobody waits.",
+    "The number of laptops needed equals the maximum number of overlapping rentals.",
     "Complexity: O(n log n)"
    ],
-   "narration": "To recap Laptop Rentals: Given start, end) rental intervals, minimum number of laptops needed so nobody waits. Try re-implementing it from scratch without looking."
+   "narration": "To recap Laptop Rentals: The number of laptops needed equals the maximum number of overlapping rentals. Try re-implementing it from scratch without looking."
   }
  ]
 }

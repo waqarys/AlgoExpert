@@ -18,13 +18,32 @@
    "narration": "Here's the problem. A BST class supporting insert, contains and remove (duplicates go right; removing a node with two children replaces it with its in-order successor's value). Removing the only node is a no-op."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Insert, search and remove all follow the BST ordering; removal of a two-child node swaps in the smallest value of the right subtree."
+   ],
+   "narration": "Insert, search and remove all follow the BST ordering; removal of a two-child node swaps in the smallest value of the right subtree."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Walk left or right by comparison",
+    "2. Insert at the empty spot",
+    "3. To remove with two children, copy the right subtree's minimum and delete it there",
+    "4. Handle the root carefully"
+   ],
+   "narration": "Step by step. First, walk left or right by comparison. Second, insert at the empty spot. Third, to remove with two children, copy the right subtree's minimum and delete it there. Fourth, handle the root carefully."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class BstConstruction {\n    public static class BST {\n        public int value;\n        public BST left, right;\n\n        public BST(int value) { this.value = value; }\n\n        public BST insert(int v) {\n            BST cur = this;\n            while (true) {\n                if (v < cur.value) { if (cur.left == null) { cur.left = new BST(v); return this; } cur = cur.left; }\n                else { if (cur.right == null) { cur.right = new BST(v); return this; } cur = cur.right; }\n            }\n        }\n\n        public boolean contains(int v) {\n            BST cur = this;\n            while (cur != null) {\n                if (v == cur.value) return true;\n                cur = v < cur.value ? cur.left : cur.right;\n            }\n            return false;",
    "lang": "java",
    "font_size": 26,
    "filename": "BstConstruction_part1.java",
-   "narration": "Here's the Java solution, starting with bst. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with bst. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -48,10 +67,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "A BST class supporting insert, contains and remove (duplicates go right; removing a node with two children replaces it with its in-order successor's value).",
+    "Insert, search and remove all follow the BST ordering; removal of a two-child node swaps in the smallest value of the right subtree.",
     "Complexity: O(log n) avg, O(n) worst per op"
    ],
-   "narration": "To recap Bst Construction: A BST class supporting insert, contains and remove (duplicates go right; removing a node with two children replaces it with its in-order successor's value). Try re-implementing it from scratch without looking."
+   "narration": "To recap Bst Construction: Insert, search and remove all follow the BST ordering; removal of a two-child node swaps in the smallest value of the right subtree. Try re-implementing it from scratch without looking."
   }
  ]
 }

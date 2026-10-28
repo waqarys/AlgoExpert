@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Undirected weighted graph as adjacency list ( dest, weight ); return its minimum spanning tree (forest) in the same format. Sort edges plus union-find."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Add edges from lightest to heaviest, skipping any that would form a cycle, detected with union-find."
+   ],
+   "narration": "Add edges from lightest to heaviest, skipping any that would form a cycle, detected with union-find."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Collect and sort edges by weight",
+    "2. Union-find over vertices",
+    "3. Add edges joining different sets",
+    "4. Return as adjacency list"
+   ],
+   "narration": "Step by step. First, collect and sort edges by weight. Second, union-find over vertices. Third, add edges joining different sets. Fourth, return as adjacency list."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class KruskalsAlgorithm {\n    public static int[][][] kruskalsAlgorithm(int[][][] edges) {\n        int n = edges.length;\n        List<int[]> all = new ArrayList<>();\n        for (int u = 0; u < n; u++) for (int[] e : edges[u]) if (u < e[0]) all.add(new int[]{u, e[0], e[1]});\n        all.sort(Comparator.comparingInt(e -> e[2]));\n        int[] parent = new int[n];\n        for (int i = 0; i < n; i++) parent[i] = i;\n        List<List<int[]>> mst = new ArrayList<>();\n        for (int i = 0; i < n; i++) mst.add(new ArrayList<>());\n        for (int[] e : all) {\n            int a = find(parent, e[0]), b = find(parent, e[1]);\n            if (a == b) continue;\n            parent[a] = b;\n            mst.get(e[0]).add(new int[]{e[1], e[2]});\n            mst.get(e[1]).add(new int[]{e[0], e[2]});\n        }\n        int[][][] out = new int[n][][];\n        for (int i = 0; i < n; i++) out[i] = mst.get(i).toArray(new int[0][]);\n        return out;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "KruskalsAlgorithm_part1.java",
-   "narration": "Here's the Java solution, starting with kruskals algorithm. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with kruskals algorithm. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -48,10 +67,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Undirected weighted graph as adjacency list ([dest, weight]); return its minimum spanning tree (forest) in the same format.",
+    "Add edges from lightest to heaviest, skipping any that would form a cycle, detected with union-find.",
     "Complexity: O(e log e)"
    ],
-   "narration": "To recap Kruskals Algorithm: Undirected weighted graph as adjacency list ( dest, weight ); return its minimum spanning tree (forest) in the same format. Try re-implementing it from scratch without looking."
+   "narration": "To recap Kruskals Algorithm: Add edges from lightest to heaviest, skipping any that would form a cycle, detected with union-find. Try re-implementing it from scratch without looking."
   }
  ]
 }

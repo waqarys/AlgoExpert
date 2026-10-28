@@ -20,13 +20,32 @@
    "narration": "Here's the problem. Water poured at the top of source column falls through a grid of 0 (air) and 1 (block). On hitting a block it splits half left, half right, flowing sideways until it can fall (or is lost at a wall). Return percentages reaching each bottom-row column. Row-by-row simulation."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Simulate row by row: water above a block splits left and right until it finds a gap to fall through."
+   ],
+   "narration": "Simulate row by row: water above a block splits left and right until it finds a gap to fall through."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Carry percentages per column",
+    "2. On a block, split half left and half right",
+    "3. Each half moves until a gap or a wall",
+    "4. Return the bottom row"
+   ],
+   "narration": "Step by step. First, carry percentages per column. Second, on a block, split half left and half right. Third, each half moves until a gap or a wall. Fourth, return the bottom row."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class WaterfallStreams {\n    public static double[] waterfallStreams(double[][] array, int source) {\n        int w = array[0].length;\n        double[] row = new double[w];\n        row[source] = -1; // negative = water amount, to distinguish from blocks\n        for (int r = 1; r < array.length; r++) {\n            double[] cur = array[r].clone();\n            for (int c = 0; c < w; c++) {\n                double water = row[c];\n                if (water >= 0) continue;\n                if (cur[c] != 1.0) { cur[c] += water; continue; }\n                double split = water / 2;\n                for (int k = c - 1; k >= 0; k--) {\n                    if (row[k] == 1.0) break;\n                    if (cur[k] != 1.0) { cur[k] += split; break; }\n                }\n                for (int k = c + 1; k < w; k++) {\n                    if (row[k] == 1.0) break;\n                    if (cur[k] != 1.0) { cur[k] += split; break; }\n                }\n            }\n            row = cur;\n        }\n        double[] out = new double[w];\n        for (int c = 0; c < w; c++) out[c] = row[c] < 0 ? -row[c] * 100 : 0;\n        return out;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "WaterfallStreams.java",
-   "narration": "Here's the Java solution, starting with waterfall streams. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with waterfall streams. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -41,10 +60,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Water poured at the top of `source` column falls through a grid of 0 (air) and 1 (block).",
+    "Simulate row by row: water above a block splits left and right until it finds a gap to fall through.",
     "Complexity: O(w^2 * h)"
    ],
-   "narration": "To recap Waterfall Streams: Water poured at the top of source column falls through a grid of 0 (air) and 1 (block). Try re-implementing it from scratch without looking."
+   "narration": "To recap Waterfall Streams: Simulate row by row: water above a block splits left and right until it finds a gap to fall through. Try re-implementing it from scratch without looking."
   }
  ]
 }

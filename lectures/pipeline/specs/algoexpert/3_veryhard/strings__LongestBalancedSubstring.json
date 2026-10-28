@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Length of the longest balanced-parentheses substring. Two counting passes."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Count opens and closes left to right, then right to left, resetting when the balance breaks."
+   ],
+   "narration": "Count opens and closes left to right, then right to left, resetting when the balance breaks."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Left to right, equal counts give a candidate",
+    "2. Reset when closes exceed opens",
+    "3. Repeat right to left"
+   ],
+   "narration": "Step by step. First, left to right, equal counts give a candidate. Second, reset when closes exceed opens. Third, repeat right to left."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LongestBalancedSubstring {\n    public static int longestBalancedSubstring(String s) {\n        return Math.max(scan(s, false), scan(s, true));\n    }\n\n    private static int scan(String s, boolean reverse) {\n        int open = 0, close = 0, best = 0;\n        for (int k = 0; k < s.length(); k++) {\n            char c = s.charAt(reverse ? s.length() - 1 - k : k);\n            boolean opening = (c == '(') != reverse;\n            if (opening) open++; else close++;\n            if (open == close) best = Math.max(best, 2 * close);\n            else if (close > open) open = close = 0;\n        }\n        return best;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LongestBalancedSubstring.java",
-   "narration": "Here's the Java solution, starting with longest balanced substring. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with longest balanced substring. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Length of the longest balanced-parentheses substring.",
+    "Count opens and closes left to right, then right to left, resetting when the balance breaks.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Longest Balanced Substring: Length of the longest balanced-parentheses substring. Try re-implementing it from scratch without looking."
+   "narration": "To recap Longest Balanced Substring: Count opens and closes left to right, then right to left, resetting when the balance breaks. Try re-implementing it from scratch without looking."
   }
  ]
 }

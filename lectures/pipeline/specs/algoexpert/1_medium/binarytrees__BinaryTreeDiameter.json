@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Number of edges on the longest path between any two nodes."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "The longest path through a node joins the heights of its two subtrees."
+   ],
+   "narration": "The longest path through a node joins the heights of its two subtrees."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Post-order returns each subtree's height",
+    "2. At each node, left height plus right height is a candidate",
+    "3. Track the maximum"
+   ],
+   "narration": "Step by step. First, post-order returns each subtree's height. Second, at each node, left height plus right height is a candidate. Third, track the maximum."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class BinaryTreeDiameter {\n    public static int binaryTreeDiameter(BinaryTree t) {\n        int[] best = {0};\n        height(t, best);\n        return best[0];\n    }\n\n    private static int height(BinaryTree t, int[] best) {\n        if (t == null) return 0;\n        int l = height(t.left, best), r = height(t.right, best);\n        best[0] = Math.max(best[0], l + r);\n        return 1 + Math.max(l, r);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "BinaryTreeDiameter.java",
-   "narration": "Here's the Java solution, starting with binary tree diameter. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with binary tree diameter. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Number of edges on the longest path between any two nodes.",
+    "The longest path through a node joins the heights of its two subtrees.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Binary Tree Diameter: Number of edges on the longest path between any two nodes. Try re-implementing it from scratch without looking."
+   "narration": "To recap Binary Tree Diameter: The longest path through a node joins the heights of its two subtrees. Try re-implementing it from scratch without looking."
   }
  ]
 }

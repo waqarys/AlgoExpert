@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Do the values read the same both ways? Reverse the second half, compare, restore."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Reverse the second half, then compare it with the first half."
+   ],
+   "narration": "Reverse the second half, then compare it with the first half."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Find the middle",
+    "2. Reverse the second half",
+    "3. Compare node by node",
+    "4. Restore the list"
+   ],
+   "narration": "Step by step. First, find the middle. Second, reverse the second half. Third, compare node by node. Fourth, restore the list."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LinkedListPalindrome {\n    public static boolean linkedListPalindrome(LinkedListNode head) {\n        LinkedListNode slow = head, fast = head;\n        while (fast != null && fast.next != null) { slow = slow.next; fast = fast.next.next; }\n        LinkedListNode rev = reverse(slow), a = head, b = rev;\n        boolean ok = true;\n        while (b != null) { if (a.value != b.value) { ok = false; break; } a = a.next; b = b.next; }\n        reverse(rev);\n        return ok;\n    }\n\n    private static LinkedListNode reverse(LinkedListNode h) {\n        LinkedListNode p = null;\n        while (h != null) { LinkedListNode n = h.next; h.next = p; p = h; h = n; }\n        return p;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LinkedListPalindrome.java",
-   "narration": "Here's the Java solution, starting with linked list palindrome. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with linked list palindrome. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Do the values read the same both ways?",
+    "Reverse the second half, then compare it with the first half.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Linked List Palindrome: Do the values read the same both ways? Try re-implementing it from scratch without looking."
+   "narration": "To recap Linked List Palindrome: Reverse the second half, then compare it with the first half. Try re-implementing it from scratch without looking."
   }
  ]
 }

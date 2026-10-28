@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Wrap every occurrence of sub in str with underscores, merging overlapping or adjacent occurrences into one wrapped block."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Find all occurrences, merge overlapping or touching ones, then insert underscores."
+   ],
+   "narration": "Find all occurrences, merge overlapping or touching ones, then insert underscores."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Collect occurrence intervals",
+    "2. Merge overlaps and adjacency",
+    "3. Insert underscores at boundaries"
+   ],
+   "narration": "Step by step. First, collect occurrence intervals. Second, merge overlaps and adjacency. Third, insert underscores at boundaries."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class UnderscorifySubstring {\n    public static String underscorifySubstring(String str, String sub) {\n        boolean[] mark = new boolean[str.length()];\n        for (int i = str.indexOf(sub); i != -1; i = str.indexOf(sub, i + 1))\n            for (int j = i; j < i + sub.length(); j++) mark[j] = true;\n        StringBuilder sb = new StringBuilder();\n        // adjacent occurrences (end of one == start of next) also merge, which marking handles naturally\n        for (int i = 0; i < str.length(); i++) {\n            if (mark[i] && (i == 0 || !mark[i - 1])) sb.append('_');\n            sb.append(str.charAt(i));\n            if (mark[i] && (i == str.length() - 1 || !mark[i + 1])) sb.append('_');\n        }\n        return sb.toString();\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "UnderscorifySubstring.java",
-   "narration": "Here's the Java solution, starting with underscorify substring. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with underscorify substring. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Wrap every occurrence of `sub` in `str` with underscores, merging overlapping or adjacent occurrences into one wrapped block.",
+    "Find all occurrences, merge overlapping or touching ones, then insert underscores.",
     "Complexity: O(n*m)"
    ],
-   "narration": "To recap Underscorify Substring: Wrap every occurrence of sub in str with underscores, merging overlapping or adjacent occurrences into one wrapped block. Try re-implementing it from scratch without looking."
+   "narration": "To recap Underscorify Substring: Find all occurrences, merge overlapping or touching ones, then insert underscores. Try re-implementing it from scratch without looking."
   }
  ]
 }

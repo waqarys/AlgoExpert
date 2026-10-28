@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Would inserting the two arrays (left to right) produce identical BSTs, without building them? Recurse on first-smaller / first-greater-or-equal descendants within value bounds, using indices only."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Two arrays give the same BST if they share the root and their smaller and larger elements build the same subtrees."
+   ],
+   "narration": "Two arrays give the same BST if they share the root and their smaller and larger elements build the same subtrees."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Compare first elements and lengths",
+    "2. Split each into smaller and bigger-or-equal lists keeping order",
+    "3. Recurse on both halves"
+   ],
+   "narration": "Step by step. First, compare first elements and lengths. Second, split each into smaller and bigger-or-equal lists keeping order. Third, recurse on both halves."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class SameBsts {\n    public static boolean sameBsts(List<Integer> a, List<Integer> b) {\n        if (a.size() != b.size()) return false;\n        if (a.isEmpty()) return true;\n        return same(a, b, 0, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);\n    }\n\n    private static boolean same(List<Integer> a, List<Integer> b, int ia, int ib, int min, int max) {\n        if (ia == -1 || ib == -1) return ia == ib;\n        if (!a.get(ia).equals(b.get(ib))) return false;\n        int v = a.get(ia);\n        return same(a, b, smaller(a, ia, min), smaller(b, ib, min), min, v)\n                && same(a, b, bigger(a, ia, max), bigger(b, ib, max), v, max);\n    }\n\n    private static int smaller(List<Integer> x, int start, int min) {\n        for (int i = start + 1; i < x.size(); i++) if (x.get(i) < x.get(start) && x.get(i) >= min) return i;\n        return -1;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "SameBsts_part1.java",
-   "narration": "Here's the Java solution, starting with same bsts. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with same bsts. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -48,10 +66,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Would inserting the two arrays (left to right) produce identical BSTs, without building them?",
+    "Two arrays give the same BST if they share the root and their smaller and larger elements build the same subtrees.",
     "Complexity: O(n^2)"
    ],
-   "narration": "To recap Same Bsts: Would inserting the two arrays (left to right) produce identical BSTs, without building them? Try re-implementing it from scratch without looking."
+   "narration": "To recap Same Bsts: Two arrays give the same BST if they share the root and their smaller and larger elements build the same subtrees. Try re-implementing it from scratch without looking."
   }
  ]
 }

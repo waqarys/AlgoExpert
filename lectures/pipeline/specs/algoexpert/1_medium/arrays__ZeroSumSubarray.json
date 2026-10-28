@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Does any non-empty contiguous subarray sum to zero? A repeated prefix sum proves it."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "If two prefix sums are equal, the elements between them sum to zero."
+   ],
+   "narration": "If two prefix sums are equal, the elements between them sum to zero."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Keep a set of prefix sums starting with zero",
+    "2. Add each element to the running sum",
+    "3. If the sum was seen before, return true"
+   ],
+   "narration": "Step by step. First, keep a set of prefix sums starting with zero. Second, add each element to the running sum. Third, if the sum was seen before, return true."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ZeroSumSubarray {\n    public static boolean zeroSumSubarray(int[] nums) {\n        Set<Long> seen = new HashSet<>();\n        seen.add(0L);\n        long sum = 0;\n        for (int n : nums) { sum += n; if (!seen.add(sum)) return true; }\n        return false;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ZeroSumSubarray.java",
-   "narration": "Here's the Java solution, starting with zero sum subarray. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with zero sum subarray. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Does any non-empty contiguous subarray sum to zero?",
+    "If two prefix sums are equal, the elements between them sum to zero.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Zero Sum Subarray: Does any non-empty contiguous subarray sum to zero? Try re-implementing it from scratch without looking."
+   "narration": "To recap Zero Sum Subarray: If two prefix sums are equal, the elements between them sum to zero. Try re-implementing it from scratch without looking."
   }
  ]
 }

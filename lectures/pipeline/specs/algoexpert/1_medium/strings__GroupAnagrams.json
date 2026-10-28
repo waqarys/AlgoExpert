@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Group words that are anagrams of each other (key equals sorted letters)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Anagrams share the same sorted letters, which makes a perfect hash key."
+   ],
+   "narration": "Anagrams share the same sorted letters, which makes a perfect hash key."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Sort each word's letters",
+    "2. Group words by that key",
+    "3. Return the groups"
+   ],
+   "narration": "Step by step. First, sort each word's letters. Second, group words by that key. Third, return the groups."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class GroupAnagrams {\n    public static List<List<String>> groupAnagrams(List<String> words) {\n        Map<String, List<String>> groups = new LinkedHashMap<>();\n        for (String w : words) {\n            char[] c = w.toCharArray();\n            Arrays.sort(c);\n            groups.computeIfAbsent(new String(c), k -> new ArrayList<>()).add(w);\n        }\n        return new ArrayList<>(groups.values());\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "GroupAnagrams.java",
-   "narration": "Here's the Java solution, starting with group anagrams. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with group anagrams. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Group words that are anagrams of each other (key = sorted letters).",
+    "Anagrams share the same sorted letters, which makes a perfect hash key.",
     "Complexity: O(w * n log n)"
    ],
-   "narration": "To recap Group Anagrams: Group words that are anagrams of each other (key equals sorted letters). Try re-implementing it from scratch without looking."
+   "narration": "To recap Group Anagrams: Anagrams share the same sorted letters, which makes a perfect hash key. Try re-implementing it from scratch without looking."
   }
  ]
 }

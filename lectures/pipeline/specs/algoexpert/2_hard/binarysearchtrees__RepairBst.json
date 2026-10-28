@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Exactly two nodes' values were swapped; swap them back in place. Iterative in-order finds the two out-of-order nodes."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "An in-order traversal of a BST is sorted; the two swapped nodes show up as order violations."
+   ],
+   "narration": "An in-order traversal of a BST is sorted; the two swapped nodes show up as order violations."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. In-order traverse tracking the previous node",
+    "2. The first violation gives the first node",
+    "3. The last violation gives the second",
+    "4. Swap their values"
+   ],
+   "narration": "Step by step. First, in-order traverse tracking the previous node. Second, the first violation gives the first node. Third, the last violation gives the second. Fourth, swap their values."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class RepairBst {\n    public static BST repairBst(BST tree) {\n        BST first = null, second = null, prev = null, cur = tree;\n        ArrayDeque<BST> st = new ArrayDeque<>();\n        while (cur != null || !st.isEmpty()) {\n            while (cur != null) { st.push(cur); cur = cur.left; }\n            cur = st.pop();\n            if (prev != null && prev.value > cur.value) { if (first == null) first = prev; second = cur; }\n            prev = cur;\n            cur = cur.right;\n        }\n        int t = first.value; first.value = second.value; second.value = t;\n        return tree;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "RepairBst.java",
-   "narration": "Here's the Java solution, starting with repair bst. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with repair bst. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Exactly two nodes' values were swapped; swap them back in place.",
+    "An in-order traversal of a BST is sorted; the two swapped nodes show up as order violations.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Repair Bst: Exactly two nodes' values were swapped; swap them back in place. Try re-implementing it from scratch without looking."
+   "narration": "To recap Repair Bst: An in-order traversal of a BST is sorted; the two swapped nodes show up as order violations. Try re-implementing it from scratch without looking."
   }
  ]
 }

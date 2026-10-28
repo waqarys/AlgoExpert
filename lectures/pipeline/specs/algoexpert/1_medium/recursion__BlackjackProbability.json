@@ -19,13 +19,32 @@
    "narration": "Here's the problem. The dealer draws cards valued 1-10 uniformly while below target-4; busts if above target. Starting from a hand value, probability of busting (rounded to 3 decimals). Memoised recursion."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "The chance of busting from hand total t is the average over the ten next cards, which we memoise."
+   ],
+   "narration": "The chance of busting from hand total t is the average over the ten next cards, which we memoise."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. If the total exceeds the target, it's a bust",
+    "2. If it reaches target minus four, stop",
+    "3. Otherwise average the ten draws",
+    "4. Memoise by total"
+   ],
+   "narration": "Step by step. First, if the total exceeds the target, it's a bust. Second, if it reaches target minus four, stop. Third, otherwise average the ten draws. Fourth, memoise by total."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class BlackjackProbability {\n    public static float blackjackProbability(int target, int startingHand) {\n        double p = bust(target, startingHand, new HashMap<>());\n        return Math.round(p * 1000) / 1000f;\n    }\n\n    private static double bust(int target, int hand, Map<Integer, Double> memo) {\n        if (hand > target) return 1;\n        if (hand + 4 >= target) return 0;\n        Double m = memo.get(hand);\n        if (m != null) return m;\n        double p = 0;\n        for (int c = 1; c <= 10; c++) p += 0.1 * bust(target, hand + c, memo);\n        memo.put(hand, p);\n        return p;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "BlackjackProbability.java",
-   "narration": "Here's the Java solution, starting with blackjack probability. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with blackjack probability. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -40,10 +59,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "The dealer draws cards valued 1-10 uniformly while below target-4; busts if above target.",
+    "The chance of busting from hand total t is the average over the ten next cards, which we memoise.",
     "Complexity: O(t)"
    ],
-   "narration": "To recap Blackjack Probability: The dealer draws cards valued 1-10 uniformly while below target-4; busts if above target. Try re-implementing it from scratch without looking."
+   "narration": "To recap Blackjack Probability: The chance of busting from hand total t is the average over the ten next cards, which we memoise. Try re-implementing it from scratch without looking."
   }
  ]
 }

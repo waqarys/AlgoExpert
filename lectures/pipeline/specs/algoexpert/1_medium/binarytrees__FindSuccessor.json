@@ -17,13 +17,30 @@
    "narration": "Here's the problem. Nodes have parent pointers; return the in-order successor of node (or null)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "The in-order successor is the leftmost node of the right subtree, or else the first ancestor reached from a left child."
+   ],
+   "narration": "The in-order successor is the leftmost node of the right subtree, or else the first ancestor reached from a left child."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. If there's a right subtree, go right then all the way left",
+    "2. Otherwise climb parents until we come from a left child"
+   ],
+   "narration": "Step by step. First, if there's a right subtree, go right then all the way left. Second, otherwise climb parents until we come from a left child."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class FindSuccessor {\n    public static BinaryTree findSuccessor(BinaryTree tree, BinaryTree node) {\n        if (node.right != null) {\n            BinaryTree c = node.right;\n            while (c.left != null) c = c.left;\n            return c;\n        }\n        BinaryTree c = node;\n        while (c.parent != null && c.parent.right == c) c = c.parent;\n        return c.parent;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "FindSuccessor.java",
-   "narration": "Here's the Java solution, starting with find successor. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with find successor. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +55,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Nodes have parent pointers; return the in-order successor of `node` (or null).",
+    "The in-order successor is the leftmost node of the right subtree, or else the first ancestor reached from a left child.",
     "Complexity: O(h)"
    ],
-   "narration": "To recap Find Successor: Nodes have parent pointers; return the in-order successor of node (or null). Try re-implementing it from scratch without looking."
+   "narration": "To recap Find Successor: The in-order successor is the leftmost node of the right subtree, or else the first ancestor reached from a left child. Try re-implementing it from scratch without looking."
   }
  ]
 }

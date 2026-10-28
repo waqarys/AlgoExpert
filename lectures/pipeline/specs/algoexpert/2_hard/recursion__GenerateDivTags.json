@@ -17,13 +17,32 @@
    "narration": "Here's the problem. All valid strings of n matched under div over under /div over pairs (balanced-parentheses generation)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Backtracking: you can open a tag while some remain and close one only if more are open than closed."
+   ],
+   "narration": "Backtracking: you can open a tag while some remain and close one only if more are open than closed."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Track opening and closing tags left",
+    "2. Add an opening tag if available",
+    "3. Add a closing tag if it keeps balance",
+    "4. Record complete strings"
+   ],
+   "narration": "Step by step. First, track opening and closing tags left. Second, add an opening tag if available. Third, add a closing tag if it keeps balance. Fourth, record complete strings."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class GenerateDivTags {\n    public static ArrayList<String> generateDivTags(int n) {\n        ArrayList<String> out = new ArrayList<>();\n        gen(n, n, new StringBuilder(), out);\n        return out;\n    }\n\n    private static void gen(int open, int close, StringBuilder sb, List<String> out) {\n        if (close == 0) { out.add(sb.toString()); return; }\n        int len = sb.length();\n        if (open > 0) { sb.append(\"<div>\"); gen(open - 1, close, sb, out); sb.setLength(len); }\n        if (close > open) { sb.append(\"</div>\"); gen(open, close - 1, sb, out); sb.setLength(len); }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "GenerateDivTags.java",
-   "narration": "Here's the Java solution, starting with generate div tags. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with generate div tags. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "All valid strings of n matched <div></div> pairs (balanced-parentheses generation).",
+    "Backtracking: you can open a tag while some remain and close one only if more are open than closed.",
     "Complexity: O(Catalan(n) * n)"
    ],
-   "narration": "To recap Generate Div Tags: All valid strings of n matched under div over under /div over pairs (balanced-parentheses generation). Try re-implementing it from scratch without looking."
+   "narration": "To recap Generate Div Tags: Backtracking: you can open a tag while some remain and close one only if more are open than closed. Try re-implementing it from scratch without looking."
   }
  ]
 }

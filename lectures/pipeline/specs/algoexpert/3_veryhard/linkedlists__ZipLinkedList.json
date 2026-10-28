@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Reorder in place to first, last, second, second-to-last, Split at middle, reverse second half, interleave."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Split at the middle, reverse the back half, and interleave."
+   ],
+   "narration": "Split at the middle, reverse the back half, and interleave."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Find the middle",
+    "2. Reverse the second half",
+    "3. Alternate nodes from both halves"
+   ],
+   "narration": "Step by step. First, find the middle. Second, reverse the second half. Third, alternate nodes from both halves."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ZipLinkedList {\n    public static LinkedListNode zipLinkedList(LinkedListNode head) {\n        if (head == null || head.next == null) return head;\n        LinkedListNode slow = head, fast = head;\n        while (fast.next != null && fast.next.next != null) { slow = slow.next; fast = fast.next.next; }\n        LinkedListNode second = slow.next, prev = null;\n        slow.next = null;\n        while (second != null) { LinkedListNode n = second.next; second.next = prev; prev = second; second = n; }\n        LinkedListNode a = head, b = prev;\n        while (b != null) {\n            LinkedListNode an = a.next, bn = b.next;\n            a.next = b; b.next = an;\n            a = an; b = bn;\n        }\n        return head;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ZipLinkedList.java",
-   "narration": "Here's the Java solution, starting with zip linked list. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with zip linked list. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Reorder in place to first, last, second, second-to-last, … Split at middle, reverse second half, interleave.",
+    "Split at the middle, reverse the back half, and interleave.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Zip Linked List: Reorder in place to first, last, second, second-to-last, Split at middle, reverse second half, interleave. Try re-implementing it from scratch without looking."
+   "narration": "To recap Zip Linked List: Split at the middle, reverse the back half, and interleave. Try re-implementing it from scratch without looking."
   }
  ]
 }

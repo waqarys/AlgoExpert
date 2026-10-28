@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Transform in place so every node's right pointer points to the next node on the same level (null at the end of a level); left pointers keep the first child. Level-by-level, constant extra space using the already-linked level above."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Process top-down: a left child's sibling is the right child, and a right child's sibling is the parent's sibling's left child."
+   ],
+   "narration": "Process top-down: a left child's sibling is the right child, and a right child's sibling is the parent's sibling's left child."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Recurse with parent and side",
+    "2. Save the old right child",
+    "3. Set right to the sibling",
+    "4. Recurse on children"
+   ],
+   "narration": "Step by step. First, recurse with parent and side. Second, save the old right child. Third, set right to the sibling. Fourth, recurse on children."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class RightSiblingTree {\n    public static BinaryTree rightSiblingTree(BinaryTree root) {\n        java.util.List<BinaryTree> level = java.util.List.of(root);\n        while (!level.isEmpty()) {\n            java.util.List<BinaryTree> next = new java.util.ArrayList<>();\n            for (BinaryTree n : level) { if (n.left != null) next.add(n.left); if (n.right != null) next.add(n.right); }\n            for (int i = 0; i < level.size(); i++) level.get(i).right = i + 1 < level.size() ? level.get(i + 1) : null;\n            level = next;\n        }\n        return root;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "RightSiblingTree.java",
-   "narration": "Here's the Java solution, starting with right sibling tree. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with right sibling tree. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Transform in place so every node's right pointer points to the next node on the same level (null at the end of a level); left pointers keep the first child.",
+    "Process top-down: a left child's sibling is the right child, and a right child's sibling is the parent's sibling's left child.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Right Sibling Tree: Transform in place so every node's right pointer points to the next node on the same level (null at the end of a level); left pointers keep the first child. Try re-implementing it from scratch without looking."
+   "narration": "To recap Right Sibling Tree: Process top-down: a left child's sibling is the right child, and a right child's sibling is the parent's sibling's left child. Try re-implementing it from scratch without looking."
   }
  ]
 }

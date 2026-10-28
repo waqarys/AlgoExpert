@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Which words can be formed by chaining 8-directionally adjacent letters without reusing a cell? Trie of words plus DFS from every cell."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A trie of the words lets the board DFS prune paths that can't spell any word."
+   ],
+   "narration": "A trie of the words lets the board DFS prune paths that can't spell any word."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Insert words into a trie",
+    "2. DFS from every cell along trie edges",
+    "3. Mark visited cells",
+    "4. Record words at word-end markers"
+   ],
+   "narration": "Step by step. First, insert words into a trie. Second, dFS from every cell along trie edges. Third, mark visited cells. Fourth, record words at word-end markers."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class BoggleBoard {\n    private static class Trie { Map<Character, Trie> next = new HashMap<>(); String word; }\n\n    public static List<String> boggleBoard(char[][] board, String[] words) {\n        Trie root = new Trie();\n        for (String w : words) {\n            Trie t = root;\n            for (char c : w.toCharArray()) t = t.next.computeIfAbsent(c, k -> new Trie());\n            t.word = w;\n        }\n        Set<String> found = new LinkedHashSet<>();\n        boolean[][] used = new boolean[board.length][board[0].length];\n        for (int r = 0; r < board.length; r++) for (int c = 0; c < board[0].length; c++) dfs(board, r, c, root, used, found);\n        return new ArrayList<>(found);\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "BoggleBoard_part1.java",
-   "narration": "Here's the Java solution, starting with boggle board. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with boggle board. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -48,10 +67,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Which words can be formed by chaining 8-directionally adjacent letters without reusing a cell?",
+    "A trie of the words lets the board DFS prune paths that can't spell any word.",
     "Complexity: O(ws + w*h*8^s)"
    ],
-   "narration": "To recap Boggle Board: Which words can be formed by chaining 8-directionally adjacent letters without reusing a cell? Try re-implementing it from scratch without looking."
+   "narration": "To recap Boggle Board: A trie of the words lets the board DFS prune paths that can't spell any word. Try re-implementing it from scratch without looking."
   }
  ]
 }

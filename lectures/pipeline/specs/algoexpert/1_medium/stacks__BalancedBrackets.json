@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Are (), , properly balanced and nested? Non-bracket chars are ignored."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A stack matches each closing bracket with the most recent opening one."
+   ],
+   "narration": "A stack matches each closing bracket with the most recent opening one."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Push openers",
+    "2. On a closer, pop and compare",
+    "3. Ignore other characters",
+    "4. Valid if the stack ends empty"
+   ],
+   "narration": "Step by step. First, push openers. Second, on a closer, pop and compare. Third, ignore other characters. Fourth, valid if the stack ends empty."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class BalancedBrackets {\n    public static boolean balancedBrackets(String s) {\n        ArrayDeque<Character> st = new ArrayDeque<>();\n        for (char c : s.toCharArray()) {\n            if (\"([{\".indexOf(c) >= 0) st.push(c);\n            else if (\")]}\".indexOf(c) >= 0) {\n                if (st.isEmpty() || \"([{\".indexOf(st.pop()) != \")]}\".indexOf(c)) return false;\n            }\n        }\n        return st.isEmpty();\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "BalancedBrackets.java",
-   "narration": "Here's the Java solution, starting with balanced brackets. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with balanced brackets. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Are (), [], {} properly balanced and nested?",
+    "A stack matches each closing bracket with the most recent opening one.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Balanced Brackets: Are (), , properly balanced and nested? Try re-implementing it from scratch without looking."
+   "narration": "To recap Balanced Brackets: A stack matches each closing bracket with the most recent opening one. Try re-implementing it from scratch without looking."
   }
  ]
 }

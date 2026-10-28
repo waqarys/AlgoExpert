@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Two lists may converge into a shared tail; return the first shared node or null. Two pointers that switch lists meet at the junction after at most n plus m steps."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Two pointers that switch to the other list after finishing travel the same distance and meet at the junction."
+   ],
+   "narration": "Two pointers that switch to the other list after finishing travel the same distance and meet at the junction."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Advance both pointers",
+    "2. When one ends, jump to the other list's head",
+    "3. They meet at the shared node or both null"
+   ],
+   "narration": "Step by step. First, advance both pointers. Second, when one ends, jump to the other list's head. Third, they meet at the shared node or both null."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MergingLinkedLists {\n    public static LinkedListNode mergingLinkedLists(LinkedListNode a, LinkedListNode b) {\n        LinkedListNode p = a, q = b;\n        while (p != q) { p = p == null ? b : p.next; q = q == null ? a : q.next; }\n        return p;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MergingLinkedLists.java",
-   "narration": "Here's the Java solution, starting with merging linked lists. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with merging linked lists. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Two lists may converge into a shared tail; return the first shared node or null.",
+    "Two pointers that switch to the other list after finishing travel the same distance and meet at the junction.",
     "Complexity: O(n + m)"
    ],
-   "narration": "To recap Merging Linked Lists: Two lists may converge into a shared tail; return the first shared node or null. Try re-implementing it from scratch without looking."
+   "narration": "To recap Merging Linked Lists: Two pointers that switch to the other list after finishing travel the same distance and meet at the junction. Try re-implementing it from scratch without looking."
   }
  ]
 }

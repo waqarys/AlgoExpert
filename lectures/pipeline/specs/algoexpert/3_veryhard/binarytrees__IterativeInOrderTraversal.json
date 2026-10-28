@@ -17,13 +17,32 @@
    "narration": "Here's the problem. In-order traversal with constant extra space using parent pointers."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Parent pointers let us know where we came from, so we can walk without a stack."
+   ],
+   "narration": "Parent pointers let us know where we came from, so we can walk without a stack."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Track previous and current",
+    "2. Coming from parent, go left if possible",
+    "3. Coming from left, visit then go right",
+    "4. Coming from right, go up"
+   ],
+   "narration": "Step by step. First, track previous and current. Second, coming from parent, go left if possible. Third, coming from left, visit then go right. Fourth, coming from right, go up."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class IterativeInOrderTraversal {\n    public static void iterativeInOrderTraversal(BinaryTree tree, Consumer<BinaryTree> callback) {\n        BinaryTree prev = null, cur = tree;\n        while (cur != null) {\n            BinaryTree next;\n            if (prev == null || prev == cur.parent) {\n                if (cur.left != null) next = cur.left;\n                else { callback.accept(cur); next = cur.right != null ? cur.right : cur.parent; }\n            } else if (prev == cur.left) {\n                callback.accept(cur);\n                next = cur.right != null ? cur.right : cur.parent;\n            } else next = cur.parent;\n            prev = cur;\n            cur = next;\n        }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "IterativeInOrderTraversal.java",
-   "narration": "Here's the Java solution, starting with iterative in order traversal. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with iterative in order traversal. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "In-order traversal with O(1) extra space using parent pointers.",
+    "Parent pointers let us know where we came from, so we can walk without a stack.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Iterative In Order Traversal: In-order traversal with constant extra space using parent pointers. Try re-implementing it from scratch without looking."
+   "narration": "To recap Iterative In Order Traversal: Parent pointers let us know where we came from, so we can walk without a stack. Try re-implementing it from scratch without looking."
   }
  ]
 }

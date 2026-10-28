@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Is nodeTwo a descendant of one of nodeOne or nodeThree and an ancestor of the other?"
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Node two must sit on the path between the other two, so search down from node one and node three."
+   ],
+   "narration": "Node two must sit on the path between the other two, so search down from node one and node three."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Check if node two descends from node one or node three",
+    "2. Then check that the other one descends from node two",
+    "3. Use BST search for each step"
+   ],
+   "narration": "Step by step. First, check if node two descends from node one or node three. Second, then check that the other one descends from node two. Third, use BST search for each step."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ValidateThreeNodes {\n    public static boolean validateThreeNodes(BST one, BST two, BST three) {\n        if (descends(two, one)) return descends(three, two);\n        if (descends(two, three)) return descends(one, two);\n        return false;\n    }\n\n    /** true if `target` is reachable going down from `from`. */\n    private static boolean descends(BST from, BST target) {\n        BST c = from;\n        while (c != null && c != target) c = target.value < c.value ? c.left : c.right;\n        return c == target;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ValidateThreeNodes.java",
-   "narration": "Here's the Java solution, starting with validate three nodes. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with validate three nodes. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Is nodeTwo a descendant of one of nodeOne/nodeThree and an ancestor of the other?",
+    "Node two must sit on the path between the other two, so search down from node one and node three.",
     "Complexity: O(h)"
    ],
-   "narration": "To recap Validate Three Nodes: Is nodeTwo a descendant of one of nodeOne or nodeThree and an ancestor of the other? Try re-implementing it from scratch without looking."
+   "narration": "To recap Validate Three Nodes: Node two must sit on the path between the other two, so search down from node one and node three. Try re-implementing it from scratch without looking."
   }
  ]
 }

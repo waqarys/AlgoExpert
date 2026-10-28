@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Sorted distinct ints; smallest index i with a i equals equals i, or -1. Binary search."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Since values are distinct sorted integers, value minus index never decreases, so binary search works."
+   ],
+   "narration": "Since values are distinct sorted integers, value minus index never decreases, so binary search works."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Binary search",
+    "2. If the value is below the index, go right",
+    "3. Otherwise record a match and go left for the smallest"
+   ],
+   "narration": "Step by step. First, binary search. Second, if the value is below the index, go right. Third, otherwise record a match and go left for the smallest."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class IndexEqualsValue {\n    public static int indexEqualsValue(int[] a) {\n        int lo = 0, hi = a.length - 1, ans = -1;\n        while (lo <= hi) {\n            int m = (lo + hi) >>> 1;\n            if (a[m] < m) lo = m + 1;\n            else { if (a[m] == m) ans = m; hi = m - 1; }\n        }\n        return ans;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "IndexEqualsValue.java",
-   "narration": "Here's the Java solution, starting with index equals value. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with index equals value. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Sorted distinct ints; smallest index i with a[i] == i, or -1.",
+    "Since values are distinct sorted integers, value minus index never decreases, so binary search works.",
     "Complexity: O(log n)"
    ],
-   "narration": "To recap Index Equals Value: Sorted distinct ints; smallest index i with a i equals equals i, or -1. Try re-implementing it from scratch without looking."
+   "narration": "To recap Index Equals Value: Since values are distinct sorted integers, value minus index never decreases, so binary search works. Try re-implementing it from scratch without looking."
   }
  ]
 }

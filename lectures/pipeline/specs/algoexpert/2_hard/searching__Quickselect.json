@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Kth smallest element (1-based) of an unsorted array, in place with Hoare-style partitioning."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Partition like quicksort, but only recurse into the side containing the kth position."
+   ],
+   "narration": "Partition like quicksort, but only recurse into the side containing the kth position."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Pick a pivot and partition",
+    "2. If the pivot lands at k minus one, done",
+    "3. Else continue on one side"
+   ],
+   "narration": "Step by step. First, pick a pivot and partition. Second, if the pivot lands at k minus one, done. Third, else continue on one side."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class Quickselect {\n    public static int quickselect(int[] a, int k) {\n        int lo = 0, hi = a.length - 1, target = k - 1;\n        while (true) {\n            int p = lo, l = lo + 1, r = hi;\n            while (l <= r) {\n                if (a[l] > a[p] && a[r] < a[p]) swap(a, l, r);\n                if (a[l] <= a[p]) l++;\n                if (a[r] >= a[p]) r--;\n            }\n            swap(a, p, r);\n            if (r == target) return a[r];\n            if (r < target) lo = r + 1; else hi = r - 1;\n        }\n    }\n\n    static void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "Quickselect.java",
-   "narration": "Here's the Java solution, starting with quickselect. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with quickselect. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Kth smallest element (1-based) of an unsorted array, in place with Hoare-style partitioning.",
+    "Partition like quicksort, but only recurse into the side containing the kth position.",
     "Complexity: O(n) avg, O(n^2) worst"
    ],
-   "narration": "To recap Quickselect: Kth smallest element (1-based) of an unsorted array, in place with Hoare-style partitioning. Try re-implementing it from scratch without looking."
+   "narration": "To recap Quickselect: Partition like quicksort, but only recurse into the side containing the kth position. Try re-implementing it from scratch without looking."
   }
  ]
 }

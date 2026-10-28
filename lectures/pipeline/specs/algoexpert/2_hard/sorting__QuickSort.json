@@ -17,13 +17,32 @@
    "narration": "Here's the problem. In-place quicksort, recursing into the smaller partition first to bound stack depth."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Partition around a pivot so smaller values go left and larger right, then sort each side."
+   ],
+   "narration": "Partition around a pivot so smaller values go left and larger right, then sort each side."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Pick a pivot",
+    "2. Partition with two pointers",
+    "3. Recurse into the smaller side first",
+    "4. Loop on the larger to bound the stack"
+   ],
+   "narration": "Step by step. First, pick a pivot. Second, partition with two pointers. Third, recurse into the smaller side first. Fourth, loop on the larger to bound the stack."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class QuickSort {\n    public static int[] quickSort(int[] a) { sort(a, 0, a.length - 1); return a; }\n\n    private static void sort(int[] a, int lo, int hi) {\n        while (lo < hi) {\n            int p = lo, l = lo + 1, r = hi;\n            while (l <= r) {\n                if (a[l] > a[p] && a[r] < a[p]) swap(a, l, r);\n                if (a[l] <= a[p]) l++;\n                if (a[r] >= a[p]) r--;\n            }\n            swap(a, p, r);\n            if (r - lo < hi - r) { sort(a, lo, r - 1); lo = r + 1; } else { sort(a, r + 1, hi); hi = r - 1; }\n        }\n    }\n\n    private static void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "QuickSort.java",
-   "narration": "Here's the Java solution, starting with quick sort. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with quick sort. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "In-place quicksort, recursing into the smaller partition first to bound stack depth.",
+    "Partition around a pivot so smaller values go left and larger right, then sort each side.",
     "Complexity: O(n log n) avg, O(n^2) worst"
    ],
-   "narration": "To recap Quick Sort: In-place quicksort, recursing into the smaller partition first to bound stack depth. Try re-implementing it from scratch without looking."
+   "narration": "To recap Quick Sort: Partition around a pivot so smaller values go left and larger right, then sort each side. Try re-implementing it from scratch without looking."
   }
  ]
 }

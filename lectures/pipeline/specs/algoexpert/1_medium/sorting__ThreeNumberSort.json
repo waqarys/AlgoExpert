@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Sort an array in place according to a 3-value order (Dutch national flag)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Dutch national flag: three regions grown by three pointers in one pass."
+   ],
+   "narration": "Dutch national flag: three regions grown by three pointers in one pass."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. First, second and third pointers",
+    "2. Swap firsts to the front",
+    "3. Leave seconds",
+    "4. Swap thirds to the back"
+   ],
+   "narration": "Step by step. First, first, second and third pointers. Second, swap firsts to the front. Third, leave seconds. Fourth, swap thirds to the back."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ThreeNumberSort {\n    public static int[] threeNumberSort(int[] a, int[] order) {\n        int lo = 0, mid = 0, hi = a.length - 1;\n        while (mid <= hi) {\n            if (a[mid] == order[0]) swap(a, lo++, mid++);\n            else if (a[mid] == order[1]) mid++;\n            else swap(a, mid, hi--);\n        }\n        return a;\n    }\n\n    private static void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ThreeNumberSort.java",
-   "narration": "Here's the Java solution, starting with three number sort. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with three number sort. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Sort an array in place according to a 3-value `order` (Dutch national flag).",
+    "Dutch national flag: three regions grown by three pointers in one pass.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Three Number Sort: Sort an array in place according to a 3-value order (Dutch national flag). Try re-implementing it from scratch without looking."
+   "narration": "To recap Three Number Sort: Dutch national flag: three regions grown by three pointers in one pass. Try re-implementing it from scratch without looking."
   }
  ]
 }

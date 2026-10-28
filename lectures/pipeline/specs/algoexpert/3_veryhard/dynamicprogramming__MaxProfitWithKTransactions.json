@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Daily prices, at most k buy or sell pairs (no overlap); max profit."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "For each transaction count, track the best profit by day using the best buy so far."
+   ],
+   "narration": "For each transaction count, track the best profit by day using the best buy so far."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Rows for transactions, columns for days",
+    "2. Carry max of previous row minus price",
+    "3. Profit is max of skip or sell today",
+    "4. Two rows suffice"
+   ],
+   "narration": "Step by step. First, rows for transactions, columns for days. Second, carry max of previous row minus price. Third, profit is max of skip or sell today. Fourth, two rows suffice."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MaxProfitWithKTransactions {\n    public static int maxProfitWithKTransactions(int[] prices, int k) {\n        if (prices.length == 0) return 0;\n        int[] prev = new int[prices.length], cur = new int[prices.length];\n        for (int t = 1; t <= k; t++) {\n            int bestBuy = Integer.MIN_VALUE;\n            for (int d = 0; d < prices.length; d++) {\n                bestBuy = Math.max(bestBuy, prev[d] - prices[d]);\n                cur[d] = Math.max(d > 0 ? cur[d - 1] : 0, bestBuy + prices[d]);\n            }\n            int[] tmp = prev; prev = cur; cur = tmp;\n        }\n        return prev[prices.length - 1];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MaxProfitWithKTransactions.java",
-   "narration": "Here's the Java solution, starting with max profit with k transactions. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with max profit with k transactions. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Daily prices, at most k buy/sell pairs (no overlap); max profit.",
+    "For each transaction count, track the best profit by day using the best buy so far.",
     "Complexity: O(n*k)"
    ],
-   "narration": "To recap Max Profit With K Transactions: Daily prices, at most k buy or sell pairs (no overlap); max profit. Try re-implementing it from scratch without looking."
+   "narration": "To recap Max Profit With K Transactions: For each transaction count, track the best profit by day using the best buy so far. Try re-implementing it from scratch without looking."
   }
  ]
 }

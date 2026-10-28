@@ -19,13 +19,31 @@
    "narration": "Here's the problem. Circular route; city i has fuel i gallons and is distances i miles from the next. Return the unique start index allowing a full loop. The start is the point after the lowest fuel balance."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "The valid start is right after the point where the running fuel balance is lowest."
+   ],
+   "narration": "The valid start is right after the point where the running fuel balance is lowest."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Track miles remaining around the loop",
+    "2. Find the city with the minimum balance",
+    "3. That city is the start"
+   ],
+   "narration": "Step by step. First, track miles remaining around the loop. Second, find the city with the minimum balance. Third, that city is the start."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ValidStartingCity {\n    public static int validStartingCity(int[] distances, int[] fuel, int mpg) {\n        int miles = 0, minMiles = 0, start = 0;\n        for (int i = 1; i < distances.length; i++) {\n            miles += fuel[i - 1] * mpg - distances[i - 1];\n            if (miles < minMiles) { minMiles = miles; start = i; }\n        }\n        return start;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ValidStartingCity.java",
-   "narration": "Here's the Java solution, starting with valid starting city. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with valid starting city. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -40,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Circular route; city i has fuel[i] gallons and is distances[i] miles from the next.",
+    "The valid start is right after the point where the running fuel balance is lowest.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Valid Starting City: Circular route; city i has fuel i gallons and is distances i miles from the next. Try re-implementing it from scratch without looking."
+   "narration": "To recap Valid Starting City: The valid start is right after the point where the running fuel balance is lowest. Try re-implementing it from scratch without looking."
   }
  ]
 }

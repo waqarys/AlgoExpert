@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Rewire the tree in place into a doubly linked list in in-order order (left equals prev, right equals next); return the leftmost node."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "In-order linking: each subtree returns its leftmost and rightmost nodes so neighbours can be connected."
+   ],
+   "narration": "In-order linking: each subtree returns its leftmost and rightmost nodes so neighbours can be connected."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Flatten left and right recursively",
+    "2. Link left's rightmost to the node",
+    "3. Link the node to right's leftmost",
+    "4. Return the outer ends"
+   ],
+   "narration": "Step by step. First, flatten left and right recursively. Second, link left's rightmost to the node. Third, link the node to right's leftmost. Fourth, return the outer ends."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class FlattenBinaryTree {\n    public static BinaryTree flattenBinaryTree(BinaryTree root) { return flatten(root)[0]; }\n\n    /** returns {leftmost, rightmost} of the flattened subtree */\n    private static BinaryTree[] flatten(BinaryTree n) {\n        BinaryTree leftMost = n, rightMost = n;\n        if (n.left != null) {\n            BinaryTree[] l = flatten(n.left);\n            l[1].right = n; n.left = l[1]; leftMost = l[0];\n        }\n        if (n.right != null) {\n            BinaryTree[] r = flatten(n.right);\n            r[0].left = n; n.right = r[0]; rightMost = r[1];\n        }\n        return new BinaryTree[]{leftMost, rightMost};\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "FlattenBinaryTree.java",
-   "narration": "Here's the Java solution, starting with flatten binary tree. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with flatten binary tree. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Rewire the tree in place into a doubly linked list in in-order order (left = prev, right = next); return the leftmost node.",
+    "In-order linking: each subtree returns its leftmost and rightmost nodes so neighbours can be connected.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Flatten Binary Tree: Rewire the tree in place into a doubly linked list in in-order order (left equals prev, right equals next); return the leftmost node. Try re-implementing it from scratch without looking."
+   "narration": "To recap Flatten Binary Tree: In-order linking: each subtree returns its leftmost and rightmost nodes so neighbours can be connected. Try re-implementing it from scratch without looking."
   }
  ]
 }

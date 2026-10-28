@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Count combinations of unlimited coins that sum to n."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Count combinations by processing one coin at a time so order doesn't matter."
+   ],
+   "narration": "Count combinations by processing one coin at a time so order doesn't matter."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. ways of zero is one",
+    "2. For each coin, for each amount, add ways of amount minus coin",
+    "3. Return ways of n"
+   ],
+   "narration": "Step by step. First, ways of zero is one. Second, for each coin, for each amount, add ways of amount minus coin. Third, return ways of n."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class NumberOfWaysToMakeChange {\n    public static int numberOfWaysToMakeChange(int n, int[] denoms) {\n        int[] ways = new int[n + 1];\n        ways[0] = 1;\n        for (int d : denoms) for (int a = d; a <= n; a++) ways[a] += ways[a - d];\n        return ways[n];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "NumberOfWaysToMakeChange.java",
-   "narration": "Here's the Java solution, starting with number of ways to make change. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with number of ways to make change. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Count combinations of unlimited coins that sum to n.",
+    "Count combinations by processing one coin at a time so order doesn't matter.",
     "Complexity: O(n*d)"
    ],
-   "narration": "To recap Number Of Ways To Make Change: Count combinations of unlimited coins that sum to n. Try re-implementing it from scratch without looking."
+   "narration": "To recap Number Of Ways To Make Change: Count combinations by processing one coin at a time so order doesn't matter. Try re-implementing it from scratch without looking."
   }
  ]
 }

@@ -18,13 +18,32 @@
    "narration": "Here's the problem. A chain is built by removing one character at a time where every intermediate string is in the input. Return the longest chain (length over equals 2) from longest to shortest, or ."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Process strings by length; each string's chain extends the best chain of any one-character-shorter string."
+   ],
+   "narration": "Process strings by length; each string's chain extends the best chain of any one-character-shorter string."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Sort by length",
+    "2. For each string, try removing each character",
+    "3. Look up the result",
+    "4. Keep best lengths and next links"
+   ],
+   "narration": "Step by step. First, sort by length. Second, for each string, try removing each character. Third, look up the result. Fourth, keep best lengths and next links."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LongestStringChain {\n    public static List<String> longestStringChain(List<String> strings) {\n        List<String> sorted = new ArrayList<>(strings);\n        sorted.sort(Comparator.comparingInt(String::length));\n        Map<String, Integer> len = new HashMap<>();\n        Map<String, String> next = new HashMap<>();\n        String bestStart = null;\n        for (String s : sorted) {\n            len.put(s, 1);\n            for (int i = 0; i < s.length(); i++) {\n                String shorter = s.substring(0, i) + s.substring(i + 1);\n                if (len.containsKey(shorter) && len.get(shorter) + 1 > len.get(s)) { len.put(s, len.get(shorter) + 1); next.put(s, shorter); }\n            }\n            if (bestStart == null || len.get(s) > len.get(bestStart)) bestStart = s;\n        }\n        List<String> out = new ArrayList<>();\n        if (bestStart == null || len.get(bestStart) < 2) return out;\n        for (String s = bestStart; s != null; s = next.get(s)) out.add(s);\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LongestStringChain.java",
-   "narration": "Here's the Java solution, starting with longest string chain. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with longest string chain. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "A chain is built by removing one character at a time where every intermediate string is in the input.",
+    "Process strings by length; each string's chain extends the best chain of any one-character-shorter string.",
     "Complexity: O(n * m^2 + n log n)"
    ],
-   "narration": "To recap Longest String Chain: A chain is built by removing one character at a time where every intermediate string is in the input. Try re-implementing it from scratch without looking."
+   "narration": "To recap Longest String Chain: Process strings by length; each string's chain extends the best chain of any one-character-shorter string. Try re-implementing it from scratch without looking."
   }
  ]
 }

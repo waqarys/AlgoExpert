@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Jobs with prereq, job dependencies; return a valid order or if there is a cycle (Kahn's algorithm)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Kahn's algorithm: repeatedly take jobs with no remaining prerequisites."
+   ],
+   "narration": "Kahn's algorithm: repeatedly take jobs with no remaining prerequisites."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Count in-degrees",
+    "2. Queue jobs with zero",
+    "3. Pop, append, and decrement dependents",
+    "4. If not all jobs appear, there's a cycle"
+   ],
+   "narration": "Step by step. First, count in-degrees. Second, queue jobs with zero. Third, pop, append, and decrement dependents. Fourth, if not all jobs appear, there's a cycle."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class TopologicalSort {\n    public static List<Integer> topologicalSort(List<Integer> jobs, List<Integer[]> deps) {\n        Map<Integer, List<Integer>> g = new HashMap<>();\n        Map<Integer, Integer> indeg = new HashMap<>();\n        for (int j : jobs) { g.put(j, new ArrayList<>()); indeg.put(j, 0); }\n        for (Integer[] d : deps) { g.get(d[0]).add(d[1]); indeg.merge(d[1], 1, Integer::sum); }\n        ArrayDeque<Integer> q = new ArrayDeque<>();\n        for (int j : jobs) if (indeg.get(j) == 0) q.add(j);\n        List<Integer> out = new ArrayList<>();\n        while (!q.isEmpty()) {\n            int j = q.poll();\n            out.add(j);\n            for (int k : g.get(j)) if (indeg.merge(k, -1, Integer::sum) == 0) q.add(k);\n        }\n        return out.size() == jobs.size() ? out : new ArrayList<>();\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "TopologicalSort.java",
-   "narration": "Here's the Java solution, starting with topological sort. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with topological sort. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Jobs with [prereq, job] dependencies; return a valid order or [] if there is a cycle (Kahn's algorithm).",
+    "Kahn's algorithm: repeatedly take jobs with no remaining prerequisites.",
     "Complexity: O(j + d)"
    ],
-   "narration": "To recap Topological Sort: Jobs with prereq, job dependencies; return a valid order or if there is a cycle (Kahn's algorithm). Try re-implementing it from scratch without looking."
+   "narration": "To recap Topological Sort: Kahn's algorithm: repeatedly take jobs with no remaining prerequisites. Try re-implementing it from scratch without looking."
   }
  ]
 }

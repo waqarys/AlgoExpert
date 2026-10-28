@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Disjoint-set with createSet, find (null if unknown) and union, using path compression and union by rank."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each set is a tree with a representative root; path compression and union by rank keep trees flat."
+   ],
+   "narration": "Each set is a tree with a representative root; path compression and union by rank keep trees flat."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. createSet makes a single-node tree",
+    "2. find follows parents with path compression",
+    "3. union attaches the shorter tree under the taller"
+   ],
+   "narration": "Step by step. First, createSet makes a single-node tree. Second, find follows parents with path compression. Third, union attaches the shorter tree under the taller."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class UnionFind {\n    private final Map<Integer, Integer> parent = new HashMap<>(), rank = new HashMap<>();\n\n    public void createSet(int v) { parent.put(v, v); rank.put(v, 0); }\n\n    public Integer find(int v) {\n        if (!parent.containsKey(v)) return null;\n        int p = parent.get(v);\n        if (p != v) { p = find(p); parent.put(v, p); }\n        return p;\n    }\n\n    public void union(int a, int b) {\n        Integer ra = find(a), rb = find(b);\n        if (ra == null || rb == null || ra.equals(rb)) return;\n        int ka = rank.get(ra), kb = rank.get(rb);\n        if (ka < kb) parent.put(ra, rb);\n        else if (ka > kb) parent.put(rb, ra);\n        else { parent.put(rb, ra); rank.put(ra, ka + 1); }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "UnionFind.java",
-   "narration": "Here's the Java solution, starting with create set. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with create set. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Disjoint-set with createSet, find (null if unknown) and union, using path compression and union by rank.",
+    "Each set is a tree with a representative root; path compression and union by rank keep trees flat.",
     "Complexity: ~O(alpha(n)) amortised per op"
    ],
-   "narration": "To recap Union Find: Disjoint-set with createSet, find (null if unknown) and union, using path compression and union by rank. Try re-implementing it from scratch without looking."
+   "narration": "To recap Union Find: Each set is a tree with a representative root; path compression and union by rank keep trees flat. Try re-implementing it from scratch without looking."
   }
  ]
 }

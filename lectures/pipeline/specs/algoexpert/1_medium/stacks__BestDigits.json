@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Remove exactly numDigits digits from a number string to make the largest possible number. Monotonic decreasing stack."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Greedy with a stack: drop a previous digit whenever a larger one arrives, while deletions remain."
+   ],
+   "narration": "Greedy with a stack: drop a previous digit whenever a larger one arrives, while deletions remain."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Push digits",
+    "2. Pop smaller tops while deletions remain",
+    "3. Trim extra from the end"
+   ],
+   "narration": "Step by step. First, push digits. Second, pop smaller tops while deletions remain. Third, trim extra from the end."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class BestDigits {\n    public static String bestDigits(String number, int numDigits) {\n        ArrayDeque<Character> st = new ArrayDeque<>();\n        int k = numDigits;\n        for (char c : number.toCharArray()) {\n            while (k > 0 && !st.isEmpty() && st.peekLast() < c) { st.pollLast(); k--; }\n            st.addLast(c);\n        }\n        while (k-- > 0) st.pollLast();\n        StringBuilder sb = new StringBuilder();\n        for (char c : st) sb.append(c);\n        return sb.toString();\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "BestDigits.java",
-   "narration": "Here's the Java solution, starting with best digits. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with best digits. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Remove exactly numDigits digits from a number string to make the largest possible number.",
+    "Greedy with a stack: drop a previous digit whenever a larger one arrives, while deletions remain.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Best Digits: Remove exactly numDigits digits from a number string to make the largest possible number. Try re-implementing it from scratch without looking."
+   "narration": "To recap Best Digits: Greedy with a stack: drop a previous digit whenever a larger one arrives, while deletions remain. Try re-implementing it from scratch without looking."
   }
  ]
 }

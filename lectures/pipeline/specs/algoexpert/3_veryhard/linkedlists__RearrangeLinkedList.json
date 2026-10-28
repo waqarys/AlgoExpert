@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Stable partition around k: nodes under k, then equals equals k, then over k. Returns new head."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Build three separate lists for less, equal and greater, then join them."
+   ],
+   "narration": "Build three separate lists for less, equal and greater, then join them."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Walk the list appending to the right partition",
+    "2. Keep heads and tails",
+    "3. Connect the non-empty lists"
+   ],
+   "narration": "Step by step. First, walk the list appending to the right partition. Second, keep heads and tails. Third, connect the non-empty lists."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class RearrangeLinkedList {\n    public static LinkedListNode rearrangeLinkedList(LinkedListNode head, int k) {\n        LinkedListNode lo = new LinkedListNode(0), eq = new LinkedListNode(0), hi = new LinkedListNode(0);\n        LinkedListNode l = lo, e = eq, h = hi;\n        for (LinkedListNode c = head; c != null; c = c.next) {\n            if (c.value < k) { l.next = c; l = c; }\n            else if (c.value == k) { e.next = c; e = c; }\n            else { h.next = c; h = c; }\n        }\n        h.next = null;\n        e.next = hi.next;\n        l.next = eq.next != null ? eq.next : hi.next;\n        return lo.next;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "RearrangeLinkedList.java",
-   "narration": "Here's the Java solution, starting with rearrange linked list. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with rearrange linked list. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Stable partition around k: nodes < k, then == k, then > k.",
+    "Build three separate lists for less, equal and greater, then join them.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Rearrange Linked List: Stable partition around k: nodes under k, then equals equals k, then over k. Try re-implementing it from scratch without looking."
+   "narration": "To recap Rearrange Linked List: Build three separate lists for less, equal and greater, then join them. Try re-implementing it from scratch without looking."
   }
  ]
 }

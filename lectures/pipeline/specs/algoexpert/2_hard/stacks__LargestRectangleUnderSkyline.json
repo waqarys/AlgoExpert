@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Largest rectangle area within adjacent buildings of width 1. Monotonic increasing stack of indices."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A monotonic stack finds, for each building, how far it extends left and right before a shorter one."
+   ],
+   "narration": "A monotonic stack finds, for each building, how far it extends left and right before a shorter one."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Push indices with increasing heights",
+    "2. When a shorter building arrives, pop and compute area",
+    "3. Width spans to the new top",
+    "4. Flush at the end"
+   ],
+   "narration": "Step by step. First, push indices with increasing heights. Second, when a shorter building arrives, pop and compute area. Third, width spans to the new top. Fourth, flush at the end."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LargestRectangleUnderSkyline {\n    public static int largestRectangleUnderSkyline(int[] h) {\n        ArrayDeque<Integer> st = new ArrayDeque<>();\n        int best = 0;\n        for (int i = 0; i <= h.length; i++) {\n            int cur = i == h.length ? 0 : h[i];\n            while (!st.isEmpty() && h[st.peek()] >= cur) {\n                int height = h[st.pop()];\n                int left = st.isEmpty() ? -1 : st.peek();\n                best = Math.max(best, height * (i - left - 1));\n            }\n            st.push(i);\n        }\n        return best;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LargestRectangleUnderSkyline.java",
-   "narration": "Here's the Java solution, starting with largest rectangle under skyline. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with largest rectangle under skyline. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Largest rectangle area within adjacent buildings of width 1.",
+    "A monotonic stack finds, for each building, how far it extends left and right before a shorter one.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Largest Rectangle Under Skyline: Largest rectangle area within adjacent buildings of width 1. Try re-implementing it from scratch without looking."
+   "narration": "To recap Largest Rectangle Under Skyline: A monotonic stack finds, for each building, how far it extends left and right before a shorter one. Try re-implementing it from scratch without looking."
   }
  ]
 }

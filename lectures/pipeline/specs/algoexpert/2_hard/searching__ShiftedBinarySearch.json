@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Find target's index in a sorted array of distinct ints rotated by some amount; -1 if absent."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "In a rotated sorted array, one half is always sorted; check if the target lies in it."
+   ],
+   "narration": "In a rotated sorted array, one half is always sorted; check if the target lies in it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Find the middle",
+    "2. Decide which half is sorted",
+    "3. Check whether the target is in that half",
+    "4. Recurse into the right half"
+   ],
+   "narration": "Step by step. First, find the middle. Second, decide which half is sorted. Third, check whether the target is in that half. Fourth, recurse into the right half."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ShiftedBinarySearch {\n    public static int shiftedBinarySearch(int[] a, int t) {\n        int lo = 0, hi = a.length - 1;\n        while (lo <= hi) {\n            int mid = (lo + hi) >>> 1;\n            if (a[mid] == t) return mid;\n            if (a[lo] <= a[mid]) { if (t >= a[lo] && t < a[mid]) hi = mid - 1; else lo = mid + 1; }\n            else { if (t > a[mid] && t <= a[hi]) lo = mid + 1; else hi = mid - 1; }\n        }\n        return -1;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ShiftedBinarySearch.java",
-   "narration": "Here's the Java solution, starting with shifted binary search. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with shifted binary search. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Find target's index in a sorted array of distinct ints rotated by some amount; -1 if absent.",
+    "In a rotated sorted array, one half is always sorted; check if the target lies in it.",
     "Complexity: O(log n)"
    ],
-   "narration": "To recap Shifted Binary Search: Find target's index in a sorted array of distinct ints rotated by some amount; -1 if absent. Try re-implementing it from scratch without looking."
+   "narration": "To recap Shifted Binary Search: In a rotated sorted array, one half is always sorted; check if the target lies in it. Try re-implementing it from scratch without looking."
   }
  ]
 }

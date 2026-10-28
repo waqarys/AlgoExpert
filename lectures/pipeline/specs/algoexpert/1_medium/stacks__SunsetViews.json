@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Buildings face EAST or WEST; return ascending indices of buildings that can see the sunset (strictly taller than everything in front of them in that direction)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A building sees the sunset if it's taller than everything between it and the sun."
+   ],
+   "narration": "A building sees the sunset if it's taller than everything between it and the sun."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Scan from the sunset side",
+    "2. Keep the running max",
+    "3. Buildings taller than the max can see",
+    "4. Return indices in order"
+   ],
+   "narration": "Step by step. First, scan from the sunset side. Second, keep the running max. Third, buildings taller than the max can see. Fourth, return indices in order."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SunsetViews {\n    public static List<Integer> sunsetViews(int[] heights, String direction) {\n        List<Integer> out = new ArrayList<>();\n        boolean east = direction.equals(\"EAST\");\n        int max = Integer.MIN_VALUE;\n        for (int k = 0; k < heights.length; k++) {\n            int i = east ? heights.length - 1 - k : k;\n            if (heights[i] > max) { out.add(i); max = heights[i]; }\n        }\n        if (east) Collections.reverse(out);\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SunsetViews.java",
-   "narration": "Here's the Java solution, starting with sunset views. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with sunset views. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Buildings face EAST or WEST; return ascending indices of buildings that can see the sunset (strictly taller than everything in front of them in that direction).",
+    "A building sees the sunset if it's taller than everything between it and the sun.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Sunset Views: Buildings face EAST or WEST; return ascending indices of buildings that can see the sunset (strictly taller than everything in front of them in that direction). Try re-implementing it from scratch without looking."
+   "narration": "To recap Sunset Views: A building sees the sunset if it's taller than everything between it and the sun. Try re-implementing it from scratch without looking."
   }
  ]
 }

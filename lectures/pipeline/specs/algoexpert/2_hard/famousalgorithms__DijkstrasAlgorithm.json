@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Edges v lists destination, weight (non-negative). Shortest distance from start to every vertex, -1 if unreachable."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Always expand the closest unvisited vertex; with non-negative weights its distance is final."
+   ],
+   "narration": "Always expand the closest unvisited vertex; with non-negative weights its distance is final."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Distances start at infinity",
+    "2. Use a min-heap of distance and vertex",
+    "3. Relax outgoing edges",
+    "4. Unreached vertices are minus one"
+   ],
+   "narration": "Step by step. First, distances start at infinity. Second, use a min-heap of distance and vertex. Third, relax outgoing edges. Fourth, unreached vertices are minus one."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class DijkstrasAlgorithm {\n    public static int[] dijkstrasAlgorithm(int start, int[][][] edges) {\n        int n = edges.length;\n        int[] dist = new int[n];\n        Arrays.fill(dist, Integer.MAX_VALUE);\n        dist[start] = 0;\n        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(a[1], b[1]));\n        pq.add(new int[]{start, 0});\n        while (!pq.isEmpty()) {\n            int[] c = pq.poll();\n            if (c[1] > dist[c[0]]) continue;\n            for (int[] e : edges[c[0]]) {\n                int nd = c[1] + e[1];\n                if (nd < dist[e[0]]) { dist[e[0]] = nd; pq.add(new int[]{e[0], nd}); }\n            }\n        }\n        for (int i = 0; i < n; i++) if (dist[i] == Integer.MAX_VALUE) dist[i] = -1;\n        return dist;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "DijkstrasAlgorithm.java",
-   "narration": "Here's the Java solution, starting with dijkstras algorithm. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with dijkstras algorithm. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Edges[v] lists [destination, weight] (non-negative).",
+    "Always expand the closest unvisited vertex; with non-negative weights its distance is final.",
     "Complexity: O((v + e) log v)"
    ],
-   "narration": "To recap Dijkstras Algorithm: Edges v lists destination, weight (non-negative). Try re-implementing it from scratch without looking."
+   "narration": "To recap Dijkstras Algorithm: Always expand the closest unvisited vertex; with non-negative weights its distance is final. Try re-implementing it from scratch without looking."
   }
  ]
 }

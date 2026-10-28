@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Paths from top-left to bottom-right of a width x height grid moving only right or down. Equals C(w plus h-2, w-1), computed incrementally to avoid overflow."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Paths to a cell come from above or from the left; this is also a binomial coefficient."
+   ],
+   "narration": "Paths to a cell come from above or from the left; this is also a binomial coefficient."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. First row and column have one way",
+    "2. Each cell sums its top and left neighbours",
+    "3. Return the bottom-right cell"
+   ],
+   "narration": "Step by step. First, first row and column have one way. Second, each cell sums its top and left neighbours. Third, return the bottom-right cell."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class NumberOfWaysToTraverseGraph {\n    public static long numberOfWaysToTraverseGraph(int width, int height) {\n        int n = width + height - 2, k = Math.min(width, height) - 1;\n        long r = 1;\n        for (int i = 1; i <= k; i++) r = r * (n - k + i) / i;\n        return r;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "NumberOfWaysToTraverseGraph.java",
-   "narration": "Here's the Java solution, starting with number of ways to traverse graph. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with number of ways to traverse graph. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Paths from top-left to bottom-right of a width x height grid moving only right/down.",
+    "Paths to a cell come from above or from the left; this is also a binomial coefficient.",
     "Complexity: O(min(w, h))"
    ],
-   "narration": "To recap Number Of Ways To Traverse Graph: Paths from top-left to bottom-right of a width x height grid moving only right or down. Try re-implementing it from scratch without looking."
+   "narration": "To recap Number Of Ways To Traverse Graph: Paths to a cell come from above or from the left; this is also a binomial coefficient. Try re-implementing it from scratch without looking."
   }
  ]
 }

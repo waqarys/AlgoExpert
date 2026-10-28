@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Smallest-area axis-aligned rectangle whose 4 corners are in the point set, else 0. Treat each pair as a diagonal and check the other two corners."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Any two points that could be opposite corners determine the other two, so check them in a hash set."
+   ],
+   "narration": "Any two points that could be opposite corners determine the other two, so check them in a hash set."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Put points in a set",
+    "2. For each pair with different x and y, check the other corners",
+    "3. Track the smallest area"
+   ],
+   "narration": "Step by step. First, put points in a set. Second, for each pair with different x and y, check the other corners. Third, track the smallest area."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MinimumAreaRectangle {\n    public static int minimumAreaRectangle(int[][] points) {\n        Set<Long> set = new HashSet<>();\n        for (int[] p : points) set.add(key(p[0], p[1]));\n        long best = Long.MAX_VALUE;\n        for (int i = 0; i < points.length; i++)\n            for (int j = i + 1; j < points.length; j++) {\n                int[] a = points[i], b = points[j];\n                if (a[0] == b[0] || a[1] == b[1]) continue;\n                if (set.contains(key(a[0], b[1])) && set.contains(key(b[0], a[1])))\n                    best = Math.min(best, (long) Math.abs(a[0] - b[0]) * Math.abs(a[1] - b[1]));\n            }\n        return best == Long.MAX_VALUE ? 0 : (int) best;\n    }\n\n    private static long key(int x, int y) { return ((long) x << 32) ^ (y & 0xffffffffL); }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MinimumAreaRectangle.java",
-   "narration": "Here's the Java solution, starting with minimum area rectangle. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with minimum area rectangle. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Smallest-area axis-aligned rectangle whose 4 corners are in the point set, else 0.",
+    "Any two points that could be opposite corners determine the other two, so check them in a hash set.",
     "Complexity: O(n^2)"
    ],
-   "narration": "To recap Minimum Area Rectangle: Smallest-area axis-aligned rectangle whose 4 corners are in the point set, else 0. Try re-implementing it from scratch without looking."
+   "narration": "To recap Minimum Area Rectangle: Any two points that could be opposite corners determine the other two, so check them in a hash set. Try re-implementing it from scratch without looking."
   }
  ]
 }

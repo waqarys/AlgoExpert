@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Undirected connected graph as adjacency list; can it be 2-coloured (bipartite)?"
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A graph is two-colourable if BFS or DFS can colour neighbours alternately without conflict."
+   ],
+   "narration": "A graph is two-colourable if BFS or DFS can colour neighbours alternately without conflict."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Colour the start",
+    "2. Give each neighbour the opposite colour",
+    "3. A neighbour with the same colour means false"
+   ],
+   "narration": "Step by step. First, colour the start. Second, give each neighbour the opposite colour. Third, a neighbour with the same colour means false."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class TwoColorable {\n    public static boolean twoColorable(int[][] edges) {\n        int[] color = new int[edges.length];\n        java.util.ArrayDeque<Integer> st = new java.util.ArrayDeque<>();\n        for (int s = 0; s < edges.length; s++) {\n            if (color[s] != 0) continue;\n            color[s] = 1;\n            st.push(s);\n            while (!st.isEmpty()) {\n                int v = st.pop();\n                for (int w : edges[v]) {\n                    if (color[w] == 0) { color[w] = -color[v]; st.push(w); }\n                    else if (color[w] == color[v]) return false;\n                }\n            }\n        }\n        return true;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "TwoColorable.java",
-   "narration": "Here's the Java solution, starting with two colorable. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with two colorable. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Undirected connected graph as adjacency list; can it be 2-coloured (bipartite)?",
+    "A graph is two-colourable if BFS or DFS can colour neighbours alternately without conflict.",
     "Complexity: O(v + e)"
    ],
-   "narration": "To recap Two Colorable: Undirected connected graph as adjacency list; can it be 2-coloured (bipartite)? Try re-implementing it from scratch without looking."
+   "narration": "To recap Two Colorable: A graph is two-colourable if BFS or DFS can colour neighbours alternately without conflict. Try re-implementing it from scratch without looking."
   }
  ]
 }

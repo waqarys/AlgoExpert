@@ -17,13 +17,31 @@
    "narration": "Here's the problem. lo, hi of the longest run of consecutive integers present in the array."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Only start counting at a number that has no predecessor, so each run is scanned exactly once."
+   ],
+   "narration": "Only start counting at a number that has no predecessor, so each run is scanned exactly once."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Put all numbers in a set",
+    "2. For each number without number minus one, extend upward",
+    "3. Track the longest run's bounds"
+   ],
+   "narration": "Step by step. First, put all numbers in a set. Second, for each number without number minus one, extend upward. Third, track the longest run's bounds."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LargestRange {\n    public static int[] largestRange(int[] a) {\n        Set<Integer> s = new HashSet<>();\n        for (int x : a) s.add(x);\n        int[] best = {a[0], a[0]};\n        for (int x : s) {\n            if (s.contains(x - 1)) continue;\n            int y = x;\n            while (s.contains(y + 1)) y++;\n            if (y - x > best[1] - best[0]) best = new int[]{x, y};\n        }\n        return best;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LargestRange.java",
-   "narration": "Here's the Java solution, starting with largest range. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with largest range. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "[lo, hi] of the longest run of consecutive integers present in the array.",
+    "Only start counting at a number that has no predecessor, so each run is scanned exactly once.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Largest Range: lo, hi of the longest run of consecutive integers present in the array. Try re-implementing it from scratch without looking."
+   "narration": "To recap Largest Range: Only start counting at a number that has no predecessor, so each run is scanned exactly once. Try re-implementing it from scratch without looking."
   }
  ]
 }

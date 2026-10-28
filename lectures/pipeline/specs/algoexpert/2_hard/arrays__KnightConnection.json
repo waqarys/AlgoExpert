@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Two knights on an infinite board move alternately or together; minimum number of turns for them to meet equals ceil(knight-move distance / 2). BFS from one knight to the other."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Knights cover two cells per joint turn, so compute the minimum knight moves to close the gap, then halve it rounding up."
+   ],
+   "narration": "Knights cover two cells per joint turn, so compute the minimum knight moves to close the gap, then halve it rounding up."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. BFS knight moves from the origin to the offset between knights",
+    "2. Count moves needed",
+    "3. Answer is ceiling of moves over two"
+   ],
+   "narration": "Step by step. First, bFS knight moves from the origin to the offset between knights. Second, count moves needed. Third, answer is ceiling of moves over two."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class KnightConnection {\n    public static int knightConnection(int[] a, int[] b) {\n        int[][] mv = {{1, 2}, {2, 1}, {-1, 2}, {-2, 1}, {1, -2}, {2, -1}, {-1, -2}, {-2, -1}};\n        ArrayDeque<int[]> q = new ArrayDeque<>();\n        Set<Long> seen = new HashSet<>();\n        q.add(new int[]{a[0], a[1], 0});\n        seen.add(key(a[0], a[1]));\n        while (true) {\n            int[] c = q.poll();\n            if (c[0] == b[0] && c[1] == b[1]) return (c[2] + 1) / 2;\n            for (int[] m : mv) {\n                int x = c[0] + m[0], y = c[1] + m[1];\n                if (seen.add(key(x, y))) q.add(new int[]{x, y, c[2] + 1});\n            }\n        }\n    }\n\n    private static long key(int x, int y) { return ((long) x << 32) ^ (y & 0xffffffffL); }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "KnightConnection.java",
-   "narration": "Here's the Java solution, starting with knight connection. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with knight connection. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Two knights on an infinite board move alternately/together; minimum number of turns for them to meet = ceil(knight-move distance / 2).",
+    "Knights cover two cells per joint turn, so compute the minimum knight moves to close the gap, then halve it rounding up.",
     "Complexity: O(d^2) for distance d"
    ],
-   "narration": "To recap Knight Connection: Two knights on an infinite board move alternately or together; minimum number of turns for them to meet equals ceil(knight-move distance / 2). Try re-implementing it from scratch without looking."
+   "narration": "To recap Knight Connection: Knights cover two cells per joint turn, so compute the minimum knight moves to close the gap, then halve it rounding up. Try re-implementing it from scratch without looking."
   }
  ]
 }

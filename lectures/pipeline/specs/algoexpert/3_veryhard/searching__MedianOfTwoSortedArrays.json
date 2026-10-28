@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Median of the union of two sorted arrays via binary-searched partition."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Binary search a cut in the smaller array so the left halves of both hold exactly half the elements."
+   ],
+   "narration": "Binary search a cut in the smaller array so the left halves of both hold exactly half the elements."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Search the cut in the smaller array",
+    "2. Derive the cut in the other",
+    "3. Check that the edges are in order",
+    "4. Median from the edge values"
+   ],
+   "narration": "Step by step. First, search the cut in the smaller array. Second, derive the cut in the other. Third, check that the edges are in order. Fourth, median from the edge values."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MedianOfTwoSortedArrays {\n    public static float medianOfTwoSortedArrays(int[] a, int[] b) {\n        if (a.length > b.length) return medianOfTwoSortedArrays(b, a);\n        int n = a.length, m = b.length, half = (n + m + 1) / 2, lo = 0, hi = n;\n        while (true) {\n            int i = (lo + hi) / 2, j = half - i;\n            int aL = i == 0 ? Integer.MIN_VALUE : a[i - 1], aR = i == n ? Integer.MAX_VALUE : a[i];\n            int bL = j == 0 ? Integer.MIN_VALUE : b[j - 1], bR = j == m ? Integer.MAX_VALUE : b[j];\n            if (aL > bR) hi = i - 1;\n            else if (bL > aR) lo = i + 1;\n            else {\n                if ((n + m) % 2 == 1) return Math.max(aL, bL);\n                return (Math.max(aL, bL) + (float) Math.min(aR, bR)) / 2;\n            }\n        }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MedianOfTwoSortedArrays.java",
-   "narration": "Here's the Java solution, starting with median of two sorted arrays. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with median of two sorted arrays. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Median of the union of two sorted arrays via binary-searched partition.",
+    "Binary search a cut in the smaller array so the left halves of both hold exactly half the elements.",
     "Complexity: O(log(min(n, m)))"
    ],
-   "narration": "To recap Median Of Two Sorted Arrays: Median of the union of two sorted arrays via binary-searched partition. Try re-implementing it from scratch without looking."
+   "narration": "To recap Median Of Two Sorted Arrays: Binary search a cut in the smaller array so the left halves of both hold exactly half the elements. Try re-implementing it from scratch without looking."
   }
  ]
 }

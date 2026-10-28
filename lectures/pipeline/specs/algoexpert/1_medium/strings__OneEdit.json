@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Are two strings at most one insert or delete or replace apart?"
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Walk both strings; at the first mismatch, try skipping in the longer one or replacing, once."
+   ],
+   "narration": "Walk both strings; at the first mismatch, try skipping in the longer one or replacing, once."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. If lengths differ by more than one, false",
+    "2. Find the first mismatch",
+    "3. Compare the remaining suffixes"
+   ],
+   "narration": "Step by step. First, if lengths differ by more than one, false. Second, find the first mismatch. Third, compare the remaining suffixes."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class OneEdit {\n    public static boolean oneEdit(String a, String b) {\n        if (Math.abs(a.length() - b.length()) > 1) return false;\n        int i = 0, j = 0;\n        boolean edited = false;\n        while (i < a.length() && j < b.length()) {\n            if (a.charAt(i) != b.charAt(j)) {\n                if (edited) return false;\n                edited = true;\n                if (a.length() > b.length()) i++;\n                else if (a.length() < b.length()) j++;\n                else { i++; j++; }\n            } else { i++; j++; }\n        }\n        return true;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "OneEdit.java",
-   "narration": "Here's the Java solution, starting with one edit. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with one edit. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Are two strings at most one insert/delete/replace apart?",
+    "Walk both strings; at the first mismatch, try skipping in the longer one or replacing, once.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap One Edit: Are two strings at most one insert or delete or replace apart? Try re-implementing it from scratch without looking."
+   "narration": "To recap One Edit: Walk both strings; at the first mismatch, try skipping in the longer one or replacing, once. Try re-implementing it from scratch without looking."
   }
  ]
 }

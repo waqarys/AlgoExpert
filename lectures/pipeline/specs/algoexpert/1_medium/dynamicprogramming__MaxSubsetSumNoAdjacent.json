@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Max sum of positive ints with no two chosen elements adjacent."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "At each index, either take it plus the best up to two back, or skip it."
+   ],
+   "narration": "At each index, either take it plus the best up to two back, or skip it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Keep the best up to i minus one and i minus two",
+    "2. Choose the max of skip or take",
+    "3. Slide forward"
+   ],
+   "narration": "Step by step. First, keep the best up to i minus one and i minus two. Second, choose the max of skip or take. Third, slide forward."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MaxSubsetSumNoAdjacent {\n    public static int maxSubsetSumNoAdjacent(int[] a) {\n        int prev = 0, cur = 0;\n        for (int x : a) { int next = Math.max(cur, prev + x); prev = cur; cur = next; }\n        return cur;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MaxSubsetSumNoAdjacent.java",
-   "narration": "Here's the Java solution, starting with max subset sum no adjacent. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with max subset sum no adjacent. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Max sum of positive ints with no two chosen elements adjacent.",
+    "At each index, either take it plus the best up to two back, or skip it.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Max Subset Sum No Adjacent: Max sum of positive ints with no two chosen elements adjacent. Try re-implementing it from scratch without looking."
+   "narration": "To recap Max Subset Sum No Adjacent: At each index, either take it plus the best up to two back, or skip it. Try re-implementing it from scratch without looking."
   }
  ]
 }

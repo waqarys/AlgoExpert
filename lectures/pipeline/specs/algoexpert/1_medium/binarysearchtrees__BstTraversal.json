@@ -17,13 +17,31 @@
    "narration": "Here's the problem. In-order, pre-order and post-order traversals appending into a list."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "In-order, pre-order and post-order differ only in when the node is visited relative to its children."
+   ],
+   "narration": "In-order, pre-order and post-order differ only in when the node is visited relative to its children."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. In-order: left, node, right",
+    "2. Pre-order: node, left, right",
+    "3. Post-order: left, right, node"
+   ],
+   "narration": "Step by step. First, in-order: left, node, right. Second, pre-order: node, left, right. Third, post-order: left, right, node."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class BstTraversal {\n    public static List<Integer> inOrderTraverse(BST t, List<Integer> out) {\n        if (t != null) { inOrderTraverse(t.left, out); out.add(t.value); inOrderTraverse(t.right, out); }\n        return out;\n    }\n\n    public static List<Integer> preOrderTraverse(BST t, List<Integer> out) {\n        if (t != null) { out.add(t.value); preOrderTraverse(t.left, out); preOrderTraverse(t.right, out); }\n        return out;\n    }\n\n    public static List<Integer> postOrderTraverse(BST t, List<Integer> out) {\n        if (t != null) { postOrderTraverse(t.left, out); postOrderTraverse(t.right, out); out.add(t.value); }\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "BstTraversal.java",
-   "narration": "Here's the Java solution, starting with in order traverse. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with in order traverse. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "In-order, pre-order and post-order traversals appending into a list.",
+    "In-order, pre-order and post-order differ only in when the node is visited relative to its children.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Bst Traversal: In-order, pre-order and post-order traversals appending into a list. Try re-implementing it from scratch without looking."
+   "narration": "To recap Bst Traversal: In-order, pre-order and post-order differ only in when the node is visited relative to its children. Try re-implementing it from scratch without looking."
   }
  ]
 }

@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Count axis-aligned rectangles whose four corners are all in the point set. Each pair forming a strictly up-right diagonal identifies one rectangle exactly once."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Two points forming an up-right diagonal define a rectangle if the other two corners exist."
+   ],
+   "narration": "Two points forming an up-right diagonal define a rectangle if the other two corners exist."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Put points in a set",
+    "2. For each pair up and to the right",
+    "3. Check the other two corners",
+    "4. Count"
+   ],
+   "narration": "Step by step. First, put points in a set. Second, for each pair up and to the right. Third, check the other two corners. Fourth, count."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class RectangleMania {\n    public static int rectangleMania(int[][] coords) {\n        Set<String> set = new HashSet<>();\n        for (int[] p : coords) set.add(p[0] + \",\" + p[1]);\n        int count = 0;\n        for (int[] a : coords) for (int[] b : coords)\n            if (b[0] > a[0] && b[1] > a[1] && set.contains(a[0] + \",\" + b[1]) && set.contains(b[0] + \",\" + a[1])) count++;\n        return count;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "RectangleMania.java",
-   "narration": "Here's the Java solution, starting with rectangle mania. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with rectangle mania. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Count axis-aligned rectangles whose four corners are all in the point set.",
+    "Two points forming an up-right diagonal define a rectangle if the other two corners exist.",
     "Complexity: O(n^2)"
    ],
-   "narration": "To recap Rectangle Mania: Count axis-aligned rectangles whose four corners are all in the point set. Try re-implementing it from scratch without looking."
+   "narration": "To recap Rectangle Mania: Two points forming an up-right diagonal define a rectangle if the other two corners exist. Try re-implementing it from scratch without looking."
   }
  ]
 }

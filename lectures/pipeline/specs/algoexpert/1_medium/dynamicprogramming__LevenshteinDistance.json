@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Minimum single-char inserts or deletes or substitutions turning a into b."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Dynamic programming over prefixes: each cell is the cheapest edit between two prefixes."
+   ],
+   "narration": "Dynamic programming over prefixes: each cell is the cheapest edit between two prefixes."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Row zero and column zero are insert or delete costs",
+    "2. Equal characters copy the diagonal",
+    "3. Otherwise one plus the min of insert, delete, replace",
+    "4. Two rows suffice"
+   ],
+   "narration": "Step by step. First, row zero and column zero are insert or delete costs. Second, equal characters copy the diagonal. Third, otherwise one plus the min of insert, delete, replace. Fourth, two rows suffice."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LevenshteinDistance {\n    public static int levenshteinDistance(String a, String b) {\n        if (a.length() < b.length()) { String t = a; a = b; b = t; }\n        int[] prev = new int[b.length() + 1], cur = new int[b.length() + 1];\n        for (int j = 0; j <= b.length(); j++) prev[j] = j;\n        for (int i = 1; i <= a.length(); i++) {\n            cur[0] = i;\n            for (int j = 1; j <= b.length(); j++)\n                cur[j] = a.charAt(i - 1) == b.charAt(j - 1) ? prev[j - 1]\n                        : 1 + Math.min(prev[j - 1], Math.min(prev[j], cur[j - 1]));\n            int[] t = prev; prev = cur; cur = t;\n        }\n        return prev[b.length()];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LevenshteinDistance.java",
-   "narration": "Here's the Java solution, starting with levenshtein distance. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with levenshtein distance. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Minimum single-char inserts/deletes/substitutions turning a into b.",
+    "Dynamic programming over prefixes: each cell is the cheapest edit between two prefixes.",
     "Complexity: O(n*m)"
    ],
-   "narration": "To recap Levenshtein Distance: Minimum single-char inserts or deletes or substitutions turning a into b. Try re-implementing it from scratch without looking."
+   "narration": "To recap Levenshtein Distance: Dynamic programming over prefixes: each cell is the cheapest edit between two prefixes. Try re-implementing it from scratch without looking."
   }
  ]
 }

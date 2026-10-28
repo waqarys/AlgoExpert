@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Stable divide-and-conquer sort using one auxiliary buffer."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Split in half, sort each half, then merge the sorted halves."
+   ],
+   "narration": "Split in half, sort each half, then merge the sorted halves."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Recurse on halves",
+    "2. Merge using a buffer",
+    "3. Copy back"
+   ],
+   "narration": "Step by step. First, recurse on halves. Second, merge using a buffer. Third, copy back."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MergeSort {\n    public static int[] mergeSort(int[] a) {\n        sort(a, new int[a.length], 0, a.length - 1);\n        return a;\n    }\n\n    private static void sort(int[] a, int[] aux, int lo, int hi) {\n        if (lo >= hi) return;\n        int mid = (lo + hi) >>> 1;\n        sort(a, aux, lo, mid);\n        sort(a, aux, mid + 1, hi);\n        System.arraycopy(a, lo, aux, lo, hi - lo + 1);\n        int i = lo, j = mid + 1;\n        for (int k = lo; k <= hi; k++) {\n            if (i > mid) a[k] = aux[j++];\n            else if (j > hi) a[k] = aux[i++];\n            else if (aux[j] < aux[i]) a[k] = aux[j++];\n            else a[k] = aux[i++];\n        }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MergeSort.java",
-   "narration": "Here's the Java solution, starting with merge sort. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with merge sort. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Stable divide-and-conquer sort using one auxiliary buffer.",
+    "Split in half, sort each half, then merge the sorted halves.",
     "Complexity: O(n log n)"
    ],
-   "narration": "To recap Merge Sort: Stable divide-and-conquer sort using one auxiliary buffer. Try re-implementing it from scratch without looking."
+   "narration": "To recap Merge Sort: Split in half, sort each half, then merge the sorted halves. Try re-implementing it from scratch without looking."
   }
  ]
 }

@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Maximum sum over any path (node-to-node, no repeats)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "At each node, the best path either bends through it or continues upward through one child."
+   ],
+   "narration": "At each node, the best path either bends through it or continues upward through one child."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Post-order returns the best downward branch",
+    "2. A bending path is node plus both positive branches",
+    "3. Track the global max"
+   ],
+   "narration": "Step by step. First, post-order returns the best downward branch. Second, a bending path is node plus both positive branches. Third, track the global max."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MaxPathSumInBinaryTree {\n    public static int maxPathSum(BinaryTree t) { int[] best = {Integer.MIN_VALUE}; branch(t, best); return best[0]; }\n\n    private static int branch(BinaryTree t, int[] best) {\n        if (t == null) return 0;\n        int l = Math.max(0, branch(t.left, best)), r = Math.max(0, branch(t.right, best));\n        best[0] = Math.max(best[0], t.value + l + r);\n        return t.value + Math.max(l, r);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MaxPathSumInBinaryTree.java",
-   "narration": "Here's the Java solution, starting with max path sum. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with max path sum. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Maximum sum over any path (node-to-node, no repeats).",
+    "At each node, the best path either bends through it or continues upward through one child.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Max Path Sum In Binary Tree: Maximum sum over any path (node-to-node, no repeats). Try re-implementing it from scratch without looking."
+   "narration": "To recap Max Path Sum In Binary Tree: At each node, the best path either bends through it or continues upward through one child. Try re-implementing it from scratch without looking."
   }
  ]
 }

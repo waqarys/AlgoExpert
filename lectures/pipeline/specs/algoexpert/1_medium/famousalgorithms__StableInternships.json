@@ -18,13 +18,32 @@
    "narration": "Here's the problem. N interns and n teams each rank the other side; produce a stable matching (Gale-Shapley with interns proposing). Returns pairs intern, team ."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Gale–Shapley: interns propose in preference order; teams keep their favourite so far."
+   ],
+   "narration": "Gale–Shapley: interns propose in preference order; teams keep their favourite so far."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Queue of free interns",
+    "2. Each proposes to the next team on their list",
+    "3. The team keeps the better intern",
+    "4. Rejected interns re-queue"
+   ],
+   "narration": "Step by step. First, queue of free interns. Second, each proposes to the next team on their list. Third, the team keeps the better intern. Fourth, rejected interns re-queue."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class StableInternships {\n    public static int[][] stableInternships(int[][] interns, int[][] teams) {\n        int n = interns.length;\n        int[][] teamRank = new int[n][n];\n        for (int t = 0; t < n; t++) for (int r = 0; r < n; r++) teamRank[t][teams[t][r]] = r;\n        int[] teamMatch = new int[n], next = new int[n];\n        java.util.Arrays.fill(teamMatch, -1);\n        java.util.ArrayDeque<Integer> free = new java.util.ArrayDeque<>();\n        for (int i = 0; i < n; i++) free.add(i);\n        while (!free.isEmpty()) {\n            int i = free.poll(), t = interns[i][next[i]++];\n            int cur = teamMatch[t];\n            if (cur == -1) teamMatch[t] = i;\n            else if (teamRank[t][i] < teamRank[t][cur]) { teamMatch[t] = i; free.add(cur); }\n            else free.add(i);\n        }\n        int[][] out = new int[n][];\n        for (int t = 0; t < n; t++) out[teamMatch[t]] = new int[]{teamMatch[t], t};\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "StableInternships.java",
-   "narration": "Here's the Java solution, starting with stable internships. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with stable internships. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "N interns and n teams each rank the other side; produce a stable matching (Gale-Shapley with interns proposing).",
+    "Gale–Shapley: interns propose in preference order; teams keep their favourite so far.",
     "Complexity: O(n^2)"
    ],
-   "narration": "To recap Stable Internships: N interns and n teams each rank the other side; produce a stable matching (Gale-Shapley with interns proposing). Try re-implementing it from scratch without looking."
+   "narration": "To recap Stable Internships: Gale–Shapley: interns propose in preference order; teams keep their favourite so far. Try re-implementing it from scratch without looking."
   }
  ]
 }

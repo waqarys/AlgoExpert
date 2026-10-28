@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Simplify a Unix path (absolute or relative), resolving \".\" and \"..\" and duplicate slashes. Leading \"..\" are kept for relative paths and dropped at the root of absolute paths."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Process path tokens with a stack: dots are ignored, double dots pop, names push."
+   ],
+   "narration": "Process path tokens with a stack: dots are ignored, double dots pop, names push."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Split on slashes",
+    "2. Skip empty tokens and single dots",
+    "3. Double dot pops, or is kept for relative paths",
+    "4. Join back"
+   ],
+   "narration": "Step by step. First, split on slashes. Second, skip empty tokens and single dots. Third, double dot pops, or is kept for relative paths. Fourth, join back."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ShortenPath {\n    public static String shortenPath(String path) {\n        boolean abs = path.startsWith(\"/\");\n        ArrayDeque<String> st = new ArrayDeque<>();\n        for (String t : path.split(\"/\")) {\n            if (t.isEmpty() || t.equals(\".\")) continue;\n            if (t.equals(\"..\")) {\n                if (!st.isEmpty() && !st.peekLast().equals(\"..\")) st.pollLast();\n                else if (!abs) st.addLast(\"..\");\n            } else st.addLast(t);\n        }\n        String joined = String.join(\"/\", st);\n        return abs ? \"/\" + joined : joined;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ShortenPath.java",
-   "narration": "Here's the Java solution, starting with shorten path. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with shorten path. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Simplify a Unix path (absolute or relative), resolving \".\" and \"..\" and duplicate slashes.",
+    "Process path tokens with a stack: dots are ignored, double dots pop, names push.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Shorten Path: Simplify a Unix path (absolute or relative), resolving \".\" and \"..\" and duplicate slashes. Try re-implementing it from scratch without looking."
+   "narration": "To recap Shorten Path: Process path tokens with a stack: dots are ignored, double dots pop, names push. Try re-implementing it from scratch without looking."
   }
  ]
 }

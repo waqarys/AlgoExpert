@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Array-backed min-heap with buildHeap (O of n sift-down), siftUp, siftDown, peek, insert and remove."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A heap is an array tree; sift up after insert, sift down after removal."
+   ],
+   "narration": "A heap is an array tree; sift up after insert, sift down after removal."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Build by sifting down from the last parent",
+    "2. Insert at the end and sift up",
+    "3. Remove by swapping root with last and sifting down"
+   ],
+   "narration": "Step by step. First, build by sifting down from the last parent. Second, insert at the end and sift up. Third, remove by swapping root with last and sifting down."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class MinHeapConstruction {\n    public static class MinHeap {\n        public final List<Integer> heap;\n\n        public MinHeap(List<Integer> array) { heap = buildHeap(new ArrayList<>(array)); }\n\n        public List<Integer> buildHeap(List<Integer> a) {\n            for (int i = (a.size() - 2) / 2; i >= 0; i--) siftDown(i, a.size() - 1, a);\n            return a;\n        }\n\n        public void siftDown(int i, int end, List<Integer> h) {\n            while (2 * i + 1 <= end) {\n                int c = 2 * i + 1;\n                if (c + 1 <= end && h.get(c + 1) < h.get(c)) c++;\n                if (h.get(c) >= h.get(i)) return;\n                java.util.Collections.swap(h, i, c);\n                i = c;\n            }\n        }\n\n        public void siftUp(int i, List<Integer> h) {",
    "lang": "java",
    "font_size": 26,
    "filename": "MinHeapConstruction_part1.java",
-   "narration": "Here's the Java solution, starting with min heap. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with min heap. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -47,10 +65,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Array-backed min-heap with buildHeap (O(n) sift-down), siftUp, siftDown, peek, insert and remove.",
+    "A heap is an array tree; sift up after insert, sift down after removal.",
     "Complexity: build O(n), insert/remove O(log n), peek O(1)"
    ],
-   "narration": "To recap Min Heap Construction: Array-backed min-heap with buildHeap (O of n sift-down), siftUp, siftDown, peek, insert and remove. Try re-implementing it from scratch without looking."
+   "narration": "To recap Min Heap Construction: A heap is an array tree; sift up after insert, sift down after removal. Try re-implementing it from scratch without looking."
   }
  ]
 }

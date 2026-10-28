@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Merge k sorted lists into one sorted list using a min-heap of (value, list, index)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A min-heap holds the head of each list; popping it always gives the next smallest overall."
+   ],
+   "narration": "A min-heap holds the head of each list; popping it always gives the next smallest overall."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Push each list's first element",
+    "2. Pop the min and append",
+    "3. Push the next from that list",
+    "4. Repeat"
+   ],
+   "narration": "Step by step. First, push each list's first element. Second, pop the min and append. Third, push the next from that list. Fourth, repeat."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MergeSortedArrays {\n    public static List<Integer> mergeSortedArrays(List<List<Integer>> arrays) {\n        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0]));\n        for (int i = 0; i < arrays.size(); i++) if (!arrays.get(i).isEmpty()) pq.add(new int[]{arrays.get(i).get(0), i, 0});\n        List<Integer> out = new ArrayList<>();\n        while (!pq.isEmpty()) {\n            int[] t = pq.poll();\n            out.add(t[0]);\n            List<Integer> src = arrays.get(t[1]);\n            if (t[2] + 1 < src.size()) pq.add(new int[]{src.get(t[2] + 1), t[1], t[2] + 1});\n        }\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MergeSortedArrays.java",
-   "narration": "Here's the Java solution, starting with merge sorted arrays. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with merge sorted arrays. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Merge k sorted lists into one sorted list using a min-heap of (value, list, index).",
+    "A min-heap holds the head of each list; popping it always gives the next smallest overall.",
     "Complexity: O(n log k)"
    ],
-   "narration": "To recap Merge Sorted Arrays: Merge k sorted lists into one sorted list using a min-heap of (value, list, index). Try re-implementing it from scratch without looking."
+   "narration": "To recap Merge Sorted Arrays: A min-heap holds the head of each list; popping it always gives the next smallest overall. Try re-implementing it from scratch without looking."
   }
  ]
 }

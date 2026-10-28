@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Values are in 1, n ; return the value whose second occurrence comes first, else -1. Mark visited values by negating the slot at index v -1 (mutates input)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Values are between one and n, so each value can mark its own index by flipping that slot negative."
+   ],
+   "narration": "Values are between one and n, so each value can mark its own index by flipping that slot negative."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. For each value, look at index abs value minus one",
+    "2. If that slot is already negative, we've seen it: return it",
+    "3. Otherwise flip it negative"
+   ],
+   "narration": "Step by step. First, for each value, look at index abs value minus one. Second, if that slot is already negative, we've seen it: return it. Third, otherwise flip it negative."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class FirstDuplicateValue {\n    public static int firstDuplicateValue(int[] a) {\n        for (int x : a) {\n            int v = Math.abs(x);\n            if (a[v - 1] < 0) return v;\n            a[v - 1] = -a[v - 1];\n        }\n        return -1;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "FirstDuplicateValue.java",
-   "narration": "Here's the Java solution, starting with first duplicate value. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with first duplicate value. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Values are in [1, n]; return the value whose second occurrence comes first, else -1.",
+    "Values are between one and n, so each value can mark its own index by flipping that slot negative.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap First Duplicate Value: Values are in 1, n ; return the value whose second occurrence comes first, else -1. Try re-implementing it from scratch without looking."
+   "narration": "To recap First Duplicate Value: Values are between one and n, so each value can mark its own index by flipping that slot negative. Try re-implementing it from scratch without looking."
   }
  ]
 }

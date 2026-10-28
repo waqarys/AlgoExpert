@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Returns maxSum , subsequence for the strictly increasing subsequence with the greatest sum."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "For each index, the best sum ending there extends the best smaller earlier element."
+   ],
+   "narration": "For each index, the best sum ending there extends the best smaller earlier element."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. For each i, scan earlier j with smaller value",
+    "2. Keep best sums and predecessors",
+    "3. Rebuild the sequence from the best end"
+   ],
+   "narration": "Step by step. First, for each i, scan earlier j with smaller value. Second, keep best sums and predecessors. Third, rebuild the sequence from the best end."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MaxSumIncreasingSubsequence {\n    public static List<List<Integer>> maxSumIncreasingSubsequence(int[] a) {\n        int n = a.length, bestIdx = 0;\n        int[] sums = a.clone(), prev = new int[n];\n        for (int i = 0; i < n; i++) {\n            prev[i] = -1;\n            for (int j = 0; j < i; j++)\n                if (a[j] < a[i] && sums[j] + a[i] > sums[i]) { sums[i] = sums[j] + a[i]; prev[i] = j; }\n            if (sums[i] > sums[bestIdx]) bestIdx = i;\n        }\n        List<Integer> seq = new ArrayList<>();\n        for (int i = bestIdx; i != -1; i = prev[i]) seq.add(a[i]);\n        Collections.reverse(seq);\n        return List.of(List.of(sums[bestIdx]), seq);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MaxSumIncreasingSubsequence.java",
-   "narration": "Here's the Java solution, starting with max sum increasing subsequence. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with max sum increasing subsequence. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Returns [[maxSum], [subsequence]] for the strictly increasing subsequence with the greatest sum.",
+    "For each index, the best sum ending there extends the best smaller earlier element.",
     "Complexity: O(n^2)"
    ],
-   "narration": "To recap Max Sum Increasing Subsequence: Returns maxSum , subsequence for the strictly increasing subsequence with the greatest sum. Try re-implementing it from scratch without looking."
+   "narration": "To recap Max Sum Increasing Subsequence: For each index, the best sum ending there extends the best smaller earlier element. Try re-implementing it from scratch without looking."
   }
  ]
 }

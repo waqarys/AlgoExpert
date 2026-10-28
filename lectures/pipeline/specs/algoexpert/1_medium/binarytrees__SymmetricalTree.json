@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Is the tree a mirror image of itself around its root?"
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A tree is symmetric if the left subtree mirrors the right."
+   ],
+   "narration": "A tree is symmetric if the left subtree mirrors the right."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Compare two nodes at a time",
+    "2. Values must match",
+    "3. Outer children pair together and inner children pair together"
+   ],
+   "narration": "Step by step. First, compare two nodes at a time. Second, values must match. Third, outer children pair together and inner children pair together."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SymmetricalTree {\n    public static boolean symmetricalTree(BinaryTree t) { return t == null || mirror(t.left, t.right); }\n\n    private static boolean mirror(BinaryTree a, BinaryTree b) {\n        if (a == null || b == null) return a == b;\n        return a.value == b.value && mirror(a.left, b.right) && mirror(a.right, b.left);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SymmetricalTree.java",
-   "narration": "Here's the Java solution, starting with symmetrical tree. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with symmetrical tree. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Is the tree a mirror image of itself around its root?",
+    "A tree is symmetric if the left subtree mirrors the right.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Symmetrical Tree: Is the tree a mirror image of itself around its root? Try re-implementing it from scratch without looking."
+   "narration": "To recap Symmetrical Tree: A tree is symmetric if the left subtree mirrors the right. Try re-implementing it from scratch without looking."
   }
  ]
 }

@@ -87,10 +87,10 @@ def render(s, path, idx, total, title):
         y = 0.76
         for b in s.get("equations", []):
             fig.text(0.5, y - 0.04, b, fontsize=s.get("eq_size", 34), ha="center", color=ACCENT); y -= 0.15
-        bl = s.get("bullets", [])
+        bl = [b[:1].upper() + b[1:] for b in s.get("bullets", [])]
         avail = y - 0.08
         for size in ([s["size"]] if "size" in s else [24, 22, 20, 18, 16, 14]):
-            width = int(1150 / size)                      # ~chars per line at this size
+            width = int(1550 / size)                      # ~chars per line at this size
             wrapped = [textwrap.wrap(b, width) or [""] for b in bl]
             lh = size / 72 / (H / DPI) * 1.45             # line height in figure fraction
             need = sum(len(w) for w in wrapped) * lh + len(bl) * lh * 0.45

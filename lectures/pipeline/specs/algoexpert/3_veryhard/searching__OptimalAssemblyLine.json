@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Split step durations (in order) into k contiguous stations minimising the longest station time. Binary search on the answer with a greedy feasibility check."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Binary search the maximum station time; greedily check whether k stations suffice."
+   ],
+   "narration": "Binary search the maximum station time; greedily check whether k stations suffice."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Bounds are the largest step and the total",
+    "2. Greedily fill stations",
+    "3. Shrink the range when feasible"
+   ],
+   "narration": "Step by step. First, bounds are the largest step and the total. Second, greedily fill stations. Third, shrink the range when feasible."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class OptimalAssemblyLine {\n    public static int optimalAssemblyLine(int[] steps, int k) {\n        int lo = 0, hi = 0;\n        for (int s : steps) { lo = Math.max(lo, s); hi += s; }\n        while (lo < hi) {\n            int mid = (lo + hi) >>> 1;\n            if (stations(steps, mid) <= k) hi = mid; else lo = mid + 1;\n        }\n        return lo;\n    }\n\n    private static int stations(int[] steps, int cap) {\n        int count = 1, cur = 0;\n        for (int s : steps) { if (cur + s > cap) { count++; cur = 0; } cur += s; }\n        return count;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "OptimalAssemblyLine.java",
-   "narration": "Here's the Java solution, starting with optimal assembly line. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with optimal assembly line. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Split step durations (in order) into k contiguous stations minimising the longest station time.",
+    "Binary search the maximum station time; greedily check whether k stations suffice.",
     "Complexity: O(n log S)"
    ],
-   "narration": "To recap Optimal Assembly Line: Split step durations (in order) into k contiguous stations minimising the longest station time. Try re-implementing it from scratch without looking."
+   "narration": "To recap Optimal Assembly Line: Binary search the maximum station time; greedily check whether k stations suffice. Try re-implementing it from scratch without looking."
   }
  ]
 }

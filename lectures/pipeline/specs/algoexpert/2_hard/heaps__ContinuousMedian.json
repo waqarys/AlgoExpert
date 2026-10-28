@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Insert numbers one at a time and query the running median, using a max-heap for the lower half and a min-heap for the upper half."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Keep the smaller half in a max-heap and the larger half in a min-heap, balanced in size."
+   ],
+   "narration": "Keep the smaller half in a max-heap and the larger half in a min-heap, balanced in size."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Insert into the right heap",
+    "2. Rebalance so sizes differ by at most one",
+    "3. Median is the top of the bigger heap or the average of tops"
+   ],
+   "narration": "Step by step. First, insert into the right heap. Second, rebalance so sizes differ by at most one. Third, median is the top of the bigger heap or the average of tops."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ContinuousMedian {\n    public static class ContinuousMedianHandler {\n        private final PriorityQueue<Integer> lower = new PriorityQueue<>(Collections.reverseOrder());\n        private final PriorityQueue<Integer> upper = new PriorityQueue<>();\n        private double median;\n\n        public void insert(int n) {\n            if (lower.isEmpty() || n < lower.peek()) lower.add(n); else upper.add(n);\n            if (lower.size() > upper.size() + 1) upper.add(lower.poll());\n            else if (upper.size() > lower.size() + 1) lower.add(upper.poll());\n            if (lower.size() == upper.size()) median = (lower.peek() + (double) upper.peek()) / 2;\n            else median = lower.size() > upper.size() ? lower.peek() : upper.peek();\n        }\n\n        public double getMedian() { return median; }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ContinuousMedian.java",
-   "narration": "Here's the Java solution, starting with insert. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with insert. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Insert numbers one at a time and query the running median, using a max-heap for the lower half and a min-heap for the upper half.",
+    "Keep the smaller half in a max-heap and the larger half in a min-heap, balanced in size.",
     "Complexity: O(log n) insert, O(1) median"
    ],
-   "narration": "To recap Continuous Median: Insert numbers one at a time and query the running median, using a max-heap for the lower half and a min-heap for the upper half. Try re-implementing it from scratch without looking."
+   "narration": "To recap Continuous Median: Keep the smaller half in a max-heap and the larger half in a min-heap, balanced in size. Try re-implementing it from scratch without looking."
   }
  ]
 }

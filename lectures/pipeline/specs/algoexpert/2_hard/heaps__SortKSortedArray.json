@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Every element is at most k positions from its sorted position; sort with a size-(k plus 1) min-heap."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Every element is within k of its spot, so the minimum of the next k plus one items is always next in order."
+   ],
+   "narration": "Every element is within k of its spot, so the minimum of the next k plus one items is always next in order."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Fill a min-heap with k plus one items",
+    "2. Pop the min into place",
+    "3. Push the next item",
+    "4. Drain the heap"
+   ],
+   "narration": "Step by step. First, fill a min-heap with k plus one items. Second, pop the min into place. Third, push the next item. Fourth, drain the heap."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SortKSortedArray {\n    public static int[] sortKSortedArray(int[] a, int k) {\n        PriorityQueue<Integer> pq = new PriorityQueue<>();\n        int w = 0;\n        for (int i = 0; i < a.length; i++) {\n            pq.add(a[i]);\n            if (pq.size() > k) a[w++] = pq.poll();\n        }\n        while (!pq.isEmpty()) a[w++] = pq.poll();\n        return a;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SortKSortedArray.java",
-   "narration": "Here's the Java solution, starting with sort k sorted array. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with sort k sorted array. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Every element is at most k positions from its sorted position; sort with a size-(k+1) min-heap.",
+    "Every element is within k of its spot, so the minimum of the next k plus one items is always next in order.",
     "Complexity: O(n log k)"
    ],
-   "narration": "To recap Sort K Sorted Array: Every element is at most k positions from its sorted position; sort with a size-(k plus 1) min-heap. Try re-implementing it from scratch without looking."
+   "narration": "To recap Sort K Sorted Array: Every element is within k of its spot, so the minimum of the next k plus one items is always next in order. Try re-implementing it from scratch without looking."
   }
  ]
 }

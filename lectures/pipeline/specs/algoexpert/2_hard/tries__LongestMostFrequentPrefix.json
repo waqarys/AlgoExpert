@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Given unique strings, return the prefix shared by the most strings; ties go to the longest such prefix. Trie storing per-node counts."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A trie with counts at each node gives every prefix's frequency directly."
+   ],
+   "narration": "A trie with counts at each node gives every prefix's frequency directly."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Insert strings counting passes per node",
+    "2. Track the max count and longest depth",
+    "3. Return that prefix"
+   ],
+   "narration": "Step by step. First, insert strings counting passes per node. Second, track the max count and longest depth. Third, return that prefix."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LongestMostFrequentPrefix {\n    private static class Node { final Map<Character, Node> next = new HashMap<>(); int count; }\n\n    public static String longestMostFrequentPrefix(String[] strings) {\n        Node root = new Node();\n        int bestCount = 0;\n        String best = \"\";\n        for (String s : strings) {\n            Node n = root;\n            for (int i = 0; i < s.length(); i++) {\n                n = n.next.computeIfAbsent(s.charAt(i), k -> new Node());\n                n.count++;\n            }\n        }\n        for (String s : strings) {\n            Node n = root;\n            for (int i = 0; i < s.length(); i++) {\n                n = n.next.get(s.charAt(i));\n                if (n.count > bestCount || (n.count == bestCount && i + 1 > best.length())) {\n                    bestCount = n.count;\n                    best = s.substring(0, i + 1);\n                }\n            }\n        }\n        return best;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "LongestMostFrequentPrefix.java",
-   "narration": "Here's the Java solution, starting with longest most frequent prefix. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with longest most frequent prefix. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Given unique strings, return the prefix shared by the most strings; ties go to the longest such prefix.",
+    "A trie with counts at each node gives every prefix's frequency directly.",
     "Complexity: O(n*m)"
    ],
-   "narration": "To recap Longest Most Frequent Prefix: Given unique strings, return the prefix shared by the most strings; ties go to the longest such prefix. Try re-implementing it from scratch without looking."
+   "narration": "To recap Longest Most Frequent Prefix: A trie with counts at each node gives every prefix's frequency directly. Try re-implementing it from scratch without looking."
   }
  ]
 }

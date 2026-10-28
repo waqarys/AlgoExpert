@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Fill a 9 times 9 board (0 equals empty) in place via backtracking with row or col or box bitmasks."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Backtracking with bitmasks of used digits per row, column and box makes each check constant time."
+   ],
+   "narration": "Backtracking with bitmasks of used digits per row, column and box makes each check constant time."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Record used digits",
+    "2. Find the next empty cell",
+    "3. Try each allowed digit and recurse",
+    "4. Undo on failure"
+   ],
+   "narration": "Step by step. First, record used digits. Second, find the next empty cell. Third, try each allowed digit and recurse. Fourth, undo on failure."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class SolveSudoku {\n    public static int[][] solveSudoku(int[][] b) {\n        int[] rows = new int[9], cols = new int[9], boxes = new int[9];\n        for (int r = 0; r < 9; r++) for (int c = 0; c < 9; c++) if (b[r][c] != 0) {\n            int bit = 1 << b[r][c];\n            rows[r] |= bit; cols[c] |= bit; boxes[r / 3 * 3 + c / 3] |= bit;\n        }\n        solve(b, 0, rows, cols, boxes);\n        return b;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "SolveSudoku_part1.java",
-   "narration": "Here's the Java solution, starting with solve sudoku. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with solve sudoku. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -47,10 +66,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Fill a 9x9 board (0 = empty) in place via backtracking with row/col/box bitmasks.",
+    "Backtracking with bitmasks of used digits per row, column and box makes each check constant time.",
     "Complexity: O(9^empty) worst"
    ],
-   "narration": "To recap Solve Sudoku: Fill a 9 times 9 board (0 equals empty) in place via backtracking with row or col or box bitmasks. Try re-implementing it from scratch without looking."
+   "narration": "To recap Solve Sudoku: Backtracking with bitmasks of used digits per row, column and box makes each check constant time. Try re-implementing it from scratch without looking."
   }
  ]
 }

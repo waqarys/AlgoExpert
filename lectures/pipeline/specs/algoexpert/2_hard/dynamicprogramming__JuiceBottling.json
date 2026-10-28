@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Prices i is the price of a bottle of size i (prices 0 equals 0). Split the total (prices.length - 1 units) into bottle sizes maximising revenue; return sizes (rod cutting)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Unbounded knapsack over sizes: best price for each total is a bottle plus the best for the remainder."
+   ],
+   "narration": "Unbounded knapsack over sizes: best price for each total is a bottle plus the best for the remainder."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Best of zero is zero",
+    "2. For each size, try every first bottle",
+    "3. Store the best choice",
+    "4. Rebuild the bottle sizes"
+   ],
+   "narration": "Step by step. First, best of zero is zero. Second, for each size, try every first bottle. Third, store the best choice. Fourth, rebuild the bottle sizes."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class JuiceBottling {\n    public static List<Integer> juiceBottling(int[] prices) {\n        int n = prices.length;\n        int[] best = new int[n], cut = new int[n];\n        for (int s = 1; s < n; s++)\n            for (int k = 1; k <= s; k++)\n                if (prices[k] + best[s - k] > best[s]) { best[s] = prices[k] + best[s - k]; cut[s] = k; }\n        List<Integer> out = new ArrayList<>();\n        for (int s = n - 1; s > 0; s -= cut[s]) out.add(cut[s]);\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "JuiceBottling.java",
-   "narration": "Here's the Java solution, starting with juice bottling. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with juice bottling. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Prices[i] is the price of a bottle of size i (prices[0] = 0).",
+    "Unbounded knapsack over sizes: best price for each total is a bottle plus the best for the remainder.",
     "Complexity: O(n^2)"
    ],
-   "narration": "To recap Juice Bottling: Prices i is the price of a bottle of size i (prices 0 equals 0). Try re-implementing it from scratch without looking."
+   "narration": "To recap Juice Bottling: Unbounded knapsack over sizes: best price for each total is a bottle plus the best for the remainder. Try re-implementing it from scratch without looking."
   }
  ]
 }

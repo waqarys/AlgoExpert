@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Do two trees have the same sequence of leaves left-to-right? Lazy iterators."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Walk both trees' leaves lazily in parallel so we can stop at the first difference."
+   ],
+   "narration": "Walk both trees' leaves lazily in parallel so we can stop at the first difference."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Iterator per tree with a stack",
+    "2. Advance to the next leaf",
+    "3. Compare values",
+    "4. Both must end together"
+   ],
+   "narration": "Step by step. First, iterator per tree with a stack. Second, advance to the next leaf. Third, compare values. Fourth, both must end together."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class CompareLeafTraversal {\n    public static boolean compareLeafTraversal(BinaryTree a, BinaryTree b) {\n        ArrayDeque<BinaryTree> sa = new ArrayDeque<>(), sb = new ArrayDeque<>();\n        sa.push(a); sb.push(b);\n        while (true) {\n            BinaryTree la = nextLeaf(sa), lb = nextLeaf(sb);\n            if (la == null || lb == null) return la == lb;\n            if (la.value != lb.value) return false;\n        }\n    }\n\n    private static BinaryTree nextLeaf(ArrayDeque<BinaryTree> st) {\n        while (!st.isEmpty()) {\n            BinaryTree n = st.pop();\n            if (n.left == null && n.right == null) return n;\n            if (n.right != null) st.push(n.right);\n            if (n.left != null) st.push(n.left);\n        }\n        return null;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "CompareLeafTraversal.java",
-   "narration": "Here's the Java solution, starting with compare leaf traversal. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with compare leaf traversal. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Do two trees have the same sequence of leaves left-to-right?",
+    "Walk both trees' leaves lazily in parallel so we can stop at the first difference.",
     "Complexity: O(n + m)"
    ],
-   "narration": "To recap Compare Leaf Traversal: Do two trees have the same sequence of leaves left-to-right? Try re-implementing it from scratch without looking."
+   "narration": "To recap Compare Leaf Traversal: Walk both trees' leaves lazily in parallel so we can stop at the first difference. Try re-implementing it from scratch without looking."
   }
  ]
 }

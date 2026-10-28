@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Number of pairs i under j with a i over a j , counted during merge sort."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Merge sort counts inversions: when a right element is placed before remaining left elements, they all form inversions."
+   ],
+   "narration": "Merge sort counts inversions: when a right element is placed before remaining left elements, they all form inversions."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Sort halves recursively",
+    "2. During merge, add remaining left count when taking from the right",
+    "3. Sum"
+   ],
+   "narration": "Step by step. First, sort halves recursively. Second, during merge, add remaining left count when taking from the right. Third, sum."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class CountInversions {\n    public static int countInversions(int[] array) {\n        int[] a = array.clone();\n        return (int) count(a, new int[a.length], 0, a.length - 1);\n    }\n\n    private static long count(int[] a, int[] aux, int lo, int hi) {\n        if (lo >= hi) return 0;\n        int mid = (lo + hi) >>> 1;\n        long inv = count(a, aux, lo, mid) + count(a, aux, mid + 1, hi);\n        System.arraycopy(a, lo, aux, lo, hi - lo + 1);\n        int i = lo, j = mid + 1;\n        for (int k = lo; k <= hi; k++) {\n            if (i > mid) a[k] = aux[j++];\n            else if (j > hi) a[k] = aux[i++];\n            else if (aux[j] < aux[i]) { a[k] = aux[j++]; inv += mid - i + 1; }\n            else a[k] = aux[i++];\n        }\n        return inv;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "CountInversions.java",
-   "narration": "Here's the Java solution, starting with count inversions. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with count inversions. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Number of pairs i < j with a[i] > a[j], counted during merge sort.",
+    "Merge sort counts inversions: when a right element is placed before remaining left elements, they all form inversions.",
     "Complexity: O(n log n)"
    ],
-   "narration": "To recap Count Inversions: Number of pairs i under j with a i over a j , counted during merge sort. Try re-implementing it from scratch without looking."
+   "narration": "To recap Count Inversions: Merge sort counts inversions: when a right element is placed before remaining left elements, they all form inversions. Try re-implementing it from scratch without looking."
   }
  ]
 }

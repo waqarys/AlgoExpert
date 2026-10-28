@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Read a matrix along anti-diagonals in zigzag, starting at top-left and moving down first (odd diagonals are read bottom-to-top, even ones top-to-bottom)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Walk diagonals, bouncing off the edges and flipping direction each time."
+   ],
+   "narration": "Walk diagonals, bouncing off the edges and flipping direction each time."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Start at top-left heading down",
+    "2. Move diagonally",
+    "3. At an edge, step along it and flip direction",
+    "4. Stop after every cell"
+   ],
+   "narration": "Step by step. First, start at top-left heading down. Second, move diagonally. Third, at an edge, step along it and flip direction. Fourth, stop after every cell."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ZigzagTraverse {\n    public static List<Integer> zigzagTraverse(List<List<Integer>> m) {\n        List<Integer> out = new ArrayList<>();\n        int R = m.size(), C = m.get(0).size();\n        for (int d = 0; d < R + C - 1; d++) {\n            int lo = Math.max(0, d - C + 1), hi = Math.min(d, R - 1);\n            if (d % 2 == 0) for (int r = lo; r <= hi; r++) out.add(m.get(r).get(d - r));\n            else for (int r = hi; r >= lo; r--) out.add(m.get(r).get(d - r));\n        }\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ZigzagTraverse.java",
-   "narration": "Here's the Java solution, starting with zigzag traverse. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with zigzag traverse. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Read a matrix along anti-diagonals in zigzag, starting at top-left and moving down first (odd diagonals are read bottom-to-top, even ones top-to-bottom).",
+    "Walk diagonals, bouncing off the edges and flipping direction each time.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Zigzag Traverse: Read a matrix along anti-diagonals in zigzag, starting at top-left and moving down first (odd diagonals are read bottom-to-top, even ones top-to-bottom). Try re-implementing it from scratch without looking."
+   "narration": "To recap Zigzag Traverse: Walk diagonals, bouncing off the edges and flipping direction each time. Try re-implementing it from scratch without looking."
   }
  ]
 }

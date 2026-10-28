@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Every subset of a set of distinct ints (iteratively doubling)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each new element doubles the subsets: every existing subset with or without it."
+   ],
+   "narration": "Each new element doubles the subsets: every existing subset with or without it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Start with the empty set",
+    "2. For each element, copy all subsets and add it",
+    "3. Return all"
+   ],
+   "narration": "Step by step. First, start with the empty set. Second, for each element, copy all subsets and add it. Third, return all."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class Powerset {\n    public static List<List<Integer>> powerset(List<Integer> array) {\n        List<List<Integer>> subsets = new ArrayList<>();\n        subsets.add(new ArrayList<>());\n        for (int x : array) {\n            int size = subsets.size();\n            for (int i = 0; i < size; i++) { List<Integer> s = new ArrayList<>(subsets.get(i)); s.add(x); subsets.add(s); }\n        }\n        return subsets;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "Powerset.java",
-   "narration": "Here's the Java solution, starting with powerset. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with powerset. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Every subset of a set of distinct ints (iteratively doubling).",
+    "Each new element doubles the subsets: every existing subset with or without it.",
     "Complexity: O(n * 2^n)"
    ],
-   "narration": "To recap Powerset: Every subset of a set of distinct ints (iteratively doubling). Try re-implementing it from scratch without looking."
+   "narration": "To recap Powerset: Each new element doubles the subsets: every existing subset with or without it. Try re-implementing it from scratch without looking."
   }
  ]
 }

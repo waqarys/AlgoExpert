@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Pillars of given heights; how much rain water is trapped? Two pointers."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Water above a pillar is limited by the smaller of the tallest walls on its left and right."
+   ],
+   "narration": "Water above a pillar is limited by the smaller of the tallest walls on its left and right."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Pointers at both ends with running maxes",
+    "2. Move the side with the smaller max",
+    "3. Add max minus height",
+    "4. Continue until they meet"
+   ],
+   "narration": "Step by step. First, pointers at both ends with running maxes. Second, move the side with the smaller max. Third, add max minus height. Fourth, continue until they meet."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class WaterArea {\n    public static int waterArea(int[] h) {\n        int l = 0, r = h.length - 1, lMax = 0, rMax = 0, water = 0;\n        while (l < r) {\n            if (h[l] < h[r]) { lMax = Math.max(lMax, h[l]); water += lMax - h[l]; l++; }\n            else { rMax = Math.max(rMax, h[r]); water += rMax - h[r]; r--; }\n        }\n        return water;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "WaterArea.java",
-   "narration": "Here's the Java solution, starting with water area. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with water area. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Pillars of given heights; how much rain water is trapped?",
+    "Water above a pillar is limited by the smaller of the tallest walls on its left and right.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Water Area: Pillars of given heights; how much rain water is trapped? Try re-implementing it from scratch without looking."
+   "narration": "To recap Water Area: Water above a pillar is limited by the smaller of the tallest walls on its left and right. Try re-implementing it from scratch without looking."
   }
  ]
 }

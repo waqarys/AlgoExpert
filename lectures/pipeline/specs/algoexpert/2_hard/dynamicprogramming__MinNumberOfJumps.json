@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Each value is the max jump length from that index; fewest jumps to reach the end. Greedy BFS-by-ranges."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Think in BFS levels: each jump extends the farthest reachable index."
+   ],
+   "narration": "Think in BFS levels: each jump extends the farthest reachable index."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Track the farthest reach and current jump end",
+    "2. When we pass the jump end, take another jump",
+    "3. Count jumps until the end"
+   ],
+   "narration": "Step by step. First, track the farthest reach and current jump end. Second, when we pass the jump end, take another jump. Third, count jumps until the end."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MinNumberOfJumps {\n    public static int minNumberOfJumps(int[] a) {\n        int jumps = 0, curEnd = 0, farthest = 0;\n        for (int i = 0; i < a.length - 1; i++) {\n            farthest = Math.max(farthest, i + a[i]);\n            if (i == curEnd) { jumps++; curEnd = farthest; }\n        }\n        return jumps;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MinNumberOfJumps.java",
-   "narration": "Here's the Java solution, starting with min number of jumps. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with min number of jumps. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Each value is the max jump length from that index; fewest jumps to reach the end.",
+    "Think in BFS levels: each jump extends the farthest reachable index.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Min Number Of Jumps: Each value is the max jump length from that index; fewest jumps to reach the end. Try re-implementing it from scratch without looking."
+   "narration": "To recap Min Number Of Jumps: Think in BFS levels: each jump extends the farthest reachable index. Try re-implementing it from scratch without looking."
   }
  ]
 }

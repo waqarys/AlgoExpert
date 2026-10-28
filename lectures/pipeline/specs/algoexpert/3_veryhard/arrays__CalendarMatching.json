@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Two people's meetings (\"HH:MM\" pairs) and daily bounds; return all free slots of at least duration minutes available to both. Convert to minutes, merge busy intervals, invert."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Merge both calendars, including bounds as meetings, then gaps of the right length are free slots."
+   ],
+   "narration": "Merge both calendars, including bounds as meetings, then gaps of the right length are free slots."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Convert times to minutes",
+    "2. Add each person's bounds as blocked time",
+    "3. Sort and merge meetings",
+    "4. Return gaps at least duration long"
+   ],
+   "narration": "Step by step. First, convert times to minutes. Second, add each person's bounds as blocked time. Third, sort and merge meetings. Fourth, return gaps at least duration long."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class CalendarMatching {\n    public static List<String[]> calendarMatching(List<String[]> cal1, String[] bounds1, List<String[]> cal2, String[] bounds2, int duration) {\n        List<int[]> busy = new ArrayList<>();\n        addCal(busy, cal1, bounds1);\n        addCal(busy, cal2, bounds2);\n        busy.sort((a, b) -> Integer.compare(a[0], b[0]));\n        List<int[]> merged = new ArrayList<>();\n        for (int[] b : busy) {\n            if (!merged.isEmpty() && merged.get(merged.size() - 1)[1] >= b[0])\n                merged.get(merged.size() - 1)[1] = Math.max(merged.get(merged.size() - 1)[1], b[1]);\n            else merged.add(b.clone());\n        }\n        List<String[]> out = new ArrayList<>();\n        for (int i = 1; i < merged.size(); i++) {\n            int s = merged.get(i - 1)[1], e = merged.get(i)[0];\n            if (e - s >= duration) out.add(new String[]{fmt(s), fmt(e)});\n        }\n        return out;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "CalendarMatching_part1.java",
-   "narration": "Here's the Java solution, starting with calendar matching. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with calendar matching. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -48,10 +67,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Two people's meetings (\"HH:MM\" pairs) and daily bounds; return all free slots of at least `duration` minutes available to both.",
+    "Merge both calendars, including bounds as meetings, then gaps of the right length are free slots.",
     "Complexity: O(c1 + c2)"
    ],
-   "narration": "To recap Calendar Matching: Two people's meetings (\"HH:MM\" pairs) and daily bounds; return all free slots of at least duration minutes available to both. Try re-implementing it from scratch without looking."
+   "narration": "To recap Calendar Matching: Merge both calendars, including bounds as meetings, then gaps of the right length are free slots. Try re-implementing it from scratch without looking."
   }
  ]
 }

@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Build a trie of all suffixes (terminated by ' ') and answer contains(suffix)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Insert every suffix into a trie, then any substring is a path from the root."
+   ],
+   "narration": "Insert every suffix into a trie, then any substring is a path from the root."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. For each start index, insert the suffix",
+    "2. Mark ends with a star",
+    "3. contains walks the trie"
+   ],
+   "narration": "Step by step. First, for each start index, insert the suffix. Second, mark ends with a star. Third, contains walks the trie."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SuffixTrieConstruction {\n    public static class TrieNode { public final Map<Character, TrieNode> children = new HashMap<>(); }\n\n    public static class SuffixTrie {\n        public final TrieNode root = new TrieNode();\n        private static final char END = '*';\n\n        public SuffixTrie(String s) {\n            for (int i = 0; i < s.length(); i++) {\n                TrieNode n = root;\n                for (int j = i; j < s.length(); j++) n = n.children.computeIfAbsent(s.charAt(j), k -> new TrieNode());\n                n.children.put(END, null);\n            }\n        }\n\n        public boolean contains(String s) {\n            TrieNode n = root;\n            for (char c : s.toCharArray()) { n = n.children.get(c); if (n == null) return false; }\n            return n.children.containsKey(END);\n        }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SuffixTrieConstruction.java",
-   "narration": "Here's the Java solution, starting with suffix trie. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with suffix trie. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Build a trie of all suffixes (terminated by '*') and answer contains(suffix).",
+    "Insert every suffix into a trie, then any substring is a path from the root.",
     "Complexity: build O(n^2), contains O(m)"
    ],
-   "narration": "To recap Suffix Trie Construction: Build a trie of all suffixes (terminated by ' ') and answer contains(suffix). Try re-implementing it from scratch without looking."
+   "narration": "To recap Suffix Trie Construction: Insert every suffix into a trie, then any substring is a path from the root. Try re-implementing it from scratch without looking."
   }
  ]
 }

@@ -19,13 +19,31 @@
    "narration": "Here's the problem. 2k tasks with durations, k workers doing two tasks each in parallel; minimise the longest worker time. Pair shortest with longest. Returns index pairs."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Pair the shortest task with the longest so no worker gets two long tasks."
+   ],
+   "narration": "Pair the shortest task with the longest so no worker gets two long tasks."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Sort task indices by duration",
+    "2. Pair the ends moving inward",
+    "3. Return the index pairs"
+   ],
+   "narration": "Step by step. First, sort task indices by duration. Second, pair the ends moving inward. Third, return the index pairs."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class TaskAssignment {\n    public static List<List<Integer>> taskAssignment(int k, List<Integer> tasks) {\n        List<Integer> idx = new ArrayList<>();\n        for (int i = 0; i < tasks.size(); i++) idx.add(i);\n        idx.sort(Comparator.comparingInt(tasks::get));\n        List<List<Integer>> out = new ArrayList<>();\n        for (int i = 0; i < k; i++) out.add(List.of(idx.get(i), idx.get(idx.size() - 1 - i)));\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "TaskAssignment.java",
-   "narration": "Here's the Java solution, starting with task assignment. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with task assignment. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -40,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "2k tasks with durations, k workers doing two tasks each in parallel; minimise the longest worker time.",
+    "Pair the shortest task with the longest so no worker gets two long tasks.",
     "Complexity: O(n log n)"
    ],
-   "narration": "To recap Task Assignment: 2k tasks with durations, k workers doing two tasks each in parallel; minimise the longest worker time. Try re-implementing it from scratch without looking."
+   "narration": "To recap Task Assignment: Pair the shortest task with the longest so no worker gets two long tasks. Try re-implementing it from scratch without looking."
   }
  ]
 }

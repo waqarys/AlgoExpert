@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Sum, over every node, of the depths of all nodes in its subtree (relative to it). Per subtree: sumDepths equals sumDepths(l) plus size(l) plus sumDepths(r) plus size(r)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each subtree's depth sum follows from its children's: their sums plus their sizes."
+   ],
+   "narration": "Each subtree's depth sum follows from its children's: their sums plus their sizes."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Post-order returns size, depth sum and total",
+    "2. Depth sum equals children's sums plus their sizes",
+    "3. Add everyone's depth sums"
+   ],
+   "narration": "Step by step. First, post-order returns size, depth sum and total. Second, depth sum equals children's sums plus their sizes. Third, add everyone's depth sums."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class AllKindsOfNodeDepths {\n    public static int allKindsOfNodeDepths(BinaryTree root) { return (int) info(root)[2]; }\n\n    /** returns {size, sumDepths, total} */\n    private static long[] info(BinaryTree t) {\n        if (t == null) return new long[]{0, 0, 0};\n        long[] l = info(t.left), r = info(t.right);\n        long size = 1 + l[0] + r[0], depths = l[1] + l[0] + r[1] + r[0];\n        return new long[]{size, depths, depths + l[2] + r[2]};\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "AllKindsOfNodeDepths.java",
-   "narration": "Here's the Java solution, starting with all kinds of node depths. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with all kinds of node depths. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Sum, over every node, of the depths of all nodes in its subtree (relative to it).",
+    "Each subtree's depth sum follows from its children's: their sums plus their sizes.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap All Kinds Of Node Depths: Sum, over every node, of the depths of all nodes in its subtree (relative to it). Try re-implementing it from scratch without looking."
+   "narration": "To recap All Kinds Of Node Depths: Each subtree's depth sum follows from its children's: their sums plus their sizes. Try re-implementing it from scratch without looking."
   }
  ]
 }

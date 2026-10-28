@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Shortest 4-directional path on a grid (0 free, 1 obstacle) from start to end using Manhattan-distance heuristic. Returns the list of row, col positions, or if unreachable."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Like Dijkstra, but the heap is ordered by distance plus a Manhattan heuristic toward the goal."
+   ],
+   "narration": "Like Dijkstra, but the heap is ordered by distance plus a Manhattan heuristic toward the goal."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Open set ordered by f equals g plus h",
+    "2. Expand the best node",
+    "3. Update neighbours' g",
+    "4. Rebuild the path when reaching the end"
+   ],
+   "narration": "Step by step. First, open set ordered by f equals g plus h. Second, expand the best node. Third, update neighbours' g. Fourth, rebuild the path when reaching the end."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class AStarAlgorithm {\n    public static int[][] aStarAlgorithm(int startRow, int startCol, int endRow, int endCol, int[][] graph) {\n        int R = graph.length, C = graph[0].length;\n        int[][] g = new int[R][C];\n        for (int[] row : g) Arrays.fill(row, Integer.MAX_VALUE);\n        int[][] from = new int[R * C][];\n        PriorityQueue<int[]> open = new PriorityQueue<>(Comparator.comparingInt(x -> x[2]));\n        g[startRow][startCol] = 0;\n        open.add(new int[]{startRow, startCol, h(startRow, startCol, endRow, endCol)});\n        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n        while (!open.isEmpty()) {\n            int[] cur = open.poll();\n            int r = cur[0], c = cur[1];\n            if (r == endRow && c == endCol) {\n                LinkedList<int[]> path = new LinkedList<>();\n                for (int[] p = {r, c}; p != null; p = from[p[0] * C + p[1]]) path.addFirst(p);\n                return path.toArray(new int[0][]);\n            }\n            if (cur[2] > g[r][c] + h(r, c, endRow, endCol)) continue;\n            for (int[] d : dirs) {\n                int nr = r + d[0], nc = c + d[1];\n                if (nr < 0 || nc < 0 || nr >= R || nc >= C || graph[nr][nc] == 1) continue;",
    "lang": "java",
    "font_size": 26,
    "filename": "AStarAlgorithm_part1.java",
-   "narration": "Here's the Java solution, starting with a star algorithm. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with a star algorithm. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -48,10 +67,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Shortest 4-directional path on a grid (0 free, 1 obstacle) from start to end using Manhattan-distance heuristic.",
+    "Like Dijkstra, but the heap is ordered by distance plus a Manhattan heuristic toward the goal.",
     "Complexity: O(w*h log(w*h))"
    ],
-   "narration": "To recap A Star Algorithm: Shortest 4-directional path on a grid (0 free, 1 obstacle) from start to end using Manhattan-distance heuristic. Try re-implementing it from scratch without looking."
+   "narration": "To recap A Star Algorithm: Like Dijkstra, but the heap is ordered by distance plus a Manhattan heuristic toward the goal. Try re-implementing it from scratch without looking."
   }
  ]
 }

@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Ways to climb height steps taking 1..maxSteps at a time. Sliding-window sum DP."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Ways to reach step n is the sum of ways for the last maxSteps steps, a sliding window."
+   ],
+   "narration": "Ways to reach step n is the sum of ways for the last maxSteps steps, a sliding window."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. ways of zero is one",
+    "2. Keep a running window sum",
+    "3. Add the new value and drop the oldest"
+   ],
+   "narration": "Step by step. First, ways of zero is one. Second, keep a running window sum. Third, add the new value and drop the oldest."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class StaircaseTraversal {\n    public static int staircaseTraversal(int height, int maxSteps) {\n        int[] ways = new int[height + 1];\n        ways[0] = 1;\n        int window = 0;\n        for (int h = 1; h <= height; h++) {\n            window += ways[h - 1];\n            if (h - maxSteps - 1 >= 0) window -= ways[h - maxSteps - 1];\n            ways[h] = window;\n        }\n        return ways[height];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "StaircaseTraversal.java",
-   "narration": "Here's the Java solution, starting with staircase traversal. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with staircase traversal. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Ways to climb `height` steps taking 1..maxSteps at a time.",
+    "Ways to reach step n is the sum of ways for the last maxSteps steps, a sliding window.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Staircase Traversal: Ways to climb height steps taking 1..maxSteps at a time. Try re-implementing it from scratch without looking."
+   "narration": "To recap Staircase Traversal: Ways to reach step n is the sum of ways for the last maxSteps steps, a sliding window. Try re-implementing it from scratch without looking."
   }
  ]
 }

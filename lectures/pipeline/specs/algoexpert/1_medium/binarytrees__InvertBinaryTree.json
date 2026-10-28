@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Mirror the tree by swapping every node's children."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Swap every node's children, recursively or with a queue."
+   ],
+   "narration": "Swap every node's children, recursively or with a queue."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Visit each node",
+    "2. Swap left and right",
+    "3. Recurse into both children"
+   ],
+   "narration": "Step by step. First, visit each node. Second, swap left and right. Third, recurse into both children."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class InvertBinaryTree {\n    public static void invertBinaryTree(BinaryTree t) {\n        if (t == null) return;\n        BinaryTree tmp = t.left; t.left = t.right; t.right = tmp;\n        invertBinaryTree(t.left);\n        invertBinaryTree(t.right);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "InvertBinaryTree.java",
-   "narration": "Here's the Java solution, starting with invert binary tree. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with invert binary tree. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Mirror the tree by swapping every node's children.",
+    "Swap every node's children, recursively or with a queue.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Invert Binary Tree: Mirror the tree by swapping every node's children. Try re-implementing it from scratch without looking."
+   "narration": "To recap Invert Binary Tree: Swap every node's children, recursively or with a queue. Try re-implementing it from scratch without looking."
   }
  ]
 }

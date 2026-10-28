@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Reverse the order of space-separated words, preserving all whitespace runs."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Reverse the order of words while keeping whitespace runs intact."
+   ],
+   "narration": "Reverse the order of words while keeping whitespace runs intact."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Tokenise into words and spaces",
+    "2. Reverse the token list",
+    "3. Join back"
+   ],
+   "narration": "Step by step. First, tokenise into words and spaces. Second, reverse the token list. Third, join back."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ReverseWordsInString {\n    public static String reverseWordsInString(String s) {\n        StringBuilder out = new StringBuilder();\n        int end = s.length();\n        for (int i = s.length() - 1; i >= -1; i--) {\n            if (i == -1 || (s.charAt(i) == ' ') != (s.charAt(end - 1) == ' ')) {\n                out.append(s, i + 1, end);\n                end = i + 1;\n            }\n            if (end == 0) break;\n        }\n        return out.toString();\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ReverseWordsInString.java",
-   "narration": "Here's the Java solution, starting with reverse words in string. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with reverse words in string. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Reverse the order of space-separated words, preserving all whitespace runs.",
+    "Reverse the order of words while keeping whitespace runs intact.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Reverse Words In String: Reverse the order of space-separated words, preserving all whitespace runs. Try re-implementing it from scratch without looking."
+   "narration": "To recap Reverse Words In String: Reverse the order of words while keeping whitespace runs intact. Try re-implementing it from scratch without looking."
   }
  ]
 }

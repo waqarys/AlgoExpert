@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Each element is a jump (wrapping). Do the jumps form one cycle visiting every index exactly once and returning to the start?"
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Follow the jumps n times: we must visit every index exactly once and return to the start."
+   ],
+   "narration": "Follow the jumps n times: we must visit every index exactly once and return to the start."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Jump n times with wrap-around",
+    "2. If we return to zero early, fail",
+    "3. After n jumps we must be at zero"
+   ],
+   "narration": "Step by step. First, jump n times with wrap-around. Second, if we return to zero early, fail. Third, after n jumps we must be at zero."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SingleCycleCheck {\n    public static boolean hasSingleCycle(int[] a) {\n        int n = a.length, idx = 0;\n        for (int visited = 0; visited < n; visited++) {\n            if (visited > 0 && idx == 0) return false;\n            idx = Math.floorMod(idx + a[idx], n);\n        }\n        return idx == 0;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SingleCycleCheck.java",
-   "narration": "Here's the Java solution, starting with has single cycle. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with has single cycle. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Each element is a jump (wrapping).",
+    "Follow the jumps n times: we must visit every index exactly once and return to the start.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Single Cycle Check: Each element is a jump (wrapping). Try re-implementing it from scratch without looking."
+   "narration": "To recap Single Cycle Check: Follow the jumps n times: we must visit every index exactly once and return to the start. Try re-implementing it from scratch without looking."
   }
  ]
 }

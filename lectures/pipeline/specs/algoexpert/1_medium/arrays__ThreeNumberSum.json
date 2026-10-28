@@ -18,13 +18,32 @@
    "narration": "Here's the problem. All triplets of distinct integers summing to target, each triplet ascending and the list sorted. Sort then sweep with two pointers."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Fix one number, then find pairs in the sorted remainder with two pointers."
+   ],
+   "narration": "Fix one number, then find pairs in the sorted remainder with two pointers."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Sort the array",
+    "2. For each index, set left and right pointers after it",
+    "3. Move them based on the current sum",
+    "4. Record exact matches"
+   ],
+   "narration": "Step by step. First, sort the array. Second, for each index, set left and right pointers after it. Third, move them based on the current sum. Fourth, record exact matches."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ThreeNumberSum {\n    public static List<Integer[]> threeNumberSum(int[] array, int target) {\n        Arrays.sort(array);\n        List<Integer[]> out = new ArrayList<>();\n        for (int i = 0; i < array.length - 2; i++) {\n            int l = i + 1, r = array.length - 1;\n            while (l < r) {\n                int s = array[i] + array[l] + array[r];\n                if (s == target) { out.add(new Integer[]{array[i], array[l], array[r]}); l++; r--; }\n                else if (s < target) l++; else r--;\n            }\n        }\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ThreeNumberSum.java",
-   "narration": "Here's the Java solution, starting with three number sum. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with three number sum. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "All triplets of distinct integers summing to target, each triplet ascending and the list sorted.",
+    "Fix one number, then find pairs in the sorted remainder with two pointers.",
     "Complexity: O(n^2)"
    ],
-   "narration": "To recap Three Number Sum: All triplets of distinct integers summing to target, each triplet ascending and the list sorted. Try re-implementing it from scratch without looking."
+   "narration": "To recap Three Number Sum: Fix one number, then find pairs in the sorted remainder with two pointers. Try re-implementing it from scratch without looking."
   }
  ]
 }

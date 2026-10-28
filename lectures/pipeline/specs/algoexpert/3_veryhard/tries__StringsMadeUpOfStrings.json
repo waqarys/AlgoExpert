@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Return the strings from strings that can be built by concatenating two or more strings from substrings (reuse allowed). Word-break DP per string."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A trie of the substrings and memoised splitting determine whether a string decomposes into two or more pieces."
+   ],
+   "narration": "A trie of the substrings and memoised splitting determine whether a string decomposes into two or more pieces."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Build a trie of substrings",
+    "2. From each index, walk the trie for word ends",
+    "3. Recurse on the rest with memo",
+    "4. Require at least two pieces"
+   ],
+   "narration": "Step by step. First, build a trie of substrings. Second, from each index, walk the trie for word ends. Third, recurse on the rest with memo. Fourth, require at least two pieces."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class StringsMadeUpOfStrings {\n    public static String[] stringsMadeUpOfStrings(String[] strings, String[] substrings) {\n        Set<String> dict = new HashSet<>(Arrays.asList(substrings));\n        List<String> out = new ArrayList<>();\n        for (String s : strings) {\n            int n = s.length();\n            int[] pieces = new int[n + 1];\n            Arrays.fill(pieces, -1);\n            pieces[0] = 0;\n            for (int j = 1; j <= n; j++)\n                for (int i = 0; i < j; i++)\n                    if (pieces[i] >= 0 && dict.contains(s.substring(i, j))) pieces[j] = Math.max(pieces[j], pieces[i] + 1);\n            if (pieces[n] >= 2) out.add(s);\n        }\n        return out.toArray(new String[0]);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "StringsMadeUpOfStrings.java",
-   "narration": "Here's the Java solution, starting with strings made up of strings. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with strings made up of strings. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Return the strings from `strings` that can be built by concatenating two or more strings from `substrings` (reuse allowed).",
+    "A trie of the substrings and memoised splitting determine whether a string decomposes into two or more pieces.",
     "Complexity: O(n * m^2)"
    ],
-   "narration": "To recap Strings Made Up Of Strings: Return the strings from strings that can be built by concatenating two or more strings from substrings (reuse allowed). Try re-implementing it from scratch without looking."
+   "narration": "To recap Strings Made Up Of Strings: A trie of the substrings and memoised splitting determine whether a string decomposes into two or more pieces. Try re-implementing it from scratch without looking."
   }
  ]
 }

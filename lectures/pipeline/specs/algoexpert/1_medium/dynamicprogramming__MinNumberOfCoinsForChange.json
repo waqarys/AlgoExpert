@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Fewest coins summing to n, or -1 if impossible."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Build the fewest coins for every amount from zero up to n."
+   ],
+   "narration": "Build the fewest coins for every amount from zero up to n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Array of infinities, zero for amount zero",
+    "2. For each coin, relax amounts from the coin up",
+    "3. Answer or minus one"
+   ],
+   "narration": "Step by step. First, array of infinities, zero for amount zero. Second, for each coin, relax amounts from the coin up. Third, answer or minus one."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MinNumberOfCoinsForChange {\n    public static int minNumberOfCoinsForChange(int n, int[] denoms) {\n        int[] dp = new int[n + 1];\n        Arrays.fill(dp, Integer.MAX_VALUE);\n        dp[0] = 0;\n        for (int d : denoms)\n            for (int a = d; a <= n; a++)\n                if (dp[a - d] != Integer.MAX_VALUE) dp[a] = Math.min(dp[a], dp[a - d] + 1);\n        return dp[n] == Integer.MAX_VALUE ? -1 : dp[n];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MinNumberOfCoinsForChange.java",
-   "narration": "Here's the Java solution, starting with min number of coins for change. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with min number of coins for change. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Fewest coins summing to n, or -1 if impossible.",
+    "Build the fewest coins for every amount from zero up to n.",
     "Complexity: O(n*d)"
    ],
-   "narration": "To recap Min Number Of Coins For Change: Fewest coins summing to n, or -1 if impossible. Try re-implementing it from scratch without looking."
+   "narration": "To recap Min Number Of Coins For Change: Build the fewest coins for every amount from zero up to n. Try re-implementing it from scratch without looking."
   }
  ]
 }

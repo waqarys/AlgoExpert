@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Reverse in-order traversal, stopping after k nodes."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A reverse in-order traversal visits values from largest to smallest, so stop at the kth."
+   ],
+   "narration": "A reverse in-order traversal visits values from largest to smallest, so stop at the kth."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Traverse right, node, left",
+    "2. Count visited nodes",
+    "3. Stop at the kth and return its value"
+   ],
+   "narration": "Step by step. First, traverse right, node, left. Second, count visited nodes. Third, stop at the kth and return its value."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class FindKthLargestValueInBst {\n    private static int seen, answer;\n\n    public static synchronized int findKthLargestValueInBst(BST tree, int k) {\n        seen = 0; answer = -1;\n        walk(tree, k);\n        return answer;\n    }\n\n    private static void walk(BST n, int k) {\n        if (n == null || seen >= k) return;\n        walk(n.right, k);\n        if (seen < k) { seen++; if (seen == k) { answer = n.value; return; } walk(n.left, k); }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "FindKthLargestValueInBst.java",
-   "narration": "Here's the Java solution, starting with find kth largest value in bst. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with find kth largest value in bst. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Reverse in-order traversal, stopping after k nodes.",
+    "A reverse in-order traversal visits values from largest to smallest, so stop at the kth.",
     "Complexity: O(h + k)"
    ],
-   "narration": "To recap Find Kth Largest Value In Bst: Reverse in-order traversal, stopping after k nodes. Try re-implementing it from scratch without looking."
+   "narration": "To recap Find Kth Largest Value In Bst: A reverse in-order traversal visits values from largest to smallest, so stop at the kth. Try re-implementing it from scratch without looking."
   }
  ]
 }

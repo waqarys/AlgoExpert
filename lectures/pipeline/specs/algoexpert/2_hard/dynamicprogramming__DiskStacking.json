@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Disks width, depth, height ; stack them so each disk is strictly smaller in all three dimensions than the one below, maximising total height. Returns the chosen disks ordered from top (smallest) to bottom (largest)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Sort disks by height; each disk's best stack is itself on top of the best compatible stack below."
+   ],
+   "narration": "Sort disks by height; each disk's best stack is itself on top of the best compatible stack below."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Sort by height",
+    "2. For each disk, check smaller earlier disks",
+    "3. Keep the best height and a predecessor link",
+    "4. Rebuild the stack"
+   ],
+   "narration": "Step by step. First, sort by height. Second, for each disk, check smaller earlier disks. Third, keep the best height and a predecessor link. Fourth, rebuild the stack."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class DiskStacking {\n    public static List<Integer[]> diskStacking(List<Integer[]> disks) {\n        List<Integer[]> d = new ArrayList<>(disks);\n        d.sort(Comparator.comparingInt(x -> x[2]));\n        int n = d.size(), best = 0;\n        int[] h = new int[n], prev = new int[n];\n        for (int i = 0; i < n; i++) {\n            h[i] = d.get(i)[2];\n            prev[i] = -1;\n            for (int j = 0; j < i; j++) {\n                Integer[] a = d.get(j), b = d.get(i);\n                if (a[0] < b[0] && a[1] < b[1] && a[2] < b[2] && h[j] + b[2] > h[i]) { h[i] = h[j] + b[2]; prev[i] = j; }\n            }\n            if (h[i] > h[best]) best = i;\n        }\n        LinkedList<Integer[]> out = new LinkedList<>();\n        for (int i = best; i != -1; i = prev[i]) out.addFirst(d.get(i));\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "DiskStacking.java",
-   "narration": "Here's the Java solution, starting with disk stacking. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with disk stacking. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Disks [width, depth, height]; stack them so each disk is strictly smaller in all three dimensions than the one below, maximising total height.",
+    "Sort disks by height; each disk's best stack is itself on top of the best compatible stack below.",
     "Complexity: O(n^2)"
    ],
-   "narration": "To recap Disk Stacking: Disks width, depth, height ; stack them so each disk is strictly smaller in all three dimensions than the one below, maximising total height. Try re-implementing it from scratch without looking."
+   "narration": "To recap Disk Stacking: Sort disks by height; each disk's best stack is itself on top of the best compatible stack below. Try re-implementing it from scratch without looking."
   }
  ]
 }

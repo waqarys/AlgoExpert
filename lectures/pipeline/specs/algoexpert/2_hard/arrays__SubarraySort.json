@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Smallest start, end range which, if sorted, makes the whole array sorted; -1, -1 if sorted."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Find the smallest and largest values that are out of order; their correct positions bound the subarray."
+   ],
+   "narration": "Find the smallest and largest values that are out of order; their correct positions bound the subarray."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Scan for elements out of order with a neighbour",
+    "2. Track the min and max among them",
+    "3. Find where min belongs from the left and max from the right"
+   ],
+   "narration": "Step by step. First, scan for elements out of order with a neighbour. Second, track the min and max among them. Third, find where min belongs from the left and max from the right."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SubarraySort {\n    public static int[] subarraySort(int[] a) {\n        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;\n        for (int i = 0; i < a.length; i++) {\n            boolean out = (i > 0 && a[i] < a[i - 1]) || (i < a.length - 1 && a[i] > a[i + 1]);\n            if (out) { min = Math.min(min, a[i]); max = Math.max(max, a[i]); }\n        }\n        if (min == Integer.MAX_VALUE) return new int[]{-1, -1};\n        int l = 0, r = a.length - 1;\n        while (a[l] <= min) l++;\n        while (a[r] >= max) r--;\n        return new int[]{l, r};\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SubarraySort.java",
-   "narration": "Here's the Java solution, starting with subarray sort. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with subarray sort. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Smallest [start, end] range which, if sorted, makes the whole array sorted; [-1, -1] if sorted.",
+    "Find the smallest and largest values that are out of order; their correct positions bound the subarray.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Subarray Sort: Smallest start, end range which, if sorted, makes the whole array sorted; -1, -1 if sorted. Try re-implementing it from scratch without looking."
+   "narration": "To recap Subarray Sort: Find the smallest and largest values that are out of order; their correct positions bound the subarray. Try re-implementing it from scratch without looking."
   }
  ]
 }

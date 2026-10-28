@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Evaluate postfix tokens with plus - / (integer division truncating toward zero)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Operands go on a stack; each operator pops two and pushes the result."
+   ],
+   "narration": "Operands go on a stack; each operator pops two and pushes the result."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Push numbers",
+    "2. On an operator, pop right then left",
+    "3. Apply and push",
+    "4. Return the last value"
+   ],
+   "narration": "Step by step. First, push numbers. Second, on an operator, pop right then left. Third, apply and push. Fourth, return the last value."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ReversePolishNotation {\n    public static int reversePolishNotation(String[] tokens) {\n        ArrayDeque<Integer> st = new ArrayDeque<>();\n        for (String t : tokens) {\n            switch (t) {\n                case \"+\" -> st.push(st.pop() + st.pop());\n                case \"*\" -> st.push(st.pop() * st.pop());\n                case \"-\" -> { int b = st.pop(); st.push(st.pop() - b); }\n                case \"/\" -> { int b = st.pop(); st.push(st.pop() / b); }\n                default -> st.push(Integer.parseInt(t));\n            }\n        }\n        return st.pop();\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ReversePolishNotation.java",
-   "narration": "Here's the Java solution, starting with reverse polish notation. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with reverse polish notation. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Evaluate postfix tokens with + - * / (integer division truncating toward zero).",
+    "Operands go on a stack; each operator pops two and pushes the result.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Reverse Polish Notation: Evaluate postfix tokens with plus - / (integer division truncating toward zero). Try re-implementing it from scratch without looking."
+   "narration": "To recap Reverse Polish Notation: Operands go on a stack; each operator pops two and pushes the result. Try re-implementing it from scratch without looking."
   }
  ]
 }

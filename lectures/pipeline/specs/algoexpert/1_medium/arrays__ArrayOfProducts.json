@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Out i equals product of every element except a i , without division. Prefix products then suffix products."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each output is the product of everything to the left times everything to the right, so two sweeps replace division."
+   ],
+   "narration": "Each output is the product of everything to the left times everything to the right, so two sweeps replace division."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Fill each slot with the running product from the left",
+    "2. Sweep from the right with a second running product",
+    "3. Multiply it in",
+    "4. No division needed"
+   ],
+   "narration": "Step by step. First, fill each slot with the running product from the left. Second, sweep from the right with a second running product. Third, multiply it in. Fourth, no division needed."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ArrayOfProducts {\n    public static int[] arrayOfProducts(int[] a) {\n        int[] out = new int[a.length];\n        int run = 1;\n        for (int i = 0; i < a.length; i++) { out[i] = run; run *= a[i]; }\n        run = 1;\n        for (int i = a.length - 1; i >= 0; i--) { out[i] *= run; run *= a[i]; }\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ArrayOfProducts.java",
-   "narration": "Here's the Java solution, starting with array of products. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with array of products. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Out[i] = product of every element except a[i], without division.",
+    "Each output is the product of everything to the left times everything to the right, so two sweeps replace division.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Array Of Products: Out i equals product of every element except a i , without division. Try re-implementing it from scratch without looking."
+   "narration": "To recap Array Of Products: Each output is the product of everything to the left times everything to the right, so two sweeps replace division. Try re-implementing it from scratch without looking."
   }
  ]
 }

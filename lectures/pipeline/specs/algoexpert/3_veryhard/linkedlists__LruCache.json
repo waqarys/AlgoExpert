@@ -18,13 +18,32 @@
    "narration": "Here's the problem. InsertKeyValuePair, getValueFromKey (null if missing) and getMostRecentKey, evicting the least recently used key at capacity. Hash map plus doubly linked list."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A hash map for lookup plus a doubly linked list for recency order gives constant-time operations."
+   ],
+   "narration": "A hash map for lookup plus a doubly linked list for recency order gives constant-time operations."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Map keys to nodes",
+    "2. Move accessed nodes to the head",
+    "3. Evict the tail at capacity",
+    "4. Most recent key is the head"
+   ],
+   "narration": "Step by step. First, map keys to nodes. Second, move accessed nodes to the head. Third, evict the tail at capacity. Fourth, most recent key is the head."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class LruCache {\n    private static class Node { String key; int value; Node prev, next; Node(String k, int v) { key = k; value = v; } }\n\n    private final int capacity;\n    private final Map<String, Node> map = new HashMap<>();\n    private final Node head = new Node(null, 0), tail = new Node(null, 0);\n\n    public LruCache(int capacity) {\n        this.capacity = Math.max(1, capacity);\n        head.next = tail; tail.prev = head;\n    }\n\n    public void insertKeyValuePair(String key, int value) {\n        Node n = map.get(key);\n        if (n != null) { n.value = value; moveToFront(n); return; }\n        if (map.size() == capacity) { Node lru = tail.prev; unlink(lru); map.remove(lru.key); }\n        n = new Node(key, value);\n        map.put(key, n);\n        addFront(n);\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "LruCache_part1.java",
-   "narration": "Here's the Java solution, starting with lru cache. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with lru cache. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -48,10 +67,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "InsertKeyValuePair, getValueFromKey (null if missing) and getMostRecentKey, evicting the least recently used key at capacity.",
+    "A hash map for lookup plus a doubly linked list for recency order gives constant-time operations.",
     "Complexity: O(1) per op"
    ],
-   "narration": "To recap Lru Cache: InsertKeyValuePair, getValueFromKey (null if missing) and getMostRecentKey, evicting the least recently used key at capacity. Try re-implementing it from scratch without looking."
+   "narration": "To recap Lru Cache: A hash map for lookup plus a doubly linked list for recency order gives constant-time operations. Try re-implementing it from scratch without looking."
   }
  ]
 }

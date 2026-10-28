@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Overlay two trees; overlapping nodes sum their values. Mutates and returns tree1."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Overlay the trees node by node: add values where both exist, otherwise keep whichever exists."
+   ],
+   "narration": "Overlay the trees node by node: add values where both exist, otherwise keep whichever exists."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. If one tree is null, return the other",
+    "2. Add the values",
+    "3. Merge left children and right children"
+   ],
+   "narration": "Step by step. First, if one tree is null, return the other. Second, add the values. Third, merge left children and right children."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MergeBinaryTrees {\n    public static BinaryTree mergeBinaryTrees(BinaryTree a, BinaryTree b) {\n        if (a == null) return b;\n        if (b == null) return a;\n        a.value += b.value;\n        a.left = mergeBinaryTrees(a.left, b.left);\n        a.right = mergeBinaryTrees(a.right, b.right);\n        return a;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MergeBinaryTrees.java",
-   "narration": "Here's the Java solution, starting with merge binary trees. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with merge binary trees. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Overlay two trees; overlapping nodes sum their values.",
+    "Overlay the trees node by node: add values where both exist, otherwise keep whichever exists.",
     "Complexity: O(n) of the smaller overlap"
    ],
-   "narration": "To recap Merge Binary Trees: Overlay two trees; overlapping nodes sum their values. Try re-implementing it from scratch without looking."
+   "narration": "To recap Merge Binary Trees: Overlay the trees node by node: add values where both exist, otherwise keep whichever exists. Try re-implementing it from scratch without looking."
   }
  ]
 }

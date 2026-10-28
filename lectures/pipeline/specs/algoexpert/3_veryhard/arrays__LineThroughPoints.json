@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Maximum number of the given (unique, integer) points lying on one straight line. For each anchor, count normalised slopes (reduced by gcd, sign-canonicalised)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Fix an anchor point; points on the same line through it share a normalised slope."
+   ],
+   "narration": "Fix an anchor point; points on the same line through it share a normalised slope."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. For each anchor, map slopes to counts",
+    "2. Normalise slopes with gcd and sign",
+    "3. Track the largest count plus one"
+   ],
+   "narration": "Step by step. First, for each anchor, map slopes to counts. Second, normalise slopes with gcd and sign. Third, track the largest count plus one."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LineThroughPoints {\n    public static int lineThroughPoints(int[][] points) {\n        int best = Math.min(points.length, 1);\n        for (int i = 0; i < points.length; i++) {\n            Map<String, Integer> slopes = new HashMap<>();\n            for (int j = i + 1; j < points.length; j++) {\n                int dx = points[j][0] - points[i][0], dy = points[j][1] - points[i][1];\n                int g = gcd(Math.abs(dx), Math.abs(dy));\n                dx /= g; dy /= g;\n                if (dx < 0 || (dx == 0 && dy < 0)) { dx = -dx; dy = -dy; }\n                best = Math.max(best, slopes.merge(dx + \"/\" + dy, 1, Integer::sum) + 1);\n            }\n        }\n        return best;\n    }\n\n    private static int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LineThroughPoints.java",
-   "narration": "Here's the Java solution, starting with line through points. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with line through points. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Maximum number of the given (unique, integer) points lying on one straight line.",
+    "Fix an anchor point; points on the same line through it share a normalised slope.",
     "Complexity: O(n^2)"
    ],
-   "narration": "To recap Line Through Points: Maximum number of the given (unique, integer) points lying on one straight line. Try re-implementing it from scratch without looking."
+   "narration": "To recap Line Through Points: Fix an anchor point; points on the same line through it share a normalised slope. Try re-implementing it from scratch without looking."
   }
  ]
 }

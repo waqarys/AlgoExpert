@@ -19,13 +19,32 @@
    "narration": "Here's the problem. Each student gets over equals 1 reward; a student scoring higher than an adjacent one gets more. Minimum total. Two passes (left-to-right, right-to-left)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each student must beat a lower-scoring neighbour on both sides, so do one pass each way and take the max."
+   ],
+   "narration": "Each student must beat a lower-scoring neighbour on both sides, so do one pass each way and take the max."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Everyone starts with one",
+    "2. Left to right, give one more than a lower left neighbour",
+    "3. Right to left, ensure one more than a lower right neighbour",
+    "4. Sum the rewards"
+   ],
+   "narration": "Step by step. First, everyone starts with one. Second, left to right, give one more than a lower left neighbour. Third, right to left, ensure one more than a lower right neighbour. Fourth, sum the rewards."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MinRewards {\n    public static int minRewards(int[] scores) {\n        int n = scores.length;\n        int[] r = new int[n];\n        java.util.Arrays.fill(r, 1);\n        for (int i = 1; i < n; i++) if (scores[i] > scores[i - 1]) r[i] = r[i - 1] + 1;\n        for (int i = n - 2; i >= 0; i--) if (scores[i] > scores[i + 1]) r[i] = Math.max(r[i], r[i + 1] + 1);\n        int sum = 0;\n        for (int x : r) sum += x;\n        return sum;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MinRewards.java",
-   "narration": "Here's the Java solution, starting with min rewards. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with min rewards. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -40,10 +59,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Each student gets >= 1 reward; a student scoring higher than an adjacent one gets more.",
+    "Each student must beat a lower-scoring neighbour on both sides, so do one pass each way and take the max.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Min Rewards: Each student gets over equals 1 reward; a student scoring higher than an adjacent one gets more. Try re-implementing it from scratch without looking."
+   "narration": "To recap Min Rewards: Each student must beat a lower-scoring neighbour on both sides, so do one pass each way and take the max. Try re-implementing it from scratch without looking."
   }
  ]
 }

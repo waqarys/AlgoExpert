@@ -18,13 +18,32 @@
    "narration": "Here's the problem. For each element, how many elements to its right are strictly smaller? Insert from the right into an augmented BST tracking left-subtree sizes."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Insert from the right into a BST that knows its left-subtree sizes; each insert counts the smaller values already there."
+   ],
+   "narration": "Insert from the right into a BST that knows its left-subtree sizes; each insert counts the smaller values already there."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Iterate from the end",
+    "2. Insert into an augmented BST",
+    "3. Add left sizes when going right",
+    "4. Record the count"
+   ],
+   "narration": "Step by step. First, iterate from the end. Second, insert into an augmented BST. Third, add left sizes when going right. Fourth, record the count."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class RightSmallerThan {\n    private static class Node {\n        int value, leftSize;\n        Node left, right;\n        Node(int v) { value = v; }\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "RightSmallerThan_part1.java",
-   "narration": "Here's the Java solution. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -48,10 +67,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "For each element, how many elements to its right are strictly smaller?",
+    "Insert from the right into a BST that knows its left-subtree sizes; each insert counts the smaller values already there.",
     "Complexity: O(n log n) avg, O(n^2) worst"
    ],
-   "narration": "To recap Right Smaller Than: For each element, how many elements to its right are strictly smaller? Try re-implementing it from scratch without looking."
+   "narration": "To recap Right Smaller Than: Insert from the right into a BST that knows its left-subtree sizes; each insert counts the smaller values already there. Try re-implementing it from scratch without looking."
   }
  ]
 }

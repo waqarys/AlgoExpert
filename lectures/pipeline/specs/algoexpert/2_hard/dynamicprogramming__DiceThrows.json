@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Number of ways to roll numDice dice with numSides sides to total target."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Count ways to reach each total with dice added one at a time."
+   ],
+   "narration": "Count ways to reach each total with dice added one at a time."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. ways for total zero with no dice is one",
+    "2. For each die, roll every face",
+    "3. Shift counts forward",
+    "4. Read ways of target"
+   ],
+   "narration": "Step by step. First, ways for total zero with no dice is one. Second, for each die, roll every face. Third, shift counts forward. Fourth, read ways of target."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class DiceThrows {\n    public static int diceThrows(int numDice, int numSides, int target) {\n        long[] ways = new long[target + 1];\n        ways[0] = 1;\n        for (int d = 0; d < numDice; d++) {\n            long[] next = new long[target + 1];\n            for (int t = 0; t <= target; t++) if (ways[t] != 0)\n                for (int s = 1; s <= numSides && t + s <= target; s++) next[t + s] += ways[t];\n            ways = next;\n        }\n        return (int) ways[target];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "DiceThrows.java",
-   "narration": "Here's the Java solution, starting with dice throws. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with dice throws. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Number of ways to roll numDice dice with numSides sides to total `target`.",
+    "Count ways to reach each total with dice added one at a time.",
     "Complexity: O(d * t * s)"
    ],
-   "narration": "To recap Dice Throws: Number of ways to roll numDice dice with numSides sides to total target. Try re-implementing it from scratch without looking."
+   "narration": "To recap Dice Throws: Count ways to reach each total with dice added one at a time. Try re-implementing it from scratch without looking."
   }
  ]
 }

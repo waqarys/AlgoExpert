@@ -17,13 +17,32 @@
    "narration": "Here's the problem. The list contains a cycle; return the node where the loop begins (Floyd's algorithm)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Floyd's cycle detection: after slow and fast meet, a pointer from the head and one from the meeting point meet at the loop start."
+   ],
+   "narration": "Floyd's cycle detection: after slow and fast meet, a pointer from the head and one from the meeting point meet at the loop start."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Slow moves one, fast two",
+    "2. They meet inside the loop",
+    "3. Reset one to the head",
+    "4. Move both by one until they meet"
+   ],
+   "narration": "Step by step. First, slow moves one, fast two. Second, they meet inside the loop. Third, reset one to the head. Fourth, move both by one until they meet."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class FindLoop {\n    public static LinkedListNode findLoop(LinkedListNode head) {\n        LinkedListNode slow = head.next, fast = head.next.next;\n        while (slow != fast) { slow = slow.next; fast = fast.next.next; }\n        slow = head;\n        while (slow != fast) { slow = slow.next; fast = fast.next; }\n        return slow;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "FindLoop.java",
-   "narration": "Here's the Java solution, starting with find loop. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with find loop. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "The list contains a cycle; return the node where the loop begins (Floyd's algorithm).",
+    "Floyd's cycle detection: after slow and fast meet, a pointer from the head and one from the meeting point meet at the loop start.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Find Loop: The list contains a cycle; return the node where the loop begins (Floyd's algorithm). Try re-implementing it from scratch without looking."
+   "narration": "To recap Find Loop: Floyd's cycle detection: after slow and fast meet, a pointer from the head and one from the meeting point meet at the loop start. Try re-implementing it from scratch without looking."
   }
  ]
 }

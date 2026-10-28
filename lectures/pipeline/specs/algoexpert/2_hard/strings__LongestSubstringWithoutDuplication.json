@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Sliding window with last-seen index per character."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Slide a window; when a character repeats, jump the start past its last occurrence."
+   ],
+   "narration": "Slide a window; when a character repeats, jump the start past its last occurrence."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Map characters to last index",
+    "2. Move start past a repeat",
+    "3. Track the longest window"
+   ],
+   "narration": "Step by step. First, map characters to last index. Second, move start past a repeat. Third, track the longest window."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LongestSubstringWithoutDuplication {\n    public static String longestSubstringWithoutDuplication(String s) {\n        Map<Character, Integer> last = new HashMap<>();\n        int start = 0, bs = 0, be = 0;\n        for (int i = 0; i < s.length(); i++) {\n            Integer p = last.get(s.charAt(i));\n            if (p != null && p >= start) start = p + 1;\n            last.put(s.charAt(i), i);\n            if (i + 1 - start > be - bs) { bs = start; be = i + 1; }\n        }\n        return s.substring(bs, be);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LongestSubstringWithoutDuplication.java",
-   "narration": "Here's the Java solution, starting with longest substring without duplication. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with longest substring without duplication. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Sliding window with last-seen index per character.",
+    "Slide a window; when a character repeats, jump the start past its last occurrence.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Longest Substring Without Duplication: Sliding window with last-seen index per character. Try re-implementing it from scratch without looking."
+   "narration": "To recap Longest Substring Without Duplication: Slide a window; when a character repeats, jump the start past its last occurrence. Try re-implementing it from scratch without looking."
   }
  ]
 }

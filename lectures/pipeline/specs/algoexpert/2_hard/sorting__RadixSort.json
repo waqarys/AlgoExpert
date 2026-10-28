@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Sort non-negative ints by LSD radix sort with counting sort per decimal digit."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Sort by each decimal digit from least significant, using a stable counting sort each time."
+   ],
+   "narration": "Sort by each decimal digit from least significant, using a stable counting sort each time."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Find the max to know digit count",
+    "2. For each digit, count, prefix sum, and place stably",
+    "3. Copy back"
+   ],
+   "narration": "Step by step. First, find the max to know digit count. Second, for each digit, count, prefix sum, and place stably. Third, copy back."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class RadixSort {\n    public static ArrayList<Integer> radixSort(ArrayList<Integer> a) {\n        if (a.isEmpty()) return a;\n        int max = a.stream().max(Integer::compare).get();\n        int[] out = new int[a.size()];\n        for (long exp = 1; max / exp > 0; exp *= 10) {\n            int[] count = new int[10];\n            for (int x : a) count[(int) (x / exp % 10)]++;\n            for (int i = 1; i < 10; i++) count[i] += count[i - 1];\n            for (int i = a.size() - 1; i >= 0; i--) out[--count[(int) (a.get(i) / exp % 10)]] = a.get(i);\n            for (int i = 0; i < out.length; i++) a.set(i, out[i]);\n        }\n        return a;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "RadixSort.java",
-   "narration": "Here's the Java solution, starting with radix sort. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with radix sort. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Sort non-negative ints by LSD radix sort with counting sort per decimal digit.",
+    "Sort by each decimal digit from least significant, using a stable counting sort each time.",
     "Complexity: O(d * (n + 10))"
    ],
-   "narration": "To recap Radix Sort: Sort non-negative ints by LSD radix sort with counting sort per decimal digit. Try re-implementing it from scratch without looking."
+   "narration": "To recap Radix Sort: Sort by each decimal digit from least significant, using a stable counting sort each time. Try re-implementing it from scratch without looking."
   }
  ]
 }

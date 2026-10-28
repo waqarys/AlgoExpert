@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Set to 0 every group of 1s not connected (4-directionally) to the matrix border. Flood-fill from border 1s marking them, then clear the rest."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Ones connected to the border survive; everything else is an island to remove."
+   ],
+   "narration": "Ones connected to the border survive; everything else is an island to remove."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Flood-fill from every border one, marking them safe",
+    "2. Turn the remaining ones into zeros",
+    "3. Restore the safe marks"
+   ],
+   "narration": "Step by step. First, flood-fill from every border one, marking them safe. Second, turn the remaining ones into zeros. Third, restore the safe marks."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class RemoveIslands {\n    public static int[][] removeIslands(int[][] m) {\n        int R = m.length, C = m[0].length;\n        ArrayDeque<int[]> st = new ArrayDeque<>();\n        for (int r = 0; r < R; r++) for (int c = 0; c < C; c++)\n            if ((r == 0 || c == 0 || r == R - 1 || c == C - 1) && m[r][c] == 1) { m[r][c] = 2; st.push(new int[]{r, c}); }\n        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n        while (!st.isEmpty()) {\n            int[] p = st.pop();\n            for (int[] d : dirs) {\n                int r = p[0] + d[0], c = p[1] + d[1];\n                if (r >= 0 && c >= 0 && r < R && c < C && m[r][c] == 1) { m[r][c] = 2; st.push(new int[]{r, c}); }\n            }\n        }\n        for (int[] row : m) for (int c = 0; c < C; c++) row[c] = row[c] == 2 ? 1 : 0;\n        return m;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "RemoveIslands.java",
-   "narration": "Here's the Java solution, starting with remove islands. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with remove islands. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Set to 0 every group of 1s not connected (4-directionally) to the matrix border.",
+    "Ones connected to the border survive; everything else is an island to remove.",
     "Complexity: O(w*h)"
    ],
-   "narration": "To recap Remove Islands: Set to 0 every group of 1s not connected (4-directionally) to the matrix border. Try re-implementing it from scratch without looking."
+   "narration": "To recap Remove Islands: Ones connected to the border survive; everything else is an island to remove. Try re-implementing it from scratch without looking."
   }
  ]
 }

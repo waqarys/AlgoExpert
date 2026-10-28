@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Doubly linked list with head or tail supporting setHead, setTail, insertBefore, insertAfter, insertAtPosition (1-based), removeNodesWithValue, remove and containsNodeWithValue. Inserting a node already in the list moves it."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A doubly linked list keeps head and tail pointers so most operations rewire a few links."
+   ],
+   "narration": "A doubly linked list keeps head and tail pointers so most operations rewire a few links."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Remove a node from its spot before reinserting",
+    "2. Update head and tail on the edges",
+    "3. Walk for position and value ops"
+   ],
+   "narration": "Step by step. First, remove a node from its spot before reinserting. Second, update head and tail on the edges. Third, walk for position and value ops."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/4)",
    "code": "public class LinkedListConstruction {\n    public static class Node {\n        public int value;\n        public Node prev, next;\n        public Node(int value) { this.value = value; }\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "LinkedListConstruction_part1.java",
-   "narration": "Here's the Java solution, starting with node. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with node. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -66,10 +84,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Doubly linked list with head/tail supporting setHead, setTail, insertBefore, insertAfter, insertAtPosition (1-based), removeNodesWithValue, remove and containsNodeWithValue.",
+    "A doubly linked list keeps head and tail pointers so most operations rewire a few links.",
     "Complexity: O(1) for head/tail/insertBefore/After/remove, O(n) for position/value ops"
    ],
-   "narration": "To recap Linked List Construction: Doubly linked list with head or tail supporting setHead, setTail, insertBefore, insertAfter, insertAtPosition (1-based), removeNodesWithValue, remove and containsNodeWithValue. Try re-implementing it from scratch without looking."
+   "narration": "To recap Linked List Construction: A doubly linked list keeps head and tail pointers so most operations rewire a few links. Try re-implementing it from scratch without looking."
   }
  ]
 }

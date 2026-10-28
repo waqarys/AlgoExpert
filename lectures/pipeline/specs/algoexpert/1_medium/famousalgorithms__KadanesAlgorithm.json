@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Maximum sum of a non-empty contiguous subarray."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "The best subarray ending here is either this element alone or it extends the best ending at the previous index."
+   ],
+   "narration": "The best subarray ending here is either this element alone or it extends the best ending at the previous index."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Running best ending here",
+    "2. Max of element or element plus running",
+    "3. Track the global max"
+   ],
+   "narration": "Step by step. First, running best ending here. Second, max of element or element plus running. Third, track the global max."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class KadanesAlgorithm {\n    public static int kadanesAlgorithm(int[] a) {\n        int cur = a[0], best = a[0];\n        for (int i = 1; i < a.length; i++) { cur = Math.max(a[i], cur + a[i]); best = Math.max(best, cur); }\n        return best;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "KadanesAlgorithm.java",
-   "narration": "Here's the Java solution, starting with kadanes algorithm. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with kadanes algorithm. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Maximum sum of a non-empty contiguous subarray.",
+    "The best subarray ending here is either this element alone or it extends the best ending at the previous index.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Kadanes Algorithm: Maximum sum of a non-empty contiguous subarray. Try re-implementing it from scratch without looking."
+   "narration": "To recap Kadanes Algorithm: The best subarray ending here is either this element alone or it extends the best ending at the previous index. Try re-implementing it from scratch without looking."
   }
  ]
 }

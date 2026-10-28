@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Nodes have only an ancestor pointer; find the deepest common ancestor of two descendants. Equalise depths, then walk up together."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Bring both descendants to the same depth, then climb together until they meet."
+   ],
+   "narration": "Bring both descendants to the same depth, then climb together until they meet."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Compute both depths",
+    "2. Lift the deeper one",
+    "3. Move both up until equal"
+   ],
+   "narration": "Step by step. First, compute both depths. Second, lift the deeper one. Third, move both up until equal."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class YoungestCommonAncestor {\n    public static class AncestralTree {\n        public final char name;\n        public AncestralTree ancestor;\n        public AncestralTree(char name) { this.name = name; }\n    }\n\n    public static AncestralTree getYoungestCommonAncestor(AncestralTree top, AncestralTree a, AncestralTree b) {\n        int da = depth(a, top), db = depth(b, top);\n        while (da > db) { a = a.ancestor; da--; }\n        while (db > da) { b = b.ancestor; db--; }\n        while (a != b) { a = a.ancestor; b = b.ancestor; }\n        return a;\n    }\n\n    private static int depth(AncestralTree n, AncestralTree top) {\n        int d = 0;\n        while (n != top) { n = n.ancestor; d++; }\n        return d;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "YoungestCommonAncestor.java",
-   "narration": "Here's the Java solution, starting with ancestral tree. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with ancestral tree. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Nodes have only an `ancestor` pointer; find the deepest common ancestor of two descendants.",
+    "Bring both descendants to the same depth, then climb together until they meet.",
     "Complexity: O(d)"
    ],
-   "narration": "To recap Youngest Common Ancestor: Nodes have only an ancestor pointer; find the deepest common ancestor of two descendants. Try re-implementing it from scratch without looking."
+   "narration": "To recap Youngest Common Ancestor: Bring both descendants to the same depth, then climb together until they meet. Try re-implementing it from scratch without looking."
   }
  ]
 }

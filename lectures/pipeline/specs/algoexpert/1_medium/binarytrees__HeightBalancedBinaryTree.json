@@ -18,13 +18,31 @@
    "narration": "Here's the problem. For every node, do left or right subtree heights differ by at most 1? Returns -1 from the helper as an \"unbalanced\" sentinel."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Compute heights bottom-up and fail fast if any node's subtrees differ by more than one."
+   ],
+   "narration": "Compute heights bottom-up and fail fast if any node's subtrees differ by more than one."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Post-order returns height and balance",
+    "2. Compare child heights",
+    "3. Propagate any imbalance up"
+   ],
+   "narration": "Step by step. First, post-order returns height and balance. Second, compare child heights. Third, propagate any imbalance up."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class HeightBalancedBinaryTree {\n    public static boolean heightBalancedBinaryTree(BinaryTree t) { return h(t) != -1; }\n\n    private static int h(BinaryTree t) {\n        if (t == null) return 0;\n        int l = h(t.left), r = h(t.right);\n        if (l == -1 || r == -1 || Math.abs(l - r) > 1) return -1;\n        return 1 + Math.max(l, r);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "HeightBalancedBinaryTree.java",
-   "narration": "Here's the Java solution, starting with height balanced binary tree. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with height balanced binary tree. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "For every node, do left/right subtree heights differ by at most 1?",
+    "Compute heights bottom-up and fail fast if any node's subtrees differ by more than one.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Height Balanced Binary Tree: For every node, do left or right subtree heights differ by at most 1? Try re-implementing it from scratch without looking."
+   "narration": "To recap Height Balanced Binary Tree: Compute heights bottom-up and fail fast if any node's subtrees differ by more than one. Try re-implementing it from scratch without looking."
   }
  ]
 }

@@ -19,13 +19,32 @@
    "narration": "Here's the problem. Matrix of 0 (land) and 1 (water). Flip at most one water cell to land to maximise the largest 4-connected land island; return its size. Label islands with ids and sizes first."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Label each island with its size, then for each water cell sum the distinct neighbouring islands plus one."
+   ],
+   "narration": "Label each island with its size, then for each water cell sum the distinct neighbouring islands plus one."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Flood-fill to label islands and record sizes",
+    "2. For each water cell, collect unique neighbouring labels",
+    "3. Sum sizes plus one",
+    "4. Take the max"
+   ],
+   "narration": "Step by step. First, flood-fill to label islands and record sizes. Second, for each water cell, collect unique neighbouring labels. Third, sum sizes plus one. Fourth, take the max."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class LargestIsland {\n    public static int largestIsland(int[][] matrix) {\n        int R = matrix.length, C = matrix[0].length, id = 2;\n        int[][] m = new int[R][];\n        for (int r = 0; r < R; r++) m[r] = matrix[r].clone();\n        Map<Integer, Integer> size = new HashMap<>();\n        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n        int best = 0;\n        for (int r = 0; r < R; r++) for (int c = 0; c < C; c++) {\n            if (m[r][c] != 0) continue;\n            int s = 0;\n            ArrayDeque<int[]> st = new ArrayDeque<>();\n            st.push(new int[]{r, c});\n            m[r][c] = id;\n            while (!st.isEmpty()) {\n                int[] p = st.pop(); s++;\n                for (int[] d : dirs) {\n                    int nr = p[0] + d[0], nc = p[1] + d[1];\n                    if (nr >= 0 && nc >= 0 && nr < R && nc < C && m[nr][nc] == 0) { m[nr][nc] = id; st.push(new int[]{nr, nc}); }\n                }\n            }\n            size.put(id++, s);",
    "lang": "java",
    "font_size": 26,
    "filename": "LargestIsland_part1.java",
-   "narration": "Here's the Java solution, starting with largest island. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with largest island. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -49,10 +68,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Matrix of 0 (land) and 1 (water).",
+    "Label each island with its size, then for each water cell sum the distinct neighbouring islands plus one.",
     "Complexity: O(w*h)"
    ],
-   "narration": "To recap Largest Island: Matrix of 0 (land) and 1 (water). Try re-implementing it from scratch without looking."
+   "narration": "To recap Largest Island: Label each island with its size, then for each water cell sum the distinct neighbouring islands plus one. Try re-implementing it from scratch without looking."
   }
  ]
 }

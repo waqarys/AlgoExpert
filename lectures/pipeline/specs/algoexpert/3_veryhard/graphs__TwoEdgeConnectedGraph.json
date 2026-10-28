@@ -19,13 +19,32 @@
    "narration": "Here's the problem. Undirected adjacency list; is the graph connected and free of bridges (stays connected after removing any single edge)? Empty graph counts as true. Tarjan low-link."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A graph has no bridges if every DFS subtree has a back edge reaching above its root."
+   ],
+   "narration": "A graph has no bridges if every DFS subtree has a back edge reaching above its root."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. DFS with arrival times",
+    "2. Compute the lowest reachable arrival time",
+    "3. A child with low time above the parent is a bridge",
+    "4. Check connectivity too"
+   ],
+   "narration": "Step by step. First, dFS with arrival times. Second, compute the lowest reachable arrival time. Third, a child with low time above the parent is a bridge. Fourth, check connectivity too."
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class TwoEdgeConnectedGraph {\n    public static boolean twoEdgeConnectedGraph(int[][] edges) {\n        int n = edges.length;\n        if (n == 0) return true;\n        int[] disc = new int[n], low = new int[n];\n        java.util.Arrays.fill(disc, -1);\n        int[] time = {0};\n        if (hasBridge(0, -1, edges, disc, low, time)) return false;\n        for (int d : disc) if (d == -1) return false;\n        return true;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "TwoEdgeConnectedGraph_part1.java",
-   "narration": "Here's the Java solution, starting with two edge connected graph. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with two edge connected graph. It follows the steps we just described."
   },
   {
    "kind": "code",
@@ -49,10 +68,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Undirected adjacency list; is the graph connected and free of bridges (stays connected after removing any single edge)?",
+    "A graph has no bridges if every DFS subtree has a back edge reaching above its root.",
     "Complexity: O(v + e)"
    ],
-   "narration": "To recap Two Edge Connected Graph: Undirected adjacency list; is the graph connected and free of bridges (stays connected after removing any single edge)? Try re-implementing it from scratch without looking."
+   "narration": "To recap Two Edge Connected Graph: A graph has no bridges if every DFS subtree has a back edge reaching above its root. Try re-implementing it from scratch without looking."
   }
  ]
 }

@@ -18,13 +18,31 @@
    "narration": "Here's the problem. For each unique string, the shortest prefix that no other string shares; if a string is a prefix of another, its answer is the whole string. Trie with per-node counts."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A trie with counts tells us the first depth where only one string passes through."
+   ],
+   "narration": "A trie with counts tells us the first depth where only one string passes through."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Insert all strings counting",
+    "2. For each string, walk until a count of one",
+    "3. Return that prefix, or the full string"
+   ],
+   "narration": "Step by step. First, insert all strings counting. Second, for each string, walk until a count of one. Third, return that prefix, or the full string."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ShortestUniquePrefixes {\n    private static class Node { final Map<Character, Node> next = new HashMap<>(); int count; }\n\n    public static String[] shortestUniquePrefixes(String[] strings) {\n        Node root = new Node();\n        for (String s : strings) {\n            Node n = root;\n            for (char c : s.toCharArray()) { n = n.next.computeIfAbsent(c, k -> new Node()); n.count++; }\n        }\n        String[] out = new String[strings.length];\n        for (int k = 0; k < strings.length; k++) {\n            String s = strings[k];\n            Node n = root;\n            int len = s.length();\n            for (int i = 0; i < s.length(); i++) {\n                n = n.next.get(s.charAt(i));\n                if (n.count == 1) { len = i + 1; break; }\n            }\n            out[k] = s.substring(0, len);\n        }\n        return out;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "ShortestUniquePrefixes.java",
-   "narration": "Here's the Java solution, starting with shortest unique prefixes. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with shortest unique prefixes. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "For each unique string, the shortest prefix that no other string shares; if a string is a prefix of another, its answer is the whole string.",
+    "A trie with counts tells us the first depth where only one string passes through.",
     "Complexity: O(n*m)"
    ],
-   "narration": "To recap Shortest Unique Prefixes: For each unique string, the shortest prefix that no other string shares; if a string is a prefix of another, its answer is the whole string. Try re-implementing it from scratch without looking."
+   "narration": "To recap Shortest Unique Prefixes: A trie with counts tells us the first depth where only one string passes through. Try re-implementing it from scratch without looking."
   }
  ]
 }

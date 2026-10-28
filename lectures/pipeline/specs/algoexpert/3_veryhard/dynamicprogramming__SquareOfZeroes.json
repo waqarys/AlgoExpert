@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Does the 0 or 1 matrix contain a square (side over equals 2) whose border is entirely 0s? Precompute consecutive zeros to the right and downward per cell."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Precompute zeros to the right and below each cell, so each square border is checked in constant time."
+   ],
+   "narration": "Precompute zeros to the right and below each cell, so each square border is checked in constant time."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Build right and down zero counts",
+    "2. For each top-left and size",
+    "3. Check the four sides with the counts",
+    "4. Return true on success"
+   ],
+   "narration": "Step by step. First, build right and down zero counts. Second, for each top-left and size. Third, check the four sides with the counts. Fourth, return true on success."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SquareOfZeroes {\n    public static boolean squareOfZeroes(int[][] m) {\n        int n = m.length;\n        int[][] right = new int[n + 1][n + 1], down = new int[n + 1][n + 1];\n        for (int r = n - 1; r >= 0; r--) for (int c = n - 1; c >= 0; c--) if (m[r][c] == 0) {\n            right[r][c] = right[r][c + 1] + 1;\n            down[r][c] = down[r + 1][c] + 1;\n        }\n        for (int r = 0; r < n; r++) for (int c = 0; c < n; c++)\n            for (int s = 2; r + s <= n && c + s <= n; s++)\n                if (right[r][c] >= s && down[r][c] >= s && right[r + s - 1][c] >= s && down[r][c + s - 1] >= s) return true;\n        return false;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SquareOfZeroes.java",
-   "narration": "Here's the Java solution, starting with square of zeroes. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with square of zeroes. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Does the 0/1 matrix contain a square (side >= 2) whose border is entirely 0s?",
+    "Precompute zeros to the right and below each cell, so each square border is checked in constant time.",
     "Complexity: O(n^3)"
    ],
-   "narration": "To recap Square Of Zeroes: Does the 0 or 1 matrix contain a square (side over equals 2) whose border is entirely 0s? Try re-implementing it from scratch without looking."
+   "narration": "To recap Square Of Zeroes: Precompute zeros to the right and below each cell, so each square border is checked in constant time. Try re-implementing it from scratch without looking."
   }
  ]
 }

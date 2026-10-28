@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Read a (possibly non-square) matrix in clockwise spiral order."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Peel the matrix layer by layer: top row, right column, bottom row, left column, then shrink."
+   ],
+   "narration": "Peel the matrix layer by layer: top row, right column, bottom row, left column, then shrink."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Keep four boundaries",
+    "2. Walk the perimeter",
+    "3. Guard single rows or columns",
+    "4. Shrink and repeat"
+   ],
+   "narration": "Step by step. First, keep four boundaries. Second, walk the perimeter. Third, guard single rows or columns. Fourth, shrink and repeat."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SpiralTraverse {\n    public static List<Integer> spiralTraverse(int[][] m) {\n        List<Integer> out = new ArrayList<>();\n        if (m.length == 0) return out;\n        int sr = 0, er = m.length - 1, sc = 0, ec = m[0].length - 1;\n        while (sr <= er && sc <= ec) {\n            for (int c = sc; c <= ec; c++) out.add(m[sr][c]);\n            for (int r = sr + 1; r <= er; r++) out.add(m[r][ec]);\n            for (int c = ec - 1; c >= sc && sr < er; c--) out.add(m[er][c]);\n            for (int r = er - 1; r > sr && sc < ec; r--) out.add(m[r][sc]);\n            sr++; er--; sc++; ec--;\n        }\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SpiralTraverse.java",
-   "narration": "Here's the Java solution, starting with spiral traverse. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with spiral traverse. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Read a (possibly non-square) matrix in clockwise spiral order.",
+    "Peel the matrix layer by layer: top row, right column, bottom row, left column, then shrink.",
     "Complexity: O(n) cells"
    ],
-   "narration": "To recap Spiral Traverse: Read a (possibly non-square) matrix in clockwise spiral order. Try re-implementing it from scratch without looking."
+   "narration": "To recap Spiral Traverse: Peel the matrix layer by layer: top row, right column, bottom row, left column, then shrink. Try re-implementing it from scratch without looking."
   }
  ]
 }

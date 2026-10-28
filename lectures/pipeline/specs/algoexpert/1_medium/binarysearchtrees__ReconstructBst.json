@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Rebuild a BST from its pre-order traversal (duplicates go right) using value bounds."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "In pre-order, the root comes first and everything smaller goes left, so we build with value bounds."
+   ],
+   "narration": "In pre-order, the root comes first and everything smaller goes left, so we build with value bounds."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Read values in order",
+    "2. Each recursion accepts values within a lower and upper bound",
+    "3. Root first, then left with an upper bound, then right"
+   ],
+   "narration": "Step by step. First, read values in order. Second, each recursion accepts values within a lower and upper bound. Third, root first, then left with an upper bound, then right."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ReconstructBst {\n    private static int idx;\n\n    public static synchronized BST reconstructBst(List<Integer> pre) {\n        idx = 0;\n        return build(pre, Long.MIN_VALUE, Long.MAX_VALUE);\n    }\n\n    private static BST build(List<Integer> pre, long lo, long hi) {\n        if (idx == pre.size()) return null;\n        int v = pre.get(idx);\n        if (v < lo || v >= hi) return null;\n        idx++;\n        BST n = new BST(v);\n        n.left = build(pre, lo, v);\n        n.right = build(pre, v, hi);\n        return n;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ReconstructBst.java",
-   "narration": "Here's the Java solution, starting with reconstruct bst. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with reconstruct bst. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Rebuild a BST from its pre-order traversal (duplicates go right) using value bounds.",
+    "In pre-order, the root comes first and everything smaller goes left, so we build with value bounds.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Reconstruct Bst: Rebuild a BST from its pre-order traversal (duplicates go right) using value bounds. Try re-implementing it from scratch without looking."
+   "narration": "To recap Reconstruct Bst: In pre-order, the root comes first and everything smaller goes left, so we build with value bounds. Try re-implementing it from scratch without looking."
   }
  ]
 }

@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Every node must be strictly greater than all left-subtree values and under equals all right-subtree values."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Every node must lie within bounds inherited from its ancestors, not just compared with its parent."
+   ],
+   "narration": "Every node must lie within bounds inherited from its ancestors, not just compared with its parent."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Start with minus and plus infinity",
+    "2. Check the node is within bounds",
+    "3. Left child tightens the upper bound",
+    "4. Right child tightens the lower bound"
+   ],
+   "narration": "Step by step. First, start with minus and plus infinity. Second, check the node is within bounds. Third, left child tightens the upper bound. Fourth, right child tightens the lower bound."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ValidateBst {\n    public static boolean validateBst(BST t) { return valid(t, Long.MIN_VALUE, Long.MAX_VALUE); }\n\n    private static boolean valid(BST t, long min, long max) {\n        if (t == null) return true;\n        if (t.value < min || t.value >= max) return false;\n        return valid(t.left, min, t.value) && valid(t.right, t.value, max);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ValidateBst.java",
-   "narration": "Here's the Java solution, starting with validate bst. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with validate bst. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Every node must be strictly greater than all left-subtree values and <= all right-subtree values.",
+    "Every node must lie within bounds inherited from its ancestors, not just compared with its parent.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Validate Bst: Every node must be strictly greater than all left-subtree values and under equals all right-subtree values. Try re-implementing it from scratch without looking."
+   "narration": "To recap Validate Bst: Every node must lie within bounds inherited from its ancestors, not just compared with its parent. Try re-implementing it from scratch without looking."
   }
  ]
 }

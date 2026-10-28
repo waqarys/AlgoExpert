@@ -17,13 +17,32 @@
    "narration": "Here's the problem. One strictly increasing subsequence of maximum length (patience sorting with predecessor links)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Patience sorting: keep the smallest possible tail for each length and binary search where each number goes."
+   ],
+   "narration": "Patience sorting: keep the smallest possible tail for each length and binary search where each number goes."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Tails array of indices",
+    "2. Binary search the position",
+    "3. Record predecessors",
+    "4. Rebuild from the last tail"
+   ],
+   "narration": "Step by step. First, tails array of indices. Second, binary search the position. Third, record predecessors. Fourth, rebuild from the last tail."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LongestIncreasingSubsequence {\n    public static List<Integer> longestIncreasingSubsequence(int[] a) {\n        int n = a.length, len = 0;\n        int[] tails = new int[n], prev = new int[n];\n        for (int i = 0; i < n; i++) {\n            int lo = 0, hi = len;\n            while (lo < hi) { int m = (lo + hi) >>> 1; if (a[tails[m]] < a[i]) lo = m + 1; else hi = m; }\n            prev[i] = lo > 0 ? tails[lo - 1] : -1;\n            tails[lo] = i;\n            if (lo == len) len++;\n        }\n        List<Integer> out = new ArrayList<>();\n        for (int i = len == 0 ? -1 : tails[len - 1]; i != -1; i = prev[i]) out.add(a[i]);\n        Collections.reverse(out);\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LongestIncreasingSubsequence.java",
-   "narration": "Here's the Java solution, starting with longest increasing subsequence. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with longest increasing subsequence. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "One strictly increasing subsequence of maximum length (patience sorting with predecessor links).",
+    "Patience sorting: keep the smallest possible tail for each length and binary search where each number goes.",
     "Complexity: O(n log n)"
    ],
-   "narration": "To recap Longest Increasing Subsequence: One strictly increasing subsequence of maximum length (patience sorting with predecessor links). Try re-implementing it from scratch without looking."
+   "narration": "To recap Longest Increasing Subsequence: Patience sorting: keep the smallest possible tail for each length and binary search where each number goes. Try re-implementing it from scratch without looking."
   }
  ]
 }

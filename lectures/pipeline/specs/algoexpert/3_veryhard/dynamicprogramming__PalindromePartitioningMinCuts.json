@@ -17,13 +17,31 @@
    "narration": "Here's the problem. Fewest cuts so every piece is a palindrome."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Precompute which substrings are palindromes, then fewest cuts for each prefix."
+   ],
+   "narration": "Precompute which substrings are palindromes, then fewest cuts for each prefix."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Palindrome table by expanding lengths",
+    "2. Cuts of i is zero if the prefix is a palindrome",
+    "3. Otherwise min over j of cuts plus one"
+   ],
+   "narration": "Step by step. First, palindrome table by expanding lengths. Second, cuts of i is zero if the prefix is a palindrome. Third, otherwise min over j of cuts plus one."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class PalindromePartitioningMinCuts {\n    public static int palindromePartitioningMinCuts(String s) {\n        int n = s.length();\n        boolean[][] pal = new boolean[n][n];\n        int[] cuts = new int[n];\n        for (int j = 0; j < n; j++) {\n            cuts[j] = j;\n            for (int i = 0; i <= j; i++)\n                if (s.charAt(i) == s.charAt(j) && (j - i < 2 || pal[i + 1][j - 1])) {\n                    pal[i][j] = true;\n                    cuts[j] = i == 0 ? 0 : Math.min(cuts[j], cuts[i - 1] + 1);\n                }\n        }\n        return n == 0 ? 0 : cuts[n - 1];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "PalindromePartitioningMinCuts.java",
-   "narration": "Here's the Java solution, starting with palindrome partitioning min cuts. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with palindrome partitioning min cuts. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Fewest cuts so every piece is a palindrome.",
+    "Precompute which substrings are palindromes, then fewest cuts for each prefix.",
     "Complexity: O(n^2)"
    ],
-   "narration": "To recap Palindrome Partitioning Min Cuts: Fewest cuts so every piece is a palindrome. Try re-implementing it from scratch without looking."
+   "narration": "To recap Palindrome Partitioning Min Cuts: Precompute which substrings are palindromes, then fewest cuts for each prefix. Try re-implementing it from scratch without looking."
   }
  ]
 }

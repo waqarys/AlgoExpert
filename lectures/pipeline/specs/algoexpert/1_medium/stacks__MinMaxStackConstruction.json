@@ -17,13 +17,31 @@
    "narration": "Here's the problem. A stack with constant push, pop, peek, getMin and getMax by storing the running min or max alongside each element."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Store the current min and max alongside each pushed value so they're always available."
+   ],
+   "narration": "Store the current min and max alongside each pushed value so they're always available."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Push value with updated min and max",
+    "2. Pop removes both",
+    "3. Peek, getMin and getMax read the top"
+   ],
+   "narration": "Step by step. First, push value with updated min and max. Second, pop removes both. Third, peek, getMin and getMax read the top."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MinMaxStackConstruction {\n    public static class MinMaxStack {\n        private final List<int[]> st = new ArrayList<>();\n\n        public int peek() { return st.get(st.size() - 1)[0]; }\n        public int pop() { return st.remove(st.size() - 1)[0]; }\n        public void push(int v) {\n            if (st.isEmpty()) st.add(new int[]{v, v, v});\n            else { int[] t = st.get(st.size() - 1); st.add(new int[]{v, Math.min(v, t[1]), Math.max(v, t[2])}); }\n        }\n        public int getMin() { return st.get(st.size() - 1)[1]; }\n        public int getMax() { return st.get(st.size() - 1)[2]; }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MinMaxStackConstruction.java",
-   "narration": "Here's the Java solution, starting with peek. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with peek. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "A stack with O(1) push, pop, peek, getMin and getMax by storing the running min/max alongside each element.",
+    "Store the current min and max alongside each pushed value so they're always available.",
     "Complexity: O(1) per op"
    ],
-   "narration": "To recap Min Max Stack Construction: A stack with constant push, pop, peek, getMin and getMax by storing the running min or max alongside each element. Try re-implementing it from scratch without looking."
+   "narration": "To recap Min Max Stack Construction: Store the current min and max alongside each pushed value so they're always available. Try re-implementing it from scratch without looking."
   }
  ]
 }

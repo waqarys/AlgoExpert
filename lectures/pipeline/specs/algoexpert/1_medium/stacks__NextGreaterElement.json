@@ -17,13 +17,31 @@
    "narration": "Here's the problem. For each element of a circular array, the next strictly greater value, or -1."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A monotonic stack holds indices still waiting for a greater value; loop twice for circularity."
+   ],
+   "narration": "A monotonic stack holds indices still waiting for a greater value; loop twice for circularity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Iterate twice around the array",
+    "2. Pop indices whose value is smaller and assign the answer",
+    "3. Push the current index"
+   ],
+   "narration": "Step by step. First, iterate twice around the array. Second, pop indices whose value is smaller and assign the answer. Third, push the current index."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class NextGreaterElement {\n    public static int[] nextGreaterElement(int[] a) {\n        int n = a.length;\n        int[] out = new int[n];\n        Arrays.fill(out, -1);\n        ArrayDeque<Integer> st = new ArrayDeque<>();\n        for (int i = 0; i < 2 * n; i++) {\n            int j = i % n;\n            while (!st.isEmpty() && a[st.peek()] < a[j]) out[st.pop()] = a[j];\n            if (i < n) st.push(j);\n        }\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "NextGreaterElement.java",
-   "narration": "Here's the Java solution, starting with next greater element. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with next greater element. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "For each element of a circular array, the next strictly greater value, or -1.",
+    "A monotonic stack holds indices still waiting for a greater value; loop twice for circularity.",
     "Complexity: O(n)"
    ],
-   "narration": "To recap Next Greater Element: For each element of a circular array, the next strictly greater value, or -1. Try re-implementing it from scratch without looking."
+   "narration": "To recap Next Greater Element: A monotonic stack holds indices still waiting for a greater value; loop twice for circularity. Try re-implementing it from scratch without looking."
   }
  ]
 }

@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Dishes have negative (sweet) or positive (savory) flavour. Pick one sweet plus one savory whose sum is closest to target without exceeding it; return sweet, savory or 0, 0 ."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Sort sweet and savory dishes, then use two pointers to approach the target from below."
+   ],
+   "narration": "Sort sweet and savory dishes, then use two pointers to approach the target from below."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Split by sign and sort",
+    "2. Pointer on the mildest sweet and the smallest savory",
+    "3. If the sum fits, record it and try a bigger savory",
+    "4. Otherwise try a sweeter dish"
+   ],
+   "narration": "Step by step. First, split by sign and sort. Second, pointer on the mildest sweet and the smallest savory. Third, if the sum fits, record it and try a bigger savory. Fourth, otherwise try a sweeter dish."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SweetAndSavory {\n    public static int[] sweetAndSavory(int[] dishes, int target) {\n        List<Integer> sweet = new ArrayList<>(), savory = new ArrayList<>();\n        for (int d : dishes) if (d < 0) sweet.add(d); else if (d > 0) savory.add(d);\n        sweet.sort(Collections.reverseOrder());\n        Collections.sort(savory);\n        int[] best = {0, 0};\n        long bestDiff = Long.MAX_VALUE;\n        int i = 0, j = 0;\n        while (i < sweet.size() && j < savory.size()) {\n            long sum = (long) sweet.get(i) + savory.get(j);\n            if (sum <= target) {\n                if (target - sum < bestDiff) { bestDiff = target - sum; best = new int[]{sweet.get(i), savory.get(j)}; }\n                j++;\n            } else i++;\n        }\n        return best;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SweetAndSavory.java",
-   "narration": "Here's the Java solution, starting with sweet and savory. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with sweet and savory. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Dishes have negative (sweet) or positive (savory) flavour.",
+    "Sort sweet and savory dishes, then use two pointers to approach the target from below.",
     "Complexity: O(n log n)"
    ],
-   "narration": "To recap Sweet And Savory: Dishes have negative (sweet) or positive (savory) flavour. Try re-implementing it from scratch without looking."
+   "narration": "To recap Sweet And Savory: Sort sweet and savory dishes, then use two pointers to approach the target from below. Try re-implementing it from scratch without looking."
   }
  ]
 }

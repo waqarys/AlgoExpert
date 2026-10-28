@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Rows and columns are sorted ascending; return row, col of target or -1, -1 . Start top-right and eliminate a row or column each step."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Start at the top-right: moving left decreases, moving down increases, so each step eliminates a row or column."
+   ],
+   "narration": "Start at the top-right: moving left decreases, moving down increases, so each step eliminates a row or column."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Start top-right",
+    "2. If too big, move left",
+    "3. If too small, move down",
+    "4. Return the coordinates or minus ones"
+   ],
+   "narration": "Step by step. First, start top-right. Second, if too big, move left. Third, if too small, move down. Fourth, return the coordinates or minus ones."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SearchInSortedMatrix {\n    public static int[] searchInSortedMatrix(int[][] m, int target) {\n        int r = 0, c = m[0].length - 1;\n        while (r < m.length && c >= 0) {\n            if (m[r][c] == target) return new int[]{r, c};\n            if (m[r][c] > target) c--; else r++;\n        }\n        return new int[]{-1, -1};\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SearchInSortedMatrix.java",
-   "narration": "Here's the Java solution, starting with search in sorted matrix. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with search in sorted matrix. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Rows and columns are sorted ascending; return [row, col] of target or [-1, -1].",
+    "Start at the top-right: moving left decreases, moving down increases, so each step eliminates a row or column.",
     "Complexity: O(n + m)"
    ],
-   "narration": "To recap Search In Sorted Matrix: Rows and columns are sorted ascending; return row, col of target or -1, -1 . Try re-implementing it from scratch without looking."
+   "narration": "To recap Search In Sorted Matrix: Start at the top-right: moving left decreases, moving down increases, so each step eliminates a row or column. Try re-implementing it from scratch without looking."
   }
  ]
 }

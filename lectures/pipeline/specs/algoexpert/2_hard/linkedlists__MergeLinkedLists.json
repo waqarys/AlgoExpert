@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Merge two sorted lists in place; return the head of the merged list."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Walk both sorted lists, splicing the smaller node in front each time, without new nodes."
+   ],
+   "narration": "Walk both sorted lists, splicing the smaller node in front each time, without new nodes."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Keep pointers into both lists and a previous pointer",
+    "2. Splice the smaller node",
+    "3. Attach any leftover tail",
+    "4. Return the smaller head"
+   ],
+   "narration": "Step by step. First, keep pointers into both lists and a previous pointer. Second, splice the smaller node. Third, attach any leftover tail. Fourth, return the smaller head."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MergeLinkedLists {\n    public static LinkedListNode mergeLinkedLists(LinkedListNode a, LinkedListNode b) {\n        LinkedListNode dummy = new LinkedListNode(0), t = dummy;\n        while (a != null && b != null) {\n            if (a.value <= b.value) { t.next = a; a = a.next; } else { t.next = b; b = b.next; }\n            t = t.next;\n        }\n        t.next = a != null ? a : b;\n        return dummy.next;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MergeLinkedLists.java",
-   "narration": "Here's the Java solution, starting with merge linked lists. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with merge linked lists. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Merge two sorted lists in place; return the head of the merged list.",
+    "Walk both sorted lists, splicing the smaller node in front each time, without new nodes.",
     "Complexity: O(n + m)"
    ],
-   "narration": "To recap Merge Linked Lists: Merge two sorted lists in place; return the head of the merged list. Try re-implementing it from scratch without looking."
+   "narration": "To recap Merge Linked Lists: Walk both sorted lists, splicing the smaller node in front each time, without new nodes. Try re-implementing it from scratch without looking."
   }
  ]
 }

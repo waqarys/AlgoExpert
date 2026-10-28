@@ -18,13 +18,32 @@
    "narration": "Here's the problem. Does sub occur in str? Prefix-function (failure table) matching."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A failure table tells us how far to fall back on a mismatch, so we never rescan the text."
+   ],
+   "narration": "A failure table tells us how far to fall back on a mismatch, so we never rescan the text."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Build the prefix function of the pattern",
+    "2. Walk the text",
+    "3. On mismatch, fall back via the table",
+    "4. Match when the pattern is complete"
+   ],
+   "narration": "Step by step. First, build the prefix function of the pattern. Second, walk the text. Third, on mismatch, fall back via the table. Fourth, match when the pattern is complete."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class KnuthMorrisPrattAlgorithm {\n    public static boolean knuthMorrisPrattAlgorithm(String str, String sub) {\n        if (sub.isEmpty()) return true;\n        int[] fail = new int[sub.length()];\n        for (int i = 1, k = 0; i < sub.length(); i++) {\n            while (k > 0 && sub.charAt(i) != sub.charAt(k)) k = fail[k - 1];\n            if (sub.charAt(i) == sub.charAt(k)) k++;\n            fail[i] = k;\n        }\n        for (int i = 0, k = 0; i < str.length(); i++) {\n            while (k > 0 && str.charAt(i) != sub.charAt(k)) k = fail[k - 1];\n            if (str.charAt(i) == sub.charAt(k)) k++;\n            if (k == sub.length()) return true;\n        }\n        return false;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "KnuthMorrisPrattAlgorithm.java",
-   "narration": "Here's the Java solution, starting with knuth morris pratt algorithm. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with knuth morris pratt algorithm. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +58,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Does `sub` occur in `str`?",
+    "A failure table tells us how far to fall back on a mismatch, so we never rescan the text.",
     "Complexity: O(n + m)"
    ],
-   "narration": "To recap Knuth Morris Pratt Algorithm: Does sub occur in str? Try re-implementing it from scratch without looking."
+   "narration": "To recap Knuth Morris Pratt Algorithm: A failure table tells us how far to fall back on a mismatch, so we never rescan the text. Try re-implementing it from scratch without looking."
   }
  ]
 }

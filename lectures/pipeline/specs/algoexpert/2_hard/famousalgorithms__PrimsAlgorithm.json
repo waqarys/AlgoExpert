@@ -17,13 +17,32 @@
    "narration": "Here's the problem. Minimum spanning tree of a connected undirected weighted graph (adjacency list of dest, weight ), grown from vertex 0 with a min-heap of frontier edges."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Grow one tree from a start vertex, always adding the cheapest edge leaving it."
+   ],
+   "narration": "Grow one tree from a start vertex, always adding the cheapest edge leaving it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Min-heap of edges from visited vertices",
+    "2. Pop the lightest to an unvisited vertex",
+    "3. Add it and push its edges",
+    "4. Repeat"
+   ],
+   "narration": "Step by step. First, min-heap of edges from visited vertices. Second, pop the lightest to an unvisited vertex. Third, add it and push its edges. Fourth, repeat."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class PrimsAlgorithm {\n    public static int[][][] primsAlgorithm(int[][][] edges) {\n        int n = edges.length;\n        boolean[] in = new boolean[n];\n        List<List<int[]>> mst = new ArrayList<>();\n        for (int i = 0; i < n; i++) mst.add(new ArrayList<>());\n        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(e -> e[2]));\n        in[0] = true;\n        for (int[] e : edges[0]) pq.add(new int[]{0, e[0], e[1]});\n        while (!pq.isEmpty()) {\n            int[] e = pq.poll();\n            if (in[e[1]]) continue;\n            in[e[1]] = true;\n            mst.get(e[0]).add(new int[]{e[1], e[2]});\n            mst.get(e[1]).add(new int[]{e[0], e[2]});\n            for (int[] f : edges[e[1]]) if (!in[f[0]]) pq.add(new int[]{e[1], f[0], f[1]});\n        }\n        int[][][] out = new int[n][][];\n        for (int i = 0; i < n; i++) out[i] = mst.get(i).toArray(new int[0][]);\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "PrimsAlgorithm.java",
-   "narration": "Here's the Java solution, starting with prims algorithm. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with prims algorithm. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Minimum spanning tree of a connected undirected weighted graph (adjacency list of [dest, weight]), grown from vertex 0 with a min-heap of frontier edges.",
+    "Grow one tree from a start vertex, always adding the cheapest edge leaving it.",
     "Complexity: O(e log v)"
    ],
-   "narration": "To recap Prims Algorithm: Minimum spanning tree of a connected undirected weighted graph (adjacency list of dest, weight ), grown from vertex 0 with a min-heap of frontier edges. Try re-implementing it from scratch without looking."
+   "narration": "To recap Prims Algorithm: Grow one tree from a start vertex, always adding the cheapest edge leaving it. Try re-implementing it from scratch without looking."
   }
  ]
 }

@@ -17,13 +17,31 @@
    "narration": "Here's the problem. In a 0 or 1 matrix, sizes of all 4-directionally connected groups of 1s (any order)."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each river is a connected component of ones; flood-fill to measure it."
+   ],
+   "narration": "Each river is a connected component of ones; flood-fill to measure it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Scan every cell",
+    "2. On an unvisited one, DFS or BFS to count its size",
+    "3. Mark visited cells"
+   ],
+   "narration": "Step by step. First, scan every cell. Second, on an unvisited one, DFS or BFS to count its size. Third, mark visited cells."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class RiverSizes {\n    public static List<Integer> riverSizes(int[][] m) {\n        List<Integer> sizes = new ArrayList<>();\n        boolean[][] seen = new boolean[m.length][m[0].length];\n        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n        for (int r = 0; r < m.length; r++)\n            for (int c = 0; c < m[0].length; c++) {\n                if (m[r][c] != 1 || seen[r][c]) continue;\n                int size = 0;\n                ArrayDeque<int[]> st = new ArrayDeque<>();\n                st.push(new int[]{r, c});\n                seen[r][c] = true;\n                while (!st.isEmpty()) {\n                    int[] p = st.pop();\n                    size++;\n                    for (int[] d : dirs) {\n                        int nr = p[0] + d[0], nc = p[1] + d[1];\n                        if (nr >= 0 && nc >= 0 && nr < m.length && nc < m[0].length && m[nr][nc] == 1 && !seen[nr][nc]) {\n                            seen[nr][nc] = true;\n                            st.push(new int[]{nr, nc});\n                        }\n                    }\n                }\n                sizes.add(size);\n            }\n        return sizes;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "RiverSizes.java",
-   "narration": "Here's the Java solution, starting with river sizes. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with river sizes. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -38,10 +56,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "In a 0/1 matrix, sizes of all 4-directionally connected groups of 1s (any order).",
+    "Each river is a connected component of ones; flood-fill to measure it.",
     "Complexity: O(w*h)"
    ],
-   "narration": "To recap River Sizes: In a 0 or 1 matrix, sizes of all 4-directionally connected groups of 1s (any order). Try re-implementing it from scratch without looking."
+   "narration": "To recap River Sizes: Each river is a connected component of ones; flood-fill to measure it. Try re-implementing it from scratch without looking."
   }
  ]
 }

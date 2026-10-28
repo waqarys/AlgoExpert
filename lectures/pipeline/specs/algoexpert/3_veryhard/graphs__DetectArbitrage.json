@@ -18,13 +18,31 @@
    "narration": "Here's the problem. Exchange-rate matrix; is there a cycle of trades yielding profit? Take -log(rate) edge weights and look for a negative cycle with Bellman-Ford."
   },
   {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Multiplying rates becomes adding minus logs, so profit means a negative cycle, found by Bellman-Ford."
+   ],
+   "narration": "Multiplying rates becomes adding minus logs, so profit means a negative cycle, found by Bellman-Ford."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Weights are minus log of the rate",
+    "2. Relax all edges n minus one times",
+    "3. If any edge still relaxes, there's arbitrage"
+   ],
+   "narration": "Step by step. First, weights are minus log of the rate. Second, relax all edges n minus one times. Third, if any edge still relaxes, there's arbitrage."
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class DetectArbitrage {\n    public static boolean detectArbitrage(double[][] rates) {\n        int n = rates.length;\n        double[] dist = new double[n];\n        java.util.Arrays.fill(dist, Double.MAX_VALUE);\n        dist[0] = 0;\n        for (int it = 0; it < n; it++) {\n            boolean changed = false;\n            for (int u = 0; u < n; u++) for (int v = 0; v < n; v++) {\n                double w = -Math.log(rates[u][v]);\n                if (dist[u] + w < dist[v] - 1e-12) { dist[v] = dist[u] + w; changed = true; }\n            }\n            if (!changed) return false;\n        }\n        return true;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "DetectArbitrage.java",
-   "narration": "Here's the Java solution, starting with detect arbitrage. Read it top to bottom; the method names mirror the steps."
+   "narration": "Here's the Java solution, starting with detect arbitrage. It follows the steps we just described."
   },
   {
    "kind": "bullets",
@@ -39,10 +57,10 @@
    "kind": "bullets",
    "heading": "Recap",
    "bullets": [
-    "Exchange-rate matrix; is there a cycle of trades yielding profit?",
+    "Multiplying rates becomes adding minus logs, so profit means a negative cycle, found by Bellman-Ford.",
     "Complexity: O(n^3)"
    ],
-   "narration": "To recap Detect Arbitrage: Exchange-rate matrix; is there a cycle of trades yielding profit? Try re-implementing it from scratch without looking."
+   "narration": "To recap Detect Arbitrage: Multiplying rates becomes adding minus logs, so profit means a negative cycle, found by Bellman-Ford. Try re-implementing it from scratch without looking."
   }
  ]
 }
