@@ -1,0 +1,275 @@
+{
+ "title": "AlgoExpert · Optimal Assembly Line",
+ "out": "algoexpert/veryhard/searching/OptimalAssemblyLine",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Optimal Assembly Line",
+   "subtitle": "AlgoExpert · Very Hard · Searching",
+   "narration": "Let's solve Optimal Assembly Line, a very hard searching problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Split step durations (in order) into k contiguous stations minimising the longest station time.",
+    "Binary search on the answer with a greedy feasibility check."
+   ],
+   "narration": "Here's the problem. Split step durations (in order) into k contiguous stations minimising the longest station time. Binary search on the answer with a greedy feasibility check."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Binary search the maximum station time; greedily check whether k stations suffice."
+   ],
+   "narration": "Binary search the maximum station time; greedily check whether k stations suffice."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Try all partitions → exponential",
+    "DP → O(k·n²)",
+    "Binary search on the answer + greedy check → O(n log Σ)"
+   ],
+   "narration": "Trying every split is exponential and the DP is k n squared. Binary search on the answer with a greedy feasibility check is n log of the sum."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Bounds are the largest step and the total",
+    "2. Greedily fill stations",
+    "3. Shrink the range when feasible"
+   ],
+   "narration": "Step by step. First, bounds are the largest step and the total. Second, greedily fill stations. Third, shrink the range when feasible."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      15,
+      15,
+      30,
+      30,
+      45
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "max time 90: needs 2 stations",
+      "range [45, 135] → hi = mid"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Try 90: 2 stations",
+   "narration": "With a max of 90 per station, we'd need 2 stations, which fits, so try smaller.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      15,
+      15,
+      30,
+      30,
+      45
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "max time 67: needs 3 stations",
+      "range [45, 90] → hi = mid"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Try 67: 3 stations",
+   "narration": "With a max of 67 per station, we'd need 3 stations, which fits, so try smaller.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      15,
+      15,
+      30,
+      30,
+      45
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "max time 62: needs 3 stations",
+      "range [57, 67] → hi = mid"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Try 62: 3 stations",
+   "narration": "With a max of 62 per station, we'd need 3 stations, which fits, so try smaller.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      15,
+      15,
+      30,
+      30,
+      45
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "max time 59: needs 4 stations",
+      "range [57, 62] → lo = mid + 1"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Try 59: 4 stations",
+   "narration": "With a max of 59 per station, we'd need 4 stations, too many, so go larger.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      15,
+      15,
+      30,
+      30,
+      45
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "max time 60: needs 3 stations",
+      "range [60, 61] → hi = mid"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Try 60: 3 stations",
+   "narration": "With a max of 60 per station, we'd need 3 stations, which fits, so try smaller.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "answer: 60"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Answer: 60",
+   "narration": "The smallest feasible maximum is 60.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class OptimalAssemblyLine {\n    public static int optimalAssemblyLine(int[] steps, int k) {\n        int lo = 0, hi = 0;\n        for (int s : steps) { lo = Math.max(lo, s); hi += s; }\n        while (lo < hi) {\n            int mid = (lo + hi) >>> 1;\n            if (stations(steps, mid) <= k) hi = mid; else lo = mid + 1;\n        }\n        return lo;\n    }\n\n    private static int stations(int[] steps, int cap) {\n        int count = 1, cur = 0;\n        for (int s : steps) { if (cur + s > cap) { count++; cur = 0; } cur += s; }\n        return count;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "OptimalAssemblyLine.java",
+   "narration": "We binary search between the max and the sum; the greedy count of stations decides which half to keep."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log S)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n log S. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "lo = max step",
+    "Greedy check is optimal for a fixed cap"
+   ],
+   "narration": "The lower bound is the largest single step."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same as Split Array Largest Sum"
+   ],
+   "narration": "This is split array largest sum."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Binary search the maximum station time; greedily check whether k stations suffice.",
+    "Complexity: O(n log S)"
+   ],
+   "narration": "To recap Optimal Assembly Line: Binary search the maximum station time; greedily check whether k stations suffice. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

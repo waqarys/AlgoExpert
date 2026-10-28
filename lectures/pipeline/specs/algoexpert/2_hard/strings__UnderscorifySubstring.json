@@ -1,0 +1,156 @@
+{
+ "title": "AlgoExpert · Underscorify Substring",
+ "out": "algoexpert/hard/strings/UnderscorifySubstring",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Underscorify Substring",
+   "subtitle": "AlgoExpert · Hard · Strings",
+   "narration": "Let's solve Underscorify Substring, a hard strings problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Wrap every occurrence of `sub` in `str` with underscores, merging overlapping or adjacent occurrences into one wrapped block."
+   ],
+   "narration": "Here's the problem. Wrap every occurrence of sub in str with underscores, merging overlapping or adjacent occurrences into one wrapped block."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Find all occurrences, merge overlapping or touching ones, then insert underscores."
+   ],
+   "narration": "Find all occurrences, merge overlapping or touching ones, then insert underscores."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Insert underscores per occurrence then merge → messy",
+    "Mark covered chars, then emit runs → O(n · m)",
+    "Or merge intervals"
+   ],
+   "narration": "Inserting underscores per occurrence and fixing overlaps is messy. Marking covered characters and wrapping each run is clean."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Collect occurrence intervals",
+    "2. Merge overlaps and adjacency",
+    "3. Insert underscores at boundaries"
+   ],
+   "narration": "Step by step. First, collect occurrence intervals. Second, merge overlaps and adjacency. Third, insert underscores at boundaries."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "testthis is a testtest to see if testestest it works"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Find every occurrence of 'test'",
+   "narration": "Find every occurrence of test, including overlapping ones like in testestest.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "^^^^          ^^^^^^^^           ^^^^^^^^^^         "
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    },
+    {
+     "type": "text",
+     "lines": [
+      "testthis is a testtest to see if testestest it works"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Mark covered characters",
+   "narration": "Mark every covered character. Overlapping and adjacent occurrences merge automatically.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "_test_this is a _testtest_ to see if _testestest_ it works"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Underscore each marked run",
+   "narration": "Put an underscore before and after each marked run.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class UnderscorifySubstring {\n    public static String underscorifySubstring(String str, String sub) {\n        boolean[] mark = new boolean[str.length()];\n        for (int i = str.indexOf(sub); i != -1; i = str.indexOf(sub, i + 1))\n            for (int j = i; j < i + sub.length(); j++) mark[j] = true;\n        StringBuilder sb = new StringBuilder();\n        // adjacent occurrences (end of one == start of next) also merge, which marking handles naturally\n        for (int i = 0; i < str.length(); i++) {\n            if (mark[i] && (i == 0 || !mark[i - 1])) sb.append('_');\n            sb.append(str.charAt(i));\n            if (mark[i] && (i == str.length() - 1 || !mark[i + 1])) sb.append('_');\n        }\n        return sb.toString();\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "UnderscorifySubstring.java",
+   "narration": "We mark characters covered by each occurrence, then emit underscores at the start and end of each marked run."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n*m)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n times m. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Overlapping occurrences",
+    "Adjacent occurrences merge",
+    "No occurrences → unchanged"
+   ],
+   "narration": "Search from i plus one to catch overlaps, and adjacent occurrences merge."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention the interval-merge approach"
+   ],
+   "narration": "Mention collecting intervals and merging them."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Find all occurrences, merge overlapping or touching ones, then insert underscores.",
+    "Complexity: O(n*m)"
+   ],
+   "narration": "To recap Underscorify Substring: Find all occurrences, merge overlapping or touching ones, then insert underscores. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,240 @@
+{
+ "title": "AlgoExpert · Maximum Sum Submatrix",
+ "out": "algoexpert/hard/dynamicprogramming/MaximumSumSubmatrix",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Maximum Sum Submatrix",
+   "subtitle": "AlgoExpert · Hard · Dynamic Programming",
+   "narration": "Let's solve Maximum Sum Submatrix, a hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Largest sum among all size x size square submatrices, using 2D prefix sums."
+   ],
+   "narration": "Here's the problem. Largest sum among all size x size square submatrices, using 2D prefix sums."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Two-dimensional prefix sums give any rectangle's sum in constant time."
+   ],
+   "narration": "Two-dimensional prefix sums give any rectangle's sum in constant time."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Sum every k×k block directly → O(R·C·k²)",
+    "2-D prefix sums → O(R·C)",
+    "Inclusion–exclusion per block"
+   ],
+   "narration": "Summing each block directly costs k squared per block. With two-dimensional prefix sums, each block is four lookups, linear overall."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Build prefix sums",
+    "2. For each bottom-right corner, compute the size by size square sum",
+    "3. Track the maximum"
+   ],
+   "narration": "Step by step. First, build prefix sums. Second, for each bottom-right corner, compute the size by size square sum. Third, track the maximum."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       5,
+       3,
+       -1,
+       5
+      ],
+      [
+       -7,
+       3,
+       7,
+       4
+      ],
+      [
+       12,
+       8,
+       0,
+       0
+      ],
+      [
+       1,
+       -8,
+       -8,
+       2
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": null,
+     "label": "matrix",
+     "h": 1,
+     "w": 0.5
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       5,
+       8,
+       7,
+       12
+      ],
+      [
+       0,
+       -2,
+       4,
+       10,
+       19
+      ],
+      [
+       0,
+       10,
+       24,
+       30,
+       39
+      ],
+      [
+       0,
+       11,
+       17,
+       15,
+       26
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": null,
+     "label": "prefix sums",
+     "h": 1,
+     "w": 0.5
+    }
+   ],
+   "caption": "Build 2-D prefix sums",
+   "narration": "Build prefix sums: each cell holds the sum of everything above and to the left.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       5,
+       3,
+       -1,
+       5
+      ],
+      [
+       -7,
+       3,
+       7,
+       4
+      ],
+      [
+       12,
+       8,
+       0,
+       0
+      ],
+      [
+       1,
+       -8,
+       -8,
+       2
+      ]
+     ],
+     "hl": {
+      "1,1": "ok",
+      "1,2": "ok",
+      "2,1": "ok",
+      "2,2": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "sum = P[r][c] − P[r−2][c] − P[r][c−2] + P[r−2][c−2] = 18"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Best 2×2: 18",
+   "narration": "Any k by k sum is four lookups. The best two-by-two block sums to 18.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MaximumSumSubmatrix {\n    public static int maximumSumSubmatrix(int[][] m, int size) {\n        int R = m.length, C = m[0].length;\n        int[][] p = new int[R + 1][C + 1];\n        for (int r = 0; r < R; r++) for (int c = 0; c < C; c++) p[r + 1][c + 1] = m[r][c] + p[r][c + 1] + p[r + 1][c] - p[r][c];\n        int best = Integer.MIN_VALUE;\n        for (int r = size; r <= R; r++) for (int c = size; c <= C; c++)\n            best = Math.max(best, p[r][c] - p[r - size][c] - p[r][c - size] + p[r - size][c - size]);\n        return best;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MaximumSumSubmatrix.java",
+   "narration": "We build the padded prefix table, then for each bottom-right corner compute the block via inclusion-exclusion and keep the max."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(w*h)",
+    "Space: O(w*h)"
+   ],
+   "narration": "Time is O of w times h. Space is O of w times h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Add back the double-subtracted corner",
+    "Off-by-one with padding",
+    "Negative values"
+   ],
+   "narration": "Remember to add back the corner you subtracted twice."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: max submatrix of any size (Kadane in 2-D)"
+   ],
+   "narration": "For any size, combine column compression with Kadane."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Two-dimensional prefix sums give any rectangle's sum in constant time.",
+    "Complexity: O(w*h)"
+   ],
+   "narration": "To recap Maximum Sum Submatrix: Two-dimensional prefix sums give any rectangle's sum in constant time. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

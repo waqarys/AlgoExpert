@@ -1,0 +1,7 @@
+POST /files/upload-session {parentId, name, size} -> {sessionId}
+PUT  /upload/{sessionId}/chunks/{n}
+POST /upload/{sessionId}/commit -> file
+GET  /files/{id}/content
+GET  /folders/{id}/children
+PATCH /files/{id} {name?, parentId?}
+POST /files/{id}/share {principal, role}

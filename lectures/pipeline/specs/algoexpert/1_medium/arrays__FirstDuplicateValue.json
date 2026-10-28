@@ -1,0 +1,255 @@
+{
+ "title": "AlgoExpert · First Duplicate Value",
+ "out": "algoexpert/medium/arrays/FirstDuplicateValue",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "First Duplicate Value",
+   "subtitle": "AlgoExpert · Medium · Arrays",
+   "narration": "Let's solve First Duplicate Value, a medium arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Values are in [1, n]; return the value whose second occurrence comes first, else -1.",
+    "Mark visited values by negating the slot at index |v|-1 (mutates input)."
+   ],
+   "narration": "Here's the problem. Values are in 1, n ; return the value whose second occurrence comes first, else -1. Mark visited values by negating the slot at index v -1 (mutates input)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Values are between one and n, so each value can mark its own index by flipping that slot negative."
+   ],
+   "narration": "Values are between one and n, so each value can mark its own index by flipping that slot negative."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: for each element, scan ahead → O(n²)",
+    "Hash set of seen values → O(n) time, O(n) space",
+    "Values are 1…n → mark by negating a[v−1] → O(1) space"
+   ],
+   "narration": "Comparing every pair is quadratic. A hash set is linear but uses extra memory. Since values are between one and n, each value can mark its own slot by negating it, giving linear time and constant space."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. For each value, look at index abs value minus one",
+    "2. If that slot is already negative, we've seen it: return it",
+    "3. Otherwise flip it negative"
+   ],
+   "narration": "Step by step. First, for each value, look at index abs value minus one. Second, if that slot is already negative, we've seen it: return it. Third, otherwise flip it negative."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      -1,
+      5,
+      2,
+      3,
+      3,
+      4
+     ],
+     "hl": {
+      "1": "ok",
+      "0": "cur"
+     },
+     "ptr": {
+      "k": 0,
+      "v-1": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "value 2: flip slot 1 negative"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Mark 2 as seen by negating index 1",
+   "narration": "Value 2 marks its own slot, index 1, by flipping it negative.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -2,
+      -1,
+      5,
+      2,
+      3,
+      3,
+      4
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "cur"
+     },
+     "ptr": {
+      "k": 1,
+      "v-1": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "value 1: flip slot 0 negative"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Mark 1 as seen by negating index 0",
+   "narration": "Value 1 marks its own slot, index 0, by flipping it negative.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -2,
+      -1,
+      5,
+      2,
+      -3,
+      3,
+      4
+     ],
+     "hl": {
+      "4": "ok",
+      "2": "cur"
+     },
+     "ptr": {
+      "k": 2,
+      "v-1": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "value 5: flip slot 4 negative"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Mark 5 as seen by negating index 4",
+   "narration": "Value 5 marks its own slot, index 4, by flipping it negative.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -2,
+      -1,
+      5,
+      2,
+      -3,
+      3,
+      4
+     ],
+     "hl": {
+      "1": "bad",
+      "3": "cur"
+     },
+     "ptr": {
+      "k": 3,
+      "v-1": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "value 2: slot 1 already negative → duplicate!"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Answer: 2",
+   "narration": "Value 2 points to slot 1, which is already negative, so 2 has been seen before. It's the first duplicate.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class FirstDuplicateValue {\n    public static int firstDuplicateValue(int[] a) {\n        for (int x : a) {\n            int v = Math.abs(x);\n            if (a[v - 1] < 0) return v;\n            a[v - 1] = -a[v - 1];\n        }\n        return -1;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "FirstDuplicateValue.java",
+   "narration": "For each value, we take its absolute value v and look at slot v minus one. If it's negative, v was seen before, so we return it. Otherwise we negate the slot."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Use abs() — the slot may already be negated",
+    "No duplicate → −1",
+    "Mutates the input; mention or restore it"
+   ],
+   "narration": "Always take the absolute value, because the current element may already have been negated. Return minus one if there's no duplicate, and mention that this mutates the input."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Ask whether modifying the input is allowed",
+    "Follow-up: read-only array → Floyd's cycle detection"
+   ],
+   "narration": "Ask if you're allowed to modify the input. If not, Floyd's cycle detection on the index graph also works in constant space."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Values are between one and n, so each value can mark its own index by flipping that slot negative.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap First Duplicate Value: Values are between one and n, so each value can mark its own index by flipping that slot negative. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

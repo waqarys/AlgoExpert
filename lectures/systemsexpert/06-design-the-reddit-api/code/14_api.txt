@@ -1,0 +1,9 @@
+GET    /v1/subreddits/{name}
+GET    /v1/subreddits/{name}/posts?sort=hot|new|top&cursor=..&limit=..
+POST   /v1/subreddits/{name}/posts            {title, body}
+PATCH  /v1/posts/{postId}                     {body}
+DELETE /v1/posts/{postId}
+GET    /v1/posts/{postId}/comments?sort=..&depth=..&cursor=..
+POST   /v1/posts/{postId}/comments            {parentId?, body}
+PUT    /v1/posts/{postId}/vote                {value: -1|0|1}
+PUT    /v1/comments/{commentId}/vote          {value}

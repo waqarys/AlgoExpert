@@ -1,0 +1,208 @@
+{
+ "title": "AlgoExpert · Missing Numbers",
+ "out": "algoexpert/medium/arrays/MissingNumbers",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Missing Numbers",
+   "subtitle": "AlgoExpert · Medium · Arrays",
+   "narration": "Let's solve Missing Numbers, a medium arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Array holds 1..n+2 with two numbers missing; return them ascending.",
+    "Split by the average of the two missing values and sum each half."
+   ],
+   "narration": "Here's the problem. Array holds 1..n plus 2 with two numbers missing; return them ascending. Split by the average of the two missing values and sum each half."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "The numbers one to n plus two sum to a known total; the missing pair splits around their average."
+   ],
+   "narration": "The numbers one to n plus two sum to a known total; the missing pair splits around their average."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: check each 1…n for membership → O(n²)",
+    "Hash set → O(n) time, O(n) space",
+    "Math (sums, or XOR) → O(n) time, O(1) space"
+   ],
+   "narration": "Checking each candidate against the array is quadratic. A hash set makes it linear with extra space. Using sums, we can get constant space: the total tells us the missing pair's sum, and splitting at the average separates them."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Compute the missing sum",
+    "2. Split at the average",
+    "3. Sum the expected and actual values below it",
+    "4. The difference gives one number, the rest gives the other"
+   ],
+   "narration": "Step by step. First, compute the missing sum. Second, split at the average. Third, sum the expected and actual values below it. Fourth, the difference gives one number, the rest gives the other."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hl": {
+      "0": "done",
+      "3": "done",
+      "2": "done"
+     },
+     "ptr": {},
+     "label": "1…n (grey = present)",
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "n = 5",
+      "missing sum = 15 − 8 = 7"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Missing pair sums to 7",
+   "narration": "With three numbers given, n is five. One through five sums to fifteen, the input sums to 8, so the two missing numbers add up to 7.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "split at average = 7 // 2 = 3",
+      "one missing number is ≤ avg, the other > avg"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Split at 3",
+   "narration": "The two missing numbers are different, so one is at most the average, 3, and the other is above it.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "expected sum 1…3 = 6",
+      "actual sum of inputs ≤ 3 = 4",
+      "first missing = 6 − 4 = 2"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "First missing = 2",
+   "narration": "The numbers one to 3 should sum to 6; the inputs at most 3 sum to 4. The difference, 2, is the first missing number.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "hl": {
+      "0": "done",
+      "3": "done",
+      "2": "done",
+      "1": "ok",
+      "4": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "second = 7 − 2 = 5"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Answer: [2, 5]",
+   "narration": "The second is 7 minus 2, which is 5. So the answer is 2 and 5.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MissingNumbers {\n    public static int[] missingNumbers(int[] nums) {\n        int n = nums.length + 2;\n        long total = (long) n * (n + 1) / 2;\n        for (int x : nums) total -= x;\n        long avg = total / 2, lowExpected = avg * (avg + 1) / 2, lowActual = 0;\n        for (int x : nums) if (x <= avg) lowActual += x;\n        int a = (int) (lowExpected - lowActual);\n        return new int[]{a, (int) (total - a)};\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MissingNumbers.java",
+   "narration": "We compute n as length plus two, subtract every input from the expected total to get the missing sum, split it at the average, and compare the expected and actual sums of the lower half to find the first number. The second is the total minus the first."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Use long for big sums",
+    "Missing numbers may be 1 or n",
+    "Empty input → [1, 2]"
+   ],
+   "narration": "Use a long for the sums. The missing numbers might be the very first or last, and an empty input means the answer is one and two."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention the XOR variant",
+    "Follow-up: k missing numbers → cyclic sort / bitset"
+   ],
+   "narration": "The XOR version works the same way, splitting on a set bit. For k missing numbers, a cyclic sort or bitset generalises."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "The numbers one to n plus two sum to a known total; the missing pair splits around their average.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Missing Numbers: The numbers one to n plus two sum to a known total; the missing pair splits around their average. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

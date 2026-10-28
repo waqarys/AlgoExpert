@@ -1,0 +1,472 @@
+{
+ "title": "SystemsExpert · Design AlgoExpert",
+ "out": "systemsexpert/01-design-algoexpert",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Design AlgoExpert",
+   "subtitle": "SystemsExpert design walkthrough",
+   "narration": "In this lecture we design AlgoExpert. We'll follow the interview framework: clarify, set requirements, estimate, sketch the architecture, define the data and API, then dive into the hard parts and the trade-offs."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Clarifying questions",
+   "bullets": [
+    "Which parts are in scope: browsing questions, the code editor, running code, user progress, payments?",
+    "How many languages must code execution support?",
+    "Global audience or one region? Latency targets for 'Run Code'?",
+    "Is static content (prompts, video) mostly read-only and edited by a small team?"
+   ],
+   "narration": "Start by clarifying the scope with your interviewer. Good questions here are: Which parts are in scope: browsing questions, the code editor, running code, user progress, payments? How many languages must code execution support? Global audience or one region? Latency targets for 'Run Code'? Is static content (prompts, video) mostly read-only and edited by a small team?"
+  },
+  {
+   "kind": "bullets",
+   "heading": "Functional requirements",
+   "bullets": [
+    "List questions with per-user completion status",
+    "View a question (prompt, hints, video walkthrough)",
+    "Write code in the browser, autosave it per language",
+    "Run code against test cases and see results",
+    "Track progress across devices"
+   ],
+   "narration": "The functional requirements. List questions with per-user completion status. View a question (prompt, hints, video walkthrough). Write code in the browser, autosave it per language. Run code against test cases and see results. Track progress across devices."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Non-functional requirements",
+   "bullets": [
+    "~99.9% availability for browsing; code execution can degrade gracefully",
+    "Run-code p95 under ~3 s",
+    "No loss of saved user code",
+    "Strong isolation of untrusted code"
+   ],
+   "narration": "The non-functional requirements. about 99.9 percent availability for browsing; code execution can degrade gracefully. Run-code p95 under about 3 s. No loss of saved user code. Strong isolation of untrusted code."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Capacity estimates",
+   "bullets": [
+    "~1M users, ~10k concurrent at peak; ~200 questions",
+    "Static content ~ few hundred MB excl. video -> CDN",
+    "Autosave every few seconds while typing: ~10k writes/s peak -> debounce client-side to ~1/10s -> ~1k writes/s",
+    "Code runs: ~1-2k/min peak; each needs ~1-2 s of sandbox CPU -> ~50 concurrent sandboxes, provision headroom x3"
+   ],
+   "narration": "Now some rough capacity estimates, which drive the design. about 1M users, about 10k concurrent at peak; about 200 questions. Static content about few hundred MB excl. video to CDN. Autosave every few seconds while typing: about 10k writes per s peak to debounce client-side to about 1 or 10s to about 1k writes per s. Code runs: about 1-2k per min peak; each needs about 1-2 s of sandbox CPU to about 50 concurrent sandboxes, provision headroom x3."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Capacity: worked out",
+   "bullets": [
+    "Autosave: 10k users typing, 1 save/s → 10k writes/s",
+    "Debounce to 1 save / 10 s → ~1k writes/s",
+    "Runs: 2k/min ≈ 33/s × 1.5 s CPU ≈ 50 busy sandboxes",
+    "Provision ×3 headroom → ~150 sandboxes"
+   ],
+   "narration": "Let's actually work the numbers. Ten thousand concurrent users saving every second would be ten thousand writes a second. Debouncing on the client to one save every ten seconds cuts that to about a thousand writes a second, easy for one Postgres primary. Code runs peak around two thousand a minute, about thirty-three a second. Each takes about one and a half seconds, so roughly fifty sandboxes are busy at once. With three times headroom for spikes, we provision about one hundred and fifty sandbox slots."
+  },
+  {
+   "kind": "diagram",
+   "heading": "High-level architecture",
+   "edges": [
+    [
+     "Browser",
+     "CDN: static site, prompts, video"
+    ],
+    [
+     "Browser",
+     "Load balancer"
+    ],
+    [
+     "Load balancer",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Postgres: users, progress, saved code"
+    ],
+    [
+     "API servers - stateless",
+     "Redis: question list, sessions"
+    ],
+    [
+     "API servers - stateless",
+     "Run queue"
+    ],
+    [
+     "Run queue",
+     "Sandbox workers per language"
+    ],
+    [
+     "Sandbox workers per language",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Payments provider"
+    ]
+   ],
+   "narration": "Here's the high-level architecture. Browser connects to CDN: static site, prompts, video and Load balancer. Load balancer connects to API servers - stateless. API servers - stateless connects to Postgres: users, progress, saved code and Redis: question list, sessions and Run queue and Payments provider. Run queue connects to Sandbox workers per language. Sandbox workers per language connects to API servers - stateless."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Run Code",
+   "edges": [
+    [
+     "Browser",
+     "CDN: static site, prompts, video"
+    ],
+    [
+     "Browser",
+     "Load balancer"
+    ],
+    [
+     "Load balancer",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Postgres: users, progress, saved code"
+    ],
+    [
+     "API servers - stateless",
+     "Redis: question list, sessions"
+    ],
+    [
+     "API servers - stateless",
+     "Run queue"
+    ],
+    [
+     "Run queue",
+     "Sandbox workers per language"
+    ],
+    [
+     "Sandbox workers per language",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Payments provider"
+    ]
+   ],
+   "highlight": [
+    "Browser"
+   ],
+   "caption": "1. User clicks Run Code",
+   "narration": "Let's follow one Run Code click. The browser sends the user's code and the question ID in a single POST."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Run Code",
+   "edges": [
+    [
+     "Browser",
+     "CDN: static site, prompts, video"
+    ],
+    [
+     "Browser",
+     "Load balancer"
+    ],
+    [
+     "Load balancer",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Postgres: users, progress, saved code"
+    ],
+    [
+     "API servers - stateless",
+     "Redis: question list, sessions"
+    ],
+    [
+     "API servers - stateless",
+     "Run queue"
+    ],
+    [
+     "Run queue",
+     "Sandbox workers per language"
+    ],
+    [
+     "Sandbox workers per language",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Payments provider"
+    ]
+   ],
+   "highlight": [
+    "Load balancer"
+   ],
+   "caption": "2. LB picks a healthy API server",
+   "narration": "The load balancer forwards it to any healthy API server. Because API servers are stateless, any one will do."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Run Code",
+   "edges": [
+    [
+     "Browser",
+     "CDN: static site, prompts, video"
+    ],
+    [
+     "Browser",
+     "Load balancer"
+    ],
+    [
+     "Load balancer",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Postgres: users, progress, saved code"
+    ],
+    [
+     "API servers - stateless",
+     "Redis: question list, sessions"
+    ],
+    [
+     "API servers - stateless",
+     "Run queue"
+    ],
+    [
+     "Run queue",
+     "Sandbox workers per language"
+    ],
+    [
+     "Sandbox workers per language",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Payments provider"
+    ]
+   ],
+   "highlight": [
+    "API servers - stateless"
+   ],
+   "caption": "3. API validates and enqueues",
+   "narration": "The API server checks the session, rate-limits the user, and puts a run job on the queue instead of executing anything itself."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Run Code",
+   "edges": [
+    [
+     "Browser",
+     "CDN: static site, prompts, video"
+    ],
+    [
+     "Browser",
+     "Load balancer"
+    ],
+    [
+     "Load balancer",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Postgres: users, progress, saved code"
+    ],
+    [
+     "API servers - stateless",
+     "Redis: question list, sessions"
+    ],
+    [
+     "API servers - stateless",
+     "Run queue"
+    ],
+    [
+     "Run queue",
+     "Sandbox workers per language"
+    ],
+    [
+     "Sandbox workers per language",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Payments provider"
+    ]
+   ],
+   "highlight": [
+    "Run queue"
+   ],
+   "caption": "4. Job waits in the per-language queue",
+   "narration": "The job waits in the queue for that language. The queue absorbs bursts, so a spike in runs never overloads the API tier."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Run Code",
+   "edges": [
+    [
+     "Browser",
+     "CDN: static site, prompts, video"
+    ],
+    [
+     "Browser",
+     "Load balancer"
+    ],
+    [
+     "Load balancer",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Postgres: users, progress, saved code"
+    ],
+    [
+     "API servers - stateless",
+     "Redis: question list, sessions"
+    ],
+    [
+     "API servers - stateless",
+     "Run queue"
+    ],
+    [
+     "Run queue",
+     "Sandbox workers per language"
+    ],
+    [
+     "Sandbox workers per language",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Payments provider"
+    ]
+   ],
+   "highlight": [
+    "Sandbox workers per language"
+   ],
+   "caption": "5. Sandbox compiles and runs tests",
+   "narration": "A sandbox worker picks up the job, compiles the code in an isolated container with CPU and memory limits, and runs the test cases."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Run Code",
+   "edges": [
+    [
+     "Browser",
+     "CDN: static site, prompts, video"
+    ],
+    [
+     "Browser",
+     "Load balancer"
+    ],
+    [
+     "Load balancer",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Postgres: users, progress, saved code"
+    ],
+    [
+     "API servers - stateless",
+     "Redis: question list, sessions"
+    ],
+    [
+     "API servers - stateless",
+     "Run queue"
+    ],
+    [
+     "Run queue",
+     "Sandbox workers per language"
+    ],
+    [
+     "Sandbox workers per language",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Payments provider"
+    ]
+   ],
+   "highlight": [
+    "API servers - stateless"
+   ],
+   "caption": "6. Results return to the browser",
+   "narration": "Results flow back to the API server, which returns them to the browser, typically within two or three seconds."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Data model",
+   "bullets": [
+    "questions(id, name, difficulty, category, prompt_md, tests_json, version)",
+    "users(id, email, plan, created_at)",
+    "user_code(user_id, question_id, language, code, updated_at) PK(user_id, question_id, language)",
+    "completions(user_id, question_id, completed_at)"
+   ],
+   "narration": "Here is the data model. The questions record holds id, name, difficulty, category, prompt md, tests json, version. The users record holds id, email, plan, created at. The user code record holds user id, question id, language, code, updated at) PK(user id, question id, language. The completions record holds user id, question id, completed at."
+  },
+  {
+   "kind": "code",
+   "heading": "API",
+   "code": "GET  /questions                          -> [{id, name, difficulty, category, completed}]\nGET  /questions/{id}                     -> prompt, hints, starter code\nPUT  /questions/{id}/code/{language}     body {code}\nPOST /questions/{id}/run                 body {language, code} -> {runId}\nGET  /runs/{runId}                       -> {status, results[]}",
+   "lang": "text",
+   "font_size": 26,
+   "filename": "15_api.txt",
+   "narration": "The API. The main endpoints are: GET questions; GET questions by id; PUT questions by id code by language; POST questions by id run; GET runs by runId. Each one is small, resource-oriented and easy to version."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Code execution",
+   "bullets": [
+    "Untrusted code runs in per-language container pools (gVisor/Firecracker style isolation), no network, CPU/memory/time limits.",
+    "Keep warm containers to avoid cold starts; route by language via the queue.",
+    "Results are pushed back (websocket) or polled."
+   ],
+   "narration": "Deep dive: Code execution. Untrusted code runs in per-language container pools (gVisor or Firecracker style isolation), no network, CPU or memory or time limits. Keep warm containers to avoid cold starts; route by language via the queue. Results are pushed back (websocket) or polled."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Autosave",
+   "bullets": [
+    "Client debounces and sends deltas; server does last-write-wins keyed by (user, question, language) with updated_at.",
+    "Local storage keeps a copy for offline edits."
+   ],
+   "narration": "Deep dive: Autosave. Client debounces and sends deltas; server does last-write-wins keyed by (user, question, language) with updated at. Local storage keeps a copy for offline edits."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Global latency",
+   "bullets": [
+    "Static assets on a CDN; API in 2-3 regions with a primary DB and read replicas; sandbox fleets in each region so run latency stays low."
+   ],
+   "narration": "Deep dive: Global latency. Static assets on a CDN; API in 2-3 regions with a primary DB and read replicas; sandbox fleets in each region so run latency stays low."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Key decisions",
+   "bullets": [
+    "CDN for prompts and videos → content is read-only and global",
+    "Queue in front of sandboxes → absorbs bursts, isolates failures",
+    "Containers per run with hard limits → untrusted code must never touch the host",
+    "Client-side debounce → 10× fewer writes, no lost work"
+   ],
+   "narration": "Let's pull together the key decisions. CDN for prompts and videos, because content is read-only and global. Queue in front of sandboxes, because absorbs bursts, isolates failures. Containers per run with hard limits, because untrusted code must never touch the host. Client-side debounce, because 10× fewer writes, no lost work."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Trade-offs & alternatives",
+   "bullets": [
+    "Polling vs websockets for run results: polling is simpler and fine at this scale",
+    "Single relational DB is enough at this size; shard by user_id later if needed",
+    "Pre-warmed sandboxes cost money but are what keeps p95 low"
+   ],
+   "narration": "Finally, the key trade-offs. Polling versus websockets for run results: polling is simpler and fine at this scale. Single relational DB is enough at this size; shard by user id later if needed. Pre-warmed sandboxes cost money but are what keeps p95 low."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Clarify scope, then functional + non-functional needs",
+    "Estimate load to size storage and fan-out",
+    "Core pieces: Browser, CDN, Load balancer, API servers - stateless, Postgres",
+    "Know your trade-offs and failure modes"
+   ],
+   "narration": "To recap AlgoExpert: we clarified the scope, set functional and non-functional requirements, estimated the load, sketched an architecture built around Browser, CDN, Load balancer, API servers - stateless, and walked through the deep dives and trade-offs. Practise explaining each decision out loud."
+  }
+ ]
+}

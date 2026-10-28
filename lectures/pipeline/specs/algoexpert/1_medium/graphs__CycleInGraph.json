@@ -1,0 +1,479 @@
+{
+ "title": "AlgoExpert · Cycle In Graph",
+ "out": "algoexpert/medium/graphs/CycleInGraph",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Cycle In Graph",
+   "subtitle": "AlgoExpert · Medium · Graphs",
+   "narration": "Let's solve Cycle In Graph, a medium graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Directed graph as adjacency list; does it contain a cycle? 3-colour DFS."
+   ],
+   "narration": "Here's the problem. Directed graph as adjacency list; does it contain a cycle? 3-colour DFS."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A cycle exists if depth-first search meets a node that's still on the current recursion stack."
+   ],
+   "narration": "A cycle exists if depth-first search meets a node that's still on the current recursion stack."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: from each node, DFS to see if you return → O(V·(V+E))",
+    "Single DFS with three colours → O(V + E)",
+    "Alternative: Kahn's topological sort fails ⇒ cycle"
+   ],
+   "narration": "Running a separate search from every node to see if it returns is slow. One depth-first search with three colours finds a cycle in linear time: an edge to a node that's still on the recursion stack is a back edge. Kahn's algorithm is an alternative."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Colour nodes white, grey, black",
+    "2. Grey means on the stack",
+    "3. Edge to a grey node is a back edge, a cycle"
+   ],
+   "narration": "Step by step. First, colour nodes white, grey, black. Second, grey means on the stack. Third, edge to a grey node is a back edge, a cycle."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "0": [
+       0.15,
+       0.75
+      ],
+      "1": [
+       0.45,
+       0.75
+      ],
+      "2": [
+       0.45,
+       0.25
+      ],
+      "3": [
+       0.8,
+       0.75
+      ],
+      "4": [
+       0.8,
+       0.25
+      ],
+      "5": [
+       0.95,
+       0.5
+      ]
+     },
+     "edges": [
+      [
+       "0",
+       "1"
+      ],
+      [
+       "0",
+       "3"
+      ],
+      [
+       "1",
+       "2"
+      ],
+      [
+       "1",
+       "3"
+      ],
+      [
+       "1",
+       "4"
+      ],
+      [
+       "2",
+       "0"
+      ],
+      [
+       "4",
+       "2"
+      ],
+      [
+       "4",
+       "5"
+      ]
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.65
+    },
+    {
+     "type": "text",
+     "lines": [
+      "grey = on stack",
+      "dark = finished",
+      "colors: [1, 0, 0, 0, 0, 0]"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.35,
+     "size": 18
+    }
+   ],
+   "caption": "Enter 0 (grey = on the recursion stack)",
+   "narration": "Enter node 0 and colour it grey, meaning it's on the current path.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "0": [
+       0.15,
+       0.75
+      ],
+      "1": [
+       0.45,
+       0.75
+      ],
+      "2": [
+       0.45,
+       0.25
+      ],
+      "3": [
+       0.8,
+       0.75
+      ],
+      "4": [
+       0.8,
+       0.25
+      ],
+      "5": [
+       0.95,
+       0.5
+      ]
+     },
+     "edges": [
+      [
+       "0",
+       "1"
+      ],
+      [
+       "0",
+       "3"
+      ],
+      [
+       "1",
+       "2"
+      ],
+      [
+       "1",
+       "3"
+      ],
+      [
+       "1",
+       "4"
+      ],
+      [
+       "2",
+       "0"
+      ],
+      [
+       "4",
+       "2"
+      ],
+      [
+       "4",
+       "5"
+      ]
+     ],
+     "hl": {
+      "0": "cur",
+      "1": "cur"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.65
+    },
+    {
+     "type": "text",
+     "lines": [
+      "grey = on stack",
+      "dark = finished",
+      "colors: [1, 1, 0, 0, 0, 0]"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.35,
+     "size": 18
+    }
+   ],
+   "caption": "Enter 1 (grey = on the recursion stack)",
+   "narration": "Enter node 1 and colour it grey, meaning it's on the current path.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "0": [
+       0.15,
+       0.75
+      ],
+      "1": [
+       0.45,
+       0.75
+      ],
+      "2": [
+       0.45,
+       0.25
+      ],
+      "3": [
+       0.8,
+       0.75
+      ],
+      "4": [
+       0.8,
+       0.25
+      ],
+      "5": [
+       0.95,
+       0.5
+      ]
+     },
+     "edges": [
+      [
+       "0",
+       "1"
+      ],
+      [
+       "0",
+       "3"
+      ],
+      [
+       "1",
+       "2"
+      ],
+      [
+       "1",
+       "3"
+      ],
+      [
+       "1",
+       "4"
+      ],
+      [
+       "2",
+       "0"
+      ],
+      [
+       "4",
+       "2"
+      ],
+      [
+       "4",
+       "5"
+      ]
+     ],
+     "hl": {
+      "0": "cur",
+      "1": "cur",
+      "2": "cur"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.65
+    },
+    {
+     "type": "text",
+     "lines": [
+      "grey = on stack",
+      "dark = finished",
+      "colors: [1, 1, 1, 0, 0, 0]"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.35,
+     "size": 18
+    }
+   ],
+   "caption": "Enter 2 (grey = on the recursion stack)",
+   "narration": "Enter node 2 and colour it grey, meaning it's on the current path.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "0": [
+       0.15,
+       0.75
+      ],
+      "1": [
+       0.45,
+       0.75
+      ],
+      "2": [
+       0.45,
+       0.25
+      ],
+      "3": [
+       0.8,
+       0.75
+      ],
+      "4": [
+       0.8,
+       0.25
+      ],
+      "5": [
+       0.95,
+       0.5
+      ]
+     },
+     "edges": [
+      [
+       "0",
+       "1"
+      ],
+      [
+       "0",
+       "3"
+      ],
+      [
+       "1",
+       "2"
+      ],
+      [
+       "1",
+       "3"
+      ],
+      [
+       "1",
+       "4"
+      ],
+      [
+       "2",
+       "0"
+      ],
+      [
+       "4",
+       "2"
+      ],
+      [
+       "4",
+       "5"
+      ]
+     ],
+     "hl": {
+      "0": "cur",
+      "1": "cur",
+      "2": "cur"
+     },
+     "ehl": [
+      [
+       "2",
+       "0"
+      ]
+     ],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.65
+    },
+    {
+     "type": "text",
+     "lines": [
+      "edge 2 → 0",
+      "0 is grey → back edge",
+      "cycle!"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.35
+    }
+   ],
+   "caption": "Edge 2 → 0 hits a grey node → cycle",
+   "narration": "Node 2 has an edge to 0, which is still grey, on the current path. That's a back edge, so there's a cycle.",
+   "layout": "cols"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class CycleInGraph {\n    public static boolean cycleInGraph(int[][] edges) {\n        int[] color = new int[edges.length];\n        for (int v = 0; v < edges.length; v++) if (color[v] == 0 && dfs(v, edges, color)) return true;\n        return false;\n    }\n\n    private static boolean dfs(int v, int[][] edges, int[] color) {\n        color[v] = 1;\n        for (int w : edges[v]) {\n            if (color[w] == 1) return true;\n            if (color[w] == 0 && dfs(w, edges, color)) return true;\n        }\n        color[v] = 2;\n        return false;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "CycleInGraph.java",
+   "narration": "We colour every node white, then DFS from each unvisited node. DFS marks the node grey, returns true if any neighbour is grey or if recursing into a white neighbour finds a cycle, and marks the node black when finished."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(v + e)",
+    "Space: O(v)"
+   ],
+   "narration": "Time is O of v plus e. Space is O of v."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Visited ≠ on-stack: finished (black) nodes are safe",
+    "Self-loops count as cycles",
+    "Disconnected graphs: start DFS from every node"
+   ],
+   "narration": "Don't confuse visited with on the stack: reaching a finished node isn't a cycle. Self-loops count, and you must start from every unvisited node to cover disconnected parts."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain white/grey/black clearly",
+    "Follow-up: undirected graphs (ignore the parent edge)"
+   ],
+   "narration": "Explain the three colours clearly. For undirected graphs, the rule changes: ignore the edge back to the parent."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "A cycle exists if depth-first search meets a node that's still on the current recursion stack.",
+    "Complexity: O(v + e)"
+   ],
+   "narration": "To recap Cycle In Graph: A cycle exists if depth-first search meets a node that's still on the current recursion stack. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

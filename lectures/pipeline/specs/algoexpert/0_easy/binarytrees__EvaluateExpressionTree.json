@@ -1,0 +1,380 @@
+{
+ "title": "AlgoExpert · Evaluate Expression Tree",
+ "out": "algoexpert/easy/binarytrees/EvaluateExpressionTree",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Evaluate Expression Tree",
+   "subtitle": "AlgoExpert · Easy · Binary Trees",
+   "narration": "Let's solve Evaluate Expression Tree, an easy binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Leaves are positive ints; internal nodes encode operators -1 '+', -2 '-', -3 '/' (truncating), -4 '*'.",
+    "Evaluate the tree."
+   ],
+   "narration": "Here's the problem. Leaves are positive ints; internal nodes encode operators -1 ' plus ', -2 '-', -3 '/' (truncating), -4 ' '. Evaluate the tree."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Leaves are numbers and internal nodes are operators, so evaluate the children first and combine them."
+   ],
+   "narration": "Leaves are numbers and internal nodes are operators, so evaluate the children first and combine them."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "There's no faster way: every node must be evaluated once",
+    "Key is post-order: children before the operator",
+    "Recursion depth = height of the tree"
+   ],
+   "narration": "Every node must be evaluated once, so linear time is optimal. The trick is the order: an operator can only be applied after both of its children, which is a post-order traversal."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. If the node is a leaf, return its value",
+    "2. Evaluate left and right subtrees",
+    "3. Apply the operator encoded at the node",
+    "4. Division truncates toward zero"
+   ],
+   "narration": "Step by step. First, if the node is a leaf, return its value. Second, evaluate left and right subtrees. Third, apply the operator encoded at the node. Fourth, division truncates toward zero."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       "+",
+       "1",
+       "2"
+      ],
+      "1": [
+       "−",
+       "3",
+       "4"
+      ],
+      "2": [
+       "÷",
+       "5",
+       "6"
+      ],
+      "3": [
+       "×",
+       "7",
+       "8"
+      ],
+      "4": [
+       2,
+       null,
+       null
+      ],
+      "5": [
+       8,
+       null,
+       null
+      ],
+      "6": [
+       3,
+       null,
+       null
+      ],
+      "7": [
+       2,
+       null,
+       null
+      ],
+      "8": [
+       3,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "3": "cur"
+     },
+     "label": null,
+     "notes": {
+      "3": "=6"
+     },
+     "h": 1
+    }
+   ],
+   "caption": "2 × 3 = 6",
+   "narration": "Both children of this × node are evaluated: 2 and 3. Applying the operator gives 6.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       "+",
+       "1",
+       "2"
+      ],
+      "1": [
+       "−",
+       "3",
+       "4"
+      ],
+      "2": [
+       "÷",
+       "5",
+       "6"
+      ],
+      "3": [
+       "×",
+       "7",
+       "8"
+      ],
+      "4": [
+       2,
+       null,
+       null
+      ],
+      "5": [
+       8,
+       null,
+       null
+      ],
+      "6": [
+       3,
+       null,
+       null
+      ],
+      "7": [
+       2,
+       null,
+       null
+      ],
+      "8": [
+       3,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "3": "done",
+      "1": "cur"
+     },
+     "label": null,
+     "notes": {
+      "3": "=6",
+      "1": "=4"
+     },
+     "h": 1
+    }
+   ],
+   "caption": "6 − 2 = 4",
+   "narration": "Both children of this − node are evaluated: 6 and 2. Applying the operator gives 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       "+",
+       "1",
+       "2"
+      ],
+      "1": [
+       "−",
+       "3",
+       "4"
+      ],
+      "2": [
+       "÷",
+       "5",
+       "6"
+      ],
+      "3": [
+       "×",
+       "7",
+       "8"
+      ],
+      "4": [
+       2,
+       null,
+       null
+      ],
+      "5": [
+       8,
+       null,
+       null
+      ],
+      "6": [
+       3,
+       null,
+       null
+      ],
+      "7": [
+       2,
+       null,
+       null
+      ],
+      "8": [
+       3,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "3": "done",
+      "1": "done",
+      "2": "cur"
+     },
+     "label": null,
+     "notes": {
+      "3": "=6",
+      "1": "=4",
+      "2": "=2"
+     },
+     "h": 1
+    }
+   ],
+   "caption": "8 ÷ 3 = 2",
+   "narration": "Both children of this ÷ node are evaluated: 8 and 3. Applying the operator gives 2.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       "+",
+       "1",
+       "2"
+      ],
+      "1": [
+       "−",
+       "3",
+       "4"
+      ],
+      "2": [
+       "÷",
+       "5",
+       "6"
+      ],
+      "3": [
+       "×",
+       "7",
+       "8"
+      ],
+      "4": [
+       2,
+       null,
+       null
+      ],
+      "5": [
+       8,
+       null,
+       null
+      ],
+      "6": [
+       3,
+       null,
+       null
+      ],
+      "7": [
+       2,
+       null,
+       null
+      ],
+      "8": [
+       3,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "3": "done",
+      "1": "done",
+      "2": "done",
+      "0": "cur"
+     },
+     "label": null,
+     "notes": {
+      "3": "=6",
+      "1": "=4",
+      "2": "=2",
+      "0": "=6"
+     },
+     "h": 1
+    }
+   ],
+   "caption": "4 + 2 = 6",
+   "narration": "Both children of this + node are evaluated: 4 and 2. Applying the operator gives 6.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class EvaluateExpressionTree {\n    public static int evaluateExpressionTree(BinaryTree t) {\n        if (t.value >= 0) return t.value;\n        int l = evaluateExpressionTree(t.left), r = evaluateExpressionTree(t.right);\n        return switch (t.value) {\n            case -1 -> l + r;\n            case -2 -> l - r;\n            case -3 -> l / r;\n            default -> l * r;\n        };\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "EvaluateExpressionTree.java",
+   "narration": "If the node's value is non-negative, it's a leaf, so return it. Otherwise evaluate the left and right subtrees, then switch on the operator code to add, subtract, divide or multiply."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Division truncates toward zero (−7 / 2 = −3)",
+    "Leaves are non-negative operands",
+    "Avoid recomputing subtrees"
+   ],
+   "narration": "Be careful that division truncates toward zero, which Java's integer division already does. Leaves are always non-negative numbers, and negative values encode operators."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: print the infix expression with parentheses",
+    "Follow-up: iterative post-order with a stack"
+   ],
+   "narration": "Natural follow-ups are printing the expression in infix form with parentheses, or evaluating iteratively with a stack."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Leaves are numbers and internal nodes are operators, so evaluate the children first and combine them.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Evaluate Expression Tree: Leaves are numbers and internal nodes are operators, so evaluate the children first and combine them. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,701 @@
+{
+ "title": "AlgoExpert · Kruskals Algorithm",
+ "out": "algoexpert/hard/famousalgorithms/KruskalsAlgorithm",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Kruskals Algorithm",
+   "subtitle": "AlgoExpert · Hard · Famous Algorithms",
+   "narration": "Let's solve Kruskals Algorithm, a hard famous algorithms problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Undirected weighted graph as adjacency list ([dest, weight]); return its minimum spanning tree (forest) in the same format.",
+    "Sort edges + union-find."
+   ],
+   "narration": "Here's the problem. Undirected weighted graph as adjacency list ( dest, weight ); return its minimum spanning tree (forest) in the same format. Sort edges plus union-find."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Add edges from lightest to heaviest, skipping any that would form a cycle, detected with union-find."
+   ],
+   "narration": "Add edges from lightest to heaviest, skipping any that would form a cycle, detected with union-find."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Try all spanning trees → exponential",
+    "Kruskal: sort edges + union-find → O(E log E)",
+    "Prim: grow from a vertex with a heap"
+   ],
+   "narration": "Enumerating spanning trees is exponential. Kruskal sorts edges and adds each cheapest one that doesn't form a cycle, checked with union-find, in E log E."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Collect and sort edges by weight",
+    "2. Union-find over vertices",
+    "3. Add edges joining different sets",
+    "4. Return as adjacency list"
+   ],
+   "narration": "Step by step. First, collect and sort edges by weight. Second, union-find over vertices. Third, add edges joining different sets. Fourth, return as adjacency list."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "0": [
+       0.1,
+       0.5
+      ],
+      "1": [
+       0.35,
+       0.85
+      ],
+      "2": [
+       0.35,
+       0.15
+      ],
+      "3": [
+       0.65,
+       0.5
+      ],
+      "4": [
+       0.9,
+       0.5
+      ]
+     },
+     "edges": [
+      [
+       "0",
+       "1"
+      ],
+      [
+       "0",
+       "2"
+      ],
+      [
+       "1",
+       "2"
+      ],
+      [
+       "1",
+       "3"
+      ],
+      [
+       "2",
+       "3"
+      ],
+      [
+       "3",
+       "4"
+      ],
+      [
+       "2",
+       "4"
+      ]
+     ],
+     "hl": {
+      "1": "ok",
+      "2": "ok"
+     },
+     "ehl": [
+      [
+       "1",
+       "2"
+      ]
+     ],
+     "directed": false,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.65
+    },
+    {
+     "type": "text",
+     "lines": [
+      "edge 1–2 (w 1)",
+      "add ✓",
+      "MST weight 1"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.35,
+     "size": 18
+    }
+   ],
+   "caption": "Edge 1–2 (1): add",
+   "narration": "Next cheapest edge: 1 to 2, weight 1. They're in different components, so add it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "0": [
+       0.1,
+       0.5
+      ],
+      "1": [
+       0.35,
+       0.85
+      ],
+      "2": [
+       0.35,
+       0.15
+      ],
+      "3": [
+       0.65,
+       0.5
+      ],
+      "4": [
+       0.9,
+       0.5
+      ]
+     },
+     "edges": [
+      [
+       "0",
+       "1"
+      ],
+      [
+       "0",
+       "2"
+      ],
+      [
+       "1",
+       "2"
+      ],
+      [
+       "1",
+       "3"
+      ],
+      [
+       "2",
+       "3"
+      ],
+      [
+       "3",
+       "4"
+      ],
+      [
+       "2",
+       "4"
+      ]
+     ],
+     "hl": {
+      "2": "ok",
+      "3": "ok"
+     },
+     "ehl": [
+      [
+       "1",
+       "2"
+      ],
+      [
+       "2",
+       "3"
+      ]
+     ],
+     "directed": false,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.65
+    },
+    {
+     "type": "text",
+     "lines": [
+      "edge 2–3 (w 2)",
+      "add ✓",
+      "MST weight 3"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.35,
+     "size": 18
+    }
+   ],
+   "caption": "Edge 2–3 (2): add",
+   "narration": "Next cheapest edge: 2 to 3, weight 2. They're in different components, so add it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "0": [
+       0.1,
+       0.5
+      ],
+      "1": [
+       0.35,
+       0.85
+      ],
+      "2": [
+       0.35,
+       0.15
+      ],
+      "3": [
+       0.65,
+       0.5
+      ],
+      "4": [
+       0.9,
+       0.5
+      ]
+     },
+     "edges": [
+      [
+       "0",
+       "1"
+      ],
+      [
+       "0",
+       "2"
+      ],
+      [
+       "1",
+       "2"
+      ],
+      [
+       "1",
+       "3"
+      ],
+      [
+       "2",
+       "3"
+      ],
+      [
+       "3",
+       "4"
+      ],
+      [
+       "2",
+       "4"
+      ]
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok"
+     },
+     "ehl": [
+      [
+       "1",
+       "2"
+      ],
+      [
+       "2",
+       "3"
+      ],
+      [
+       "0",
+       "1"
+      ]
+     ],
+     "directed": false,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.65
+    },
+    {
+     "type": "text",
+     "lines": [
+      "edge 0–1 (w 3)",
+      "add ✓",
+      "MST weight 6"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.35,
+     "size": 18
+    }
+   ],
+   "caption": "Edge 0–1 (3): add",
+   "narration": "Next cheapest edge: 0 to 1, weight 3. They're in different components, so add it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "0": [
+       0.1,
+       0.5
+      ],
+      "1": [
+       0.35,
+       0.85
+      ],
+      "2": [
+       0.35,
+       0.15
+      ],
+      "3": [
+       0.65,
+       0.5
+      ],
+      "4": [
+       0.9,
+       0.5
+      ]
+     },
+     "edges": [
+      [
+       "0",
+       "1"
+      ],
+      [
+       "0",
+       "2"
+      ],
+      [
+       "1",
+       "2"
+      ],
+      [
+       "1",
+       "3"
+      ],
+      [
+       "2",
+       "3"
+      ],
+      [
+       "3",
+       "4"
+      ],
+      [
+       "2",
+       "4"
+      ]
+     ],
+     "hl": {
+      "0": "bad",
+      "2": "bad"
+     },
+     "ehl": [
+      [
+       "1",
+       "2"
+      ],
+      [
+       "2",
+       "3"
+      ],
+      [
+       "0",
+       "1"
+      ]
+     ],
+     "directed": false,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.65
+    },
+    {
+     "type": "text",
+     "lines": [
+      "edge 0–2 (w 5)",
+      "would form a cycle ✗",
+      "MST weight 6"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.35,
+     "size": 18
+    }
+   ],
+   "caption": "Edge 0–2 (5): skip (cycle)",
+   "narration": "Next cheapest edge: 0 to 2, weight 5. They're already connected, so it would form a cycle; skip it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "0": [
+       0.1,
+       0.5
+      ],
+      "1": [
+       0.35,
+       0.85
+      ],
+      "2": [
+       0.35,
+       0.15
+      ],
+      "3": [
+       0.65,
+       0.5
+      ],
+      "4": [
+       0.9,
+       0.5
+      ]
+     },
+     "edges": [
+      [
+       "0",
+       "1"
+      ],
+      [
+       "0",
+       "2"
+      ],
+      [
+       "1",
+       "2"
+      ],
+      [
+       "1",
+       "3"
+      ],
+      [
+       "2",
+       "3"
+      ],
+      [
+       "3",
+       "4"
+      ],
+      [
+       "2",
+       "4"
+      ]
+     ],
+     "hl": {
+      "3": "ok",
+      "4": "ok"
+     },
+     "ehl": [
+      [
+       "1",
+       "2"
+      ],
+      [
+       "2",
+       "3"
+      ],
+      [
+       "0",
+       "1"
+      ],
+      [
+       "3",
+       "4"
+      ]
+     ],
+     "directed": false,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.65
+    },
+    {
+     "type": "text",
+     "lines": [
+      "edge 3–4 (w 6)",
+      "add ✓",
+      "MST weight 12"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.35,
+     "size": 18
+    }
+   ],
+   "caption": "Edge 3–4 (6): add",
+   "narration": "Next cheapest edge: 3 to 4, weight 6. They're in different components, so add it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "0": [
+       0.1,
+       0.5
+      ],
+      "1": [
+       0.35,
+       0.85
+      ],
+      "2": [
+       0.35,
+       0.15
+      ],
+      "3": [
+       0.65,
+       0.5
+      ],
+      "4": [
+       0.9,
+       0.5
+      ]
+     },
+     "edges": [
+      [
+       "0",
+       "1"
+      ],
+      [
+       "0",
+       "2"
+      ],
+      [
+       "1",
+       "2"
+      ],
+      [
+       "1",
+       "3"
+      ],
+      [
+       "2",
+       "3"
+      ],
+      [
+       "3",
+       "4"
+      ],
+      [
+       "2",
+       "4"
+      ]
+     ],
+     "hl": {
+      "2": "bad",
+      "4": "bad"
+     },
+     "ehl": [
+      [
+       "1",
+       "2"
+      ],
+      [
+       "2",
+       "3"
+      ],
+      [
+       "0",
+       "1"
+      ],
+      [
+       "3",
+       "4"
+      ]
+     ],
+     "directed": false,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.65
+    },
+    {
+     "type": "text",
+     "lines": [
+      "edge 2–4 (w 7)",
+      "would form a cycle ✗",
+      "MST weight 12"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.35,
+     "size": 18
+    }
+   ],
+   "caption": "Edge 2–4 (7): skip (cycle)",
+   "narration": "Next cheapest edge: 2 to 4, weight 7. They're already connected, so it would form a cycle; skip it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (1/2)",
+   "code": "public class KruskalsAlgorithm {\n    public static int[][][] kruskalsAlgorithm(int[][][] edges) {\n        int n = edges.length;\n        List<int[]> all = new ArrayList<>();\n        for (int u = 0; u < n; u++) for (int[] e : edges[u]) if (u < e[0]) all.add(new int[]{u, e[0], e[1]});\n        all.sort(Comparator.comparingInt(e -> e[2]));\n        int[] parent = new int[n];\n        for (int i = 0; i < n; i++) parent[i] = i;\n        List<List<int[]>> mst = new ArrayList<>();\n        for (int i = 0; i < n; i++) mst.add(new ArrayList<>());\n        for (int[] e : all) {\n            int a = find(parent, e[0]), b = find(parent, e[1]);\n            if (a == b) continue;\n            parent[a] = b;\n            mst.get(e[0]).add(new int[]{e[1], e[2]});\n            mst.get(e[1]).add(new int[]{e[0], e[2]});\n        }\n        int[][][] out = new int[n][][];\n        for (int i = 0; i < n; i++) out[i] = mst.get(i).toArray(new int[0][]);\n        return out;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "KruskalsAlgorithm_part1.java",
+   "narration": "We collect each edge once, sort by weight, and for each edge union the two roots if different, recording it in both adjacency lists."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (2/2)",
+   "code": "    private static int find(int[] p, int x) { while (p[x] != x) { p[x] = p[p[x]]; x = p[x]; } return x; }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "KruskalsAlgorithm_part2.java",
+   "narration": "We collect each edge once, sort by weight, and for each edge union the two roots if different, recording it in both adjacency lists."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(e log e)",
+    "Space: O(v + e)"
+   ],
+   "narration": "Time is O of e log e. Space is O of v plus e."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Undirected edges appear twice — dedupe",
+    "Disconnected graph → spanning forest",
+    "Use path compression"
+   ],
+   "narration": "Each undirected edge appears in both lists; add it once. A disconnected graph yields a forest."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Cut property explains correctness",
+    "Kruskal vs Prim trade-offs"
+   ],
+   "narration": "The cut property explains why the cheapest crossing edge is safe. Kruskal suits sparse graphs; Prim with a heap suits dense ones."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Add edges from lightest to heaviest, skipping any that would form a cycle, detected with union-find.",
+    "Complexity: O(e log e)"
+   ],
+   "narration": "To recap Kruskals Algorithm: Add edges from lightest to heaviest, skipping any that would form a cycle, detected with union-find. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

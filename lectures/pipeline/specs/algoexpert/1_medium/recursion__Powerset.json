@@ -1,0 +1,168 @@
+{
+ "title": "AlgoExpert · Powerset",
+ "out": "algoexpert/medium/recursion/Powerset",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Powerset",
+   "subtitle": "AlgoExpert · Medium · Recursion",
+   "narration": "Let's solve Powerset, a medium recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Every subset of a set of distinct ints (iteratively doubling)."
+   ],
+   "narration": "Here's the problem. Every subset of a set of distinct ints (iteratively doubling)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each new element doubles the subsets: every existing subset with or without it."
+   ],
+   "narration": "Each new element doubles the subsets: every existing subset with or without it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Bitmask: each of 2ⁿ masks picks a subset",
+    "Iterative doubling or recursion",
+    "O(n · 2ⁿ) time and space either way"
+   ],
+   "narration": "Each subset corresponds to an n-bit mask, so there are two to the n of them. Iteratively doubling the list, or recursion, produces them all in n times two to the n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Start with the empty set",
+    "2. For each element, copy all subsets and add it",
+    "3. Return all"
+   ],
+   "narration": "Step by step. First, start with the empty set. Second, for each element, copy all subsets and add it. Third, return all."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "subsets: [ [] ]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Start with the empty set",
+   "narration": "Start with just the empty subset.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "add 1 to each existing subset:",
+      "[[], [1]]"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "After 1: 2 subsets",
+   "narration": "For 1, copy every existing subset and add 1 to the copy. That doubles the count to 2.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "add 2 to each existing subset:",
+      "[[], [1], [2], [1, 2]]"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "After 2: 4 subsets",
+   "narration": "For 2, copy every existing subset and add 2 to the copy. That doubles the count to 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "add 3 to each existing subset:",
+      "[[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "After 3: 8 subsets",
+   "narration": "For 3, copy every existing subset and add 3 to the copy. That doubles the count to 8.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class Powerset {\n    public static List<List<Integer>> powerset(List<Integer> array) {\n        List<List<Integer>> subsets = new ArrayList<>();\n        subsets.add(new ArrayList<>());\n        for (int x : array) {\n            int size = subsets.size();\n            for (int i = 0; i < size; i++) { List<Integer> s = new ArrayList<>(subsets.get(i)); s.add(x); subsets.add(s); }\n        }\n        return subsets;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "Powerset.java",
+   "narration": "We start with one empty subset. For each value, we take the current size and, for each existing subset, add a copy with the value appended."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n * 2^n)",
+    "Space: O(n * 2^n)"
+   ],
+   "narration": "Time is O of n times 2 to the n. Space is O of n times 2 to the n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Iterate over the size *before* adding",
+    "Include the empty set",
+    "Duplicates in input → dedupe"
+   ],
+   "narration": "Capture the list size before the inner loop, or you'll loop forever on subsets you just added. Remember the empty set."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention bitmask enumeration",
+    "Follow-up: subsets with duplicates, subsets summing to k"
+   ],
+   "narration": "Mention the bitmask view. Follow-ups handle duplicates or restrict to a target sum."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Each new element doubles the subsets: every existing subset with or without it.",
+    "Complexity: O(n * 2^n)"
+   ],
+   "narration": "To recap Powerset: Each new element doubles the subsets: every existing subset with or without it. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,189 @@
+{
+ "title": "AlgoExpert · Merge Sort",
+ "out": "algoexpert/veryhard/sorting/MergeSort",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Merge Sort",
+   "subtitle": "AlgoExpert · Very Hard · Sorting",
+   "narration": "Let's solve Merge Sort, a very hard sorting problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Stable divide-and-conquer sort using one auxiliary buffer."
+   ],
+   "narration": "Here's the problem. Stable divide-and-conquer sort using one auxiliary buffer."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Split in half, sort each half, then merge the sorted halves."
+   ],
+   "narration": "Split in half, sort each half, then merge the sorted halves."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Quadratic sorts → O(n²)",
+    "Merge sort → O(n log n), stable",
+    "O(n) auxiliary"
+   ],
+   "narration": "Merge sort guarantees n log n and is stable, at the cost of an auxiliary array."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Recurse on halves",
+    "2. Merge using a buffer",
+    "3. Copy back"
+   ],
+   "narration": "Step by step. First, recurse on halves. Second, merge using a buffer. Third, copy back."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      8,
+      5,
+      2,
+      9,
+      5,
+      6,
+      3
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Split in half recursively",
+   "narration": "Split the array in half repeatedly until pieces have one element.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      5,
+      8,
+      9
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "sorted left",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      3,
+      5,
+      6
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "sorted right",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Sort both halves",
+   "narration": "After recursion, both halves are sorted.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      5,
+      5,
+      6,
+      8,
+      9
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok",
+      "4": "ok",
+      "5": "ok",
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Merge with two pointers",
+   "narration": "Merge by repeatedly taking the smaller front element.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MergeSort {\n    public static int[] mergeSort(int[] a) {\n        sort(a, new int[a.length], 0, a.length - 1);\n        return a;\n    }\n\n    private static void sort(int[] a, int[] aux, int lo, int hi) {\n        if (lo >= hi) return;\n        int mid = (lo + hi) >>> 1;\n        sort(a, aux, lo, mid);\n        sort(a, aux, mid + 1, hi);\n        System.arraycopy(a, lo, aux, lo, hi - lo + 1);\n        int i = lo, j = mid + 1;\n        for (int k = lo; k <= hi; k++) {\n            if (i > mid) a[k] = aux[j++];\n            else if (j > hi) a[k] = aux[i++];\n            else if (aux[j] < aux[i]) a[k] = aux[j++];\n            else a[k] = aux[i++];\n        }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MergeSort.java",
+   "narration": "Sort recurses on both halves, copies the range to aux, and merges back taking the smaller of the two fronts."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n log n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Allocate aux once",
+    "≤ for stability",
+    "Base case size 1"
+   ],
+   "narration": "Allocate the auxiliary array once, not per call."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Compare with quick sort"
+   ],
+   "narration": "Contrast with quick sort's average speed and in-place nature."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Split in half, sort each half, then merge the sorted halves.",
+    "Complexity: O(n log n)"
+   ],
+   "narration": "To recap Merge Sort: Split in half, sort each half, then merge the sorted halves. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

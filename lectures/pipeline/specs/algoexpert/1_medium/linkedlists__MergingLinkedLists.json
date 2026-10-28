@@ -1,0 +1,228 @@
+{
+ "title": "AlgoExpert · Merging Linked Lists",
+ "out": "algoexpert/medium/linkedlists/MergingLinkedLists",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Merging Linked Lists",
+   "subtitle": "AlgoExpert · Medium · Linked Lists",
+   "narration": "Let's solve Merging Linked Lists, a medium linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Two lists may converge into a shared tail; return the first shared node or null.",
+    "Two pointers that switch lists meet at the junction after at most n+m steps."
+   ],
+   "narration": "Here's the problem. Two lists may converge into a shared tail; return the first shared node or null. Two pointers that switch lists meet at the junction after at most n plus m steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Two pointers that switch to the other list after finishing travel the same distance and meet at the junction."
+   ],
+   "narration": "Two pointers that switch to the other list after finishing travel the same distance and meet at the junction."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: for each A node, scan B → O(n·m)",
+    "Hash set of A nodes → O(n + m) time, O(n) space",
+    "Two pointers switching lists → O(1) space"
+   ],
+   "narration": "Comparing every pair is quadratic. A hash set of A's nodes is linear but uses memory. Two pointers that switch to the other list at the end both travel the same total distance, so they meet at the intersection with constant space."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Advance both pointers",
+    "2. When one ends, jump to the other list's head",
+    "3. They meet at the shared node or both null"
+   ],
+   "narration": "Step by step. First, advance both pointers. Second, when one ends, jump to the other list's head. Third, they meet at the shared node or both null."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      2,
+      3,
+      1,
+      4
+     ],
+     "ptr": {},
+     "hl": {
+      "2": "ok",
+      "3": "ok"
+     },
+     "cycle_to": null,
+     "label": "list A",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      8,
+      7,
+      1,
+      4
+     ],
+     "ptr": {},
+     "hl": {
+      "2": "ok",
+      "3": "ok"
+     },
+     "cycle_to": null,
+     "label": "list B (shares 1 → 4)",
+     "h": 1
+    }
+   ],
+   "caption": "Both lists share the tail 1 → 4",
+   "narration": "The two lists merge at the node with value one and share everything after it.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "p walks A then B: step 0 → 2",
+      "q walks B then A: step 0 → 8"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Step 0",
+   "narration": "After 0 steps, p is at 2 and q is at 8.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "p walks A then B: step 2 → 1",
+      "q walks B then A: step 2 → 1"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Step 2",
+   "narration": "After 2 steps, p is at 1 and q is at 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "p walks A then B: step 5 → 8",
+      "q walks B then A: step 5 → 2"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Step 5",
+   "narration": "After 5 steps, p is at 8 and q is at 2.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "p walks A then B: step 7 → 1",
+      "q walks B then A: step 7 → 1"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Step 7",
+   "narration": "After 7 steps, p is at 1 and q is at 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "both travel lenA + lenB → they meet at the shared node",
+      "meet at node 1 (the shared one)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "They meet at the shared node",
+   "narration": "Each pointer travels the length of both lists, so they line up and meet at the shared node.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MergingLinkedLists {\n    public static LinkedListNode mergingLinkedLists(LinkedListNode a, LinkedListNode b) {\n        LinkedListNode p = a, q = b;\n        while (p != q) { p = p == null ? b : p.next; q = q == null ? a : q.next; }\n        return p;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MergingLinkedLists.java",
+   "narration": "Two pointers start at each head. While they differ, each moves to next, or to the other list's head when it hits null. Return either."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n + m)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n plus m. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Compare node identity, not value",
+    "No intersection → both reach null together",
+    "Different lengths are fine"
+   ],
+   "narration": "Compare node references, not values; two different nodes can share a value. With no intersection, both reach null together and we return null."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why the distances equalise",
+    "Alternative: compute lengths and align"
+   ],
+   "narration": "Explain the equal-distance argument, and mention aligning by length difference as an alternative."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Two pointers that switch to the other list after finishing travel the same distance and meet at the junction.",
+    "Complexity: O(n + m)"
+   ],
+   "narration": "To recap Merging Linked Lists: Two pointers that switch to the other list after finishing travel the same distance and meet at the junction. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

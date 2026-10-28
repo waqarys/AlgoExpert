@@ -1,0 +1,187 @@
+{
+ "title": "AlgoExpert · Best Seat",
+ "out": "algoexpert/medium/arrays/BestSeat",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Best Seat",
+   "subtitle": "AlgoExpert · Medium · Arrays",
+   "narration": "Let's solve Best Seat, a medium arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "A row of seats (1 taken, 0 free; both ends taken).",
+    "Return the index of the free seat with the most space on both sides (centre of the widest gap, leftmost on ties), or -1."
+   ],
+   "narration": "Here's the problem. A row of seats (1 taken, 0 free; both ends taken). Return the index of the free seat with the most space on both sides (centre of the widest gap, leftmost on ties), or -1."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "The best seat is the middle of the longest run of empty seats between occupied ones."
+   ],
+   "narration": "The best seat is the middle of the longest run of empty seats between occupied ones."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: for each empty seat, scan both ways for neighbours → O(n²)",
+    "Optimal: find runs of zeros in one pass → O(n)",
+    "Middle of the longest run is the answer"
+   ],
+   "narration": "Brute force checks each empty seat and scans outward for the nearest people, which is quadratic. Instead we walk once, measuring each run of empty seats between occupied ones, and keep the middle of the longest."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Scan for runs of zeros between ones",
+    "2. Track the longest run",
+    "3. Return its middle index, or minus one if none"
+   ],
+   "narration": "Step by step. First, scan for runs of zeros between ones. Second, track the longest run. Third, return its middle index, or minus one if none."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+     ],
+     "hl": {
+      "0": "done",
+      "2": "done",
+      "1": "ok"
+     },
+     "ptr": {
+      "l": 0,
+      "r": 2
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      2
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "gap = 1",
+      "best seat = 1"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Run of 1 empty seat(s) between 0 and 2 → best 1",
+   "narration": "Between occupied seats 0 and 2 there is 1 empty seat. The middle is seat 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+     ],
+     "hl": {
+      "2": "done",
+      "6": "done",
+      "4": "ok"
+     },
+     "ptr": {
+      "l": 2,
+      "r": 6
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      2,
+      6
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "gap = 3",
+      "best seat = 4"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Run of 3 empty seat(s) between 2 and 6 → best 4",
+   "narration": "Between occupied seats 2 and 6 there are 3 empty seats. The middle is seat 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class BestSeat {\n    public static int bestSeat(int[] seats) {\n        int best = -1, bestGap = 0, l = 0;\n        while (l < seats.length) {\n            int r = l + 1;\n            while (r < seats.length && seats[r] == 0) r++;\n            int gap = r - l - 1;\n            if (gap > bestGap) { bestGap = gap; best = (l + r) / 2; }\n            l = r;\n        }\n        return best;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "BestSeat.java",
+   "narration": "We start at an occupied seat l, move r forward past zeros, compute the gap as r minus l minus one, and if it's the best so far, record the middle seat. Then l jumps to r."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "No empty seat → −1",
+    "Ties: keep the leftmost (strictly greater)",
+    "Even-length runs: (l + r) / 2 picks the left middle"
+   ],
+   "narration": "If there's no empty seat, return minus one. Using a strictly greater comparison keeps the leftmost seat on ties, and for an even run, integer division picks the left middle."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Clarify ends: seats at both ends are occupied",
+    "Follow-up: seat many people one by one (heap of gaps)"
+   ],
+   "narration": "Clarify that both ends are occupied. A follow-up seats people one after another, which calls for a heap of gaps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "The best seat is the middle of the longest run of empty seats between occupied ones.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Best Seat: The best seat is the middle of the longest run of empty seats between occupied ones. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

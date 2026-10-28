@@ -1,0 +1,484 @@
+{
+ "title": "AlgoExpert · Binary Tree Diameter",
+ "out": "algoexpert/medium/binarytrees/BinaryTreeDiameter",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Binary Tree Diameter",
+   "subtitle": "AlgoExpert · Medium · Binary Trees",
+   "narration": "Let's solve Binary Tree Diameter, a medium binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Number of edges on the longest path between any two nodes."
+   ],
+   "narration": "Here's the problem. Number of edges on the longest path between any two nodes."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "The longest path through a node joins the heights of its two subtrees."
+   ],
+   "narration": "The longest path through a node joins the heights of its two subtrees."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: diameter through each node via separate height calls → O(n²)",
+    "Post-order computing height once per node → O(n)",
+    "Diameter need not pass through the root"
+   ],
+   "narration": "Computing heights separately for every node repeats work and is quadratic. A single post-order pass returns each subtree's height and, along the way, checks the path that bends through each node."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Post-order returns each subtree's height",
+    "2. At each node, left height plus right height is a candidate",
+    "3. Track the maximum"
+   ],
+   "narration": "Step by step. First, post-order returns each subtree's height. Second, at each node, left height plus right height is a candidate. Third, track the maximum."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       3,
+       "3",
+       "4"
+      ],
+      "2": [
+       2,
+       null,
+       null
+      ],
+      "3": [
+       7,
+       "7",
+       null
+      ],
+      "4": [
+       4,
+       null,
+       "10"
+      ],
+      "7": [
+       8,
+       "15",
+       null
+      ],
+      "10": [
+       5,
+       "21",
+       null
+      ],
+      "15": [
+       9,
+       null,
+       null
+      ],
+      "21": [
+       6,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "7": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.68
+    },
+    {
+     "type": "text",
+     "lines": [
+      "h(left) = 1",
+      "h(right) = 0",
+      "best = 1"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.32
+    }
+   ],
+   "caption": "At 8: left 1 + right 0 = 1; best 1",
+   "narration": "At node 8, the left height is 1 and the right height is 0. A path through here has 1 edges. Best so far: 1.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       3,
+       "3",
+       "4"
+      ],
+      "2": [
+       2,
+       null,
+       null
+      ],
+      "3": [
+       7,
+       "7",
+       null
+      ],
+      "4": [
+       4,
+       null,
+       "10"
+      ],
+      "7": [
+       8,
+       "15",
+       null
+      ],
+      "10": [
+       5,
+       "21",
+       null
+      ],
+      "15": [
+       9,
+       null,
+       null
+      ],
+      "21": [
+       6,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "3": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.68
+    },
+    {
+     "type": "text",
+     "lines": [
+      "h(left) = 2",
+      "h(right) = 0",
+      "best = 2"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.32
+    }
+   ],
+   "caption": "At 7: left 2 + right 0 = 2; best 2",
+   "narration": "At node 7, the left height is 2 and the right height is 0. A path through here has 2 edges. Best so far: 2.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       3,
+       "3",
+       "4"
+      ],
+      "2": [
+       2,
+       null,
+       null
+      ],
+      "3": [
+       7,
+       "7",
+       null
+      ],
+      "4": [
+       4,
+       null,
+       "10"
+      ],
+      "7": [
+       8,
+       "15",
+       null
+      ],
+      "10": [
+       5,
+       "21",
+       null
+      ],
+      "15": [
+       9,
+       null,
+       null
+      ],
+      "21": [
+       6,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "10": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.68
+    },
+    {
+     "type": "text",
+     "lines": [
+      "h(left) = 1",
+      "h(right) = 0",
+      "best = 2"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.32
+    }
+   ],
+   "caption": "At 5: left 1 + right 0 = 1; best 2",
+   "narration": "At node 5, the left height is 1 and the right height is 0. A path through here has 1 edges. Best so far: 2.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       3,
+       "3",
+       "4"
+      ],
+      "2": [
+       2,
+       null,
+       null
+      ],
+      "3": [
+       7,
+       "7",
+       null
+      ],
+      "4": [
+       4,
+       null,
+       "10"
+      ],
+      "7": [
+       8,
+       "15",
+       null
+      ],
+      "10": [
+       5,
+       "21",
+       null
+      ],
+      "15": [
+       9,
+       null,
+       null
+      ],
+      "21": [
+       6,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "1": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.68
+    },
+    {
+     "type": "text",
+     "lines": [
+      "h(left) = 3",
+      "h(right) = 3",
+      "best = 6"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.32
+    }
+   ],
+   "caption": "At 3: left 3 + right 3 = 6; best 6",
+   "narration": "At node 3, the left height is 3 and the right height is 3. A path through here has 6 edges. Best so far: 6.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       3,
+       "3",
+       "4"
+      ],
+      "2": [
+       2,
+       null,
+       null
+      ],
+      "3": [
+       7,
+       "7",
+       null
+      ],
+      "4": [
+       4,
+       null,
+       "10"
+      ],
+      "7": [
+       8,
+       "15",
+       null
+      ],
+      "10": [
+       5,
+       "21",
+       null
+      ],
+      "15": [
+       9,
+       null,
+       null
+      ],
+      "21": [
+       6,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.68
+    },
+    {
+     "type": "text",
+     "lines": [
+      "h(left) = 4",
+      "h(right) = 1",
+      "best = 6"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.32
+    }
+   ],
+   "caption": "At 1: left 4 + right 1 = 5; best 6",
+   "narration": "At node 1, the left height is 4 and the right height is 1. A path through here has 5 edges. Best so far: 6.",
+   "layout": "cols"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class BinaryTreeDiameter {\n    public static int binaryTreeDiameter(BinaryTree t) {\n        int[] best = {0};\n        height(t, best);\n        return best[0];\n    }\n\n    private static int height(BinaryTree t, int[] best) {\n        if (t == null) return 0;\n        int l = height(t.left, best), r = height(t.right, best);\n        best[0] = Math.max(best[0], l + r);\n        return 1 + Math.max(l, r);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "BinaryTreeDiameter.java",
+   "narration": "Height returns zero for null. It computes left and right heights, updates the best diameter with their sum, and returns one plus the larger height."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Diameter counts edges, not nodes",
+    "Longest path may avoid the root",
+    "Single node → 0"
+   ],
+   "narration": "The diameter counts edges, and it often doesn't pass through the root, as in this example."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Return height, track best in a field/array",
+    "Follow-up: max path SUM (Hard)"
+   ],
+   "narration": "Return the height and track the best in a shared variable. The hard follow-up maximises path sum instead of length."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "The longest path through a node joins the heights of its two subtrees.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Binary Tree Diameter: The longest path through a node joins the heights of its two subtrees. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

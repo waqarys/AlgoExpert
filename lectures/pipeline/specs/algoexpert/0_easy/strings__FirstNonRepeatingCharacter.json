@@ -1,0 +1,228 @@
+{
+ "title": "AlgoExpert · First Non Repeating Character",
+ "out": "algoexpert/easy/strings/FirstNonRepeatingCharacter",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "First Non Repeating Character",
+   "subtitle": "AlgoExpert · Easy · Strings",
+   "narration": "Let's solve First Non Repeating Character, an easy strings problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Index of the first lowercase char occurring exactly once, else -1."
+   ],
+   "narration": "Here's the problem. Index of the first lowercase char occurring exactly once, else -1."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Two passes: first count every character, then find the first with a count of one."
+   ],
+   "narration": "Two passes: first count every character, then find the first with a count of one."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: for each char, scan the whole string → O(n²)",
+    "Optimal: count, then scan → O(n)",
+    "Space O(1): alphabet is fixed (26)"
+   ],
+   "narration": "The brute force checks each character against every other, which is quadratic. Counting first and scanning second is linear, and the count table is constant size because the alphabet is fixed."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Count frequencies in a map",
+    "2. Scan the string again",
+    "3. Return the first index with count one, else minus one"
+   ],
+   "narration": "Step by step. First, count frequencies in a map. Second, scan the string again. Third, return the first index with count one, else minus one."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "c",
+      "a",
+      "f"
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       "a",
+       2
+      ],
+      [
+       "b",
+       1
+      ],
+      [
+       "c",
+       2
+      ],
+      [
+       "d",
+       1
+      ],
+      [
+       "f",
+       1
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "char",
+      "count"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Pass 1: count every character",
+   "narration": "First pass: count each character. a and c appear twice; b, d and f once.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "c",
+      "a",
+      "f"
+     ],
+     "hl": {
+      "0": "bad"
+     },
+     "ptr": {
+      "i": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "count['a'] = 2"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'a' count 2 → skip",
+   "narration": "Second pass: a at index 0 has count 2, so skip it.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "c",
+      "a",
+      "f"
+     ],
+     "hl": {
+      "1": "ok"
+     },
+     "ptr": {
+      "i": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "count['b'] = 1"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'b' count 1 → answer index 1",
+   "narration": "Second pass: b at index 1 has count 1, so the answer is 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class FirstNonRepeatingCharacter {\n    public static int firstNonRepeatingCharacter(String s) {\n        int[] freq = new int[26];\n        for (char c : s.toCharArray()) freq[c - 'a']++;\n        for (int i = 0; i < s.length(); i++) if (freq[s.charAt(i) - 'a'] == 1) return i;\n        return -1;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "FirstNonRepeatingCharacter.java",
+   "narration": "First we count characters in a map. Then we loop over the string again and return the first index whose count is one, or minus one."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1) (26 counters)"
+   ],
+   "narration": "Time is O of n. Space is constant (26 counters)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "No unique char → −1",
+    "Second pass must follow original order",
+    "Single-character string → 0"
+   ],
+   "narration": "Return minus one if every character repeats, and make sure the second pass follows the original order."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: streaming input → LinkedHashMap / queue"
+   ],
+   "narration": "For a stream of characters, keep a queue of candidates or an ordered map."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Two passes: first count every character, then find the first with a count of one.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap First Non Repeating Character: Two passes: first count every character, then find the first with a count of one. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

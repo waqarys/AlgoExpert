@@ -1,0 +1,385 @@
+{
+ "title": "AlgoExpert · Longest Subarray With Sum",
+ "out": "algoexpert/hard/arrays/LongestSubarrayWithSum",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Longest Subarray With Sum",
+   "subtitle": "AlgoExpert · Hard · Arrays",
+   "narration": "Let's solve Longest Subarray With Sum, a hard arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Non-negative ints; [start, end] of the longest subarray summing to target, or [] if none.",
+    "Sliding window."
+   ],
+   "narration": "Here's the problem. Non-negative ints; start, end of the longest subarray summing to target, or if none. Sliding window."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Values are non-negative, so a sliding window grows to add and shrinks to subtract."
+   ],
+   "narration": "Values are non-negative, so a sliding window grows to add and shrinks to subtract."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: every subarray → O(n²)",
+    "Sliding window (non-negative values) → O(n)",
+    "Prefix sums + hash map for negatives"
+   ],
+   "narration": "Checking every subarray is quadratic. Since values are non-negative, a sliding window works: grow right, shrink left when the sum is too big, in linear time."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Expand the right edge adding values",
+    "2. Shrink from the left while the sum is too big",
+    "3. Record the longest window equal to target"
+   ],
+   "narration": "Step by step. First, expand the right edge adding values. Second, shrink from the left while the sum is too big. Third, record the longest window equal to target."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      3,
+      4,
+      3,
+      3,
+      1,
+      2,
+      1,
+      2
+     ],
+     "hl": {},
+     "ptr": {
+      "l": 0,
+      "r": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      0
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "window sum = 1",
+      "best = none"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "r = 0: sum 1",
+   "narration": "Extend to 1; the window sum is 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      3,
+      4,
+      3,
+      3,
+      1,
+      2,
+      1,
+      2
+     ],
+     "hl": {},
+     "ptr": {
+      "l": 0,
+      "r": 2
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      2
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "window sum = 6",
+      "best = none"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "r = 2: sum 6",
+   "narration": "Extend to 3; the window sum is 6.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      3,
+      4,
+      3,
+      3,
+      1,
+      2,
+      1,
+      2
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok"
+     },
+     "ptr": {
+      "l": 2,
+      "r": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      2,
+      4
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "window sum = 10",
+      "best = [0, 3]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "r = 4: sum 10",
+   "narration": "Extend to 3; the window sum is 10. Best so far: indices 0 to 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      3,
+      4,
+      3,
+      3,
+      1,
+      2,
+      1,
+      2
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok"
+     },
+     "ptr": {
+      "l": 3,
+      "r": 5
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      3,
+      5
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "window sum = 10",
+      "best = [0, 3]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "r = 5: sum 10",
+   "narration": "Extend to 3; the window sum is 10. Best so far: indices 0 to 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      3,
+      4,
+      3,
+      3,
+      1,
+      2,
+      1,
+      2
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok"
+     },
+     "ptr": {
+      "l": 4,
+      "r": 7
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      4,
+      7
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "window sum = 9",
+      "best = [0, 3]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "r = 7: sum 9",
+   "narration": "Extend to 2; the window sum is 9. Best so far: indices 0 to 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      3,
+      4,
+      3,
+      3,
+      1,
+      2,
+      1,
+      2
+     ],
+     "hl": {
+      "4": "ok",
+      "5": "ok",
+      "6": "ok",
+      "7": "ok",
+      "8": "ok"
+     },
+     "ptr": {
+      "l": 5,
+      "r": 9
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      5,
+      9
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "window sum = 9",
+      "best = [4, 8]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "r = 9: sum 9",
+   "narration": "Extend to 2; the window sum is 9. Best so far: indices 4 to 8.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class LongestSubarrayWithSum {\n    public static int[] longestSubarrayWithSum(int[] a, int target) {\n        int[] best = {};\n        int l = 0, sum = 0;\n        for (int r = 0; r < a.length; r++) {\n            sum += a[r];\n            while (sum > target && l < r) sum -= a[l++];\n            if (sum == target && (best.length == 0 || r - l > best[1] - best[0])) best = new int[]{l, r};\n        }\n        return best;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LongestSubarrayWithSum.java",
+   "narration": "We grow r, add a r, shrink from l while the sum exceeds target, and record the window when it matches and is longer."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Window only works for non-negatives",
+    "Zeros extend windows",
+    "No match → []"
+   ],
+   "narration": "The window only works because values are non-negative; zeros can extend a match. With negatives, use prefix sums and a hash map."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention the prefix-sum variant"
+   ],
+   "narration": "Mention the prefix-sum and hash-map version for negative numbers."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Values are non-negative, so a sliding window grows to add and shrinks to subtract.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Longest Subarray With Sum: Values are non-negative, so a sliding window grows to add and shrinks to subtract. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

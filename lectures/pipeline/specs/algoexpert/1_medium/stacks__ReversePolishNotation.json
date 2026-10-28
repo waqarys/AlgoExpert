@@ -1,0 +1,366 @@
+{
+ "title": "AlgoExpert · Reverse Polish Notation",
+ "out": "algoexpert/medium/stacks/ReversePolishNotation",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Reverse Polish Notation",
+   "subtitle": "AlgoExpert · Medium · Stacks",
+   "narration": "Let's solve Reverse Polish Notation, a medium stacks problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Evaluate postfix tokens with + - * / (integer division truncating toward zero)."
+   ],
+   "narration": "Here's the problem. Evaluate postfix tokens with plus - / (integer division truncating toward zero)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Operands go on a stack; each operator pops two and pushes the result."
+   ],
+   "narration": "Operands go on a stack; each operator pops two and pushes the result."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Build an expression tree then evaluate → extra structure",
+    "Stack evaluation → O(n) time and space"
+   ],
+   "narration": "You could build an expression tree, but a single stack is enough: numbers are pushed, operators pop two and push the result."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Push numbers",
+    "2. On an operator, pop right then left",
+    "3. Apply and push",
+    "4. Return the last value"
+   ],
+   "narration": "Step by step. First, push numbers. Second, on an operator, pop right then left. Third, apply and push. Fourth, return the last value."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "50",
+      "3",
+      "17",
+      "+",
+      "2",
+      "-",
+      "/"
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "stack",
+     "items": [
+      50
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "push 50",
+   "narration": "Number: push 50.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "50",
+      "3",
+      "17",
+      "+",
+      "2",
+      "-",
+      "/"
+     ],
+     "hl": {
+      "1": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "stack",
+     "items": [
+      3,
+      50
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "push 3",
+   "narration": "Number: push 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "50",
+      "3",
+      "17",
+      "+",
+      "2",
+      "-",
+      "/"
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "stack",
+     "items": [
+      17,
+      3,
+      50
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "push 17",
+   "narration": "Number: push 17.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "50",
+      "3",
+      "17",
+      "+",
+      "2",
+      "-",
+      "/"
+     ],
+     "hl": {
+      "3": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "stack",
+     "items": [
+      20,
+      50
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "3 + 17 = 20",
+   "narration": "Operator +: pop 17 and 3, compute 3 + 17 = 20, push it.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "50",
+      "3",
+      "17",
+      "+",
+      "2",
+      "-",
+      "/"
+     ],
+     "hl": {
+      "4": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "stack",
+     "items": [
+      2,
+      20,
+      50
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "push 2",
+   "narration": "Number: push 2.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "50",
+      "3",
+      "17",
+      "+",
+      "2",
+      "-",
+      "/"
+     ],
+     "hl": {
+      "5": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "stack",
+     "items": [
+      18,
+      50
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "20 - 2 = 18",
+   "narration": "Operator -: pop 2 and 20, compute 20 - 2 = 18, push it.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "50",
+      "3",
+      "17",
+      "+",
+      "2",
+      "-",
+      "/"
+     ],
+     "hl": {
+      "6": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "stack",
+     "items": [
+      2
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "50 / 18 = 2",
+   "narration": "Operator /: pop 18 and 50, compute 50 / 18 = 2, push it.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ReversePolishNotation {\n    public static int reversePolishNotation(String[] tokens) {\n        ArrayDeque<Integer> st = new ArrayDeque<>();\n        for (String t : tokens) {\n            switch (t) {\n                case \"+\" -> st.push(st.pop() + st.pop());\n                case \"*\" -> st.push(st.pop() * st.pop());\n                case \"-\" -> { int b = st.pop(); st.push(st.pop() - b); }\n                case \"/\" -> { int b = st.pop(); st.push(st.pop() / b); }\n                default -> st.push(Integer.parseInt(t));\n            }\n        }\n        return st.pop();\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ReversePolishNotation.java",
+   "narration": "For each token: plus and times push the result of two pops; minus and divide pop b first then compute a op b; anything else is parsed and pushed. Return the final pop."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Operand order for − and /: second pop is the left operand",
+    "Integer division truncates toward zero",
+    "Negative numbers are tokens too"
+   ],
+   "narration": "For minus and divide, the first pop is the right operand. Division truncates toward zero."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: convert infix → RPN (shunting-yard)"
+   ],
+   "narration": "A follow-up converts infix to RPN with the shunting-yard algorithm."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Operands go on a stack; each operator pops two and pushes the result.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Reverse Polish Notation: Operands go on a stack; each operator pops two and pushes the result. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

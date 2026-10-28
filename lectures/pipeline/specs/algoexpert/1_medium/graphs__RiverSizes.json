@@ -1,0 +1,459 @@
+{
+ "title": "AlgoExpert · River Sizes",
+ "out": "algoexpert/medium/graphs/RiverSizes",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "River Sizes",
+   "subtitle": "AlgoExpert · Medium · Graphs",
+   "narration": "Let's solve River Sizes, a medium graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "In a 0/1 matrix, sizes of all 4-directionally connected groups of 1s (any order)."
+   ],
+   "narration": "Here's the problem. In a 0 or 1 matrix, sizes of all 4-directionally connected groups of 1s (any order)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each river is a connected component of ones; flood-fill to measure it."
+   ],
+   "narration": "Each river is a connected component of ones; flood-fill to measure it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: re-explore from every 1 → repeated work",
+    "Visited matrix + DFS/BFS → each cell once, O(w·h)",
+    "Iterative stack avoids recursion limits"
+   ],
+   "narration": "Exploring from every one without remembering visits repeats work. With a visited matrix, each cell is processed once, linear in the grid size."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Scan every cell",
+    "2. On an unvisited one, DFS or BFS to count its size",
+    "3. Mark visited cells"
+   ],
+   "narration": "Step by step. First, scan every cell. Second, on an unvisited one, DFS or BFS to count its size. Third, mark visited cells."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       0,
+       0,
+       1,
+       0
+      ],
+      [
+       1,
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       0,
+       1
+      ],
+      [
+       1,
+       0,
+       1,
+       0,
+       1
+      ],
+      [
+       1,
+       0,
+       1,
+       1,
+       0
+      ]
+     ],
+     "hl": {
+      "1,0": "ok",
+      "0,0": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1,
+     "w": 0.5
+    },
+    {
+     "type": "text",
+     "lines": [
+      "sizes:",
+      "[2]"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.5
+    }
+   ],
+   "caption": "River at (0,0) → size 2",
+   "narration": "Scanning reaches an unvisited one at row 0, column 0. A flood fill finds a river of size 2.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       0,
+       0,
+       1,
+       0
+      ],
+      [
+       1,
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       0,
+       1
+      ],
+      [
+       1,
+       0,
+       1,
+       0,
+       1
+      ],
+      [
+       1,
+       0,
+       1,
+       1,
+       0
+      ]
+     ],
+     "hl": {
+      "1,0": "done",
+      "0,3": "ok",
+      "0,0": "done"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1,
+     "w": 0.5
+    },
+    {
+     "type": "text",
+     "lines": [
+      "sizes:",
+      "[2, 1]"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.5
+    }
+   ],
+   "caption": "River at (0,3) → size 1",
+   "narration": "Scanning reaches an unvisited one at row 0, column 3. A flood fill finds a river of size 1.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       0,
+       0,
+       1,
+       0
+      ],
+      [
+       1,
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       0,
+       1
+      ],
+      [
+       1,
+       0,
+       1,
+       0,
+       1
+      ],
+      [
+       1,
+       0,
+       1,
+       1,
+       0
+      ]
+     ],
+     "hl": {
+      "1,2": "ok",
+      "0,0": "done",
+      "4,3": "ok",
+      "0,3": "done",
+      "4,2": "ok",
+      "2,2": "ok",
+      "1,0": "done",
+      "3,2": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1,
+     "w": 0.5
+    },
+    {
+     "type": "text",
+     "lines": [
+      "sizes:",
+      "[2, 1, 5]"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.5
+    }
+   ],
+   "caption": "River at (1,2) → size 5",
+   "narration": "Scanning reaches an unvisited one at row 1, column 2. A flood fill finds a river of size 5.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       0,
+       0,
+       1,
+       0
+      ],
+      [
+       1,
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       0,
+       1
+      ],
+      [
+       1,
+       0,
+       1,
+       0,
+       1
+      ],
+      [
+       1,
+       0,
+       1,
+       1,
+       0
+      ]
+     ],
+     "hl": {
+      "2,4": "ok",
+      "1,2": "done",
+      "3,4": "ok",
+      "0,0": "done",
+      "4,3": "done",
+      "0,3": "done",
+      "4,2": "done",
+      "2,2": "done",
+      "1,0": "done",
+      "3,2": "done"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1,
+     "w": 0.5
+    },
+    {
+     "type": "text",
+     "lines": [
+      "sizes:",
+      "[2, 1, 5, 2]"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.5
+    }
+   ],
+   "caption": "River at (2,4) → size 2",
+   "narration": "Scanning reaches an unvisited one at row 2, column 4. A flood fill finds a river of size 2.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       0,
+       0,
+       1,
+       0
+      ],
+      [
+       1,
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       0,
+       1
+      ],
+      [
+       1,
+       0,
+       1,
+       0,
+       1
+      ],
+      [
+       1,
+       0,
+       1,
+       1,
+       0
+      ]
+     ],
+     "hl": {
+      "2,4": "done",
+      "1,2": "done",
+      "4,0": "ok",
+      "3,4": "done",
+      "0,0": "done",
+      "4,3": "done",
+      "0,3": "done",
+      "4,2": "done",
+      "3,0": "ok",
+      "2,2": "done",
+      "1,0": "done",
+      "3,2": "done"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1,
+     "w": 0.5
+    },
+    {
+     "type": "text",
+     "lines": [
+      "sizes:",
+      "[2, 1, 5, 2, 2]"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.5
+    }
+   ],
+   "caption": "River at (3,0) → size 2",
+   "narration": "Scanning reaches an unvisited one at row 3, column 0. A flood fill finds a river of size 2.",
+   "layout": "cols"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class RiverSizes {\n    public static List<Integer> riverSizes(int[][] m) {\n        List<Integer> sizes = new ArrayList<>();\n        boolean[][] seen = new boolean[m.length][m[0].length];\n        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n        for (int r = 0; r < m.length; r++)\n            for (int c = 0; c < m[0].length; c++) {\n                if (m[r][c] != 1 || seen[r][c]) continue;\n                int size = 0;\n                ArrayDeque<int[]> st = new ArrayDeque<>();\n                st.push(new int[]{r, c});\n                seen[r][c] = true;\n                while (!st.isEmpty()) {\n                    int[] p = st.pop();\n                    size++;\n                    for (int[] d : dirs) {\n                        int nr = p[0] + d[0], nc = p[1] + d[1];\n                        if (nr >= 0 && nc >= 0 && nr < m.length && nc < m[0].length && m[nr][nc] == 1 && !seen[nr][nc]) {\n                            seen[nr][nc] = true;\n                            st.push(new int[]{nr, nc});\n                        }\n                    }\n                }\n                sizes.add(size);\n            }\n        return sizes;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "RiverSizes.java",
+   "narration": "We scan every cell. On an unvisited one, we start a stack-based flood fill, counting popped cells and pushing unvisited neighbouring ones, then record the size."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(w*h)",
+    "Space: O(w*h)"
+   ],
+   "narration": "Time is O of w times h. Space is O of w times h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Mark visited when pushing, not popping",
+    "4-directional adjacency",
+    "Empty grid / no rivers → []"
+   ],
+   "narration": "Mark cells visited when you push them, otherwise the same cell can be pushed twice and counted twice."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention union-find alternative",
+    "Follow-up: largest island after flipping one 0 (Largest Island)"
+   ],
+   "narration": "Union-find is an alternative. The hard follow-up flips one zero to maximise an island."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Each river is a connected component of ones; flood-fill to measure it.",
+    "Complexity: O(w*h)"
+   ],
+   "narration": "To recap River Sizes: Each river is a connected component of ones; flood-fill to measure it. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

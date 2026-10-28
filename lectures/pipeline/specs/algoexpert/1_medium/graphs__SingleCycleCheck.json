@@ -1,0 +1,335 @@
+{
+ "title": "AlgoExpert · Single Cycle Check",
+ "out": "algoexpert/medium/graphs/SingleCycleCheck",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Single Cycle Check",
+   "subtitle": "AlgoExpert · Medium · Graphs",
+   "narration": "Let's solve Single Cycle Check, a medium graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Each element is a jump (wrapping).",
+    "Do the jumps form one cycle visiting every index exactly once and returning to the start?"
+   ],
+   "narration": "Here's the problem. Each element is a jump (wrapping). Do the jumps form one cycle visiting every index exactly once and returning to the start?"
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Follow the jumps n times: we must visit every index exactly once and return to the start."
+   ],
+   "narration": "Follow the jumps n times: we must visit every index exactly once and return to the start."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Visited array → O(n) space",
+    "Count jumps instead: n jumps, no early return to 0 → O(1) space",
+    "Floor-mod handles negative jumps"
+   ],
+   "narration": "A visited array works but uses extra space. Counting is enough: if we make n jumps, never land on index zero early, and end at zero, every index was visited exactly once."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Jump n times with wrap-around",
+    "2. If we return to zero early, fail",
+    "3. After n jumps we must be at zero"
+   ],
+   "narration": "Step by step. First, jump n times with wrap-around. Second, if we return to zero early, fail. Third, after n jumps we must be at zero."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      1,
+      -4,
+      -4,
+      2
+     ],
+     "hl": {
+      "0": "cur",
+      "2": "warn"
+     },
+     "ptr": {
+      "at": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "jump +2: 0 → 2",
+      "jumps so far: 1"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "0 → 2",
+   "narration": "From index 0, jump 2 to index 2, wrapping around if needed.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      1,
+      -4,
+      -4,
+      2
+     ],
+     "hl": {
+      "0": "done",
+      "2": "cur",
+      "3": "warn"
+     },
+     "ptr": {
+      "at": 2
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "jump +1: 2 → 3",
+      "jumps so far: 2"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "2 → 3",
+   "narration": "From index 2, jump 1 to index 3, wrapping around if needed.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      1,
+      -4,
+      -4,
+      2
+     ],
+     "hl": {
+      "0": "done",
+      "2": "done",
+      "3": "cur",
+      "5": "warn"
+     },
+     "ptr": {
+      "at": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "jump -4: 3 → 5",
+      "jumps so far: 3"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "3 → 5",
+   "narration": "From index 3, jump -4 to index 5, wrapping around if needed.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      1,
+      -4,
+      -4,
+      2
+     ],
+     "hl": {
+      "0": "done",
+      "2": "done",
+      "3": "done",
+      "5": "done",
+      "1": "cur",
+      "4": "warn"
+     },
+     "ptr": {
+      "at": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "jump +3: 1 → 4",
+      "jumps so far: 5"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "1 → 4",
+   "narration": "From index 1, jump 3 to index 4, wrapping around if needed.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      1,
+      -4,
+      -4,
+      2
+     ],
+     "hl": {
+      "0": "warn",
+      "2": "done",
+      "3": "done",
+      "5": "done",
+      "1": "done",
+      "4": "cur"
+     },
+     "ptr": {
+      "at": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "jump -4: 4 → 0",
+      "jumps so far: 6"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "4 → 0",
+   "narration": "From index 4, jump -4 to index 0, wrapping around if needed.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      1,
+      -4,
+      -4,
+      2
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok",
+      "4": "ok",
+      "5": "ok"
+     },
+     "ptr": {
+      "at": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "After 6 jumps we're back at 0 → single cycle",
+   "narration": "After exactly 6 jumps, we're back at index zero, and we never returned early. It's a single cycle.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SingleCycleCheck {\n    public static boolean hasSingleCycle(int[] a) {\n        int n = a.length, idx = 0;\n        for (int visited = 0; visited < n; visited++) {\n            if (visited > 0 && idx == 0) return false;\n            idx = Math.floorMod(idx + a[idx], n);\n        }\n        return idx == 0;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SingleCycleCheck.java",
+   "narration": "We loop n times. If we land back on zero after at least one jump but before n jumps, we return false. Each step moves the index by the value with floor mod. Finally we check we're at zero."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Negative jumps: use floorMod",
+    "Large jumps wrap multiple times",
+    "Returning to 0 early → false"
+   ],
+   "narration": "Use floor mod so negative jumps wrap correctly, and remember that returning to zero too early means a smaller cycle."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why n jumps + end at 0 suffices",
+    "Follow-up: detect any cycle from any start"
+   ],
+   "narration": "Explain the counting argument carefully; that's what interviewers look for."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Follow the jumps n times: we must visit every index exactly once and return to the start.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Single Cycle Check: Follow the jumps n times: we must visit every index exactly once and return to the start. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,270 @@
+{
+ "title": "AlgoExpert · Valid Starting City",
+ "out": "algoexpert/medium/greedyalgorithms/ValidStartingCity",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Valid Starting City",
+   "subtitle": "AlgoExpert · Medium · Greedy Algorithms",
+   "narration": "Let's solve Valid Starting City, a medium greedy algorithms problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Circular route; city i has fuel[i] gallons and is distances[i] miles from the next.",
+    "Return the unique start index allowing a full loop.",
+    "The start is the point after the lowest fuel balance."
+   ],
+   "narration": "Here's the problem. Circular route; city i has fuel i gallons and is distances i miles from the next. Return the unique start index allowing a full loop. The start is the point after the lowest fuel balance."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "The valid start is right after the point where the running fuel balance is lowest."
+   ],
+   "narration": "The valid start is right after the point where the running fuel balance is lowest."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: simulate from every city → O(n²)",
+    "Track running fuel; start where it's lowest → O(n)",
+    "Guaranteed exactly one valid city"
+   ],
+   "narration": "Simulating the trip from every city is quadratic. Instead, run the trip once from city zero, allowing negative fuel. The city where the running total hits its minimum is the right start: starting there, the tank never dips below zero."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Track miles remaining around the loop",
+    "2. Find the city with the minimum balance",
+    "3. That city is the start"
+   ],
+   "narration": "Step by step. First, track miles remaining around the loop. Second, find the city with the minimum balance. Third, that city is the start."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      25,
+      15,
+      10,
+      15
+     ],
+     "hl": {},
+     "ptr": {
+      "city": 1
+     },
+     "label": "distance to next",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      0,
+      5,
+      "",
+      "",
+      ""
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "cur"
+     },
+     "ptr": {},
+     "label": "miles left on arrival (starting at city 0)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Arrive at city 1 with 5 miles; lowest so far at city 0",
+   "narration": "Arriving at city 1, starting from city zero, we'd have 5 miles of fuel. The lowest point so far is at city 0.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      25,
+      15,
+      10,
+      15
+     ],
+     "hl": {},
+     "ptr": {
+      "city": 2
+     },
+     "label": "distance to next",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      0,
+      5,
+      0,
+      "",
+      ""
+     ],
+     "hl": {
+      "0": "ok",
+      "2": "cur"
+     },
+     "ptr": {},
+     "label": "miles left on arrival (starting at city 0)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Arrive at city 2 with 0 miles; lowest so far at city 0",
+   "narration": "Arriving at city 2, starting from city zero, we'd have 0 miles of fuel. The lowest point so far is at city 0.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      25,
+      15,
+      10,
+      15
+     ],
+     "hl": {},
+     "ptr": {
+      "city": 3
+     },
+     "label": "distance to next",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      0,
+      5,
+      0,
+      -5,
+      ""
+     ],
+     "hl": {
+      "3": "cur"
+     },
+     "ptr": {},
+     "label": "miles left on arrival (starting at city 0)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Arrive at city 3 with -5 miles; lowest so far at city 3",
+   "narration": "Arriving at city 3, starting from city zero, we'd have -5 miles of fuel. The lowest point so far is at city 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      25,
+      15,
+      10,
+      15
+     ],
+     "hl": {},
+     "ptr": {
+      "city": 4
+     },
+     "label": "distance to next",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      0,
+      5,
+      0,
+      -5,
+      -15
+     ],
+     "hl": {
+      "4": "cur"
+     },
+     "ptr": {},
+     "label": "miles left on arrival (starting at city 0)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Arrive at city 4 with -15 miles; lowest so far at city 4",
+   "narration": "Arriving at city 4, starting from city zero, we'd have -15 miles of fuel. The lowest point so far is at city 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ValidStartingCity {\n    public static int validStartingCity(int[] distances, int[] fuel, int mpg) {\n        int miles = 0, minMiles = 0, start = 0;\n        for (int i = 1; i < distances.length; i++) {\n            miles += fuel[i - 1] * mpg - distances[i - 1];\n            if (miles < minMiles) { minMiles = miles; start = i; }\n        }\n        return start;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ValidStartingCity.java",
+   "narration": "We track miles remaining, the minimum and its city. For each city from one, add the fuel from the previous city times mpg minus the distance, and update the minimum and start."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Fuel is gallons × mpg",
+    "Start at the minimum *arrival* point",
+    "Input guarantees a solution"
+   ],
+   "narration": "Remember to multiply fuel by miles per gallon, and choose the city where you arrive with the least fuel."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same as LeetCode Gas Station",
+    "Explain why the minimum point works"
+   ],
+   "narration": "This is the gas station problem. Explain the minimum-point argument: shifting the start shifts the whole curve up."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "The valid start is right after the point where the running fuel balance is lowest.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Valid Starting City: The valid start is right after the point where the running fuel balance is lowest. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

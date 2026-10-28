@@ -1,0 +1,224 @@
+{
+ "title": "AlgoExpert · Remove Kth Node From End",
+ "out": "algoexpert/medium/linkedlists/RemoveKthNodeFromEnd",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Remove Kth Node From End",
+   "subtitle": "AlgoExpert · Medium · Linked Lists",
+   "narration": "Let's solve Remove Kth Node From End, a medium linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Remove in place (list length >= 2, k valid).",
+    "If the head is removed, the head node takes its successor's value so the reference stays valid."
+   ],
+   "narration": "Here's the problem. Remove in place (list length over equals 2, k valid). If the head is removed, the head node takes its successor's value so the reference stays valid."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Keep a gap of k between two pointers so the leading one hits the end when the trailing one is just before the target."
+   ],
+   "narration": "Keep a gap of k between two pointers so the leading one hits the end when the trailing one is just before the target."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Two passes: count length, then walk to n − k",
+    "One pass with a k-gap between two pointers",
+    "Both O(n) time, O(1) space"
+   ],
+   "narration": "Two passes, one to count and one to walk, works fine. The single-pass trick keeps two pointers exactly k apart, so when the leading one reaches the end, the trailing one is right before the target."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Advance the lead k steps",
+    "2. Move both until the lead ends",
+    "3. Unlink the target, handling the head"
+   ],
+   "narration": "Step by step. First, advance the lead k steps. Second, move both until the lead ends. Third, unlink the target, handling the head."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "ptr": {
+      "fast": 4,
+      "slow": 0
+     },
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Move fast 4 steps ahead",
+   "narration": "Move fast 4 nodes ahead, so the gap between fast and slow is exactly k.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "ptr": {
+      "fast": 6,
+      "slow": 2
+     },
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Advance both: slow at 2",
+   "narration": "Move both together. Slow is at 2, fast at 6.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "ptr": {
+      "fast": 9,
+      "slow": 5
+     },
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Advance both: slow at 5",
+   "narration": "Move both together. Slow is at 5, fast at 9.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "ptr": {
+      "slow": 5
+     },
+     "hl": {
+      "6": "bad"
+     },
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "slow.next = slow.next.next removes 6",
+   "narration": "Fast is at the last node, so slow is just before the k-th from the end. Skip over 6 to remove it.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class RemoveKthNodeFromEnd {\n    public static void removeKthNodeFromEnd(LinkedListNode head, int k) {\n        LinkedListNode fast = head, slow = head;\n        for (int i = 0; i < k; i++) fast = fast.next;\n        if (fast == null) { head.value = head.next.value; head.next = head.next.next; return; }\n        while (fast.next != null) { fast = fast.next; slow = slow.next; }\n        slow.next = slow.next.next;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "RemoveKthNodeFromEnd.java",
+   "narration": "Fast moves k steps. If it's null, the head is the target, so we overwrite the head with its next. Otherwise we advance both until fast is the last node and skip slow's next."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Removing the head (k = length): copy next into head",
+    "k is always valid here",
+    "Stop fast at the last node, not null"
+   ],
+   "narration": "Removing the head is the special case: fast becomes null, so we copy the second node into the head and skip it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Dummy node simplifies head removal",
+    "Follow-up: return the new head instead"
+   ],
+   "narration": "Using a dummy node avoids the head special case. Mention it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Keep a gap of k between two pointers so the leading one hits the end when the trailing one is just before the target.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Remove Kth Node From End: Keep a gap of k between two pointers so the leading one hits the end when the trailing one is just before the target. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

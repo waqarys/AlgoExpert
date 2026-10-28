@@ -1,0 +1,233 @@
+{
+ "title": "AlgoExpert · Caesar Cipher Encryptor",
+ "out": "algoexpert/easy/strings/CaesarCipherEncryptor",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Caesar Cipher Encryptor",
+   "subtitle": "AlgoExpert · Easy · Strings",
+   "narration": "Let's solve Caesar Cipher Encryptor, an easy strings problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Shift each lowercase letter by `key` positions, wrapping around z."
+   ],
+   "narration": "Here's the problem. Shift each lowercase letter by key positions, wrapping around z."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Shift each letter by the key, wrapping around the alphabet with modulo twenty-six."
+   ],
+   "narration": "Shift each letter by the key, wrapping around the alphabet with modulo twenty-six."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Naive: shift one letter step by step k times → O(n·k)",
+    "Optimal: arithmetic with modulo 26 → O(n)",
+    "Reduce k mod 26 first (k can be huge)"
+   ],
+   "narration": "A naive version steps each letter forward k times. With modular arithmetic, each letter is shifted in one step, and reducing k modulo twenty-six handles huge keys."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Reduce the key modulo twenty-six",
+    "2. For each letter, compute its new code",
+    "3. Wrap past z back to a",
+    "4. Build the new string"
+   ],
+   "narration": "Step by step. First, reduce the key modulo twenty-six. Second, for each letter, compute its new code. Third, wrap past z back to a. Fourth, build the new string."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "x",
+      "y",
+      "z"
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {},
+     "label": "input",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      "z"
+     ],
+     "hl": {
+      "0": "ok"
+     },
+     "ptr": {},
+     "label": "output",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "'x' = 23; (23 + 2) mod 26 = 25 → 'z'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'x' shifted by 2 → 'z'",
+   "narration": "The letter x is position 23. Adding 2 and taking modulo twenty-six gives 25, which is z.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "x",
+      "y",
+      "z"
+     ],
+     "hl": {
+      "1": "cur"
+     },
+     "ptr": {},
+     "label": "input",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      "z",
+      "a"
+     ],
+     "hl": {
+      "1": "ok"
+     },
+     "ptr": {},
+     "label": "output",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "'y' = 24; (24 + 2) mod 26 = 0 → 'a'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'y' shifted by 2 → 'a'",
+   "narration": "The letter y is position 24. Adding 2 and taking modulo twenty-six gives 0, which is a.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "x",
+      "y",
+      "z"
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {},
+     "label": "input",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      "z",
+      "a",
+      "b"
+     ],
+     "hl": {
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": "output",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "'z' = 25; (25 + 2) mod 26 = 1 → 'b'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'z' shifted by 2 → 'b'",
+   "narration": "The letter z is position 25. Adding 2 and taking modulo twenty-six gives 1, which is b.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class CaesarCipherEncryptor {\n    public static String caesarCypherEncryptor(String str, int key) {\n        int k = key % 26;\n        StringBuilder sb = new StringBuilder();\n        for (char c : str.toCharArray()) sb.append((char) ('a' + (c - 'a' + k) % 26));\n        return sb.toString();\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "CaesarCipherEncryptor.java",
+   "narration": "We reduce the key modulo twenty-six, then map each character to its zero-based position, add the key, wrap with modulo, and convert back to a character."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Wrap-around: 'z' + 1 = 'a'",
+    "Large k (e.g. 54 ≡ 2)",
+    "Lowercase only per problem"
+   ],
+   "narration": "Remember wrap-around from z back to a and reduce large keys first."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Use a StringBuilder / char array, not string concatenation",
+    "Follow-up: decrypt, uppercase, non-letters"
+   ],
+   "narration": "Build the result with a character array or StringBuilder. Follow-ups include decryption and handling uppercase or punctuation."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Shift each letter by the key, wrapping around the alphabet with modulo twenty-six.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Caesar Cipher Encryptor: Shift each letter by the key, wrapping around the alphabet with modulo twenty-six. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

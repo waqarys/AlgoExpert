@@ -1,0 +1,467 @@
+{
+ "title": "AlgoExpert · Knapsack Problem",
+ "out": "algoexpert/hard/dynamicprogramming/KnapsackProblem",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Knapsack Problem",
+   "subtitle": "AlgoExpert · Hard · Dynamic Programming",
+   "narration": "Let's solve Knapsack Problem, a hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Items are [value, weight].",
+    "Returns [[maxValue], [item indices]]."
+   ],
+   "narration": "Here's the problem. Items are value, weight . Returns maxValue , item indices ."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each item is taken or skipped; a table over items and capacities captures every choice."
+   ],
+   "narration": "Each item is taken or skipped; a table over items and capacities captures every choice."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Try all 2ⁿ subsets",
+    "DP table (items × capacity) → O(n·C)",
+    "1-D array iterating capacity downward → O(C) space"
+   ],
+   "narration": "Trying all subsets is exponential. A table over items and capacity is n times C, pseudo-polynomial, and backtracking recovers the items."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Row per item, column per capacity",
+    "2. Skip copies the row above",
+    "3. Take adds the value to the row above at capacity minus weight",
+    "4. Backtrack to list items"
+   ],
+   "narration": "Step by step. First, row per item, column per capacity. Second, skip copies the row above. Third, take adds the value to the row above at capacity minus weight. Fourth, backtrack to list items."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1
+      ]
+     ],
+     "hl": {
+      "1,2": "ok",
+      "1,3": "ok",
+      "1,4": "ok",
+      "1,5": "ok",
+      "1,6": "ok",
+      "1,7": "ok",
+      "1,8": "ok",
+      "1,9": "ok",
+      "1,10": "ok"
+     },
+     "rowh": [
+      "–",
+      "[1,2]"
+     ],
+     "colh": [
+      "",
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Item [1 value, 2 weight]",
+   "narration": "Add the item worth 1 weighing 2. Green cells improved by taking it. Best for capacity ten is now 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       0,
+       1,
+       4,
+       4,
+       5,
+       5,
+       5,
+       5,
+       5,
+       5
+      ]
+     ],
+     "hl": {
+      "2,3": "ok",
+      "2,4": "ok",
+      "2,5": "ok",
+      "2,6": "ok",
+      "2,7": "ok",
+      "2,8": "ok",
+      "2,9": "ok",
+      "2,10": "ok"
+     },
+     "rowh": [
+      "–",
+      "[1,2]",
+      "[4,3]"
+     ],
+     "colh": [
+      "",
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Item [4 value, 3 weight]",
+   "narration": "Add the item worth 4 weighing 3. Green cells improved by taking it. Best for capacity ten is now 5.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       0,
+       1,
+       4,
+       4,
+       5,
+       5,
+       5,
+       5,
+       5,
+       5
+      ],
+      [
+       0,
+       0,
+       1,
+       4,
+       4,
+       5,
+       5,
+       5,
+       6,
+       9,
+       9
+      ]
+     ],
+     "hl": {
+      "3,8": "ok",
+      "3,9": "ok",
+      "3,10": "ok"
+     },
+     "rowh": [
+      "–",
+      "[1,2]",
+      "[4,3]",
+      "[5,6]"
+     ],
+     "colh": [
+      "",
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Item [5 value, 6 weight]",
+   "narration": "Add the item worth 5 weighing 6. Green cells improved by taking it. Best for capacity ten is now 9.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1
+      ],
+      [
+       0,
+       0,
+       1,
+       4,
+       4,
+       5,
+       5,
+       5,
+       5,
+       5,
+       5
+      ],
+      [
+       0,
+       0,
+       1,
+       4,
+       4,
+       5,
+       5,
+       5,
+       6,
+       9,
+       9
+      ],
+      [
+       0,
+       0,
+       1,
+       4,
+       4,
+       5,
+       5,
+       6,
+       6,
+       9,
+       10
+      ]
+     ],
+     "hl": {
+      "4,7": "ok",
+      "4,10": "ok"
+     },
+     "rowh": [
+      "–",
+      "[1,2]",
+      "[4,3]",
+      "[5,6]",
+      "[6,7]"
+     ],
+     "colh": [
+      "",
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Item [6 value, 7 weight]",
+   "narration": "Add the item worth 6 weighing 7. Green cells improved by taking it. Best for capacity ten is now 10.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "max value 10",
+      "items [1, 3]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Answer: 10 using items [1, 3]",
+   "narration": "Backtracking from the bottom-right, the chosen items are [1, 3], worth 10.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class KnapsackProblem {\n    public static List<List<Integer>> knapsackProblem(int[][] items, int capacity) {\n        int n = items.length;\n        int[][] dp = new int[n + 1][capacity + 1];\n        for (int i = 1; i <= n; i++) for (int c = 0; c <= capacity; c++) {\n            dp[i][c] = dp[i - 1][c];\n            int w = items[i - 1][1];\n            if (w <= c) dp[i][c] = Math.max(dp[i][c], dp[i - 1][c - w] + items[i - 1][0]);\n        }\n        List<Integer> chosen = new ArrayList<>();\n        for (int i = n, c = capacity; i > 0; i--)\n            if (dp[i][c] != dp[i - 1][c]) { chosen.add(0, i - 1); c -= items[i - 1][1]; }\n        return List.of(List.of(dp[n][capacity]), chosen);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "KnapsackProblem.java",
+   "narration": "Dp of i, c is either skipping the item, or taking it if it fits. Then from the bottom-right, a change between rows means the item was taken."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n*c)",
+    "Space: O(n*c)"
+   ],
+   "narration": "Time is O of n times c. Space is O of n times c."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Pseudo-polynomial in capacity",
+    "1-D version must iterate capacity downward",
+    "Backtrack to recover items"
+   ],
+   "narration": "This is pseudo-polynomial. The one-dimensional version must iterate capacity downward."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention unbounded vs 0/1 knapsack"
+   ],
+   "narration": "Contrast zero-one with unbounded knapsack."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Each item is taken or skipped; a table over items and capacities captures every choice.",
+    "Complexity: O(n*c)"
+   ],
+   "narration": "To recap Knapsack Problem: Each item is taken or skipped; a table over items and capacities captures every choice. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,323 @@
+{
+ "title": "AlgoExpert · All Kinds Of Node Depths",
+ "out": "algoexpert/veryhard/binarytrees/AllKindsOfNodeDepths",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "All Kinds Of Node Depths",
+   "subtitle": "AlgoExpert · Very Hard · Binary Trees",
+   "narration": "Let's solve All Kinds Of Node Depths, a very hard binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Sum, over every node, of the depths of all nodes in its subtree (relative to it).",
+    "Per subtree: sumDepths = sumDepths(l) + size(l) + sumDepths(r) + size(r)."
+   ],
+   "narration": "Here's the problem. Sum, over every node, of the depths of all nodes in its subtree (relative to it). Per subtree: sumDepths equals sumDepths(l) plus size(l) plus sumDepths(r) plus size(r)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each subtree's depth sum follows from its children's: their sums plus their sizes."
+   ],
+   "narration": "Each subtree's depth sum follows from its children's: their sums plus their sizes."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Compute depth sum for every subtree separately → O(n²)",
+    "Single post-order returning (size, depthSum, total) → O(n)"
+   ],
+   "narration": "Computing each subtree's depth sum separately is quadratic. One post-order pass returning size, depth sum and total is linear."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Post-order returns size, depth sum and total",
+    "2. Depth sum equals children's sums plus their sizes",
+    "3. Add everyone's depth sums"
+   ],
+   "narration": "Step by step. First, post-order returns size, depth sum and total. Second, depth sum equals children's sums plus their sizes. Third, add everyone's depth sums."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ],
+      "7": [
+       8,
+       null,
+       null
+      ],
+      "8": [
+       9,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {},
+     "label": null,
+     "notes": {
+      "7": "s1 d0",
+      "8": "s1 d0",
+      "4": "s1 d0",
+      "5": "s1 d0",
+      "6": "s1 d0"
+     },
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "leaf: size 1, depth-sum 0"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "Leaves: size 1, depth sum 0",
+   "narration": "Each node returns its subtree size, the sum of depths below it, and the running total.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ],
+      "7": [
+       8,
+       null,
+       null
+      ],
+      "8": [
+       9,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "3": "cur"
+     },
+     "label": null,
+     "notes": {
+      "3": "s3 d2"
+     },
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "depths = left depths + left size + right depths + right size"
+     ],
+     "label": null,
+     "h": 0.35,
+     "size": 18
+    }
+   ],
+   "caption": "Moving up adds 1 per node below",
+   "narration": "Moving up one level adds one to every node's depth below, so depth sum is children's sums plus their sizes.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ],
+      "7": [
+       8,
+       null,
+       null
+      ],
+      "8": [
+       9,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "ok"
+     },
+     "label": null,
+     "notes": {
+      "0": "total 26"
+     },
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "answer = Σ depth sums of all subtrees = 26"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "Answer: 26",
+   "narration": "Adding every subtree's depth sum gives 26.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class AllKindsOfNodeDepths {\n    public static int allKindsOfNodeDepths(BinaryTree root) { return (int) info(root)[2]; }\n\n    /** returns {size, sumDepths, total} */\n    private static long[] info(BinaryTree t) {\n        if (t == null) return new long[]{0, 0, 0};\n        long[] l = info(t.left), r = info(t.right);\n        long size = 1 + l[0] + r[0], depths = l[1] + l[0] + r[1] + r[0];\n        return new long[]{size, depths, depths + l[2] + r[2]};\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "AllKindsOfNodeDepths.java",
+   "narration": "Info returns zeros for null. Otherwise it combines children: size is one plus both, depths is each child's depth sum plus its size, and total adds the children's totals."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Use long for large trees",
+    "Null → zeros"
+   ],
+   "narration": "Use longs on big trees."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain the +size trick"
+   ],
+   "narration": "Explain why adding the size shifts depths by one."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Each subtree's depth sum follows from its children's: their sums plus their sizes.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap All Kinds Of Node Depths: Each subtree's depth sum follows from its children's: their sums plus their sizes. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,374 @@
+{
+ "title": "AlgoExpert · Next Greater Element",
+ "out": "algoexpert/medium/stacks/NextGreaterElement",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Next Greater Element",
+   "subtitle": "AlgoExpert · Medium · Stacks",
+   "narration": "Let's solve Next Greater Element, a medium stacks problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "For each element of a circular array, the next strictly greater value, or -1."
+   ],
+   "narration": "Here's the problem. For each element of a circular array, the next strictly greater value, or -1."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A monotonic stack holds indices still waiting for a greater value; loop twice for circularity."
+   ],
+   "narration": "A monotonic stack holds indices still waiting for a greater value; loop twice for circularity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "For each element scan forward (wrapping) → O(n²)",
+    "Monotonic decreasing stack, two passes for wrap → O(n)",
+    "Each index pushed and popped once"
+   ],
+   "narration": "Scanning forward from every element is quadratic. A decreasing stack of unresolved indices resolves them as soon as a bigger value appears. Looping twice handles the circular wrap."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Iterate twice around the array",
+    "2. Pop indices whose value is smaller and assign the answer",
+    "3. Push the current index"
+   ],
+   "narration": "Step by step. First, iterate twice around the array. Second, pop indices whose value is smaller and assign the answer. Third, push the current index."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      5,
+      -3,
+      -4,
+      6,
+      7,
+      2
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {
+      "i": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "answer",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "stack (indices): [0]"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "Push index 0",
+   "narration": "2 is greater than nothing waiting; push it.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      5,
+      -3,
+      -4,
+      6,
+      7,
+      2
+     ],
+     "hl": {
+      "1": "cur",
+      "0": "ok"
+     },
+     "ptr": {
+      "i": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      5,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "answer",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "stack (indices): [1]"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "5 resolves [2]",
+   "narration": "5 is greater than 2 on the stack, so it's their answer.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      5,
+      -3,
+      -4,
+      6,
+      7,
+      2
+     ],
+     "hl": {
+      "4": "cur",
+      "3": "ok",
+      "2": "ok",
+      "1": "ok"
+     },
+     "ptr": {
+      "i": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      5,
+      6,
+      6,
+      6,
+      -1,
+      -1,
+      -1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "answer",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "stack (indices): [4]"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "6 resolves [-4, -3, 5]",
+   "narration": "6 is greater than -4, -3, 5 on the stack, so it's their answer.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      5,
+      -3,
+      -4,
+      6,
+      7,
+      2
+     ],
+     "hl": {
+      "5": "cur",
+      "4": "ok"
+     },
+     "ptr": {
+      "i": 5
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      5,
+      6,
+      6,
+      6,
+      7,
+      -1,
+      -1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "answer",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "stack (indices): [5]"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "7 resolves [6]",
+   "narration": "7 is greater than 6 on the stack, so it's their answer.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      5,
+      -3,
+      -4,
+      6,
+      7,
+      2
+     ],
+     "hl": {
+      "1": "cur",
+      "6": "ok"
+     },
+     "ptr": {
+      "i": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      5,
+      6,
+      6,
+      6,
+      7,
+      -1,
+      5
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "answer",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "stack (indices): [5]"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "Pass 2: 5 resolves [2]",
+   "narration": "In the second pass, 5 is greater than 2 on the stack, so it's their answer.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class NextGreaterElement {\n    public static int[] nextGreaterElement(int[] a) {\n        int n = a.length;\n        int[] out = new int[n];\n        Arrays.fill(out, -1);\n        ArrayDeque<Integer> st = new ArrayDeque<>();\n        for (int i = 0; i < 2 * n; i++) {\n            int j = i % n;\n            while (!st.isEmpty() && a[st.peek()] < a[j]) out[st.pop()] = a[j];\n            if (i < n) st.push(j);\n        }\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "NextGreaterElement.java",
+   "narration": "We fill the output with minus one and loop i to two n, using j equal i mod n. While the top's value is smaller than a of j, pop and set its answer. Push j only in the first pass."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Push indices, not values",
+    "Only push in the first pass",
+    "No greater → −1"
+   ],
+   "narration": "Store indices so you can write the answer. Only push during the first pass."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same pattern: daily temperatures, stock span"
+   ],
+   "narration": "The same pattern solves daily temperatures and stock span."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "A monotonic stack holds indices still waiting for a greater value; loop twice for circularity.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Next Greater Element: A monotonic stack holds indices still waiting for a greater value; loop twice for circularity. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

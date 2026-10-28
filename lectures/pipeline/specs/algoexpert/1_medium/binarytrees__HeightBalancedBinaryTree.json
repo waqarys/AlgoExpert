@@ -1,0 +1,400 @@
+{
+ "title": "AlgoExpert · Height Balanced Binary Tree",
+ "out": "algoexpert/medium/binarytrees/HeightBalancedBinaryTree",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Height Balanced Binary Tree",
+   "subtitle": "AlgoExpert · Medium · Binary Trees",
+   "narration": "Let's solve Height Balanced Binary Tree, a medium binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "For every node, do left/right subtree heights differ by at most 1?",
+    "Returns -1 from the helper as an \"unbalanced\" sentinel."
+   ],
+   "narration": "Here's the problem. For every node, do left or right subtree heights differ by at most 1? Returns -1 from the helper as an \"unbalanced\" sentinel."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Compute heights bottom-up and fail fast if any node's subtrees differ by more than one."
+   ],
+   "narration": "Compute heights bottom-up and fail fast if any node's subtrees differ by more than one."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Naive: compute height separately at every node → O(n²)",
+    "Single post-order returning height or −1 → O(n)",
+    "Fail fast propagates up immediately"
+   ],
+   "narration": "Calling a separate height function at every node repeats work and is quadratic on skewed trees. A single post-order pass that returns the height, or minus one for unbalanced, checks everything in linear time."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Post-order returns height and balance",
+    "2. Compare child heights",
+    "3. Propagate any imbalance up"
+   ],
+   "narration": "Step by step. First, post-order returns height and balance. Second, compare child heights. Third, propagate any imbalance up."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       null,
+       "6"
+      ],
+      "3": [
+       4,
+       null,
+       null
+      ],
+      "4": [
+       5,
+       "9",
+       "10"
+      ],
+      "6": [
+       6,
+       null,
+       null
+      ],
+      "9": [
+       7,
+       null,
+       null
+      ],
+      "10": [
+       8,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "3": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Node 4: heights 0 and 0 → height 1",
+   "narration": "At node 4, the subtree heights are 0 and 0. That's balanced, with height 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       null,
+       "6"
+      ],
+      "3": [
+       4,
+       null,
+       null
+      ],
+      "4": [
+       5,
+       "9",
+       "10"
+      ],
+      "6": [
+       6,
+       null,
+       null
+      ],
+      "9": [
+       7,
+       null,
+       null
+      ],
+      "10": [
+       8,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "10": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Node 8: heights 0 and 0 → height 1",
+   "narration": "At node 8, the subtree heights are 0 and 0. That's balanced, with height 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       null,
+       "6"
+      ],
+      "3": [
+       4,
+       null,
+       null
+      ],
+      "4": [
+       5,
+       "9",
+       "10"
+      ],
+      "6": [
+       6,
+       null,
+       null
+      ],
+      "9": [
+       7,
+       null,
+       null
+      ],
+      "10": [
+       8,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "1": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Node 2: heights 1 and 2 → height 3",
+   "narration": "At node 2, the subtree heights are 1 and 2. That's balanced, with height 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       null,
+       "6"
+      ],
+      "3": [
+       4,
+       null,
+       null
+      ],
+      "4": [
+       5,
+       "9",
+       "10"
+      ],
+      "6": [
+       6,
+       null,
+       null
+      ],
+      "9": [
+       7,
+       null,
+       null
+      ],
+      "10": [
+       8,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "6": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Node 6: heights 0 and 0 → height 1",
+   "narration": "At node 6, the subtree heights are 0 and 0. That's balanced, with height 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       null,
+       "6"
+      ],
+      "3": [
+       4,
+       null,
+       null
+      ],
+      "4": [
+       5,
+       "9",
+       "10"
+      ],
+      "6": [
+       6,
+       null,
+       null
+      ],
+      "9": [
+       7,
+       null,
+       null
+      ],
+      "10": [
+       8,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Node 1: heights 3 and 2 → height 4",
+   "narration": "At node 1, the subtree heights are 3 and 2. That's balanced, with height 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class HeightBalancedBinaryTree {\n    public static boolean heightBalancedBinaryTree(BinaryTree t) { return h(t) != -1; }\n\n    private static int h(BinaryTree t) {\n        if (t == null) return 0;\n        int l = h(t.left), r = h(t.right);\n        if (l == -1 || r == -1 || Math.abs(l - r) > 1) return -1;\n        return 1 + Math.max(l, r);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "HeightBalancedBinaryTree.java",
+   "narration": "The helper returns zero for null. It computes both child heights; if either is minus one or they differ by more than one, it returns minus one. Otherwise it returns one plus the larger."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Empty tree is balanced",
+    "Check every node, not just the root",
+    "Use a sentinel (−1) to short-circuit"
+   ],
+   "narration": "An empty tree is balanced, and the condition must hold at every node, not just the root."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: rebalance via rotations (AVL)",
+    "Return a small object instead of a sentinel"
+   ],
+   "narration": "In a real codebase, return a small object with height and balanced flag. A follow-up is how AVL trees rebalance with rotations."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Compute heights bottom-up and fail fast if any node's subtrees differ by more than one.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Height Balanced Binary Tree: Compute heights bottom-up and fail fast if any node's subtrees differ by more than one. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

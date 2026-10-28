@@ -1,0 +1,82 @@
+{
+ "title": "SystemsExpert · Fundamentals 1/4",
+ "out": "systemsexpert/00b_fundamentals_1",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Design Fundamentals 1/4",
+   "subtitle": "Topics 1–6",
+   "narration": "Design fundamentals, part 1 of 4. We'll cover What are design fundamentals?, Client–server model, Network protocols, Storage, Latency and throughput, and Availability."
+  },
+  {
+   "kind": "bullets",
+   "heading": "1. What are design fundamentals?",
+   "bullets": [
+    "Four pillars: the basis (networking, storage), the key characteristics (availability, latency, throughput, redundancy, consistency), the components (LBs, caches, proxies, DBs), the tech (Kafka, Redis, S3...)"
+   ],
+   "narration": "What are design fundamentals?. Four pillars: the basis (networking, storage), the key characteristics (availability, latency, throughput, redundancy, consistency), the components (LBs, caches, proxies, DBs), the tech (Kafka, Redis, S3 )."
+  },
+  {
+   "kind": "bullets",
+   "heading": "2. Client–server model",
+   "bullets": [
+    "DNS resolves to an IP",
+    "the client opens a connection to the server's port",
+    "the server listens",
+    "HTTP runs on 80, HTTPS on 443"
+   ],
+   "narration": "Client–server model. DNS resolves to an IP. the client opens a connection to the server's port. the server listens. HTTP runs on 80, HTTPS on 443."
+  },
+  {
+   "kind": "bullets",
+   "heading": "3. Network protocols",
+   "bullets": [
+    "IP packets, TCP (ordered, reliable, handshake), UDP (fast, lossy), HTTP request/response on top of TCP"
+   ],
+   "narration": "Network protocols. IP packets, TCP (ordered, reliable, handshake), UDP (fast, lossy), HTTP request or response on top of TCP."
+  },
+  {
+   "kind": "bullets",
+   "heading": "4. Storage",
+   "bullets": [
+    "Memory versus disk",
+    "persistence",
+    "databases are just servers that write to disk"
+   ],
+   "narration": "Storage. Memory versus disk. persistence. databases are just servers that write to disk."
+  },
+  {
+   "kind": "bullets",
+   "heading": "5. Latency and throughput",
+   "bullets": [
+    "Latency = time per operation (memory ~µs, SSD ~100 µs, cross-continent ~150 ms)",
+    "Throughput = operations per second",
+    "Improve them separately"
+   ],
+   "narration": "Latency and throughput. Latency equals time per operation (memory about µs, SSD about 100 µs, cross-continent about 150 ms). Throughput equals operations per second. Improve them separately."
+  },
+  {
+   "kind": "bullets",
+   "heading": "6. Availability",
+   "bullets": [
+    "Nines (99.99% ≈ 52 min a year)",
+    "SLA vs SLO",
+    "Redundancy, no single point of failure, passive/active failover"
+   ],
+   "narration": "Availability. Nines (99.99 percent about 52 min a year). SLA versus SLO. Redundancy, no single point of failure, passive or active failover."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "1. What are design fundamentals?",
+    "2. Client–server model",
+    "3. Network protocols",
+    "4. Storage",
+    "5. Latency and throughput",
+    "6. Availability"
+   ],
+   "narration": "To recap this part: What are design fundamentals?; Client–server model; Network protocols; Storage; Latency and throughput; Availability. Each of these shows up again in the design walkthroughs."
+  }
+ ]
+}

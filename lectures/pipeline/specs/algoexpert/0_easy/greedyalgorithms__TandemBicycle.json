@@ -1,0 +1,265 @@
+{
+ "title": "AlgoExpert · Tandem Bicycle",
+ "out": "algoexpert/easy/greedyalgorithms/TandemBicycle",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Tandem Bicycle",
+   "subtitle": "AlgoExpert · Easy · Greedy Algorithms",
+   "narration": "Let's solve Tandem Bicycle, an easy greedy algorithms problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Pair red and blue riders; a tandem's speed is the max of its riders.",
+    "Return the max (fastest=true) or min possible total speed."
+   ],
+   "narration": "Here's the problem. Pair red and blue riders; a tandem's speed is the max of its riders. Return the max (fastest equals true) or min possible total speed."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Speed is the max of the two riders.",
+    "For maximum total, pair the fastest with the slowest; for minimum, pair like with like."
+   ],
+   "narration": "Speed is the max of the two riders. For maximum total, pair the fastest with the slowest; for minimum, pair like with like."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: try all n! pairings",
+    "Fastest total: pair big with small (opposite orders)",
+    "Slowest total: pair big with big (same order) → O(n log n)"
+   ],
+   "narration": "Trying all pairings is factorial. Since each pair counts only its faster rider, the fastest total wastes as few fast riders as possible: pair each fast rider with a slow one. For the slowest total, pair fast with fast."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Sort both lists",
+    "2. For fastest total, pair one ascending with the other descending",
+    "3. For slowest, pair in the same order",
+    "4. Sum the max of each pair"
+   ],
+   "narration": "Step by step. First, sort both lists. Second, for fastest total, pair one ascending with the other descending. Third, for slowest, pair in the same order. Fourth, sum the max of each pair."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      5,
+      5,
+      9
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {
+      "i": 0
+     },
+     "label": "red ascending",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      7,
+      6,
+      3,
+      2,
+      1
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {
+      "i": 0
+     },
+     "label": "blue descending",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "max(2, 7) = 7",
+      "total = 7"
+     ],
+     "label": null,
+     "h": 0.5
+    }
+   ],
+   "caption": "Pair 2 with 7 → +7 (total 7)",
+   "narration": "Pair red 2 with blue 7. The tandem goes at the faster speed, 7, so the total becomes 7.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      5,
+      5,
+      9
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {
+      "i": 2
+     },
+     "label": "red ascending",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      7,
+      6,
+      3,
+      2,
+      1
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {
+      "i": 2
+     },
+     "label": "blue descending",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "max(5, 3) = 5",
+      "total = 18"
+     ],
+     "label": null,
+     "h": 0.5
+    }
+   ],
+   "caption": "Pair 5 with 3 → +5 (total 18)",
+   "narration": "Pair red 5 with blue 3. The tandem goes at the faster speed, 5, so the total becomes 18.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      5,
+      5,
+      9
+     ],
+     "hl": {
+      "4": "cur"
+     },
+     "ptr": {
+      "i": 4
+     },
+     "label": "red ascending",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      7,
+      6,
+      3,
+      2,
+      1
+     ],
+     "hl": {
+      "4": "cur"
+     },
+     "ptr": {
+      "i": 4
+     },
+     "label": "blue descending",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "max(9, 1) = 9",
+      "total = 32"
+     ],
+     "label": null,
+     "h": 0.5
+    }
+   ],
+   "caption": "Pair 9 with 1 → +9 (total 32)",
+   "narration": "Pair red 9 with blue 1. The tandem goes at the faster speed, 9, so the total becomes 32.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class TandemBicycle {\n    public static int tandemBicycle(int[] red, int[] blue, boolean fastest) {\n        Arrays.sort(red);\n        Arrays.sort(blue);\n        int n = red.length, total = 0;\n        for (int i = 0; i < n; i++) {\n            int b = fastest ? blue[n - 1 - i] : blue[i];\n            total += Math.max(red[i], b);\n        }\n        return total;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "TandemBicycle.java",
+   "narration": "We sort both arrays. If we want the fastest total, we read one of them backwards. Then for each index we add the max of the two speeds."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n log n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "fastest flag flips the sort order of one list",
+    "Sorting mutates inputs",
+    "Equal speeds are fine"
+   ],
+   "narration": "The fastest flag decides whether one list is reversed. Sorting mutates the inputs, so mention it or copy."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Justify with an exchange argument",
+    "Follow-up: k riders per bike"
+   ],
+   "narration": "Justify the pairing with an exchange argument, and be ready to discuss bikes with more riders."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Speed is the max of the two riders.",
+    "Complexity: O(n log n)"
+   ],
+   "narration": "To recap Tandem Bicycle: Speed is the max of the two riders. For maximum total, pair the fastest with the slowest; for minimum, pair like with like. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

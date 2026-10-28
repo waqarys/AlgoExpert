@@ -1,0 +1,360 @@
+{
+ "title": "AlgoExpert · Three Number Sum",
+ "out": "algoexpert/medium/arrays/ThreeNumberSum",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Three Number Sum",
+   "subtitle": "AlgoExpert · Medium · Arrays",
+   "narration": "Let's solve Three Number Sum, a medium arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "All triplets of distinct integers summing to target, each triplet ascending and the list sorted.",
+    "Sort then sweep with two pointers."
+   ],
+   "narration": "Here's the problem. All triplets of distinct integers summing to target, each triplet ascending and the list sorted. Sort then sweep with two pointers."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Fix one number, then find pairs in the sorted remainder with two pointers."
+   ],
+   "narration": "Fix one number, then find pairs in the sorted remainder with two pointers."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: three nested loops → O(n³)",
+    "Fix one + hash set for the pair → O(n²) time, O(n) space",
+    "Sort + fix one + two pointers → O(n²), O(1) extra"
+   ],
+   "narration": "Three nested loops are cubic. Fixing one number and using a hash set for the other two is quadratic with extra memory. Sorting, fixing one number, and closing in with two pointers is quadratic with constant extra space, and naturally sorted output."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Sort the array",
+    "2. For each index, set left and right pointers after it",
+    "3. Move them based on the current sum",
+    "4. Record exact matches"
+   ],
+   "narration": "Step by step. First, sort the array. Second, for each index, set left and right pointers after it. Third, move them based on the current sum. Fourth, record exact matches."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -8,
+      -6,
+      1,
+      2,
+      3,
+      5,
+      6,
+      12
+     ],
+     "hl": {
+      "0": "warn",
+      "1": "cur",
+      "7": "cur"
+     },
+     "ptr": {
+      "i": 0,
+      "L": 1,
+      "R": 7
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "-8 + -6 + 12 = -2",
+      "triplets: []"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "sum -2 < 0 → L++",
+   "narration": "With -8 fixed, -6 plus 12 gives -2. Too small, so move left forward.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -8,
+      -6,
+      1,
+      2,
+      3,
+      5,
+      6,
+      12
+     ],
+     "hl": {
+      "0": "warn",
+      "2": "cur",
+      "7": "cur"
+     },
+     "ptr": {
+      "i": 0,
+      "L": 2,
+      "R": 7
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "-8 + 1 + 12 = 5",
+      "triplets: []"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "sum 5 > 0 → R−−",
+   "narration": "With -8 fixed, 1 plus 12 gives 5. Too big, so move right back.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -8,
+      -6,
+      1,
+      2,
+      3,
+      5,
+      6,
+      12
+     ],
+     "hl": {
+      "0": "warn",
+      "2": "cur",
+      "6": "cur"
+     },
+     "ptr": {
+      "i": 0,
+      "L": 2,
+      "R": 6
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "-8 + 1 + 6 = -1",
+      "triplets: []"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "sum -1 < 0 → L++",
+   "narration": "With -8 fixed, 1 plus 6 gives -1. Too small, so move left forward.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -8,
+      -6,
+      1,
+      2,
+      3,
+      5,
+      6,
+      12
+     ],
+     "hl": {
+      "0": "warn",
+      "3": "cur",
+      "6": "cur"
+     },
+     "ptr": {
+      "i": 0,
+      "L": 3,
+      "R": 6
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "-8 + 2 + 6 = 0",
+      "triplets: [[-8, 2, 6]]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "sum 0 = 0 ✓",
+   "narration": "With -8 fixed, 2 plus 6 gives 0. That's a match; record it and move both pointers.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -8,
+      -6,
+      1,
+      2,
+      3,
+      5,
+      6,
+      12
+     ],
+     "hl": {
+      "0": "warn",
+      "4": "cur",
+      "5": "cur"
+     },
+     "ptr": {
+      "i": 0,
+      "L": 4,
+      "R": 5
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "-8 + 3 + 5 = 0",
+      "triplets: [[-8, 2, 6], [-8, 3, 5]]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "sum 0 = 0 ✓",
+   "narration": "With -8 fixed, 3 plus 5 gives 0. That's a match; record it and move both pointers.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -8,
+      -6,
+      1,
+      2,
+      3,
+      5,
+      6,
+      12
+     ],
+     "hl": {
+      "1": "warn",
+      "2": "cur",
+      "7": "cur"
+     },
+     "ptr": {
+      "i": 1,
+      "L": 2,
+      "R": 7
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "-6 + 1 + 12 = 7",
+      "triplets: [[-8, 2, 6], [-8, 3, 5]]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "sum 7 > 0 → R−−",
+   "narration": "With -6 fixed, 1 plus 12 gives 7. Too big, so move right back.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ThreeNumberSum {\n    public static List<Integer[]> threeNumberSum(int[] array, int target) {\n        Arrays.sort(array);\n        List<Integer[]> out = new ArrayList<>();\n        for (int i = 0; i < array.length - 2; i++) {\n            int l = i + 1, r = array.length - 1;\n            while (l < r) {\n                int s = array[i] + array[l] + array[r];\n                if (s == target) { out.add(new Integer[]{array[i], array[l], array[r]}); l++; r--; }\n                else if (s < target) l++; else r--;\n            }\n        }\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ThreeNumberSum.java",
+   "narration": "We sort, then for each index i set l right after it and r at the end. We compute the sum; on a match we record and move both, otherwise move l forward if too small or r back if too big."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^2)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n squared. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Distinct values here; with duplicates, skip repeats",
+    "Move both pointers after a match",
+    "Fewer than 3 elements → empty"
+   ],
+   "narration": "This problem has distinct values. With duplicates you'd skip repeated values to avoid duplicate triplets. After a match, move both pointers."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention generalisation to k-sum",
+    "Follow-up: closest 3-sum"
+   ],
+   "narration": "Mention that this generalises to k-sum, and a common follow-up is the closest three-sum."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Fix one number, then find pairs in the sorted remainder with two pointers.",
+    "Complexity: O(n^2)"
+   ],
+   "narration": "To recap Three Number Sum: Fix one number, then find pairs in the sorted remainder with two pointers. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

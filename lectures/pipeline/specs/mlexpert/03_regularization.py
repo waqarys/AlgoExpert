@@ -1,0 +1,18 @@
+from speclib import *
+TITLE = "MLExpert · Ridge, Lasso and Elastic Net"; OUT = "mlexpert/03_regularization"; M = "mlexpert/mlexpert/regularization.py"
+SLIDES = [
+ title("Regularisation", "Ridge, Lasso and Elastic Net", "Linear regression can overfit, especially with many correlated features. Regularisation fixes that by penalising large weights. We'll build ridge, lasso, and elastic net from scratch."),
+ bullets("The problem", ["Many features, few samples → huge, unstable weights", "Correlated features make XᵀX nearly singular", "We want simpler models that generalise"],
+  "Here's the issue. With many features and limited data, least squares can produce huge weights that fit noise. Correlated features make the matrix X transpose X nearly singular, so tiny data changes swing the solution. We want to trade a little bias for a lot less variance."),
+ eqs("Three penalties", [r"$\mathrm{Ridge}:\ \|y-Xw\|^2+\alpha\|w\|_2^2$", r"$\mathrm{Lasso}:\ \frac{1}{2n}\|y-Xw\|^2+\alpha\|w\|_1$"], ["Elastic net mixes both with l1_ratio"],
+  "Ridge adds the squared length of the weights. Lasso adds the sum of absolute values. Elastic net blends the two with a mixing ratio. The intuition: ridge shrinks every weight smoothly, while lasso pushes some weights exactly to zero, giving feature selection for free."),
+ code("Ridge: closed form", src(M, "Ridge.fit"), "Ridge keeps a closed form. We centre X and y so the intercept isn't penalised, then solve X transpose X plus alpha times identity against X transpose y. Adding alpha makes the system always solvable. The bias is recovered from the means."),
+ eqs("Lasso: soft thresholding", [r"$S(z,\gamma)=\mathrm{sign}(z)\,\max(|z|-\gamma,0)$"], ["No closed form: |w| isn't differentiable at 0", "Coordinate descent: optimise one weight at a time", "Small correlations snap to exactly zero"],
+  "Lasso has no closed form because absolute value has a kink at zero. Instead we use coordinate descent: fix all weights but one, and solve for that one exactly. The answer is the soft-threshold function, which shrinks the value toward zero and clips anything smaller than gamma to exactly zero."),
+ code("Coordinate descent", src(M, "soft_threshold") + "\n\n# inside ElasticNet.fit\nfor j in range(d):\n    r = yc - Xc @ w + Xc[:, j] * w[j]       # partial residual\n    w[j] = soft_threshold(Xc[:, j] @ r / n, l1) / (col_sq[j] + l2)",
+  "In code, for each feature we compute the partial residual, leaving that feature out, correlate it with the feature, soft-threshold by the L1 strength, and divide by the column's energy plus the L2 strength. Loop until the weights stop changing."),
+ bullets("Trade-offs", ["Ridge: O(n·d² + d³), keeps all features, handles collinearity", "Lasso: sparse, interpretable; picks one of correlated features", "Elastic net: sparsity + stability for grouped features", "Always scale features first; tune α by cross-validation"],
+  "Trade-offs. Ridge is one linear solve and handles collinearity, but keeps every feature. Lasso gives sparse, interpretable models, though among correlated features it picks one somewhat arbitrarily. Elastic net combines sparsity with stability. In every case, scale features first and choose alpha by cross-validation."),
+ bullets("Recap", ["Penalise weights to reduce variance", "L2 → shrink; L1 → zero out", "Ridge: closed form; Lasso: coordinate descent", "Elastic net blends both"],
+  "To recap: regularisation penalises weights to reduce variance. L2 shrinks, L1 zeroes out. Ridge is solved in closed form, lasso by coordinate descent with soft thresholding, and elastic net blends the two."),
+]

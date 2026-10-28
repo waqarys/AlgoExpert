@@ -1,0 +1,238 @@
+{
+ "title": "AlgoExpert · Staircase Traversal",
+ "out": "algoexpert/medium/recursion/StaircaseTraversal",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Staircase Traversal",
+   "subtitle": "AlgoExpert · Medium · Recursion",
+   "narration": "Let's solve Staircase Traversal, a medium recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Ways to climb `height` steps taking 1..maxSteps at a time.",
+    "Sliding-window sum DP."
+   ],
+   "narration": "Here's the problem. Ways to climb height steps taking 1..maxSteps at a time. Sliding-window sum DP."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Ways to reach step n is the sum of ways for the last maxSteps steps, a sliding window."
+   ],
+   "narration": "Ways to reach step n is the sum of ways for the last maxSteps steps, a sliding window."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Recursion over step sizes → O(kⁿ)",
+    "Memo/DP summing last k → O(n·k)",
+    "Sliding window sum → O(n)"
+   ],
+   "narration": "Plain recursion branches k ways per step. A DP summing the previous k entries is n times k, and keeping a running window sum makes it linear."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. ways of zero is one",
+    "2. Keep a running window sum",
+    "3. Add the new value and drop the oldest"
+   ],
+   "narration": "Step by step. First, ways of zero is one. Second, keep a running window sum. Third, add the new value and drop the oldest."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      0,
+      0,
+      0
+     ],
+     "hl": {
+      "1": "ok",
+      "0": "warn"
+     },
+     "ptr": {},
+     "label": "ways to reach each step",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "ways[1] = sum of the last 2 = 1"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "ways[1] = 1",
+   "narration": "To reach step 1, the last move came from one of the previous 2 steps, so we sum them: 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      2,
+      0,
+      0
+     ],
+     "hl": {
+      "2": "ok",
+      "0": "warn",
+      "1": "warn"
+     },
+     "ptr": {},
+     "label": "ways to reach each step",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "ways[2] = sum of the last 2 = 2"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "ways[2] = 2",
+   "narration": "To reach step 2, the last move came from one of the previous 2 steps, so we sum them: 2.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      2,
+      3,
+      0
+     ],
+     "hl": {
+      "3": "ok",
+      "1": "warn",
+      "2": "warn"
+     },
+     "ptr": {},
+     "label": "ways to reach each step",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "ways[3] = sum of the last 2 = 3"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "ways[3] = 3",
+   "narration": "To reach step 3, the last move came from one of the previous 2 steps, so we sum them: 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      2,
+      3,
+      5
+     ],
+     "hl": {
+      "4": "ok",
+      "2": "warn",
+      "3": "warn"
+     },
+     "ptr": {},
+     "label": "ways to reach each step",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "ways[4] = sum of the last 2 = 5"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "ways[4] = 5",
+   "narration": "To reach step 4, the last move came from one of the previous 2 steps, so we sum them: 5.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class StaircaseTraversal {\n    public static int staircaseTraversal(int height, int maxSteps) {\n        int[] ways = new int[height + 1];\n        ways[0] = 1;\n        int window = 0;\n        for (int h = 1; h <= height; h++) {\n            window += ways[h - 1];\n            if (h - maxSteps - 1 >= 0) window -= ways[h - maxSteps - 1];\n            ways[h] = window;\n        }\n        return ways[height];\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "StaircaseTraversal.java",
+   "narration": "Ways of zero is one. For each height, add ways of h minus one to the window, subtract the value that left the window, and store the window as ways of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "ways[0] = 1",
+    "Subtract the element leaving the window",
+    "maxSteps > height"
+   ],
+   "narration": "Ways of zero is one. When the window slides, subtract the value falling out of it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Notice Fibonacci for k = 2",
+    "Follow-up: forbidden steps"
+   ],
+   "narration": "With k equal to two, it's Fibonacci. Forbidden steps are a nice follow-up."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Ways to reach step n is the sum of ways for the last maxSteps steps, a sliding window.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Staircase Traversal: Ways to reach step n is the sum of ways for the last maxSteps steps, a sliding window. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

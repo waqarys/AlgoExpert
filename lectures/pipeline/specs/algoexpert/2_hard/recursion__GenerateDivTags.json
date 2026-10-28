@@ -1,0 +1,149 @@
+{
+ "title": "AlgoExpert · Generate Div Tags",
+ "out": "algoexpert/hard/recursion/GenerateDivTags",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Generate Div Tags",
+   "subtitle": "AlgoExpert · Hard · Recursion",
+   "narration": "Let's solve Generate Div Tags, a hard recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "All valid strings of n matched <div></div> pairs (balanced-parentheses generation)."
+   ],
+   "narration": "Here's the problem. All valid strings of n matched under div over under /div over pairs (balanced-parentheses generation)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Backtracking: you can open a tag while some remain and close one only if more are open than closed."
+   ],
+   "narration": "Backtracking: you can open a tag while some remain and close one only if more are open than closed."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Generate all 2^(2n) strings and filter → O(4ⁿ·n)",
+    "Backtracking with counts → O(Catalan(n))",
+    "Output size is the Catalan number"
+   ],
+   "narration": "Generating every string and filtering valid ones is wasteful. Backtracking with remaining counts only builds valid prefixes; the output size is the Catalan number."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Track opening and closing tags left",
+    "2. Add an opening tag if available",
+    "3. Add a closing tag if it keeps balance",
+    "4. Record complete strings"
+   ],
+   "narration": "Step by step. First, track opening and closing tags left. Second, add an opening tag if available. Third, add a closing tag if it keeps balance. Fourth, record complete strings."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "state: opens left, closes left",
+      "add <div> if opens > 0",
+      "add </div> if closes > opens"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Two rules keep tags valid",
+   "narration": "Track how many opening and closing tags remain. Open if any opens remain; close only if more closes than opens remain.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "(((  →  ((()  →  ((())  →  ((()))"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 22
+    }
+   ],
+   "caption": "Depth-first: open, open, open, close…",
+   "narration": "Depth first, we open three times, then close three times: the first answer.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "<<<>>> <<><>> <<>><> <><<>> <><><>"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 20
+    }
+   ],
+   "caption": "n = 3 → 5 combinations",
+   "narration": "Backtracking yields all 5 valid combinations, shown here with angle brackets for div tags.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class GenerateDivTags {\n    public static ArrayList<String> generateDivTags(int n) {\n        ArrayList<String> out = new ArrayList<>();\n        gen(n, n, new StringBuilder(), out);\n        return out;\n    }\n\n    private static void gen(int open, int close, StringBuilder sb, List<String> out) {\n        if (close == 0) { out.add(sb.toString()); return; }\n        int len = sb.length();\n        if (open > 0) { sb.append(\"<div>\"); gen(open - 1, close, sb, out); sb.setLength(len); }\n        if (close > open) { sb.append(\"</div>\"); gen(open, close - 1, sb, out); sb.setLength(len); }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "GenerateDivTags.java",
+   "narration": "Gen records the string when no closes remain. It appends an opening tag if opens remain and recurses, and a closing tag if closes exceed opens, undoing each append."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(Catalan(n) * n)",
+    "Space: O(Catalan(n) * n)"
+   ],
+   "narration": "Time is O of Catalan(n) times n. Space is O of Catalan(n) times n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Close only when closes > opens",
+    "n = 0 → [\"\"]",
+    "Undo appends"
+   ],
+   "narration": "Only close when more closes than opens remain."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention Catalan numbers"
+   ],
+   "narration": "Mention Catalan numbers."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Backtracking: you can open a tag while some remain and close one only if more are open than closed.",
+    "Complexity: O(Catalan(n) * n)"
+   ],
+   "narration": "To recap Generate Div Tags: Backtracking: you can open a tag while some remain and close one only if more are open than closed. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

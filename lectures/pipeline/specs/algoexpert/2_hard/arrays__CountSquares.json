@@ -1,0 +1,316 @@
+{
+ "title": "AlgoExpert · Count Squares",
+ "out": "algoexpert/hard/arrays/CountSquares",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Count Squares",
+   "subtitle": "AlgoExpert · Hard · Arrays",
+   "narration": "Let's solve Count Squares, a hard arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Number of squares (any orientation) whose four corners are all in the point set.",
+    "For each pair as a diagonal, compute the other two corners; each square is found twice."
+   ],
+   "narration": "Here's the problem. Number of squares (any orientation) whose four corners are all in the point set. For each pair as a diagonal, compute the other two corners; each square is found twice."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Any two points can be a square's diagonal; the other two corners are then fixed, so just check they exist."
+   ],
+   "narration": "Any two points can be a square's diagonal; the other two corners are then fixed, so just check they exist."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: all 4-point combinations → O(n⁴)",
+    "Pairs as diagonals + hash set lookup → O(n²)",
+    "Double coordinates to keep midpoints integral"
+   ],
+   "narration": "Checking every group of four points is n to the fourth. Treating each pair as a diagonal and looking up the other two corners in a hash set is quadratic."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Put all points in a hash set",
+    "2. For each pair, compute the two remaining corners by rotating around the midpoint",
+    "3. Count when both exist",
+    "4. Divide by two since each square has two diagonals"
+   ],
+   "narration": "Step by step. First, put all points in a hash set. Second, for each pair, compute the two remaining corners by rotating around the midpoint. Third, count when both exist. Fourth, divide by two since each square has two diagonals."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "(1, 1)": [
+       0.8571428571428571,
+       0.42857142857142855
+      ],
+      "(0, 0)": [
+       0.7142857142857143,
+       0.2857142857142857
+      ],
+      "(-4, 2)": [
+       0.14285714285714285,
+       0.5714285714285714
+      ],
+      "(-2, -1)": [
+       0.42857142857142855,
+       0.14285714285714285
+      ],
+      "(0, 1)": [
+       0.7142857142857143,
+       0.42857142857142855
+      ],
+      "(1, 0)": [
+       0.8571428571428571,
+       0.2857142857142857
+      ],
+      "(-1, 4)": [
+       0.5714285714285714,
+       0.8571428571428571
+      ]
+     },
+     "edges": [],
+     "hl": {},
+     "ehl": [],
+     "directed": false,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.6
+    },
+    {
+     "type": "text",
+     "lines": [
+      "7 points"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.4
+    }
+   ],
+   "caption": "Input points",
+   "narration": "Here are seven points. We'll treat each pair as a square's diagonal.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "(1, 1)": [
+       0.8571428571428571,
+       0.42857142857142855
+      ],
+      "(0, 0)": [
+       0.7142857142857143,
+       0.2857142857142857
+      ],
+      "(-4, 2)": [
+       0.14285714285714285,
+       0.5714285714285714
+      ],
+      "(-2, -1)": [
+       0.42857142857142855,
+       0.14285714285714285
+      ],
+      "(0, 1)": [
+       0.7142857142857143,
+       0.42857142857142855
+      ],
+      "(1, 0)": [
+       0.8571428571428571,
+       0.2857142857142857
+      ],
+      "(-1, 4)": [
+       0.5714285714285714,
+       0.8571428571428571
+      ]
+     },
+     "edges": [
+      [
+       "(1, 1)",
+       "(0, 0)"
+      ]
+     ],
+     "hl": {
+      "(1, 1)": "cur",
+      "(0, 0)": "cur"
+     },
+     "ehl": [],
+     "directed": false,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.6
+    },
+    {
+     "type": "text",
+     "lines": [
+      "diagonal (1, 1) – (0, 0)",
+      "midpoint (0.5, 0.5)"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.4,
+     "size": 18
+    }
+   ],
+   "caption": "Pick diagonal (1, 1) – (0, 0)",
+   "narration": "Take (1, 1) and (0, 0) as a diagonal. The midpoint is the square's centre.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "(1, 1)": [
+       0.8571428571428571,
+       0.42857142857142855
+      ],
+      "(0, 0)": [
+       0.7142857142857143,
+       0.2857142857142857
+      ],
+      "(-4, 2)": [
+       0.14285714285714285,
+       0.5714285714285714
+      ],
+      "(-2, -1)": [
+       0.42857142857142855,
+       0.14285714285714285
+      ],
+      "(0, 1)": [
+       0.7142857142857143,
+       0.42857142857142855
+      ],
+      "(1, 0)": [
+       0.8571428571428571,
+       0.2857142857142857
+      ],
+      "(-1, 4)": [
+       0.5714285714285714,
+       0.8571428571428571
+      ]
+     },
+     "edges": [
+      [
+       "(1, 1)",
+       "(0, 0)"
+      ]
+     ],
+     "hl": {
+      "(1, 1)": "cur",
+      "(0, 0)": "cur",
+      "(0, 1)": "ok",
+      "(1, 0)": "ok"
+     },
+     "ehl": [],
+     "directed": false,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.6
+    },
+    {
+     "type": "text",
+     "lines": [
+      "rotate half-diagonal 90°:",
+      "(0, 1) ✓  (1, 0) ✓"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.4,
+     "size": 18
+    }
+   ],
+   "caption": "Rotate 90° about the midpoint: both corners exist",
+   "narration": "Rotating the half-diagonal ninety degrees gives the other two corners. Both are in the set, so this is a square.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "ordered diagonal hits: 8",
+      "each square counted 4× → 2 square(s)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Answer: 2",
+   "narration": "We found 8 ordered diagonal pairs. Each square has two diagonals in two orders, so divide by four: 2.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class CountSquares {\n    public static int countSquares(int[][] points) {\n        Set<String> set = new HashSet<>();\n        for (int[] p : points) set.add(p[0] * 2 + \",\" + p[1] * 2);\n        int count = 0;\n        for (int i = 0; i < points.length; i++)\n            for (int j = 0; j < points.length; j++) {\n                if (i == j) continue;\n                long x1 = points[i][0] * 2L, y1 = points[i][1] * 2L, x2 = points[j][0] * 2L, y2 = points[j][1] * 2L;\n                long mx = (x1 + x2) / 2, my = (y1 + y2) / 2, dx = x1 - mx, dy = y1 - my;\n                if (set.contains((mx - dy) + \",\" + (my + dx)) && set.contains((mx + dy) + \",\" + (my - dx))) count++;\n            }\n        return count / 4;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "CountSquares.java",
+   "narration": "We store doubled coordinates in a set. For each ordered pair, compute the midpoint and the half-diagonal, rotate it to get the other two corners, and count if both exist. Return count over four."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^2)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n squared. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Divide by 4 (each square counted four times)",
+    "Half-integer midpoints → scale coordinates by 2",
+    "Duplicate points"
+   ],
+   "narration": "Each square is counted four times, so divide. Doubling every coordinate keeps midpoints integral, avoiding floating-point keys."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention the side-based variant (pairs as edges)",
+    "Tilted squares are counted too"
+   ],
+   "narration": "This counts tilted squares too, not just axis-aligned ones. Mention the edge-based variant as an alternative."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Any two points can be a square's diagonal; the other two corners are then fixed, so just check they exist.",
+    "Complexity: O(n^2)"
+   ],
+   "narration": "To recap Count Squares: Any two points can be a square's diagonal; the other two corners are then fixed, so just check they exist. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

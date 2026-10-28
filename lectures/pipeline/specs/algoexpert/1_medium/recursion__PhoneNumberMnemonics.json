@@ -1,0 +1,169 @@
+{
+ "title": "AlgoExpert · Phone Number Mnemonics",
+ "out": "algoexpert/medium/recursion/PhoneNumberMnemonics",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Phone Number Mnemonics",
+   "subtitle": "AlgoExpert · Medium · Recursion",
+   "narration": "Let's solve Phone Number Mnemonics, a medium recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "All letter strings a digit string could spell on a keypad (0 and 1 map to themselves)."
+   ],
+   "narration": "Here's the problem. All letter strings a digit string could spell on a keypad (0 and 1 map to themselves)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each digit maps to a few letters; explore every combination with backtracking."
+   ],
+   "narration": "Each digit maps to a few letters; explore every combination with backtracking."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Iterative: expand a list digit by digit (BFS)",
+    "Backtracking with a StringBuilder (DFS)",
+    "Both O(4ⁿ · n)"
+   ],
+   "narration": "You can expand a list of partial strings digit by digit, or backtrack depth first with one string builder. Both are bounded by four to the n times n, the size of the output."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Recurse digit by digit",
+    "2. Try each letter for the digit",
+    "3. At the end, record the word"
+   ],
+   "narration": "Step by step. First, recurse digit by digit. Second, try each letter for the digit. Third, at the end, record the word."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "1",
+       "1"
+      ],
+      [
+       "9",
+       "wxyz"
+      ],
+      [
+       "0",
+       "0"
+      ],
+      [
+       "5",
+       "jkl"
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "digit",
+      "letters"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "1905 → letters per digit",
+   "narration": "For one-nine-zero-five, one and zero map to themselves, nine to w, x, y, z, and five to j, k, l.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "1 → 1w → 1w0 → 1w0j, 1w0k, 1w0l",
+      "      → 1x0 → 1x0j …"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Depth-first: one letter per digit",
+   "narration": "Recursion picks one letter per digit, depth first, then backtracks to try the next letter.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "1w0j, 1w0k, 1w0l, 1x0j, 1x0k, 1x0l",
+      "1y0j, 1y0k, 1y0l, 1z0j, 1z0k, 1z0l"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "12 mnemonics = 1 × 4 × 1 × 3",
+   "narration": "In total there are 12 mnemonics: one times four times one times three.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class PhoneNumberMnemonics {\n    private static final String[] KEYS = {\"0\", \"1\", \"abc\", \"def\", \"ghi\", \"jkl\", \"mno\", \"pqrs\", \"tuv\", \"wxyz\"};\n\n    public static List<String> phoneNumberMnemonics(String phone) {\n        List<String> out = new ArrayList<>();\n        build(phone, 0, new StringBuilder(), out);\n        return out;\n    }\n\n    private static void build(String p, int i, StringBuilder sb, List<String> out) {\n        if (i == p.length()) { out.add(sb.toString()); return; }\n        for (char c : KEYS[p.charAt(i) - '0'].toCharArray()) { sb.append(c); build(p, i + 1, sb, out); sb.setLength(sb.length() - 1); }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "PhoneNumberMnemonics.java",
+   "narration": "Build recurses on the digit index. At the end it records the string; otherwise for each letter of the current key it appends, recurses and removes the letter."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(4^n * n)",
+    "Space: O(4^n * n)"
+   ],
+   "narration": "Time is O of 4 to the n times n. Space is O of 4 to the n times n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "0 and 1 map to themselves here",
+    "Undo the append after recursing",
+    "Empty input → [\"\"]"
+   ],
+   "narration": "In this version zero and one map to themselves. Remove the last character after each recursive call."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "State the output-size bound",
+    "Follow-up: only dictionary words (use a trie)"
+   ],
+   "narration": "State the output-size bound clearly. Restricting to real words is a nice trie follow-up."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Each digit maps to a few letters; explore every combination with backtracking.",
+    "Complexity: O(4^n * n)"
+   ],
+   "narration": "To recap Phone Number Mnemonics: Each digit maps to a few letters; explore every combination with backtracking. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

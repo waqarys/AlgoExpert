@@ -1,0 +1,337 @@
+{
+ "title": "AlgoExpert · Non Constructible Change",
+ "out": "algoexpert/easy/arrays/NonConstructibleChange",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Non Constructible Change",
+   "subtitle": "AlgoExpert · Easy · Arrays",
+   "narration": "Let's solve Non Constructible Change, an easy arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Given positive coin values, find the minimum amount that cannot be formed.",
+    "Sort; if the next coin exceeds (reachable + 1), reachable + 1 is the answer."
+   ],
+   "narration": "Here's the problem. Given positive coin values, find the minimum amount that cannot be formed. Sort; if the next coin exceeds (reachable plus 1), reachable plus 1 is the answer."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Sort the coins.",
+    "If you can already build every amount up to some total, a coin bigger than total plus one leaves a gap you can never fill."
+   ],
+   "narration": "Sort the coins. If you can already build every amount up to some total, a coin bigger than total plus one leaves a gap you can never fill."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: try amounts 1, 2, 3… and check each with subset sums",
+    "Each check is exponential (2ⁿ subsets)",
+    "Optimal: sort once, then one greedy pass → O(n log n)"
+   ],
+   "narration": "The brute-force idea is to test amounts one, two, three and so on, checking each against every subset of coins. That's exponential. Sorting first lets a single greedy pass track the largest reachable amount, so the whole thing is n log n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Sort the coins ascending",
+    "2. Track change, the largest amount you can build so far",
+    "3. If a coin exceeds change plus one, return change plus one",
+    "4. Otherwise add the coin to change"
+   ],
+   "narration": "Step by step. First, sort the coins ascending. Second, track change, the largest amount you can build so far. Third, if a coin exceeds change plus one, return change plus one. Fourth, otherwise add the coin to change."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      2,
+      3,
+      5,
+      7,
+      22
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "sorted coins",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "change = 0  (we can make every amount up to 0)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Coins: [5, 7, 1, 1, 2, 3, 22] → sorted",
+   "narration": "Let's use the coins five, seven, one, one, two, three and twenty-two. After sorting, we start with change equal to zero.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      2,
+      3,
+      5,
+      7,
+      22
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {
+      "coin": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "change before = 0",
+      "1 ≤ 0 + 1 → change = 1"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Every amount 1…1 is now reachable",
+   "narration": "Coin 1 is at most 0 plus one, so it extends our reach: every amount up to 1 can be made.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      2,
+      3,
+      5,
+      7,
+      22
+     ],
+     "hl": {
+      "0": "done",
+      "1": "done",
+      "2": "cur"
+     },
+     "ptr": {
+      "coin": 2
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "change before = 2",
+      "2 ≤ 2 + 1 → change = 4"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Every amount 1…4 is now reachable",
+   "narration": "Coin 2 is at most 2 plus one, so it extends our reach: every amount up to 4 can be made.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      2,
+      3,
+      5,
+      7,
+      22
+     ],
+     "hl": {
+      "0": "done",
+      "1": "done",
+      "2": "done",
+      "3": "cur"
+     },
+     "ptr": {
+      "coin": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "change before = 4",
+      "3 ≤ 4 + 1 → change = 7"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Every amount 1…7 is now reachable",
+   "narration": "Coin 3 is at most 4 plus one, so it extends our reach: every amount up to 7 can be made.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      2,
+      3,
+      5,
+      7,
+      22
+     ],
+     "hl": {
+      "0": "done",
+      "1": "done",
+      "2": "done",
+      "3": "done",
+      "4": "cur"
+     },
+     "ptr": {
+      "coin": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "change before = 7",
+      "5 ≤ 7 + 1 → change = 12"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Every amount 1…12 is now reachable",
+   "narration": "Coin 5 is at most 7 plus one, so it extends our reach: every amount up to 12 can be made.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      1,
+      2,
+      3,
+      5,
+      7,
+      22
+     ],
+     "hl": {
+      "6": "bad"
+     },
+     "ptr": {
+      "coin": 6
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "change = 19",
+      "coin 22 > 19 + 1"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Coin 22 > 20: we can never make 20",
+   "narration": "Now coin 22 is bigger than 19 plus one. There's no way to make 20, so that's our answer.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class NonConstructibleChange {\n    public static int nonConstructibleChange(int[] coins) {\n        Arrays.sort(coins);\n        int reach = 0;\n        for (int c : coins) {\n            if (c > reach + 1) break;\n            reach += c;\n        }\n        return reach + 1;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "NonConstructibleChange.java",
+   "narration": "The whole solution is a few lines. We sort the array, keep a running total called reach, and for each coin break out as soon as the coin exceeds reach plus one. Otherwise we add it. Whatever reach plus one is at the end is the answer."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log n)",
+    "Space: O(1) (in-place sort)"
+   ],
+   "narration": "Time is O of n log n. Space is constant (in-place sort)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "No coins → answer is 1",
+    "Duplicates are fine (1, 1 → reach 2)",
+    "Must sort first; unsorted order breaks the invariant",
+    "Use long if values can be large"
+   ],
+   "narration": "Edge cases: with no coins the answer is one. Duplicates are fine. The invariant only holds if coins are processed in ascending order, so forgetting to sort is the classic bug. And with big values, use a long for the running total."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain the invariant: all of 1…change are buildable",
+    "Follow-up: what if coins can be reused? (answer changes)",
+    "Mention it's a greedy proof by induction"
+   ],
+   "narration": "In the interview, state the invariant clearly: every amount from one to change is buildable. That's an induction proof. A good follow-up is what changes if coins can be reused."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Sort the coins.",
+    "Complexity: O(n log n)"
+   ],
+   "narration": "To recap Non Constructible Change: Sort the coins. If you can already build every amount up to some total, a coin bigger than total plus one leaves a gap you can never fill. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

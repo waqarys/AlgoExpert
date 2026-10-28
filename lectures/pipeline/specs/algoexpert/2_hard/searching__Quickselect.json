@@ -1,0 +1,257 @@
+{
+ "title": "AlgoExpert · Quickselect",
+ "out": "algoexpert/hard/searching/Quickselect",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Quickselect",
+   "subtitle": "AlgoExpert · Hard · Searching",
+   "narration": "Let's solve Quickselect, a hard searching problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Kth smallest element (1-based) of an unsorted array, in place with Hoare-style partitioning."
+   ],
+   "narration": "Here's the problem. Kth smallest element (1-based) of an unsorted array, in place with Hoare-style partitioning."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Partition like quicksort, but only recurse into the side containing the kth position."
+   ],
+   "narration": "Partition like quicksort, but only recurse into the side containing the kth position."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Sort → O(n log n)",
+    "Heap of size k → O(n log k)",
+    "Quickselect → O(n) average"
+   ],
+   "narration": "Sorting finds the k-th smallest in n log n. A heap of size k is n log k. Quickselect partitions and recurses into one side only, linear on average."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Pick a pivot and partition",
+    "2. If the pivot lands at k minus one, done",
+    "3. Else continue on one side"
+   ],
+   "narration": "Step by step. First, pick a pivot and partition. Second, if the pivot lands at k minus one, done. Third, else continue on one side."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      6,
+      5,
+      2,
+      3,
+      7,
+      8,
+      9
+     ],
+     "hl": {
+      "5": "ok",
+      "0": "done",
+      "1": "done",
+      "2": "done",
+      "3": "done",
+      "4": "done",
+      "6": "done"
+     },
+     "ptr": {
+      "pivot": 5
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "pivot 8 lands at index 5; target index 2"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Pivot 8 → index 5",
+   "narration": "Partition around 8: it lands at index 5. The target is left of it, so we only recurse there.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      5,
+      2,
+      6,
+      7,
+      8,
+      9
+     ],
+     "hl": {
+      "3": "ok",
+      "0": "done",
+      "1": "done",
+      "2": "done",
+      "4": "done"
+     },
+     "ptr": {
+      "pivot": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "pivot 6 lands at index 3; target index 2"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Pivot 6 → index 3",
+   "narration": "Partition around 6: it lands at index 3. The target is left of it, so we only recurse there.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "hl": {
+      "1": "ok",
+      "0": "done",
+      "2": "done"
+     },
+     "ptr": {
+      "pivot": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "pivot 3 lands at index 1; target index 2"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Pivot 3 → index 1",
+   "narration": "Partition around 3: it lands at index 1. The target is right of it, so we only recurse there.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "hl": {
+      "2": "ok"
+     },
+     "ptr": {
+      "pivot": 2
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "pivot 5 lands at index 2; target index 2"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Pivot 5 → index 2",
+   "narration": "Partition around 5: it lands at index 2. That's the target!",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class Quickselect {\n    public static int quickselect(int[] a, int k) {\n        int lo = 0, hi = a.length - 1, target = k - 1;\n        while (true) {\n            int p = lo, l = lo + 1, r = hi;\n            while (l <= r) {\n                if (a[l] > a[p] && a[r] < a[p]) swap(a, l, r);\n                if (a[l] <= a[p]) l++;\n                if (a[r] >= a[p]) r--;\n            }\n            swap(a, p, r);\n            if (r == target) return a[r];\n            if (r < target) lo = r + 1; else hi = r - 1;\n        }\n    }\n\n    static void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "Quickselect.java",
+   "narration": "We partition with the first element as pivot, swapping out-of-place pairs, place the pivot at r, and narrow lo or hi toward the target."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n) avg, O(n^2) worst",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n avg, O of n squared worst. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Worst case O(n²) — randomise the pivot",
+    "k is 1-indexed",
+    "Duplicates"
+   ],
+   "narration": "Worst case is quadratic; randomise the pivot. Remember k is one-indexed."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention median-of-medians O(n) worst case"
+   ],
+   "narration": "Median of medians guarantees linear worst case."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Partition like quicksort, but only recurse into the side containing the kth position.",
+    "Complexity: O(n) avg, O(n^2) worst"
+   ],
+   "narration": "To recap Quickselect: Partition like quicksort, but only recurse into the side containing the kth position. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

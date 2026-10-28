@@ -1,0 +1,398 @@
+{
+ "title": "AlgoExpert · Sort K Sorted Array",
+ "out": "algoexpert/hard/heaps/SortKSortedArray",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Sort K Sorted Array",
+   "subtitle": "AlgoExpert · Hard · Heaps",
+   "narration": "Let's solve Sort K Sorted Array, a hard heaps problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Every element is at most k positions from its sorted position; sort with a size-(k+1) min-heap."
+   ],
+   "narration": "Here's the problem. Every element is at most k positions from its sorted position; sort with a size-(k plus 1) min-heap."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Every element is within k of its spot, so the minimum of the next k plus one items is always next in order."
+   ],
+   "narration": "Every element is within k of its spot, so the minimum of the next k plus one items is always next in order."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Full sort → O(n log n)",
+    "Insertion sort → O(n·k)",
+    "Min-heap of size k + 1 → O(n log k)"
+   ],
+   "narration": "A full sort ignores the structure. Since each element is at most k away from its spot, the smallest of the next k plus one elements is always next, so a heap of size k plus one gives n log k."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Fill a min-heap with k plus one items",
+    "2. Pop the min into place",
+    "3. Push the next item",
+    "4. Drain the heap"
+   ],
+   "narration": "Step by step. First, fill a min-heap with k plus one items. Second, pop the min into place. Third, push the next item. Fourth, drain the heap."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      2,
+      1,
+      5,
+      4,
+      7,
+      6,
+      5
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      3
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "heap (size ≤ 4)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      "∅"
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "sorted output",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Add 3",
+   "narration": "Push 3. The heap isn't full yet.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      2,
+      1,
+      5,
+      4,
+      7,
+      6,
+      5
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      3
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "heap (size ≤ 4)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      "∅"
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "sorted output",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Add 1",
+   "narration": "Push 1. The heap isn't full yet.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      2,
+      1,
+      5,
+      4,
+      7,
+      6,
+      5
+     ],
+     "hl": {
+      "3": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      5
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "heap (size ≤ 4)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      1
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "sorted output",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Add 5, pop 1",
+   "narration": "Push 5. The heap has more than 3, so pop the smallest, 1, which must be in its final place.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      2,
+      1,
+      5,
+      4,
+      7,
+      6,
+      5
+     ],
+     "hl": {
+      "5": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      4,
+      5,
+      7
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "heap (size ≤ 4)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      3
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "sorted output",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Add 7, pop 3",
+   "narration": "Push 7. The heap has more than 3, so pop the smallest, 3, which must be in its final place.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      2,
+      1,
+      5,
+      4,
+      7,
+      6,
+      5
+     ],
+     "hl": {
+      "6": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      5,
+      6,
+      7
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "heap (size ≤ 4)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      3,
+      4
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "sorted output",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Add 6, pop 4",
+   "narration": "Push 6. The heap has more than 3, so pop the smallest, 4, which must be in its final place.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      5,
+      6,
+      7
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok",
+      "4": "ok",
+      "5": "ok",
+      "6": "ok",
+      "7": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Drain the heap → sorted",
+   "narration": "Drain the rest of the heap. The array is sorted.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SortKSortedArray {\n    public static int[] sortKSortedArray(int[] a, int k) {\n        PriorityQueue<Integer> pq = new PriorityQueue<>();\n        int w = 0;\n        for (int i = 0; i < a.length; i++) {\n            pq.add(a[i]);\n            if (pq.size() > k) a[w++] = pq.poll();\n        }\n        while (!pq.isEmpty()) a[w++] = pq.poll();\n        return a;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SortKSortedArray.java",
+   "narration": "We push each element, and once the heap exceeds k, poll into the next write slot. Then drain the heap."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log k)",
+    "Space: O(k)"
+   ],
+   "narration": "Time is O of n log k. Space is O of k."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "k = 0 → already sorted",
+    "k ≥ n",
+    "Write back in place"
+   ],
+   "narration": "With k zero it's already sorted."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why the min of k+1 is safe"
+   ],
+   "narration": "Explain why the minimum of the window is safe to place."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Every element is within k of its spot, so the minimum of the next k plus one items is always next in order.",
+    "Complexity: O(n log k)"
+   ],
+   "narration": "To recap Sort K Sorted Array: Every element is within k of its spot, so the minimum of the next k plus one items is always next in order. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

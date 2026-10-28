@@ -1,0 +1,166 @@
+{
+ "title": "AlgoExpert · Airport Connections",
+ "out": "algoexpert/veryhard/graphs/AirportConnections",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Airport Connections",
+   "subtitle": "AlgoExpert · Very Hard · Graphs",
+   "narration": "Let's solve Airport Connections, a very hard graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Minimum number of new one-way routes from the starting airport so every airport is reachable.",
+    "Collapse strongly connected components (Tarjan) and count SCCs with in-degree 0, excluding the one containing the start."
+   ],
+   "narration": "Here's the problem. Minimum number of new one-way routes from the starting airport so every airport is reachable. Collapse strongly connected components (Tarjan) and count SCCs with in-degree 0, excluding the one containing the start."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Only unreachable airports matter; pick those that unlock the most others first."
+   ],
+   "narration": "Only unreachable airports matter; pick those that unlock the most others first."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Greedy: repeatedly add route to largest unreachable set → O(V·(V+E))",
+    "SCC condensation + count zero in-degree → O(V + E)"
+   ],
+   "narration": "The greedy approach repeatedly searches. Condensing strongly connected components with Tarjan and counting sources is linear."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Find unreachable airports",
+    "2. For each, count airports reachable only through it",
+    "3. Sort by that count",
+    "4. Greedily connect"
+   ],
+   "narration": "Step by step. First, find unreachable airports. Second, for each, count airports reachable only through it. Third, sort by that count. Fourth, greedily connect."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "airports + one-way routes; start LGA",
+      "goal: fewest new routes so every airport is reachable"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Fewest new routes from the start",
+   "narration": "We want the fewest extra one-way routes so every airport is reachable from the start.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "collapse strongly connected components",
+      "→ a DAG of components"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Collapse SCCs",
+   "narration": "First collapse strongly connected components, since airports inside one can already reach each other.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "count components with no incoming edge",
+      "(excluding the start's component) → answer"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Answer = sources other than start",
+   "narration": "In the component DAG, every component with no incoming edge, other than the start's, needs exactly one new route.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (1/3)",
+   "code": "public class AirportConnections {\n    public static int airportConnections(List<String> airports, List<List<String>> routes, String start) {\n        Map<String, List<String>> g = new HashMap<>();\n        for (String a : airports) g.put(a, new ArrayList<>());\n        for (List<String> r : routes) g.get(r.get(0)).add(r.get(1));\n        Map<String, Integer> comp = tarjan(airports, g);\n        Set<Integer> hasIncoming = new HashSet<>();\n        for (List<String> r : routes) {\n            int a = comp.get(r.get(0)), b = comp.get(r.get(1));\n            if (a != b) hasIncoming.add(b);\n        }\n        Set<Integer> all = new HashSet<>(comp.values());\n        int count = 0;\n        for (int c : all) if (!hasIncoming.contains(c) && c != comp.get(start)) count++;\n        return count;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "AirportConnections_part1.java",
+   "narration": "We build the graph, label components with Tarjan, mark components with incoming cross edges, and count the rest, excluding the start's."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (2/3)",
+   "code": "    private static Map<String, Integer> tarjan(List<String> nodes, Map<String, List<String>> g) {\n        Map<String, Integer> idx = new HashMap<>(), low = new HashMap<>(), comp = new HashMap<>();\n        Deque<String> st = new ArrayDeque<>();\n        Set<String> on = new HashSet<>();\n        int[] counter = {0, 0};\n        for (String n : nodes) if (!idx.containsKey(n)) strong(n, g, idx, low, comp, st, on, counter);\n        return comp;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "AirportConnections_part2.java",
+   "narration": "We build the graph, label components with Tarjan, mark components with incoming cross edges, and count the rest, excluding the start's."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (3/3)",
+   "code": "    private static void strong(String v, Map<String, List<String>> g, Map<String, Integer> idx, Map<String, Integer> low,\n                               Map<String, Integer> comp, Deque<String> st, Set<String> on, int[] counter) {\n        idx.put(v, counter[0]); low.put(v, counter[0]); counter[0]++;\n        st.push(v); on.add(v);\n        for (String w : g.get(v)) {\n            if (!idx.containsKey(w)) { strong(w, g, idx, low, comp, st, on, counter); low.put(v, Math.min(low.get(v), low.get(w))); }\n            else if (on.contains(w)) low.put(v, Math.min(low.get(v), idx.get(w)));\n        }\n        if (low.get(v).equals(idx.get(v))) {\n            String w;\n            do { w = st.pop(); on.remove(w); comp.put(w, counter[1]); } while (!w.equals(v));\n            counter[1]++;\n        }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "AirportConnections_part3.java",
+   "narration": "We build the graph, label components with Tarjan, mark components with incoming cross edges, and count the rest, excluding the start's."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(a + r)",
+    "Space: O(a + r)"
+   ],
+   "narration": "Time is O of a plus r. Space is O of a plus r."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Exclude start's component",
+    "Self-loops",
+    "Already all reachable → 0"
+   ],
+   "narration": "Don't count the start's own component."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why sources suffice"
+   ],
+   "narration": "Explain why each source needs exactly one edge and that's enough."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Only unreachable airports matter; pick those that unlock the most others first.",
+    "Complexity: O(a + r)"
+   ],
+   "narration": "To recap Airport Connections: Only unreachable airports matter; pick those that unlock the most others first. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

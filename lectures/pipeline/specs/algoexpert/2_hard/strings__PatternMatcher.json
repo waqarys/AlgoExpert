@@ -1,0 +1,152 @@
+{
+ "title": "AlgoExpert · Pattern Matcher",
+ "out": "algoexpert/hard/strings/PatternMatcher",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Pattern Matcher",
+   "subtitle": "AlgoExpert · Hard · Strings",
+   "narration": "Let's solve Pattern Matcher, a hard strings problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Pattern of 'x'/'y'; find substrings x and y so substituting yields `str`.",
+    "Returns [x, y] (empty strings if unused) or [] if impossible.",
+    "Normalise so pattern starts with 'x', then try every length of x."
+   ],
+   "narration": "Here's the problem. Pattern of 'x'/'y'; find substrings x and y so substituting yields str. Returns x, y (empty strings if unused) or if impossible. Normalise so pattern starts with 'x', then try every length of x."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Fix the length of x; the length of y follows from the counts, so test each candidate."
+   ],
+   "narration": "Fix the length of x; the length of y follows from the counts, so test each candidate."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Try all (len x, len y) pairs → O(n² · m)",
+    "Fix len(x); len(y) is determined → O(n · m)",
+    "Swap x/y if pattern starts with y"
+   ],
+   "narration": "Trying every pair of lengths is wasteful, since once x's length is fixed, y's length is determined. That's n times m."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Normalise so the pattern starts with x",
+    "2. Count x and y",
+    "3. For each length of x, derive length of y",
+    "4. Build and compare"
+   ],
+   "narration": "Step by step. First, normalise so the pattern starts with x. Second, count x and y. Third, for each length of x, derive length of y. Fourth, build and compare."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "pattern xxyxxy: 4 × x, 2 × y",
+      "string length 30"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Count x and y",
+   "narration": "The pattern has four x's and two y's. The string is thirty characters.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "try len(x)=1: y = (30 − 4)/2 = 13 → x='g' … ✗",
+      "try len(x)=2: y = 11 → x='go', y='powerranger' ✓"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Try each length of x",
+   "narration": "For each length of x, the length of y follows. Take x from the start and y from its first position, then rebuild and compare.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "go go powerranger go go powerranger ✓",
+      "→ ['go', 'powerranger']"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 20
+    }
+   ],
+   "caption": "Match: x = go, y = powerranger",
+   "narration": "With x equal to go and y equal to powerranger, the rebuilt string matches.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class PatternMatcher {\n    public static String[] patternMatcher(String pattern, String str) {\n        if (pattern.length() > str.length()) return new String[]{};\n        boolean swapped = pattern.charAt(0) != 'x';\n        String p = swapped ? pattern.replace('x', '#').replace('y', 'x').replace('#', 'y') : pattern;\n        int cx = 0, cy = 0, firstY = -1;\n        for (int i = 0; i < p.length(); i++) {\n            if (p.charAt(i) == 'x') cx++; else { cy++; if (firstY == -1) firstY = i; }\n        }\n        for (int lx = 1; lx * cx <= str.length(); lx++) {\n            int rest = str.length() - lx * cx;\n            if (cy == 0 ? rest != 0 : rest % cy != 0) continue;\n            int ly = cy == 0 ? 0 : rest / cy;\n            String x = str.substring(0, lx);\n            String y = cy == 0 ? \"\" : str.substring(firstY * lx, firstY * lx + ly);\n            StringBuilder sb = new StringBuilder();\n            for (char c : p.toCharArray()) sb.append(c == 'x' ? x : y);\n            if (sb.toString().equals(str)) return swapped ? new String[]{y, x} : new String[]{x, y};\n        }\n        return new String[]{};\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "PatternMatcher.java",
+   "narration": "We normalise so the pattern starts with x, count x's and y's, then for each x length compute y's length, extract both, rebuild, and compare."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^2 + m)",
+    "Space: O(n + m)"
+   ],
+   "narration": "Time is O of n squared plus m. Space is O of n plus m."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Pattern starting with y: swap and swap back",
+    "Pattern with only x",
+    "Return in [x, y] order"
+   ],
+   "narration": "If the pattern starts with y, swap the letters, then swap the answer back."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why len(y) is determined"
+   ],
+   "narration": "Explain why y's length is forced."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Fix the length of x; the length of y follows from the counts, so test each candidate.",
+    "Complexity: O(n^2 + m)"
+   ],
+   "narration": "To recap Pattern Matcher: Fix the length of x; the length of y follows from the counts, so test each candidate. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

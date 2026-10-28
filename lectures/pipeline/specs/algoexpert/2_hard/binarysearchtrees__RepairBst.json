@@ -1,0 +1,291 @@
+{
+ "title": "AlgoExpert · Repair Bst",
+ "out": "algoexpert/hard/binarysearchtrees/RepairBst",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Repair Bst",
+   "subtitle": "AlgoExpert · Hard · Binary Search Trees",
+   "narration": "Let's solve Repair Bst, a hard binary search trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Exactly two nodes' values were swapped; swap them back in place.",
+    "Iterative in-order finds the two out-of-order nodes."
+   ],
+   "narration": "Here's the problem. Exactly two nodes' values were swapped; swap them back in place. Iterative in-order finds the two out-of-order nodes."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "An in-order traversal of a BST is sorted; the two swapped nodes show up as order violations."
+   ],
+   "narration": "An in-order traversal of a BST is sorted; the two swapped nodes show up as order violations."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Copy in-order to array, sort, rewrite → O(n) space",
+    "In-order with prev pointer, catch the two violations → O(h) space",
+    "Morris traversal → O(1) space"
+   ],
+   "narration": "Dumping the in-order traversal into an array, sorting it and writing it back uses linear space. Tracking the previous node during an in-order walk spots the violations with only the stack."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. In-order traverse tracking the previous node",
+    "2. The first violation gives the first node",
+    "3. The last violation gives the second",
+    "4. Swap their values"
+   ],
+   "narration": "Step by step. First, in-order traverse tracking the previous node. Second, the first violation gives the first node. Third, the last violation gives the second. Fourth, swap their values."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       "1",
+       "2"
+      ],
+      "1": [
+       7,
+       "3",
+       "5"
+      ],
+      "2": [
+       20,
+       "4",
+       "6"
+      ],
+      "3": [
+       3,
+       "7",
+       null
+      ],
+      "4": [
+       12,
+       null,
+       "8"
+      ],
+      "5": [
+       8,
+       null,
+       null
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       2,
+       null,
+       null
+      ],
+      "8": [
+       14,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "1": "bad",
+      "4": "bad"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.6
+    },
+    {
+     "type": "text",
+     "lines": [
+      "two values swapped"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.4
+    }
+   ],
+   "caption": "A BST with two swapped values",
+   "narration": "Two values in this BST were swapped. We need to find and fix them.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      12,
+      8,
+      10,
+      7,
+      14,
+      20,
+      22
+     ],
+     "hl": {
+      "2": "bad",
+      "5": "bad"
+     },
+     "ptr": {},
+     "label": "in-order traversal",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "In-order should be sorted: drops at [12, 10] > [8, 7]",
+   "narration": "An in-order traversal of a BST is sorted. Here it drops: the first is the larger value before the first drop, 12, and the second is the smaller value after the last drop, 7.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       "1",
+       "2"
+      ],
+      "1": [
+       7,
+       "3",
+       "5"
+      ],
+      "2": [
+       20,
+       "4",
+       "6"
+      ],
+      "3": [
+       3,
+       "7",
+       null
+      ],
+      "4": [
+       12,
+       null,
+       "8"
+      ],
+      "5": [
+       8,
+       null,
+       null
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       2,
+       null,
+       null
+      ],
+      "8": [
+       14,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "1": "ok",
+      "4": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.6
+    },
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      7,
+      8,
+      10,
+      12,
+      14,
+      20,
+      22
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "in-order",
+     "h": 1,
+     "idx": true,
+     "w": 0.4
+    }
+   ],
+   "caption": "Swap them back → valid BST",
+   "narration": "Swap those two values back and the in-order traversal is sorted again.",
+   "layout": "cols"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class RepairBst {\n    public static BST repairBst(BST tree) {\n        BST first = null, second = null, prev = null, cur = tree;\n        ArrayDeque<BST> st = new ArrayDeque<>();\n        while (cur != null || !st.isEmpty()) {\n            while (cur != null) { st.push(cur); cur = cur.left; }\n            cur = st.pop();\n            if (prev != null && prev.value > cur.value) { if (first == null) first = prev; second = cur; }\n            prev = cur;\n            cur = cur.right;\n        }\n        int t = first.value; first.value = second.value; second.value = t;\n        return tree;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "RepairBst.java",
+   "narration": "We do an iterative in-order traversal. When prev is greater than cur, the first time we record prev as first, and every time we record cur as second. Finally we swap their values."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Adjacent swap → only one drop",
+    "First = prev at first drop, second = cur at last drop",
+    "Swap values, not nodes"
+   ],
+   "narration": "If the swapped nodes are adjacent in order, there's only one drop; the rule still works."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention Morris traversal for O(1) space"
+   ],
+   "narration": "Mention Morris traversal for constant space."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "An in-order traversal of a BST is sorted; the two swapped nodes show up as order violations.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Repair Bst: An in-order traversal of a BST is sorted; the two swapped nodes show up as order violations. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

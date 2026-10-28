@@ -1,0 +1,227 @@
+{
+ "title": "AlgoExpert · Find Loop",
+ "out": "algoexpert/hard/linkedlists/FindLoop",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Find Loop",
+   "subtitle": "AlgoExpert · Hard · Linked Lists",
+   "narration": "Let's solve Find Loop, a hard linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "The list contains a cycle; return the node where the loop begins (Floyd's algorithm)."
+   ],
+   "narration": "Here's the problem. The list contains a cycle; return the node where the loop begins (Floyd's algorithm)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Floyd's cycle detection: after slow and fast meet, a pointer from the head and one from the meeting point meet at the loop start."
+   ],
+   "narration": "Floyd's cycle detection: after slow and fast meet, a pointer from the head and one from the meeting point meet at the loop start."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Hash set of visited nodes → O(n) space",
+    "Floyd's tortoise and hare → O(1) space",
+    "Second phase finds the loop start"
+   ],
+   "narration": "Storing visited nodes finds the loop start but uses memory. Floyd's algorithm uses two speeds to meet inside the loop, then a reset finds the start with constant space."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Slow moves one, fast two",
+    "2. They meet inside the loop",
+    "3. Reset one to the head",
+    "4. Move both by one until they meet"
+   ],
+   "narration": "Step by step. First, slow moves one, fast two. Second, they meet inside the loop. Third, reset one to the head. Fourth, move both by one until they meet."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "ptr": {
+      "slow": 1,
+      "fast": 2
+     },
+     "hl": {},
+     "cycle_to": 4,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Loop back to node 4; slow 1 step, fast 2",
+   "narration": "The tail points back to node four. Slow moves one step, fast two.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "ptr": {
+      "slow": 6,
+      "fast": 6
+     },
+     "hl": {
+      "6": "cur"
+     },
+     "cycle_to": 4,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "They meet at 6",
+   "narration": "They meet inside the loop, at node 6.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "ptr": {
+      "slow": 0,
+      "fast": 4
+     },
+     "hl": {
+      "0": "warn"
+     },
+     "cycle_to": 4,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Reset slow to head; both move 1 step",
+   "narration": "Reset slow to the head; now both move one step at a time.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "ptr": {
+      "both": 4
+     },
+     "hl": {
+      "4": "ok"
+     },
+     "cycle_to": 4,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Meet again at 4: loop start",
+   "narration": "After 4 steps they meet at node 4, the start of the loop. The distance from head to loop start equals the distance from the meeting point to loop start.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class FindLoop {\n    public static LinkedListNode findLoop(LinkedListNode head) {\n        LinkedListNode slow = head.next, fast = head.next.next;\n        while (slow != fast) { slow = slow.next; fast = fast.next.next; }\n        slow = head;\n        while (slow != fast) { slow = slow.next; fast = fast.next; }\n        return slow;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "FindLoop.java",
+   "narration": "Slow and fast start one and two steps in and move until equal. Then slow restarts at the head and both move one step until they meet at the loop start."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Input always has a loop here",
+    "Start both at head.next/next.next correctly",
+    "Compare nodes, not values"
+   ],
+   "narration": "Initialise the pointers carefully and compare nodes by identity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Prove the reset trick (distance argument)"
+   ],
+   "narration": "Be ready to prove why the reset works."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Floyd's cycle detection: after slow and fast meet, a pointer from the head and one from the meeting point meet at the loop start.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Find Loop: Floyd's cycle detection: after slow and fast meet, a pointer from the head and one from the meeting point meet at the loop start. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

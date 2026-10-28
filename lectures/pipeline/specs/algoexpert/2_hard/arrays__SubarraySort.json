@@ -1,0 +1,221 @@
+{
+ "title": "AlgoExpert · Subarray Sort",
+ "out": "algoexpert/hard/arrays/SubarraySort",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Subarray Sort",
+   "subtitle": "AlgoExpert · Hard · Arrays",
+   "narration": "Let's solve Subarray Sort, a hard arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Smallest [start, end] range which, if sorted, makes the whole array sorted; [-1, -1] if sorted."
+   ],
+   "narration": "Here's the problem. Smallest start, end range which, if sorted, makes the whole array sorted; -1, -1 if sorted."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Find the smallest and largest values that are out of order; their correct positions bound the subarray."
+   ],
+   "narration": "Find the smallest and largest values that are out of order; their correct positions bound the subarray."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Sort a copy and compare → O(n log n)",
+    "Find min/max out of place, then their positions → O(n)",
+    "O(1) space"
+   ],
+   "narration": "Sorting a copy and finding the first and last differences is n log n. Finding the smallest and largest out-of-order values, then where they belong, is linear."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Scan for elements out of order with a neighbour",
+    "2. Track the min and max among them",
+    "3. Find where min belongs from the left and max from the right"
+   ],
+   "narration": "Step by step. First, scan for elements out of order with a neighbour. Second, track the min and max among them. Third, find where min belongs from the left and max from the right."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      4,
+      7,
+      10,
+      11,
+      7,
+      12,
+      6,
+      7,
+      16,
+      18,
+      19
+     ],
+     "hl": {
+      "5": "bad",
+      "6": "bad",
+      "7": "bad",
+      "8": "bad"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Find out-of-order elements",
+   "narration": "Mark every element that's smaller than its left neighbour or bigger than its right.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      4,
+      7,
+      10,
+      11,
+      7,
+      12,
+      6,
+      7,
+      16,
+      18,
+      19
+     ],
+     "hl": {
+      "8": "cur",
+      "7": "warn"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "min out of order = 6",
+      "max out of order = 12"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Smallest = 6, largest = 12",
+   "narration": "Among them the smallest is 6 and the largest is 12.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      4,
+      7,
+      10,
+      11,
+      7,
+      12,
+      6,
+      7,
+      16,
+      18,
+      19
+     ],
+     "hl": {},
+     "ptr": {
+      "l": 3,
+      "r": 9
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      3,
+      9
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "6 belongs at index 3; 12 at index 9"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Answer: [3, 9]",
+   "narration": "6 belongs right after the first value bigger than it, index 3. 12 belongs at index 9. Sorting indices 3 to 9 sorts the array.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SubarraySort {\n    public static int[] subarraySort(int[] a) {\n        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;\n        for (int i = 0; i < a.length; i++) {\n            boolean out = (i > 0 && a[i] < a[i - 1]) || (i < a.length - 1 && a[i] > a[i + 1]);\n            if (out) { min = Math.min(min, a[i]); max = Math.max(max, a[i]); }\n        }\n        if (min == Integer.MAX_VALUE) return new int[]{-1, -1};\n        int l = 0, r = a.length - 1;\n        while (a[l] <= min) l++;\n        while (a[r] >= max) r--;\n        return new int[]{l, r};\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SubarraySort.java",
+   "narration": "We track the min and max of out-of-order elements, return minus ones if none, then move l right while values are at most min and r left while values are at least max."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Already sorted → [−1, −1]",
+    "Duplicates: use ≤ / ≥",
+    "Out-of-order values may be far from the boundary"
+   ],
+   "narration": "If nothing is out of order, return minus one, minus one. Use less-or-equal so duplicates are handled."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why min/max determine the bounds"
+   ],
+   "narration": "Explain why the extreme out-of-order values define the bounds."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Find the smallest and largest values that are out of order; their correct positions bound the subarray.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Subarray Sort: Find the smallest and largest values that are out of order; their correct positions bound the subarray. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

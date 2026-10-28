@@ -1,0 +1,160 @@
+{
+ "title": "AlgoExpert · Calendar Matching",
+ "out": "algoexpert/veryhard/arrays/CalendarMatching",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Calendar Matching",
+   "subtitle": "AlgoExpert · Very Hard · Arrays",
+   "narration": "Let's solve Calendar Matching, a very hard arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Two people's meetings (\"HH:MM\" pairs) and daily bounds; return all free slots of at least `duration` minutes available to both.",
+    "Convert to minutes, merge busy intervals, invert."
+   ],
+   "narration": "Here's the problem. Two people's meetings (\"HH:MM\" pairs) and daily bounds; return all free slots of at least duration minutes available to both. Convert to minutes, merge busy intervals, invert."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Merge both calendars, including bounds as meetings, then gaps of the right length are free slots."
+   ],
+   "narration": "Merge both calendars, including bounds as meetings, then gaps of the right length are free slots."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Check each minute of the day → O(1440)",
+    "Merge sorted busy intervals → O((n+m) log)",
+    "Bounds become busy blocks"
+   ],
+   "narration": "You could check every minute, but merging busy intervals is cleaner: add bounds as busy, sort, merge, and read off gaps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Convert times to minutes",
+    "2. Add each person's bounds as blocked time",
+    "3. Sort and merge meetings",
+    "4. Return gaps at least duration long"
+   ],
+   "narration": "Step by step. First, convert times to minutes. Second, add each person's bounds as blocked time. Third, sort and merge meetings. Fourth, return gaps at least duration long."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "cal1: 9:00–10:30, 12:00–13:00, 16:00–18:00 (bounds 9–20)",
+      "cal2: 10:00–11:30, 12:30–14:30, 14:30–15:00, 16:00–17:00 (bounds 10–18:30)"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 16
+    }
+   ],
+   "caption": "Two calendars with daily bounds",
+   "narration": "Each person has meetings and daily bounds. Treat time outside the bounds as busy.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "sort all busy intervals by start",
+      "merge overlaps: 0:00–11:30, 12:00–15:00, 16:00–18:00, 18:30–24:00"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 16
+    }
+   ],
+   "caption": "Merge all busy intervals",
+   "narration": "Convert to minutes, add the out-of-bounds time as busy, sort, and merge overlapping intervals.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "gaps ≥ 30 min: 11:30–12:00, 15:00–16:00, 18:00–18:30"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Free gaps long enough",
+   "narration": "The gaps between merged busy blocks that are at least the meeting length are the answer.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (1/2)",
+   "code": "public class CalendarMatching {\n    public static List<String[]> calendarMatching(List<String[]> cal1, String[] bounds1, List<String[]> cal2, String[] bounds2, int duration) {\n        List<int[]> busy = new ArrayList<>();\n        addCal(busy, cal1, bounds1);\n        addCal(busy, cal2, bounds2);\n        busy.sort((a, b) -> Integer.compare(a[0], b[0]));\n        List<int[]> merged = new ArrayList<>();\n        for (int[] b : busy) {\n            if (!merged.isEmpty() && merged.get(merged.size() - 1)[1] >= b[0])\n                merged.get(merged.size() - 1)[1] = Math.max(merged.get(merged.size() - 1)[1], b[1]);\n            else merged.add(b.clone());\n        }\n        List<String[]> out = new ArrayList<>();\n        for (int i = 1; i < merged.size(); i++) {\n            int s = merged.get(i - 1)[1], e = merged.get(i)[0];\n            if (e - s >= duration) out.add(new String[]{fmt(s), fmt(e)});\n        }\n        return out;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "CalendarMatching_part1.java",
+   "narration": "We add each calendar's meetings plus before-start and after-end blocks, sort, merge overlapping intervals, and output gaps at least the duration long."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (2/2)",
+   "code": "    private static void addCal(List<int[]> busy, List<String[]> cal, String[] bounds) {\n        busy.add(new int[]{0, min(bounds[0])});\n        for (String[] m : cal) busy.add(new int[]{min(m[0]), min(m[1])});\n        busy.add(new int[]{min(bounds[1]), 24 * 60});\n    }\n\n    private static int min(String t) { String[] p = t.split(\":\"); return Integer.parseInt(p[0]) * 60 + Integer.parseInt(p[1]); }\n\n    private static String fmt(int m) { return (m / 60) + \":\" + String.format(\"%02d\", m % 60); }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "CalendarMatching_part2.java",
+   "narration": "We add each calendar's meetings plus before-start and after-end blocks, sort, merge overlapping intervals, and output gaps at least the duration long."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(c1 + c2)",
+    "Space: O(c1 + c2)"
+   ],
+   "narration": "Time is O of c1 plus c2. Space is O of c1 plus c2."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Convert times to minutes",
+    "Back-to-back meetings merge",
+    "Gap must be ≥ duration"
+   ],
+   "narration": "Work in minutes and format back at the end."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Generalises to k calendars"
+   ],
+   "narration": "This generalises to any number of calendars."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Merge both calendars, including bounds as meetings, then gaps of the right length are free slots.",
+    "Complexity: O(c1 + c2)"
+   ],
+   "narration": "To recap Calendar Matching: Merge both calendars, including bounds as meetings, then gaps of the right length are free slots. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

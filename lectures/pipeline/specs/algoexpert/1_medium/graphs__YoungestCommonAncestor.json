@@ -1,0 +1,320 @@
+{
+ "title": "AlgoExpert · Youngest Common Ancestor",
+ "out": "algoexpert/medium/graphs/YoungestCommonAncestor",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Youngest Common Ancestor",
+   "subtitle": "AlgoExpert · Medium · Graphs",
+   "narration": "Let's solve Youngest Common Ancestor, a medium graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Nodes have only an `ancestor` pointer; find the deepest common ancestor of two descendants.",
+    "Equalise depths, then walk up together."
+   ],
+   "narration": "Here's the problem. Nodes have only an ancestor pointer; find the deepest common ancestor of two descendants. Equalise depths, then walk up together."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Bring both descendants to the same depth, then climb together until they meet."
+   ],
+   "narration": "Bring both descendants to the same depth, then climb together until they meet."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Store all ancestors of one node in a set, walk up the other → O(d) space",
+    "Equalise depths, then climb together → O(d) time, O(1) space",
+    "d = depth of the deeper node"
+   ],
+   "narration": "One approach stores all of one node's ancestors in a set, then walks up from the other until it finds one. Equalising depths and then climbing both in lockstep avoids extra memory."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Compute both depths",
+    "2. Lift the deeper one",
+    "3. Move both up until equal"
+   ],
+   "narration": "Step by step. First, compute both depths. Second, lift the deeper one. Third, move both up until equal."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "A": [
+       "A",
+       "B",
+       "C"
+      ],
+      "B": [
+       "B",
+       "D",
+       "E"
+      ],
+      "C": [
+       "C",
+       "F",
+       "G"
+      ],
+      "D": [
+       "D",
+       "H",
+       "I"
+      ],
+      "E": [
+       "E",
+       null,
+       null
+      ],
+      "F": [
+       "F",
+       null,
+       null
+      ],
+      "G": [
+       "G",
+       null,
+       null
+      ],
+      "H": [
+       "H",
+       null,
+       null
+      ],
+      "I": [
+       "I",
+       null,
+       null
+      ]
+     },
+     "root": "A",
+     "hl": {
+      "E": "cur",
+      "I": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "depth(E) = 2, depth(I) = 3"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "Descendants E and I; depths 2 and 3",
+   "narration": "Find the youngest common ancestor of E and I. E is at depth two, I at depth three.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "A": [
+       "A",
+       "B",
+       "C"
+      ],
+      "B": [
+       "B",
+       "D",
+       "E"
+      ],
+      "C": [
+       "C",
+       "F",
+       "G"
+      ],
+      "D": [
+       "D",
+       "H",
+       "I"
+      ],
+      "E": [
+       "E",
+       null,
+       null
+      ],
+      "F": [
+       "F",
+       null,
+       null
+      ],
+      "G": [
+       "G",
+       null,
+       null
+      ],
+      "H": [
+       "H",
+       null,
+       null
+      ],
+      "I": [
+       "I",
+       null,
+       null
+      ]
+     },
+     "root": "A",
+     "hl": {
+      "E": "cur",
+      "D": "cur",
+      "I": "done"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "lift I one level → D"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "Lift the deeper one: I → D",
+   "narration": "First lift the deeper node, I, by one level to D, so both are at depth two.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "A": [
+       "A",
+       "B",
+       "C"
+      ],
+      "B": [
+       "B",
+       "D",
+       "E"
+      ],
+      "C": [
+       "C",
+       "F",
+       "G"
+      ],
+      "D": [
+       "D",
+       "H",
+       "I"
+      ],
+      "E": [
+       "E",
+       null,
+       null
+      ],
+      "F": [
+       "F",
+       null,
+       null
+      ],
+      "G": [
+       "G",
+       null,
+       null
+      ],
+      "H": [
+       "H",
+       null,
+       null
+      ],
+      "I": [
+       "I",
+       null,
+       null
+      ]
+     },
+     "root": "A",
+     "hl": {
+      "B": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "E → B, D → B: equal"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "Move both up: E → B, D → B → answer B",
+   "narration": "Now move both up together. E goes to B, D goes to B. They meet: the answer is B.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class YoungestCommonAncestor {\n    public static class AncestralTree {\n        public final char name;\n        public AncestralTree ancestor;\n        public AncestralTree(char name) { this.name = name; }\n    }\n\n    public static AncestralTree getYoungestCommonAncestor(AncestralTree top, AncestralTree a, AncestralTree b) {\n        int da = depth(a, top), db = depth(b, top);\n        while (da > db) { a = a.ancestor; da--; }\n        while (db > da) { b = b.ancestor; db--; }\n        while (a != b) { a = a.ancestor; b = b.ancestor; }\n        return a;\n    }\n\n    private static int depth(AncestralTree n, AncestralTree top) {\n        int d = 0;\n        while (n != top) { n = n.ancestor; d++; }\n        return d;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "YoungestCommonAncestor.java",
+   "narration": "We compute both depths by walking up to the top. Then we lift the deeper node until depths match, and finally move both up together until they're the same node."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(d)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of d. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "One node is the ancestor of the other",
+    "Both nodes are the same",
+    "The answer may be the top ancestor"
+   ],
+   "narration": "If one node is the ancestor of the other, the algorithm returns it naturally. The same node twice returns itself."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: binary tree without parent pointers (LCA)",
+    "Follow-up: many queries → binary lifting"
+   ],
+   "narration": "Without parent pointers, use the recursive lowest common ancestor. For many queries, binary lifting answers each in log time."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Bring both descendants to the same depth, then climb together until they meet.",
+    "Complexity: O(d)"
+   ],
+   "narration": "To recap Youngest Common Ancestor: Bring both descendants to the same depth, then climb together until they meet. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

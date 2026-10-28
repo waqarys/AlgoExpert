@@ -1,0 +1,248 @@
+{
+ "title": "AlgoExpert · Interweaving Strings",
+ "out": "algoexpert/hard/recursion/InterweavingStrings",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Interweaving Strings",
+   "subtitle": "AlgoExpert · Hard · Recursion",
+   "narration": "Let's solve Interweaving Strings, a hard recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Can `three` be formed by interleaving `one` and `two` keeping each one's order?"
+   ],
+   "narration": "Here's the problem. Can three be formed by interleaving one and two keeping each one's order?"
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each prefix pair of the two strings either explains the next character of three or not, so memoise by indices."
+   ],
+   "narration": "Each prefix pair of the two strings either explains the next character of three or not, so memoise by indices."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Recursion choosing a or b at each step → O(2^(n+m))",
+    "Memoise on (i, j) → O(n·m)",
+    "Bottom-up table"
+   ],
+   "narration": "Recursing on which string supplies the next letter is exponential. The state is just i and j, so memoising makes it n times m."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Recursive i and j into one and two",
+    "2. Next character of three must come from one or the other",
+    "3. Memoise failed states",
+    "4. Succeed when all are used"
+   ],
+   "narration": "Step by step. First, recursive i and j into one and two. Second, next character of three must come from one or the other. Third, memoise failed states. Fourth, succeed when all are used."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "one = algo, two = frog",
+      "three = fralgogo"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Is three an interleaving of one and two?",
+   "narration": "Can we build fralgogo by interleaving algo and frog, keeping each in order?",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "✓",
+       "✓",
+       "✓",
+       "·",
+       "·"
+      ],
+      [
+       "·",
+       "·",
+       "✓",
+       "·",
+       "·"
+      ],
+      [
+       "·",
+       "·",
+       "✓",
+       "·",
+       "·"
+      ],
+      [
+       "·",
+       "·",
+       "✓",
+       "✓",
+       "✓"
+      ],
+      [
+       "·",
+       "·",
+       "✓",
+       "·",
+       "✓"
+      ]
+     ],
+     "hl": {},
+     "rowh": [
+      "",
+      "a",
+      "l",
+      "g",
+      "o"
+     ],
+     "colh": [
+      "",
+      "",
+      "f",
+      "r",
+      "o",
+      "g"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "dp[i][j]: first i of one + first j of two make the first i+j of three",
+   "narration": "Dp i, j says whether the first i letters of one and j letters of two make the first i plus j letters of three. A cell is reachable from above if one's letter matches, or from the left if two's does.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "✓",
+       "✓",
+       "✓",
+       "·",
+       "·"
+      ],
+      [
+       "·",
+       "·",
+       "✓",
+       "·",
+       "·"
+      ],
+      [
+       "·",
+       "·",
+       "✓",
+       "·",
+       "·"
+      ],
+      [
+       "·",
+       "·",
+       "✓",
+       "✓",
+       "✓"
+      ],
+      [
+       "·",
+       "·",
+       "✓",
+       "·",
+       "✓"
+      ]
+     ],
+     "hl": {
+      "4,4": "ok"
+     },
+     "rowh": [
+      "",
+      "a",
+      "l",
+      "g",
+      "o"
+     ],
+     "colh": [
+      "",
+      "",
+      "f",
+      "r",
+      "o",
+      "g"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "dp[4][4] = True",
+   "narration": "The bottom-right cell is true, so the answer is yes.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class InterweavingStrings {\n    public static boolean interweavingStrings(String one, String two, String three) {\n        int n = one.length(), m = two.length();\n        if (n + m != three.length()) return false;\n        boolean[] dp = new boolean[m + 1];\n        for (int i = 0; i <= n; i++)\n            for (int j = 0; j <= m; j++) {\n                if (i == 0 && j == 0) { dp[0] = true; continue; }\n                boolean fromOne = i > 0 && dp[j] && one.charAt(i - 1) == three.charAt(i + j - 1);\n                boolean fromTwo = j > 0 && dp[j - 1] && two.charAt(j - 1) == three.charAt(i + j - 1);\n                dp[j] = fromOne || fromTwo;\n            }\n        return dp[m];\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "InterweavingStrings.java",
+   "narration": "We check lengths, then recurse on i and j with a memo: if one's letter matches the next of three try advancing i, and if two's matches try advancing j."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n*m)",
+    "Space: O(m)"
+   ],
+   "narration": "Time is O of n times m. Space is O of m."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Lengths must add up",
+    "Both strings may match the same letter",
+    "Empty strings"
+   ],
+   "narration": "If lengths don't add up, return false immediately."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention 1-D DP"
+   ],
+   "narration": "A one-dimensional DP row is enough."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Each prefix pair of the two strings either explains the next character of three or not, so memoise by indices.",
+    "Complexity: O(n*m)"
+   ],
+   "narration": "To recap Interweaving Strings: Each prefix pair of the two strings either explains the next character of three or not, so memoise by indices. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

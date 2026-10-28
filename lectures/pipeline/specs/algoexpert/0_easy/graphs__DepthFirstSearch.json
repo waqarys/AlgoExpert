@@ -1,0 +1,844 @@
+{
+ "title": "AlgoExpert · Depth First Search",
+ "out": "algoexpert/easy/graphs/DepthFirstSearch",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Depth First Search",
+   "subtitle": "AlgoExpert · Easy · Graphs",
+   "narration": "Let's solve Depth First Search, an easy graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Given a tree-like graph of named nodes, return names in DFS (pre-order) order."
+   ],
+   "narration": "Here's the problem. Given a tree-like graph of named nodes, return names in DFS (pre-order) order."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Depth-first search visits a node, then fully explores each child before moving to the next sibling."
+   ],
+   "narration": "Depth-first search visits a node, then fully explores each child before moving to the next sibling."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "DFS is already linear: O(V + E)",
+    "Alternative: BFS gives a different (level) order",
+    "Iterative DFS needs children pushed in reverse"
+   ],
+   "narration": "Depth-first search is already linear in vertices plus edges. What matters is the order: we go as deep as possible before backtracking, unlike breadth-first search, which goes level by level."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Append the node's name",
+    "2. Recurse into each child in order",
+    "3. Return the collected list"
+   ],
+   "narration": "Step by step. First, append the node's name. Second, recurse into each child in order. Third, return the collected list."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "A": [
+       0.5,
+       0.9
+      ],
+      "B": [
+       0.2,
+       0.65
+      ],
+      "C": [
+       0.5,
+       0.65
+      ],
+      "D": [
+       0.8,
+       0.65
+      ],
+      "E": [
+       0.08,
+       0.4
+      ],
+      "F": [
+       0.3,
+       0.4
+      ],
+      "G": [
+       0.7,
+       0.4
+      ],
+      "H": [
+       0.92,
+       0.4
+      ],
+      "I": [
+       0.22,
+       0.12
+      ],
+      "J": [
+       0.4,
+       0.12
+      ],
+      "K": [
+       0.7,
+       0.12
+      ]
+     },
+     "edges": [
+      [
+       "A",
+       "B"
+      ],
+      [
+       "A",
+       "C"
+      ],
+      [
+       "A",
+       "D"
+      ],
+      [
+       "B",
+       "E"
+      ],
+      [
+       "B",
+       "F"
+      ],
+      [
+       "D",
+       "G"
+      ],
+      [
+       "D",
+       "H"
+      ],
+      [
+       "F",
+       "I"
+      ],
+      [
+       "F",
+       "J"
+      ],
+      [
+       "G",
+       "K"
+      ]
+     ],
+     "hl": {
+      "A": "cur"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "visited:",
+      "A"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Visit A → order: A",
+   "narration": "We visit A and append it. Then we dive into its first child before touching its siblings.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "A": [
+       0.5,
+       0.9
+      ],
+      "B": [
+       0.2,
+       0.65
+      ],
+      "C": [
+       0.5,
+       0.65
+      ],
+      "D": [
+       0.8,
+       0.65
+      ],
+      "E": [
+       0.08,
+       0.4
+      ],
+      "F": [
+       0.3,
+       0.4
+      ],
+      "G": [
+       0.7,
+       0.4
+      ],
+      "H": [
+       0.92,
+       0.4
+      ],
+      "I": [
+       0.22,
+       0.12
+      ],
+      "J": [
+       0.4,
+       0.12
+      ],
+      "K": [
+       0.7,
+       0.12
+      ]
+     },
+     "edges": [
+      [
+       "A",
+       "B"
+      ],
+      [
+       "A",
+       "C"
+      ],
+      [
+       "A",
+       "D"
+      ],
+      [
+       "B",
+       "E"
+      ],
+      [
+       "B",
+       "F"
+      ],
+      [
+       "D",
+       "G"
+      ],
+      [
+       "D",
+       "H"
+      ],
+      [
+       "F",
+       "I"
+      ],
+      [
+       "F",
+       "J"
+      ],
+      [
+       "G",
+       "K"
+      ]
+     ],
+     "hl": {
+      "A": "done",
+      "B": "done",
+      "E": "cur"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "visited:",
+      "A B E"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Visit E → order: A B E",
+   "narration": "We visit E and append it. Then we dive into its first child before touching its siblings.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "A": [
+       0.5,
+       0.9
+      ],
+      "B": [
+       0.2,
+       0.65
+      ],
+      "C": [
+       0.5,
+       0.65
+      ],
+      "D": [
+       0.8,
+       0.65
+      ],
+      "E": [
+       0.08,
+       0.4
+      ],
+      "F": [
+       0.3,
+       0.4
+      ],
+      "G": [
+       0.7,
+       0.4
+      ],
+      "H": [
+       0.92,
+       0.4
+      ],
+      "I": [
+       0.22,
+       0.12
+      ],
+      "J": [
+       0.4,
+       0.12
+      ],
+      "K": [
+       0.7,
+       0.12
+      ]
+     },
+     "edges": [
+      [
+       "A",
+       "B"
+      ],
+      [
+       "A",
+       "C"
+      ],
+      [
+       "A",
+       "D"
+      ],
+      [
+       "B",
+       "E"
+      ],
+      [
+       "B",
+       "F"
+      ],
+      [
+       "D",
+       "G"
+      ],
+      [
+       "D",
+       "H"
+      ],
+      [
+       "F",
+       "I"
+      ],
+      [
+       "F",
+       "J"
+      ],
+      [
+       "G",
+       "K"
+      ]
+     ],
+     "hl": {
+      "A": "done",
+      "B": "done",
+      "E": "done",
+      "F": "done",
+      "I": "cur"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "visited:",
+      "A B E F I"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Visit I → order: A B E F I",
+   "narration": "We visit I and append it. Then we dive into its first child before touching its siblings.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "A": [
+       0.5,
+       0.9
+      ],
+      "B": [
+       0.2,
+       0.65
+      ],
+      "C": [
+       0.5,
+       0.65
+      ],
+      "D": [
+       0.8,
+       0.65
+      ],
+      "E": [
+       0.08,
+       0.4
+      ],
+      "F": [
+       0.3,
+       0.4
+      ],
+      "G": [
+       0.7,
+       0.4
+      ],
+      "H": [
+       0.92,
+       0.4
+      ],
+      "I": [
+       0.22,
+       0.12
+      ],
+      "J": [
+       0.4,
+       0.12
+      ],
+      "K": [
+       0.7,
+       0.12
+      ]
+     },
+     "edges": [
+      [
+       "A",
+       "B"
+      ],
+      [
+       "A",
+       "C"
+      ],
+      [
+       "A",
+       "D"
+      ],
+      [
+       "B",
+       "E"
+      ],
+      [
+       "B",
+       "F"
+      ],
+      [
+       "D",
+       "G"
+      ],
+      [
+       "D",
+       "H"
+      ],
+      [
+       "F",
+       "I"
+      ],
+      [
+       "F",
+       "J"
+      ],
+      [
+       "G",
+       "K"
+      ]
+     ],
+     "hl": {
+      "A": "done",
+      "B": "done",
+      "E": "done",
+      "F": "done",
+      "I": "done",
+      "J": "done",
+      "C": "cur"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "visited:",
+      "A B E F I J C"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Visit C → order: A B E F I J C",
+   "narration": "We visit C and append it. Then we dive into its first child before touching its siblings.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "A": [
+       0.5,
+       0.9
+      ],
+      "B": [
+       0.2,
+       0.65
+      ],
+      "C": [
+       0.5,
+       0.65
+      ],
+      "D": [
+       0.8,
+       0.65
+      ],
+      "E": [
+       0.08,
+       0.4
+      ],
+      "F": [
+       0.3,
+       0.4
+      ],
+      "G": [
+       0.7,
+       0.4
+      ],
+      "H": [
+       0.92,
+       0.4
+      ],
+      "I": [
+       0.22,
+       0.12
+      ],
+      "J": [
+       0.4,
+       0.12
+      ],
+      "K": [
+       0.7,
+       0.12
+      ]
+     },
+     "edges": [
+      [
+       "A",
+       "B"
+      ],
+      [
+       "A",
+       "C"
+      ],
+      [
+       "A",
+       "D"
+      ],
+      [
+       "B",
+       "E"
+      ],
+      [
+       "B",
+       "F"
+      ],
+      [
+       "D",
+       "G"
+      ],
+      [
+       "D",
+       "H"
+      ],
+      [
+       "F",
+       "I"
+      ],
+      [
+       "F",
+       "J"
+      ],
+      [
+       "G",
+       "K"
+      ]
+     ],
+     "hl": {
+      "A": "done",
+      "B": "done",
+      "E": "done",
+      "F": "done",
+      "I": "done",
+      "J": "done",
+      "C": "done",
+      "D": "done",
+      "G": "cur"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "visited:",
+      "A B E F I J C D G"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Visit G → order: A B E F I J C D G",
+   "narration": "We visit G and append it. Then we dive into its first child before touching its siblings.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "A": [
+       0.5,
+       0.9
+      ],
+      "B": [
+       0.2,
+       0.65
+      ],
+      "C": [
+       0.5,
+       0.65
+      ],
+      "D": [
+       0.8,
+       0.65
+      ],
+      "E": [
+       0.08,
+       0.4
+      ],
+      "F": [
+       0.3,
+       0.4
+      ],
+      "G": [
+       0.7,
+       0.4
+      ],
+      "H": [
+       0.92,
+       0.4
+      ],
+      "I": [
+       0.22,
+       0.12
+      ],
+      "J": [
+       0.4,
+       0.12
+      ],
+      "K": [
+       0.7,
+       0.12
+      ]
+     },
+     "edges": [
+      [
+       "A",
+       "B"
+      ],
+      [
+       "A",
+       "C"
+      ],
+      [
+       "A",
+       "D"
+      ],
+      [
+       "B",
+       "E"
+      ],
+      [
+       "B",
+       "F"
+      ],
+      [
+       "D",
+       "G"
+      ],
+      [
+       "D",
+       "H"
+      ],
+      [
+       "F",
+       "I"
+      ],
+      [
+       "F",
+       "J"
+      ],
+      [
+       "G",
+       "K"
+      ]
+     ],
+     "hl": {
+      "A": "done",
+      "B": "done",
+      "E": "done",
+      "F": "done",
+      "I": "done",
+      "J": "done",
+      "C": "done",
+      "D": "done",
+      "G": "done",
+      "K": "done",
+      "H": "cur"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "visited:",
+      "A B E F I J C D G K H"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Visit H → order: A B E F I J C D G K H",
+   "narration": "We visit H and append it. Then we dive into its first child before touching its siblings.",
+   "layout": "cols"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class DepthFirstSearch {\n    public static class Node {\n        public final String name;\n        public final List<Node> children = new ArrayList<>();\n        public Node(String name) { this.name = name; }\n        public Node addChild(String name) { children.add(new Node(name)); return this; }\n        public List<String> depthFirstSearch(List<String> out) {\n            out.add(name);\n            for (Node c : children) c.depthFirstSearch(out);\n            return out;\n        }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "DepthFirstSearch.java",
+   "narration": "The method appends this node's name, then calls depth-first search on each child in order, passing the same list, and returns it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(v + e)",
+    "Space: O(v)"
+   ],
+   "narration": "Time is O of v plus e. Space is O of v."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Child order matters: left to right",
+    "Iterative: push children reversed onto the stack",
+    "General graphs need a visited set (trees don't)"
+   ],
+   "narration": "Children must be visited left to right. If you use an explicit stack, push children in reverse. On general graphs, add a visited set to avoid cycles."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Know recursive and iterative versions",
+    "Follow-up: detect a cycle, topological sort"
+   ],
+   "narration": "Know both the recursive and iterative versions; DFS underpins cycle detection and topological sort."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Depth-first search visits a node, then fully explores each child before moving to the next sibling.",
+    "Complexity: O(v + e)"
+   ],
+   "narration": "To recap Depth First Search: Depth-first search visits a node, then fully explores each child before moving to the next sibling. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

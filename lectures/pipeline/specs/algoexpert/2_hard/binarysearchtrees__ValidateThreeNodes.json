@@ -1,0 +1,296 @@
+{
+ "title": "AlgoExpert · Validate Three Nodes",
+ "out": "algoexpert/hard/binarysearchtrees/ValidateThreeNodes",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Validate Three Nodes",
+   "subtitle": "AlgoExpert · Hard · Binary Search Trees",
+   "narration": "Let's solve Validate Three Nodes, a hard binary search trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Is nodeTwo a descendant of one of nodeOne/nodeThree and an ancestor of the other?"
+   ],
+   "narration": "Here's the problem. Is nodeTwo a descendant of one of nodeOne or nodeThree and an ancestor of the other?"
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Node two must sit on the path between the other two, so search down from node one and node three."
+   ],
+   "narration": "Node two must sit on the path between the other two, so search down from node one and node three."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Find all paths from root, compare → O(n)",
+    "BST searches between nodes → O(h)",
+    "Search simultaneously from one and three for O(d) best case"
+   ],
+   "narration": "Instead of exploring the whole tree, we can use BST searches: check whether one reaches two, then two reaches three, or the other way around. That's height time."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Check if node two descends from node one or node three",
+    "2. Then check that the other one descends from node two",
+    "3. Use BST search for each step"
+   ],
+   "narration": "Step by step. First, check if node two descends from node one or node three. Second, then check that the other one descends from node two. Third, use BST search for each step."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       5,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       7,
+       "5",
+       "6"
+      ],
+      "3": [
+       1,
+       "7",
+       null
+      ],
+      "4": [
+       4,
+       "8",
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       8,
+       null,
+       null
+      ],
+      "7": [
+       0,
+       null,
+       null
+      ],
+      "8": [
+       3,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "cur",
+      "1": "warn",
+      "8": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "nodeOne = 5, nodeTwo = 2, nodeThree = 3",
+   "narration": "Is two between five and three: is five an ancestor of two, and two an ancestor of three, or the reverse?",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       5,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       7,
+       "5",
+       "6"
+      ],
+      "3": [
+       1,
+       "7",
+       null
+      ],
+      "4": [
+       4,
+       "8",
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       8,
+       null,
+       null
+      ],
+      "7": [
+       0,
+       null,
+       null
+      ],
+      "8": [
+       3,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "done",
+      "1": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Search 2 from 5: 5 → 2 ✓",
+   "narration": "Starting at five, search for two using BST order: go left, found it. So five is an ancestor of two.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       5,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       7,
+       "5",
+       "6"
+      ],
+      "3": [
+       1,
+       "7",
+       null
+      ],
+      "4": [
+       4,
+       "8",
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       8,
+       null,
+       null
+      ],
+      "7": [
+       0,
+       null,
+       null
+      ],
+      "8": [
+       3,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "1": "done",
+      "4": "done",
+      "8": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Search 3 from 2: 2 → 4 → 3 ✓ → true",
+   "narration": "Now search for three from two: right to four, left to three. Found, so the answer is true.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ValidateThreeNodes {\n    public static boolean validateThreeNodes(BST one, BST two, BST three) {\n        if (descends(two, one)) return descends(three, two);\n        if (descends(two, three)) return descends(one, two);\n        return false;\n    }\n\n    /** true if `target` is reachable going down from `from`. */\n    private static boolean descends(BST from, BST target) {\n        BST c = from;\n        while (c != null && c != target) c = target.value < c.value ? c.left : c.right;\n        return c == target;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ValidateThreeNodes.java",
+   "narration": "If two descends from one, return whether three descends from two. Otherwise if two descends from three, return whether one descends from two. Descends walks down using BST order until it hits the target or null."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(h)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of h. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Either direction: one→two→three or three→two→one",
+    "Compare node identity",
+    "Node two must be strictly between"
+   ],
+   "narration": "Check both directions, and compare node references, not just values."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention the simultaneous search optimisation"
+   ],
+   "narration": "Mention the optimisation that searches from both ends at once, stopping early."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Node two must sit on the path between the other two, so search down from node one and node three.",
+    "Complexity: O(h)"
+   ],
+   "narration": "To recap Validate Three Nodes: Node two must sit on the path between the other two, so search down from node one and node three. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

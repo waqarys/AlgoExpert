@@ -1,0 +1,60 @@
+{
+ "title": "SystemsExpert · Interview Framework",
+ "out": "systemsexpert/00a_interview_framework",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "System Design Interviews",
+   "subtitle": "Framework and back-of-envelope maths",
+   "narration": "Welcome to the SystemsExpert series. Before the individual designs, here's the framework to run every system design interview, and the numbers you should know for quick estimates."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The 45-minute framework",
+   "bullets": [
+    "Clarify the scope and the users.",
+    "Functional and non-functional requirements.",
+    "Rough estimates.",
+    "Entities and API.",
+    "High-level diagram.",
+    "Deep dives on bottlenecks.",
+    "Trade-offs and failure modes."
+   ],
+   "narration": "Run every interview in the same order. Step 1: Clarify the scope and the users. Step 2: Functional and non-functional requirements. Step 3: Rough estimates. Step 4: Entities and API. Step 5: High-level diagram. Step 6: Deep dives on bottlenecks. Step 7: Trade-offs and failure modes. Keep the interviewer involved at every step."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Back-of-envelope numbers",
+   "bullets": [
+    "1 day ≈ 86,400 s ≈ 10^5 s; 1M requests/day ≈ 12 QPS; peak ≈ 2–3× the average.",
+    "Character 1 B; tweet-size text ~300 B; photo ~200 KB–2 MB; 1 min of HD video ~50–100 MB.",
+    "One server handles ~10k concurrent connections and ~1k–10k simple QPS; Redis does ~100k ops/s.",
+    "A disk sequential read is ~100× faster than random; reading 1 MB from memory takes ~250 µs, from SSD ~1 ms."
+   ],
+   "narration": "Some numbers worth memorising. 1 day about 86,400 s about 10^5 s; 1M requests per day about 12 Q P S; peak about 2–3× the average. Character 1 B; tweet-size text about 300 B; photo about 200 KB–2 MB; 1 min of HD video about 50–100 MB. One server handles about 10k concurrent connections and about 1k–10k simple Q P S; Redis does about 100k ops per s. A disk sequential read is about 100× faster than random; reading 1 MB from memory takes about 250 µs, from SSD about 1 ms."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Worked estimate: photo sharing",
+   "bullets": [
+    "100M DAU × 2 uploads/day = 200M photos/day",
+    "200M ÷ 86,400 s ≈ 2.3k uploads/s (peak ×3 ≈ 7k/s)",
+    "× 2 MB ≈ 400 TB/day → ~150 PB/year (× 3 replicas)",
+    "Reads 50× writes ≈ 115k/s → CDN + cache",
+    "Conclusion: blob store + CDN; metadata DB sharded"
+   ],
+   "narration": "Let's run one estimate end to end, for a photo-sharing app. A hundred million daily users uploading two photos each is two hundred million photos a day. Divide by about eighty-six thousand seconds: roughly twenty-three hundred uploads a second, maybe seven thousand at peak. At two megabytes each that's four hundred terabytes a day, about a hundred and fifty petabytes a year before replication. If reads are fifty times writes, that's over a hundred thousand reads a second. Those numbers tell you immediately: photos go in a blob store behind a CDN, and metadata needs a sharded database."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Same structure every time",
+    "Requirements before boxes",
+    "Estimate, then size the design",
+    "Finish with trade-offs"
+   ],
+   "narration": "To recap: use the same structure every time, settle requirements before drawing boxes, let estimates size the design, and always finish with trade-offs and failure modes. Next, the fundamentals, in four parts."
+  }
+ ]
+}

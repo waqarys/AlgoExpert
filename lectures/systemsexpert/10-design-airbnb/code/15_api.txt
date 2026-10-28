@@ -1,0 +1,4 @@
+GET  /search?lat&lng&radius&checkIn&checkOut&guests&priceMax
+GET  /listings/{id}
+POST /listings  (host)
+POST /bookings {listingId, checkIn, checkOut, idempotencyKey}

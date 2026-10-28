@@ -1,0 +1,4 @@
+GET  /home                       -> personalised rows
+GET  /titles/{id}
+POST /playback/{titleId}/start   -> manifest + edge URLs + DRM license info
+POST /playback/{titleId}/heartbeat {position}

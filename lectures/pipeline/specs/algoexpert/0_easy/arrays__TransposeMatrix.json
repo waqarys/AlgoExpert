@@ -1,0 +1,322 @@
+{
+ "title": "AlgoExpert · Transpose Matrix",
+ "out": "algoexpert/easy/arrays/TransposeMatrix",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Transpose Matrix",
+   "subtitle": "AlgoExpert · Easy · Arrays",
+   "narration": "Let's solve Transpose Matrix, an easy arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Flip a 2D matrix over its main diagonal."
+   ],
+   "narration": "Here's the problem. Flip a 2D matrix over its main diagonal."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Transposing swaps rows and columns, so the cell at row i, column j moves to row j, column i."
+   ],
+   "narration": "Transposing swaps rows and columns, so the cell at row i, column j moves to row j, column i."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Only one sensible approach: copy every cell once",
+    "Must allocate a new C×R matrix (shape changes)",
+    "In-place only works for square matrices"
+   ],
+   "narration": "There's no faster approach than touching every cell once, so the question is really about getting indices right. Because the shape changes from R by C to C by R, we need a new matrix; an in-place swap only works when the matrix is square."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Allocate a matrix with the dimensions swapped",
+    "2. Copy each cell to its mirrored position",
+    "3. Return the new matrix"
+   ],
+   "narration": "Step by step. First, allocate a matrix with the dimensions swapped. Second, copy each cell to its mirrored position. Third, return the new matrix."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       2,
+       3
+      ],
+      [
+       4,
+       5,
+       6
+      ]
+     ],
+     "hl": {
+      "0,0": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "input 2×3",
+     "h": 1,
+     "w": 0.45
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       ""
+      ],
+      [
+       "",
+       ""
+      ],
+      [
+       "",
+       ""
+      ]
+     ],
+     "hl": {
+      "0,0": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "output 3×2",
+     "h": 1,
+     "w": 0.55
+    }
+   ],
+   "caption": "m[0][0] = 1 → t[0][0]",
+   "narration": "The value 1 at row 0, column 0 moves to row 0, column 0 of the result.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       2,
+       3
+      ],
+      [
+       4,
+       5,
+       6
+      ]
+     ],
+     "hl": {
+      "0,2": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "input 2×3",
+     "h": 1,
+     "w": 0.45
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       ""
+      ],
+      [
+       2,
+       ""
+      ],
+      [
+       3,
+       ""
+      ]
+     ],
+     "hl": {
+      "2,0": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "output 3×2",
+     "h": 1,
+     "w": 0.55
+    }
+   ],
+   "caption": "m[0][2] = 3 → t[2][0]",
+   "narration": "The value 3 at row 0, column 2 moves to row 2, column 0 of the result.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       2,
+       3
+      ],
+      [
+       4,
+       5,
+       6
+      ]
+     ],
+     "hl": {
+      "1,1": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "input 2×3",
+     "h": 1,
+     "w": 0.45
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       4
+      ],
+      [
+       2,
+       5
+      ],
+      [
+       3,
+       ""
+      ]
+     ],
+     "hl": {
+      "1,1": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "output 3×2",
+     "h": 1,
+     "w": 0.55
+    }
+   ],
+   "caption": "m[1][1] = 5 → t[1][1]",
+   "narration": "The value 5 at row 1, column 1 moves to row 1, column 1 of the result.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       2,
+       3
+      ],
+      [
+       4,
+       5,
+       6
+      ]
+     ],
+     "hl": {
+      "1,2": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "input 2×3",
+     "h": 1,
+     "w": 0.45
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       1,
+       4
+      ],
+      [
+       2,
+       5
+      ],
+      [
+       3,
+       6
+      ]
+     ],
+     "hl": {
+      "2,1": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": "output 3×2",
+     "h": 1,
+     "w": 0.55
+    }
+   ],
+   "caption": "m[1][2] = 6 → t[2][1]",
+   "narration": "The value 6 at row 1, column 2 moves to row 2, column 1 of the result.",
+   "layout": "cols"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class TransposeMatrix {\n    public static int[][] transposeMatrix(int[][] matrix) {\n        int rows = matrix.length, cols = matrix[0].length;\n        int[][] out = new int[cols][rows];\n        for (int r = 0; r < rows; r++) for (int c = 0; c < cols; c++) out[c][r] = matrix[r][c];\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "TransposeMatrix.java",
+   "narration": "We allocate a matrix with columns and rows swapped, then two nested loops copy matrix i j into result j i."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(w*h)",
+    "Space: O(w*h)"
+   ],
+   "narration": "Time is O of w times h. Space is O of w times h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Swap the dimensions when allocating",
+    "1×n and n×1 inputs",
+    "Don't mix up rows and columns in the loop"
+   ],
+   "narration": "The classic bug is allocating the result with the original dimensions. Test a single row and a single column input to catch it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: in-place transpose of a square matrix (swap i<j)",
+    "Follow-up: rotate 90° = transpose + reverse rows"
+   ],
+   "narration": "Good follow-ups are an in-place transpose for square matrices, swapping only cells above the diagonal, and rotating an image by ninety degrees, which is a transpose plus reversing each row."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Transposing swaps rows and columns, so the cell at row i, column j moves to row j, column i.",
+    "Complexity: O(w*h)"
+   ],
+   "narration": "To recap Transpose Matrix: Transposing swaps rows and columns, so the cell at row i, column j moves to row j, column i. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

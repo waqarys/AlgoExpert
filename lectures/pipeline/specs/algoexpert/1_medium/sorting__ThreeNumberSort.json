@@ -1,0 +1,328 @@
+{
+ "title": "AlgoExpert · Three Number Sort",
+ "out": "algoexpert/medium/sorting/ThreeNumberSort",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Three Number Sort",
+   "subtitle": "AlgoExpert · Medium · Sorting",
+   "narration": "Let's solve Three Number Sort, a medium sorting problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Sort an array in place according to a 3-value `order` (Dutch national flag)."
+   ],
+   "narration": "Here's the problem. Sort an array in place according to a 3-value order (Dutch national flag)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Dutch national flag: three regions grown by three pointers in one pass."
+   ],
+   "narration": "Dutch national flag: three regions grown by three pointers in one pass."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Sort → O(n log n)",
+    "Counting pass + rewrite → O(n), two passes",
+    "Dutch national flag → O(n), one pass, O(1) space"
+   ],
+   "narration": "Sorting is n log n. Counting each value and rewriting is linear but two passes. The Dutch national flag algorithm does it in one pass with three pointers."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. First, second and third pointers",
+    "2. Swap firsts to the front",
+    "3. Leave seconds",
+    "4. Swap thirds to the back"
+   ],
+   "narration": "Step by step. First, first, second and third pointers. Second, swap firsts to the front. Third, leave seconds. Fourth, swap thirds to the back."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      0,
+      0,
+      -1,
+      -1,
+      0,
+      1,
+      1
+     ],
+     "hl": {},
+     "ptr": {
+      "lo": 0,
+      "mid": 1,
+      "hi": 7
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "saw 1: second → leave it"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "1: second → leave it",
+   "narration": "Mid saw 1, the second value, so we leave it.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      1,
+      0,
+      -1,
+      -1,
+      0,
+      1,
+      1
+     ],
+     "hl": {},
+     "ptr": {
+      "lo": 1,
+      "mid": 2,
+      "hi": 7
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "saw 0: first → swap to lo"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "0: first → swap to lo",
+   "narration": "Mid saw 0, the first value, so we swap to lo.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      0,
+      1,
+      1,
+      -1,
+      0,
+      1,
+      -1
+     ],
+     "hl": {},
+     "ptr": {
+      "lo": 2,
+      "mid": 3,
+      "hi": 6
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "saw -1: third → swap to hi"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "-1: third → swap to hi",
+   "narration": "Mid saw -1, the third value, so we swap to hi.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      0,
+      1,
+      1,
+      -1,
+      0,
+      1,
+      -1
+     ],
+     "hl": {},
+     "ptr": {
+      "lo": 2,
+      "mid": 4,
+      "hi": 6
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "saw 1: second → leave it"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "1: second → leave it",
+   "narration": "Mid saw 1, the second value, so we leave it.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      -1,
+      -1
+     ],
+     "hl": {},
+     "ptr": {
+      "lo": 2,
+      "mid": 5,
+      "hi": 5
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "saw 1: second → leave it"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "1: second → leave it",
+   "narration": "Mid saw 1, the second value, so we leave it.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      -1,
+      -1
+     ],
+     "hl": {},
+     "ptr": {
+      "lo": 3,
+      "mid": 6,
+      "hi": 5
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "saw 0: first → swap to lo"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "0: first → swap to lo",
+   "narration": "Mid saw 0, the first value, so we swap to lo.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ThreeNumberSort {\n    public static int[] threeNumberSort(int[] a, int[] order) {\n        int lo = 0, mid = 0, hi = a.length - 1;\n        while (mid <= hi) {\n            if (a[mid] == order[0]) swap(a, lo++, mid++);\n            else if (a[mid] == order[1]) mid++;\n            else swap(a, mid, hi--);\n        }\n        return a;\n    }\n\n    private static void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ThreeNumberSort.java",
+   "narration": "Lo, mid and hi start at the ends. While mid is at most hi, first-order values swap to lo and both advance, second-order values just advance mid, and third-order values swap with hi, which moves down."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Don't advance mid after swapping with hi",
+    "Values may be missing",
+    "Loop while mid ≤ hi"
+   ],
+   "narration": "After swapping with hi, don't advance mid: the swapped-in value hasn't been examined."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Name the Dutch national flag problem"
+   ],
+   "narration": "Name the Dutch national flag problem; interviewers like hearing it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Dutch national flag: three regions grown by three pointers in one pass.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Three Number Sort: Dutch national flag: three regions grown by three pointers in one pass. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

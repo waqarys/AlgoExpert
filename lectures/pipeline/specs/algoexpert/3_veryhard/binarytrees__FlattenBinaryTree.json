@@ -1,0 +1,185 @@
+{
+ "title": "AlgoExpert · Flatten Binary Tree",
+ "out": "algoexpert/veryhard/binarytrees/FlattenBinaryTree",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Flatten Binary Tree",
+   "subtitle": "AlgoExpert · Very Hard · Binary Trees",
+   "narration": "Let's solve Flatten Binary Tree, a very hard binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Rewire the tree in place into a doubly linked list in in-order order (left = prev, right = next); return the leftmost node."
+   ],
+   "narration": "Here's the problem. Rewire the tree in place into a doubly linked list in in-order order (left equals prev, right equals next); return the leftmost node."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "In-order linking: each subtree returns its leftmost and rightmost nodes so neighbours can be connected."
+   ],
+   "narration": "In-order linking: each subtree returns its leftmost and rightmost nodes so neighbours can be connected."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "In-order into an array, then relink → O(n) space",
+    "Recursive returning (leftmost, rightmost) → O(h) space"
+   ],
+   "narration": "Collecting nodes in order and relinking uses linear space. Returning both ends of each flattened subtree lets us link in place with only the recursion stack."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Flatten left and right recursively",
+    "2. Link left's rightmost to the node",
+    "3. Link the node to right's leftmost",
+    "4. Return the outer ends"
+   ],
+   "narration": "Step by step. First, flatten left and right recursively. Second, link left's rightmost to the node. Third, link the node to right's leftmost. Fourth, return the outer ends."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       null
+      ],
+      "3": [
+       4,
+       null,
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {},
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Flatten in in-order into a doubly linked list",
+   "narration": "Flatten the tree into a doubly linked list in in-order, using left as previous and right as next.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "flatten(left) → (leftmost, rightmost)",
+      "link rightmost ↔ node; node ↔ leftmost of right"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Recursively return both ends",
+   "narration": "Each call returns the leftmost and rightmost of its flattened subtree, so the parent can link its left list's tail and right list's head to itself.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      4,
+      2,
+      5,
+      1,
+      6,
+      3
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Result: 4 ⇄ 2 ⇄ 5 ⇄ 1 ⇄ 6 ⇄ 3",
+   "narration": "The result is four, two, five, one, six, three, linked both ways.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class FlattenBinaryTree {\n    public static BinaryTree flattenBinaryTree(BinaryTree root) { return flatten(root)[0]; }\n\n    /** returns {leftmost, rightmost} of the flattened subtree */\n    private static BinaryTree[] flatten(BinaryTree n) {\n        BinaryTree leftMost = n, rightMost = n;\n        if (n.left != null) {\n            BinaryTree[] l = flatten(n.left);\n            l[1].right = n; n.left = l[1]; leftMost = l[0];\n        }\n        if (n.right != null) {\n            BinaryTree[] r = flatten(n.right);\n            r[0].left = n; n.right = r[0]; rightMost = r[1];\n        }\n        return new BinaryTree[]{leftMost, rightMost};\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "FlattenBinaryTree.java",
+   "narration": "Flatten recurses left, links its rightmost to the node, recurses right, links its leftmost to the node, and returns the outer ends."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Return the leftmost as the new head",
+    "Single node",
+    "Rewire both directions"
+   ],
+   "narration": "Return the leftmost node as the head."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention Morris-style alternative"
+   ],
+   "narration": "A Morris-style approach avoids recursion."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "In-order linking: each subtree returns its leftmost and rightmost nodes so neighbours can be connected.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Flatten Binary Tree: In-order linking: each subtree returns its leftmost and rightmost nodes so neighbours can be connected. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

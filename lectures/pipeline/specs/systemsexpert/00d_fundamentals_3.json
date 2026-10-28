@@ -1,0 +1,81 @@
+{
+ "title": "SystemsExpert · Fundamentals 3/4",
+ "out": "systemsexpert/00d_fundamentals_3",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Design Fundamentals 3/4",
+   "subtitle": "Topics 13–18",
+   "narration": "Design fundamentals, part 3 of 4. We'll cover Specialized storage paradigms, Replication and sharding, Leader election, Peer-to-peer networks, Polling and streaming, and Configuration."
+  },
+  {
+   "kind": "bullets",
+   "heading": "13. Specialized storage paradigms",
+   "bullets": [
+    "Blob storage (S3/GCS), time-series DBs (InfluxDB, Prometheus), graph DBs (Neo4j), spatial indexes (quadtrees, geohash)"
+   ],
+   "narration": "Specialized storage paradigms. Blob storage (S3 or GCS), time-series DBs (InfluxDB, Prometheus), graph DBs (Neo4j), spatial indexes (quadtrees, geohash)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "14. Replication and sharding",
+   "bullets": [
+    "Sync vs async replicas",
+    "sharding by range, hash or region",
+    "hot spots",
+    "resharding with consistent hashing"
+   ],
+   "narration": "Replication and sharding. Sync versus async replicas. sharding by range, hash or region. hot spots. resharding with consistent hashing."
+  },
+  {
+   "kind": "bullets",
+   "heading": "15. Leader election",
+   "bullets": [
+    "One leader handles writes/jobs",
+    "consensus via Paxos/Raft",
+    "in practice use ZooKeeper/etcd leases"
+   ],
+   "narration": "Leader election. One leader handles writes or jobs. consensus via Paxos or Raft. in practice use ZooKeeper or etcd leases."
+  },
+  {
+   "kind": "bullets",
+   "heading": "16. Peer-to-peer networks",
+   "bullets": [
+    "Split a large file into chunks shared between peers (BitTorrent)",
+    "gossip protocols",
+    "DHT for peer discovery"
+   ],
+   "narration": "Peer-to-peer networks. Split a large file into chunks shared between peers (BitTorrent). gossip protocols. DHT for peer discovery."
+  },
+  {
+   "kind": "bullets",
+   "heading": "17. Polling and streaming",
+   "bullets": [
+    "Polling at intervals vs a long-lived connection (WebSockets/SSE)",
+    "streaming suits chat and live data"
+   ],
+   "narration": "Polling and streaming. Polling at intervals versus a long-lived connection (WebSockets or SSE). streaming suits chat and live data."
+  },
+  {
+   "kind": "bullets",
+   "heading": "18. Configuration",
+   "bullets": [
+    "Static (deployed with the code, reviewed) vs dynamic (a config service, instant but riskier)"
+   ],
+   "narration": "Configuration. Static (deployed with the code, reviewed) versus dynamic (a config service, instant but riskier)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "13. Specialized storage paradigms",
+    "14. Replication and sharding",
+    "15. Leader election",
+    "16. Peer-to-peer networks",
+    "17. Polling and streaming",
+    "18. Configuration"
+   ],
+   "narration": "To recap this part: Specialized storage paradigms; Replication and sharding; Leader election; Peer-to-peer networks; Polling and streaming; Configuration. Each of these shows up again in the design walkthroughs."
+  }
+ ]
+}

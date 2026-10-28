@@ -1,0 +1,183 @@
+{
+ "title": "AlgoExpert · Suffix Trie Construction",
+ "out": "algoexpert/medium/tries/SuffixTrieConstruction",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Suffix Trie Construction",
+   "subtitle": "AlgoExpert · Medium · Tries",
+   "narration": "Let's solve Suffix Trie Construction, a medium tries problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Build a trie of all suffixes (terminated by '*') and answer contains(suffix)."
+   ],
+   "narration": "Here's the problem. Build a trie of all suffixes (terminated by ' ') and answer contains(suffix)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Insert every suffix into a trie, then any substring is a path from the root."
+   ],
+   "narration": "Insert every suffix into a trie, then any substring is a path from the root."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Store suffixes in a list → O(n·m) lookup",
+    "Suffix trie → O(n²) build, O(m) lookup",
+    "Suffix tree/array → near-linear space"
+   ],
+   "narration": "Storing suffixes in a list makes each lookup scan everything. A suffix trie builds in quadratic time and space and answers lookups in the length of the query."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. For each start index, insert the suffix",
+    "2. Mark ends with a star",
+    "3. contains walks the trie"
+   ],
+   "narration": "Step by step. First, for each start index, insert the suffix. Second, mark ends with a star. Third, contains walks the trie."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "insert suffix 'babc*'",
+      "suffixes so far: ['babc']"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Insert suffix 'babc'",
+   "narration": "Insert the suffix b a b c, followed by an end marker.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "insert suffix 'abc*'",
+      "suffixes so far: ['babc', 'abc']"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Insert suffix 'abc'",
+   "narration": "Insert the suffix a b c, followed by an end marker.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "insert suffix 'bc*'",
+      "suffixes so far: ['babc', 'abc', 'bc']"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Insert suffix 'bc'",
+   "narration": "Insert the suffix b c, followed by an end marker.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "insert suffix 'c*'",
+      "suffixes so far: ['babc', 'abc', 'bc', 'c']"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Insert suffix 'c'",
+   "narration": "Insert the suffix c, followed by an end marker.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "contains('abc'): b? no — a → b → c → * ✓",
+      "contains('ab'): a → b, no * ✗"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Lookup walks the trie, then checks the end marker",
+   "narration": "Contains walks the characters; it's true only if the final node has the end marker, so ab is not a suffix but abc is.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SuffixTrieConstruction {\n    public static class TrieNode { public final Map<Character, TrieNode> children = new HashMap<>(); }\n\n    public static class SuffixTrie {\n        public final TrieNode root = new TrieNode();\n        private static final char END = '*';\n\n        public SuffixTrie(String s) {\n            for (int i = 0; i < s.length(); i++) {\n                TrieNode n = root;\n                for (int j = i; j < s.length(); j++) n = n.children.computeIfAbsent(s.charAt(j), k -> new TrieNode());\n                n.children.put(END, null);\n            }\n        }\n\n        public boolean contains(String s) {\n            TrieNode n = root;\n            for (char c : s.toCharArray()) { n = n.children.get(c); if (n == null) return false; }\n            return n.children.containsKey(END);\n        }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SuffixTrieConstruction.java",
+   "narration": "The constructor inserts every suffix character by character, creating nodes as needed, then adds the end marker. Contains walks the characters and checks the end marker."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: build O(n^2), contains O(m)",
+    "Space: O(n^2)"
+   ],
+   "narration": "Time is build O of n squared, contains O of m. Space is O of n squared."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "End marker distinguishes suffix from substring",
+    "Quadratic space",
+    "Empty string"
+   ],
+   "narration": "The end marker distinguishes a true suffix from just a substring."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention suffix trees / arrays"
+   ],
+   "narration": "Mention suffix trees and arrays for linear-space alternatives."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Insert every suffix into a trie, then any substring is a path from the root.",
+    "Complexity: build O(n^2), contains O(m)"
+   ],
+   "narration": "To recap Suffix Trie Construction: Insert every suffix into a trie, then any substring is a path from the root. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

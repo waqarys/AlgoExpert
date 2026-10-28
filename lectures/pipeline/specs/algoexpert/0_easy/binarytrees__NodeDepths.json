@@ -1,0 +1,515 @@
+{
+ "title": "AlgoExpert · Node Depths",
+ "out": "algoexpert/easy/binarytrees/NodeDepths",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Node Depths",
+   "subtitle": "AlgoExpert · Easy · Binary Trees",
+   "narration": "Let's solve Node Depths, an easy binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Sum of the depths (distance from root) of every node."
+   ],
+   "narration": "Here's the problem. Sum of the depths (distance from root) of every node."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each node contributes its depth, so pass the depth down while traversing and add it up."
+   ],
+   "narration": "Each node contributes its depth, so pass the depth down while traversing and add it up."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Naive: compute each node's depth by walking up from it → O(n·h)",
+    "Optimal: pass depth down in one traversal → O(n)",
+    "BFS by levels also works: depth × level size"
+   ],
+   "narration": "A naive approach finds each node's depth separately. Passing the depth down during one traversal gives linear time. A breadth-first version multiplies each level's size by its depth."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Traverse from the root at depth zero",
+    "2. Add the current depth to the total",
+    "3. Visit children with depth plus one",
+    "4. Return the sum"
+   ],
+   "narration": "Step by step. First, traverse from the root at depth zero. Second, add the current depth to the total. Third, visit children with depth plus one. Fourth, return the sum."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ],
+      "7": [
+       8,
+       null,
+       null
+      ],
+      "8": [
+       9,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "cur"
+     },
+     "label": null,
+     "notes": {
+      "0": "d=0"
+     },
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "node 1",
+      "depth 0",
+      "total = 0"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Node 1 at depth 0 → total 0",
+   "narration": "Node 1 sits at depth 0, so the running total becomes 0.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ],
+      "7": [
+       8,
+       null,
+       null
+      ],
+      "8": [
+       9,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "done",
+      "1": "done",
+      "3": "cur"
+     },
+     "label": null,
+     "notes": {
+      "3": "d=2"
+     },
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "node 4",
+      "depth 2",
+      "total = 3"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Node 4 at depth 2 → total 3",
+   "narration": "Node 4 sits at depth 2, so the running total becomes 3.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ],
+      "7": [
+       8,
+       null,
+       null
+      ],
+      "8": [
+       9,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "done",
+      "1": "done",
+      "3": "done",
+      "7": "done",
+      "8": "cur"
+     },
+     "label": null,
+     "notes": {
+      "8": "d=3"
+     },
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "node 9",
+      "depth 3",
+      "total = 9"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Node 9 at depth 3 → total 9",
+   "narration": "Node 9 sits at depth 3, so the running total becomes 9.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ],
+      "7": [
+       8,
+       null,
+       null
+      ],
+      "8": [
+       9,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "done",
+      "1": "done",
+      "3": "done",
+      "7": "done",
+      "8": "done",
+      "4": "done",
+      "2": "cur"
+     },
+     "label": null,
+     "notes": {
+      "2": "d=1"
+     },
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "node 3",
+      "depth 1",
+      "total = 12"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Node 3 at depth 1 → total 12",
+   "narration": "Node 3 sits at depth 1, so the running total becomes 12.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ],
+      "7": [
+       8,
+       null,
+       null
+      ],
+      "8": [
+       9,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "done",
+      "1": "done",
+      "3": "done",
+      "7": "done",
+      "8": "done",
+      "4": "done",
+      "2": "done",
+      "5": "done",
+      "6": "cur"
+     },
+     "label": null,
+     "notes": {
+      "6": "d=2"
+     },
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "node 7",
+      "depth 2",
+      "total = 16"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Node 7 at depth 2 → total 16",
+   "narration": "Node 7 sits at depth 2, so the running total becomes 16.",
+   "layout": "cols"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class NodeDepths {\n    public static int nodeDepths(BinaryTree root) { return sum(root, 0); }\n\n    private static int sum(BinaryTree n, int depth) {\n        if (n == null) return 0;\n        return depth + sum(n.left, depth + 1) + sum(n.right, depth + 1);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "NodeDepths.java",
+   "narration": "The helper returns zero for a null node, otherwise the current depth plus the results for both children at depth plus one."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Root has depth 0",
+    "Empty tree → 0",
+    "Deep trees: recursion depth = height"
+   ],
+   "narration": "Remember the root has depth zero, and an empty tree sums to zero."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention iterative stack/queue version",
+    "Follow-up: sum of depths for every subtree (All Kinds Of Node Depths)"
+   ],
+   "narration": "Mention the iterative version. The very hard follow-up, All Kinds of Node Depths, sums this value for every subtree."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Each node contributes its depth, so pass the depth down while traversing and add it up.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Node Depths: Each node contributes its depth, so pass the depth down while traversing and add it up. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

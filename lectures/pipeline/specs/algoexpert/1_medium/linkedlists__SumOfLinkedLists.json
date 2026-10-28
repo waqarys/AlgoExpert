@@ -1,0 +1,312 @@
+{
+ "title": "AlgoExpert · Sum Of Linked Lists",
+ "out": "algoexpert/medium/linkedlists/SumOfLinkedLists",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Sum Of Linked Lists",
+   "subtitle": "AlgoExpert · Medium · Linked Lists",
+   "narration": "Let's solve Sum Of Linked Lists, a medium linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Lists store digits least-significant first; return their sum in the same format."
+   ],
+   "narration": "Here's the problem. Lists store digits least-significant first; return their sum in the same format."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Add digit by digit like grade school, carrying into the next node."
+   ],
+   "narration": "Add digit by digit like grade school, carrying into the next node."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Convert to integers, add, convert back → overflows for long lists",
+    "Digit-by-digit with carry → O(max(n, m))",
+    "Dummy head simplifies building"
+   ],
+   "narration": "Converting to integers overflows on long lists. Adding digit by digit with a carry, like on paper, works for any length."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Walk both lists together",
+    "2. Sum digits plus carry",
+    "3. Create a node with the ones digit",
+    "4. Carry the rest"
+   ],
+   "narration": "Step by step. First, walk both lists together. Second, sum digits plus carry. Third, create a node with the ones digit. Fourth, carry the rest."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      2,
+      4,
+      7,
+      1
+     ],
+     "ptr": {},
+     "hl": {
+      "0": "cur"
+     },
+     "cycle_to": null,
+     "label": "1742 (reversed)",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      9,
+      4,
+      5
+     ],
+     "ptr": {},
+     "hl": {
+      "0": "cur"
+     },
+     "cycle_to": null,
+     "label": "549 (reversed)",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      1
+     ],
+     "ptr": {},
+     "hl": {
+      "0": "ok"
+     },
+     "cycle_to": null,
+     "label": "result",
+     "h": 1
+    }
+   ],
+   "caption": "2 + 9 + carry → digit 1, carry 1",
+   "narration": "Add 2 and 9 plus the carry: 11. Write 1 and carry 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      2,
+      4,
+      7,
+      1
+     ],
+     "ptr": {},
+     "hl": {
+      "1": "cur"
+     },
+     "cycle_to": null,
+     "label": "1742 (reversed)",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      9,
+      4,
+      5
+     ],
+     "ptr": {},
+     "hl": {
+      "1": "cur"
+     },
+     "cycle_to": null,
+     "label": "549 (reversed)",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      1,
+      9
+     ],
+     "ptr": {},
+     "hl": {
+      "1": "ok"
+     },
+     "cycle_to": null,
+     "label": "result",
+     "h": 1
+    }
+   ],
+   "caption": "4 + 4 + carry → digit 9, carry 0",
+   "narration": "Add 4 and 4 plus the carry: 9. Write 9 and carry 0.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      2,
+      4,
+      7,
+      1
+     ],
+     "ptr": {},
+     "hl": {
+      "2": "cur"
+     },
+     "cycle_to": null,
+     "label": "1742 (reversed)",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      9,
+      4,
+      5
+     ],
+     "ptr": {},
+     "hl": {
+      "2": "cur"
+     },
+     "cycle_to": null,
+     "label": "549 (reversed)",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      1,
+      9,
+      2
+     ],
+     "ptr": {},
+     "hl": {
+      "2": "ok"
+     },
+     "cycle_to": null,
+     "label": "result",
+     "h": 1
+    }
+   ],
+   "caption": "7 + 5 + carry → digit 2, carry 1",
+   "narration": "Add 7 and 5 plus the carry: 12. Write 2 and carry 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      2,
+      4,
+      7,
+      1
+     ],
+     "ptr": {},
+     "hl": {
+      "3": "cur"
+     },
+     "cycle_to": null,
+     "label": "1742 (reversed)",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      9,
+      4,
+      5
+     ],
+     "ptr": {},
+     "hl": {
+      "3": "cur"
+     },
+     "cycle_to": null,
+     "label": "549 (reversed)",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      1,
+      9,
+      2,
+      2
+     ],
+     "ptr": {},
+     "hl": {
+      "3": "ok"
+     },
+     "cycle_to": null,
+     "label": "result",
+     "h": 1
+    }
+   ],
+   "caption": "1 + 0 + carry → digit 2, carry 0",
+   "narration": "Add 1 and 0 plus the carry: 2. Write 2 and carry 0.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SumOfLinkedLists {\n    public static LinkedListNode sumOfLinkedLists(LinkedListNode a, LinkedListNode b) {\n        LinkedListNode dummy = new LinkedListNode(0), cur = dummy;\n        int carry = 0;\n        while (a != null || b != null || carry != 0) {\n            int s = carry + (a == null ? 0 : a.value) + (b == null ? 0 : b.value);\n            cur.next = new LinkedListNode(s % 10);\n            cur = cur.next;\n            carry = s / 10;\n            if (a != null) a = a.next;\n            if (b != null) b = b.next;\n        }\n        return dummy.next;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SumOfLinkedLists.java",
+   "narration": "We loop while either list or the carry remains, compute the sum, append its last digit, keep the carry, and advance the lists. Return dummy's next."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(max(n, m))",
+    "Space: O(max(n, m))"
+   ],
+   "narration": "Time is O of max(n, m). Space is O of max(n, m)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Final carry creates an extra node",
+    "Lists of different lengths",
+    "Use a dummy head"
+   ],
+   "narration": "Don't forget the final carry, which may add a new node. Treat a finished list as zeros."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: digits stored most-significant first (use stacks or reverse)"
+   ],
+   "narration": "If digits are stored most significant first, reverse the lists or use stacks."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Add digit by digit like grade school, carrying into the next node.",
+    "Complexity: O(max(n, m))"
+   ],
+   "narration": "To recap Sum Of Linked Lists: Add digit by digit like grade school, carrying into the next node. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

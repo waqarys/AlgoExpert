@@ -1,0 +1,208 @@
+{
+ "title": "AlgoExpert · Middle Node",
+ "out": "algoexpert/easy/linkedlists/MiddleNode",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Middle Node",
+   "subtitle": "AlgoExpert · Easy · Linked Lists",
+   "narration": "Let's solve Middle Node, an easy linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Return the middle node (second middle for even lengths) via slow/fast pointers."
+   ],
+   "narration": "Here's the problem. Return the middle node (second middle for even lengths) via slow or fast pointers."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A fast pointer moving two steps lands at the end exactly when a slow pointer moving one step reaches the middle."
+   ],
+   "narration": "A fast pointer moving two steps lands at the end exactly when a slow pointer moving one step reaches the middle."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Two passes: count length, then walk n/2 → O(n)",
+    "Or copy into an array → O(n) space",
+    "One pass: slow/fast pointers → O(n), O(1) space"
+   ],
+   "narration": "You could count the length and then walk half of it, which takes two passes, or copy the nodes into an array. The slow and fast pointer trick finds the middle in one pass with constant space."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Start slow and fast at the head",
+    "2. Advance slow by one, fast by two",
+    "3. Stop when fast runs out",
+    "4. Return slow"
+   ],
+   "narration": "Step by step. First, start slow and fast at the head. Second, advance slow by one, fast by two. Third, stop when fast runs out. Fourth, return slow."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      2,
+      7,
+      3,
+      5,
+      9
+     ],
+     "ptr": {
+      "slow": 0,
+      "fast": 0
+     },
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "slow and fast start at the head",
+   "narration": "Both pointers start at the head, the node with value two.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      2,
+      7,
+      3,
+      5,
+      9
+     ],
+     "ptr": {
+      "slow": 1,
+      "fast": 2
+     },
+     "hl": {
+      "1": "cur"
+     },
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "slow → 7, fast → 3",
+   "narration": "Slow moves one step to 7; fast moves two steps to 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      2,
+      7,
+      3,
+      5,
+      9
+     ],
+     "ptr": {
+      "slow": 2,
+      "fast": 4
+     },
+     "hl": {
+      "2": "cur"
+     },
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "slow → 3, fast → 9",
+   "narration": "Slow moves one step to 3; fast moves two steps to 9.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      2,
+      7,
+      3,
+      5,
+      9
+     ],
+     "ptr": {
+      "slow": 2
+     },
+     "hl": {
+      "2": "ok"
+     },
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "fast can't move: middle is 3",
+   "narration": "Fast is at the last node, so slow is at the middle: 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MiddleNode {\n    public static LinkedListNode middleNode(LinkedListNode head) {\n        LinkedListNode slow = head, fast = head;\n        while (fast != null && fast.next != null) { slow = slow.next; fast = fast.next.next; }\n        return slow;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MiddleNode.java",
+   "narration": "Slow and fast start at the head. While fast and fast dot next aren't null, slow moves one step and fast moves two. Return slow."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Even length: return the SECOND middle",
+    "Single node → itself",
+    "Check fast and fast.next before moving"
+   ],
+   "narration": "For an even length, the problem wants the second middle node, which this loop naturally returns. Always check fast and fast dot next before jumping."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "The same trick detects cycles (Floyd)",
+    "Follow-up: split the list in half for merge sort"
+   ],
+   "narration": "The same pattern powers cycle detection and splitting a list in half for merge sort."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "A fast pointer moving two steps lands at the end exactly when a slow pointer moving one step reaches the middle.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Middle Node: A fast pointer moving two steps lands at the end exactly when a slow pointer moving one step reaches the middle. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

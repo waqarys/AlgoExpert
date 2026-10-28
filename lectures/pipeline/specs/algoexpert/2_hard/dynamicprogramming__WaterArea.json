@@ -1,0 +1,377 @@
+{
+ "title": "AlgoExpert · Water Area",
+ "out": "algoexpert/hard/dynamicprogramming/WaterArea",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Water Area",
+   "subtitle": "AlgoExpert · Hard · Dynamic Programming",
+   "narration": "Let's solve Water Area, a hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Pillars of given heights; how much rain water is trapped?",
+    "Two pointers."
+   ],
+   "narration": "Here's the problem. Pillars of given heights; how much rain water is trapped? Two pointers."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Water above a pillar is limited by the smaller of the tallest walls on its left and right."
+   ],
+   "narration": "Water above a pillar is limited by the smaller of the tallest walls on its left and right."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Per index: scan left and right for maxes → O(n²)",
+    "Prefix max arrays → O(n) time, O(n) space",
+    "Two pointers → O(n), O(1)"
+   ],
+   "narration": "Scanning both sides for every index is quadratic. Prefix and suffix max arrays make it linear. Two pointers do it in constant space: the lower side's max is the binding limit."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Pointers at both ends with running maxes",
+    "2. Move the side with the smaller max",
+    "3. Add max minus height",
+    "4. Continue until they meet"
+   ],
+   "narration": "Step by step. First, pointers at both ends with running maxes. Second, move the side with the smaller max. Third, add max minus height. Fourth, continue until they meet."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      8,
+      0,
+      0,
+      5,
+      0,
+      0,
+      10,
+      0,
+      0,
+      1,
+      1,
+      0,
+      3
+     ],
+     "hl": {
+      "0": "acc"
+     },
+     "ptr": {
+      "l": 1,
+      "r": 13
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "index 0 holds 0",
+      "total = 0"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Index 0: +0 → 0",
+   "narration": "The left side is lower, so its max bounds the water at index 0: 0 units. Total 0.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      8,
+      0,
+      0,
+      5,
+      0,
+      0,
+      10,
+      0,
+      0,
+      1,
+      1,
+      0,
+      3
+     ],
+     "hl": {
+      "12": "acc"
+     },
+     "ptr": {
+      "l": 1,
+      "r": 11
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "index 12 holds 3",
+      "total = 3"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Index 12: +3 → 3",
+   "narration": "The right side is lower, so its max bounds the water at index 12: 3 units. Total 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      8,
+      0,
+      0,
+      5,
+      0,
+      0,
+      10,
+      0,
+      0,
+      1,
+      1,
+      0,
+      3
+     ],
+     "hl": {
+      "10": "acc"
+     },
+     "ptr": {
+      "l": 1,
+      "r": 9
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "index 10 holds 2",
+      "total = 7"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Index 10: +2 → 7",
+   "narration": "The right side is lower, so its max bounds the water at index 10: 2 units. Total 7.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      8,
+      0,
+      0,
+      5,
+      0,
+      0,
+      10,
+      0,
+      0,
+      1,
+      1,
+      0,
+      3
+     ],
+     "hl": {
+      "1": "acc"
+     },
+     "ptr": {
+      "l": 2,
+      "r": 7
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "index 1 holds 0",
+      "total = 13"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Index 1: +0 → 13",
+   "narration": "The left side is lower, so its max bounds the water at index 1: 0 units. Total 13.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      8,
+      0,
+      0,
+      5,
+      0,
+      0,
+      10,
+      0,
+      0,
+      1,
+      1,
+      0,
+      3
+     ],
+     "hl": {
+      "4": "acc"
+     },
+     "ptr": {
+      "l": 5,
+      "r": 7
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "index 4 holds 3",
+      "total = 32"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Index 4: +3 → 32",
+   "narration": "The left side is lower, so its max bounds the water at index 4: 3 units. Total 32.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      8,
+      0,
+      0,
+      5,
+      0,
+      0,
+      10,
+      0,
+      0,
+      1,
+      1,
+      0,
+      3
+     ],
+     "hl": {
+      "6": "acc"
+     },
+     "ptr": {
+      "l": 7,
+      "r": 7
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "index 6 holds 8",
+      "total = 48"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Index 6: +8 → 48",
+   "narration": "The left side is lower, so its max bounds the water at index 6: 8 units. Total 48.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class WaterArea {\n    public static int waterArea(int[] h) {\n        int l = 0, r = h.length - 1, lMax = 0, rMax = 0, water = 0;\n        while (l < r) {\n            if (h[l] < h[r]) { lMax = Math.max(lMax, h[l]); water += lMax - h[l]; l++; }\n            else { rMax = Math.max(rMax, h[r]); water += rMax - h[r]; r--; }\n        }\n        return water;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "WaterArea.java",
+   "narration": "While l is less than r, move the smaller side: update its max, add max minus height, and step inward."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Empty / short arrays → 0",
+    "Move the lower side",
+    "Water = max − height (never negative)"
+   ],
+   "narration": "Always move the side with the smaller height; its max is the limit."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same as Trapping Rain Water"
+   ],
+   "narration": "This is trapping rain water."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Water above a pillar is limited by the smaller of the tallest walls on its left and right.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Water Area: Water above a pillar is limited by the smaller of the tallest walls on its left and right. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

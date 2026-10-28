@@ -1,0 +1,150 @@
+{
+ "title": "AlgoExpert · Waterfall Streams",
+ "out": "algoexpert/veryhard/arrays/WaterfallStreams",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Waterfall Streams",
+   "subtitle": "AlgoExpert · Very Hard · Arrays",
+   "narration": "Let's solve Waterfall Streams, a very hard arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Water poured at the top of `source` column falls through a grid of 0 (air) and 1 (block).",
+    "On hitting a block it splits half left, half right, flowing sideways until it can fall (or is lost at a wall).",
+    "Return percentages reaching each bottom-row column.",
+    "Row-by-row simulation."
+   ],
+   "narration": "Here's the problem. Water poured at the top of source column falls through a grid of 0 (air) and 1 (block). On hitting a block it splits half left, half right, flowing sideways until it can fall (or is lost at a wall). Return percentages reaching each bottom-row column. Row-by-row simulation."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Simulate row by row: water above a block splits left and right until it finds a gap to fall through."
+   ],
+   "narration": "Simulate row by row: water above a block splits left and right until it finds a gap to fall through."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Simulate each droplet → slow",
+    "Row-by-row simulation of amounts → O(w² · h)"
+   ],
+   "narration": "Simulating individual droplets is slow. Carrying amounts row by row, splitting on blocks, is simple and fast enough."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Carry percentages per column",
+    "2. On a block, split half left and half right",
+    "3. Each half moves until a gap or a wall",
+    "4. Return the bottom row"
+   ],
+   "narration": "Step by step. First, carry percentages per column. Second, on a block, split half left and half right. Third, each half moves until a gap or a wall. Fourth, return the bottom row."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "water enters column 3 at the top",
+      "falls until it hits a block (1)"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Water falls straight down",
+   "narration": "Water falls straight down from the source until it hits a block.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "on a block: split 50/50 left and right",
+      "each half slides until it finds a gap below"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Splits on a block",
+   "narration": "On a block, it splits in half, and each half flows sideways until it can fall again, or is trapped by a wall.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "bottom row collects percentages",
+      "e.g. [0, 0, 0, 25, 25, 0, 0]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Percentages at the bottom",
+   "narration": "Row by row, we carry water amounts down. The bottom row's amounts, as percentages, are the answer.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class WaterfallStreams {\n    public static double[] waterfallStreams(double[][] array, int source) {\n        int w = array[0].length;\n        double[] row = new double[w];\n        row[source] = -1; // negative = water amount, to distinguish from blocks\n        for (int r = 1; r < array.length; r++) {\n            double[] cur = array[r].clone();\n            for (int c = 0; c < w; c++) {\n                double water = row[c];\n                if (water >= 0) continue;\n                if (cur[c] != 1.0) { cur[c] += water; continue; }\n                double split = water / 2;\n                for (int k = c - 1; k >= 0; k--) {\n                    if (row[k] == 1.0) break;\n                    if (cur[k] != 1.0) { cur[k] += split; break; }\n                }\n                for (int k = c + 1; k < w; k++) {\n                    if (row[k] == 1.0) break;\n                    if (cur[k] != 1.0) { cur[k] += split; break; }\n                }\n            }\n            row = cur;\n        }\n        double[] out = new double[w];\n        for (int c = 0; c < w; c++) out[c] = row[c] < 0 ? -row[c] * 100 : 0;\n        return out;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "WaterfallStreams.java",
+   "narration": "For each row, water above an open cell falls in; above a block, it splits and each half moves sideways until there's an opening above the next row or a block stops it. Finally we scale the last row to percentages."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(w^2 * h)",
+    "Space: O(w)"
+   ],
+   "narration": "Time is O of w squared times h. Space is O of w."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Water trapped by walls is lost",
+    "Use negatives or a separate array to distinguish water from blocks",
+    "Floating-point percentages"
+   ],
+   "narration": "Water that hits a side wall is lost."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Draw a small example"
+   ],
+   "narration": "Draw a small grid first."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Simulate row by row: water above a block splits left and right until it finds a gap to fall through.",
+    "Complexity: O(w^2 * h)"
+   ],
+   "narration": "To recap Waterfall Streams: Simulate row by row: water above a block splits left and right until it finds a gap to fall through. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,462 @@
+{
+ "title": "SystemsExpert · Design Netflix",
+ "out": "systemsexpert/07-design-netflix",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Design Netflix",
+   "subtitle": "SystemsExpert design walkthrough",
+   "narration": "In this lecture we design Netflix. We'll follow the interview framework: clarify, set requirements, estimate, sketch the architecture, define the data and API, then dive into the hard parts and the trade-offs."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Clarifying questions",
+   "bullets": [
+    "Focus on streaming/video delivery, recommendations, or both?",
+    "How many titles and subscribers?",
+    "Need to support many device types and bitrates?"
+   ],
+   "narration": "Start by clarifying the scope with your interviewer. Good questions here are: Focus on streaming or video delivery, recommendations, or both? How many titles and subscribers? Need to support many device types and bitrates?"
+  },
+  {
+   "kind": "bullets",
+   "heading": "Functional requirements",
+   "bullets": [
+    "Browse catalogue, personalised home page",
+    "Stream a title with adaptive bitrate",
+    "Resume playback across devices"
+   ],
+   "narration": "The functional requirements. Browse catalogue, personalised home page. Stream a title with adaptive bitrate. Resume playback across devices."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Non-functional requirements",
+   "bullets": [
+    "Very high availability, global low latency",
+    "Startup < 2 s, minimal rebuffering"
+   ],
+   "narration": "The non-functional requirements. Very high availability, global low latency. Startup under 2 s, minimal rebuffering."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Capacity estimates",
+   "bullets": [
+    "~200M subscribers, ~10k titles; each title encoded in ~dozens of bitrate/resolution variants -> PB scale",
+    "Peak egress tens of Tbps -> must be served from edge caches (Open Connect style) close to ISPs"
+   ],
+   "narration": "Now some rough capacity estimates, which drive the design. about 200M subscribers, about 10k titles; each title encoded in about dozens of bitrate or resolution variants to PB scale. Peak egress tens of Tbps to must be served from edge caches (Open Connect style) close to ISPs."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Capacity: worked out",
+   "bullets": [
+    "Peak 10M concurrent streams × 5 Mbps",
+    "= 50 Tbps of egress",
+    "Edge box ~100 Gbps → ~500+ boxes at peak",
+    "Catalogue 10k titles × 50 encodes × ~5 GB ≈ PBs"
+   ],
+   "narration": "Let's actually work the numbers. Suppose ten million concurrent streams at five megabits a second. That's fifty terabits per second of egress. If one edge appliance serves around a hundred gigabits, we need at least five hundred of them, spread across ISPs. Ten thousand titles with dozens of encodes each puts storage in the petabytes."
+  },
+  {
+   "kind": "diagram",
+   "heading": "High-level architecture",
+   "edges": [
+    [
+     "Device",
+     "Control plane APIs - cloud"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Catalogue + user DB"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Recommendation service"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Device"
+    ],
+    [
+     "Device",
+     "Edge caches inside ISPs"
+    ],
+    [
+     "Studio upload",
+     "Transcoding pipeline"
+    ],
+    [
+     "Transcoding pipeline",
+     "Origin blob store"
+    ],
+    [
+     "Origin blob store",
+     "Edge caches inside ISPs"
+    ],
+    [
+     "Device",
+     "Event stream"
+    ],
+    [
+     "Event stream",
+     "Batch/stream analytics"
+    ],
+    [
+     "Batch/stream analytics",
+     "Recommendation service"
+    ]
+   ],
+   "narration": "Here's the high-level architecture. Device connects to Control plane APIs - cloud and Edge caches inside ISPs and Event stream. Control plane APIs - cloud connects to Catalogue plus user DB and Recommendation service and Device. Studio upload connects to Transcoding pipeline. Transcoding pipeline connects to Origin blob store. Origin blob store connects to Edge caches inside ISPs. Event stream connects to Batch or stream analytics. Batch or stream analytics connects to Recommendation service."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Press Play",
+   "edges": [
+    [
+     "Device",
+     "Control plane APIs - cloud"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Catalogue + user DB"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Recommendation service"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Device"
+    ],
+    [
+     "Device",
+     "Edge caches inside ISPs"
+    ],
+    [
+     "Studio upload",
+     "Transcoding pipeline"
+    ],
+    [
+     "Transcoding pipeline",
+     "Origin blob store"
+    ],
+    [
+     "Origin blob store",
+     "Edge caches inside ISPs"
+    ],
+    [
+     "Device",
+     "Event stream"
+    ],
+    [
+     "Event stream",
+     "Batch/stream analytics"
+    ],
+    [
+     "Batch/stream analytics",
+     "Recommendation service"
+    ]
+   ],
+   "highlight": [
+    "Device"
+   ],
+   "caption": "1. User presses Play",
+   "narration": "Let's follow a play request. The device calls the control plane to start playback for a title."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Press Play",
+   "edges": [
+    [
+     "Device",
+     "Control plane APIs - cloud"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Catalogue + user DB"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Recommendation service"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Device"
+    ],
+    [
+     "Device",
+     "Edge caches inside ISPs"
+    ],
+    [
+     "Studio upload",
+     "Transcoding pipeline"
+    ],
+    [
+     "Transcoding pipeline",
+     "Origin blob store"
+    ],
+    [
+     "Origin blob store",
+     "Edge caches inside ISPs"
+    ],
+    [
+     "Device",
+     "Event stream"
+    ],
+    [
+     "Event stream",
+     "Batch/stream analytics"
+    ],
+    [
+     "Batch/stream analytics",
+     "Recommendation service"
+    ]
+   ],
+   "highlight": [
+    "Control plane APIs - cloud"
+   ],
+   "caption": "2. Control plane picks a CDN",
+   "narration": "The control plane checks the subscription and picks the best edge cache for this user's network, then returns a manifest."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Press Play",
+   "edges": [
+    [
+     "Device",
+     "Control plane APIs - cloud"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Catalogue + user DB"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Recommendation service"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Device"
+    ],
+    [
+     "Device",
+     "Edge caches inside ISPs"
+    ],
+    [
+     "Studio upload",
+     "Transcoding pipeline"
+    ],
+    [
+     "Transcoding pipeline",
+     "Origin blob store"
+    ],
+    [
+     "Origin blob store",
+     "Edge caches inside ISPs"
+    ],
+    [
+     "Device",
+     "Event stream"
+    ],
+    [
+     "Event stream",
+     "Batch/stream analytics"
+    ],
+    [
+     "Batch/stream analytics",
+     "Recommendation service"
+    ]
+   ],
+   "highlight": [
+    "Edge caches inside ISPs"
+   ],
+   "caption": "3. Stream segments from the edge",
+   "narration": "The device streams video segments directly from an edge cache inside the user's ISP, switching bitrate as bandwidth changes."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Press Play",
+   "edges": [
+    [
+     "Device",
+     "Control plane APIs - cloud"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Catalogue + user DB"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Recommendation service"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Device"
+    ],
+    [
+     "Device",
+     "Edge caches inside ISPs"
+    ],
+    [
+     "Studio upload",
+     "Transcoding pipeline"
+    ],
+    [
+     "Transcoding pipeline",
+     "Origin blob store"
+    ],
+    [
+     "Origin blob store",
+     "Edge caches inside ISPs"
+    ],
+    [
+     "Device",
+     "Event stream"
+    ],
+    [
+     "Event stream",
+     "Batch/stream analytics"
+    ],
+    [
+     "Batch/stream analytics",
+     "Recommendation service"
+    ]
+   ],
+   "highlight": [
+    "Event stream"
+   ],
+   "caption": "4. Heartbeats record progress",
+   "narration": "Every few seconds, playback heartbeats go to the event stream, recording position for resume."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Press Play",
+   "edges": [
+    [
+     "Device",
+     "Control plane APIs - cloud"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Catalogue + user DB"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Recommendation service"
+    ],
+    [
+     "Control plane APIs - cloud",
+     "Device"
+    ],
+    [
+     "Device",
+     "Edge caches inside ISPs"
+    ],
+    [
+     "Studio upload",
+     "Transcoding pipeline"
+    ],
+    [
+     "Transcoding pipeline",
+     "Origin blob store"
+    ],
+    [
+     "Origin blob store",
+     "Edge caches inside ISPs"
+    ],
+    [
+     "Device",
+     "Event stream"
+    ],
+    [
+     "Event stream",
+     "Batch/stream analytics"
+    ],
+    [
+     "Batch/stream analytics",
+     "Recommendation service"
+    ]
+   ],
+   "highlight": [
+    "Batch/stream analytics"
+   ],
+   "caption": "5. Analytics feed recommendations",
+   "narration": "Those events feed analytics and the recommendation models that shape the next home page."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Data model",
+   "bullets": [
+    "titles(id, metadata, encodes[])",
+    "viewing_history(user_id, title_id, position, updated_at) - write-heavy, wide-column store",
+    "manifest: per title, list of segment URLs per bitrate"
+   ],
+   "narration": "Here is the data model. The titles record holds id, metadata, encodes . The viewing history record holds user id, title id, position, updated at. - write-heavy, wide-column store. manifest: per title, list of segment URLs per bitrate."
+  },
+  {
+   "kind": "code",
+   "heading": "API",
+   "code": "GET  /home                       -> personalised rows\nGET  /titles/{id}\nPOST /playback/{titleId}/start   -> manifest + edge URLs + DRM license info\nPOST /playback/{titleId}/heartbeat {position}",
+   "lang": "text",
+   "font_size": 26,
+   "filename": "14_api.txt",
+   "narration": "The API. The main endpoints are: GET home; GET titles by id; POST playback by titleId start; POST playback by titleId heartbeat. Each one is small, resource-oriented and easy to version."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Encoding",
+   "bullets": [
+    "Split source into chunks, transcode in parallel into many codecs/bitrates; segment into ~2-4 s pieces for ABR (DASH/HLS)."
+   ],
+   "narration": "Deep dive: Encoding. Split source into chunks, transcode in parallel into many codecs or bitrates; segment into about 2-4 s pieces for ABR (DASH or HLS)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Delivery",
+   "bullets": [
+    "Popular content is pre-positioned at edges during off-peak; clients measure throughput and switch bitrate per segment."
+   ],
+   "narration": "Deep dive: Delivery. Popular content is pre-positioned at edges during off-peak; clients measure throughput and switch bitrate per segment."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recommendations",
+   "bullets": [
+    "Offline batch training on viewing logs produces candidate lists; online service re-ranks per request."
+   ],
+   "narration": "Deep dive: Recommendations. Offline batch training on viewing logs produces candidate lists; online service re-ranks per request."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Key decisions",
+   "bullets": [
+    "Own CDN inside ISPs → cost and quality at this egress",
+    "Pre-position popular titles off-peak → cache hits at prime time",
+    "Adaptive bitrate segments → smooth playback on any network",
+    "Control plane in cloud, data plane at edge → each scales independently"
+   ],
+   "narration": "Let's pull together the key decisions. Own CDN inside ISPs, because cost and quality at this egress. Pre-position popular titles off-peak, because cache hits at prime time. Adaptive bitrate segments, because smooth playback on any network. Control plane in cloud, data plane at edge, because each scales independently."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Trade-offs & alternatives",
+   "bullets": [
+    "Own CDN gives control and cost savings but large capex",
+    "Pre-positioning wastes some storage on titles that won't be watched",
+    "Resume position is eventually consistent (heartbeat every ~10-30 s)"
+   ],
+   "narration": "Finally, the key trade-offs. Own CDN gives control and cost savings but large capex. Pre-positioning wastes some storage on titles that won't be watched. Resume position is eventually consistent (heartbeat every about 10-30 s)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Clarify scope, then functional + non-functional needs",
+    "Estimate load to size storage and fan-out",
+    "Core pieces: Device, Control plane APIs - cloud, Catalogue + user DB, Recommendation service, Edge caches inside ISPs",
+    "Know your trade-offs and failure modes"
+   ],
+   "narration": "To recap Netflix: we clarified the scope, set functional and non-functional requirements, estimated the load, sketched an architecture built around Device, Control plane APIs - cloud, Catalogue plus user DB, Recommendation service, and walked through the deep dives and trade-offs. Practise explaining each decision out loud."
+  }
+ ]
+}

@@ -1,0 +1,349 @@
+{
+ "title": "AlgoExpert · Max Sum Increasing Subsequence",
+ "out": "algoexpert/hard/dynamicprogramming/MaxSumIncreasingSubsequence",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Max Sum Increasing Subsequence",
+   "subtitle": "AlgoExpert · Hard · Dynamic Programming",
+   "narration": "Let's solve Max Sum Increasing Subsequence, a hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Returns [[maxSum], [subsequence]] for the strictly increasing subsequence with the greatest sum."
+   ],
+   "narration": "Here's the problem. Returns maxSum , subsequence for the strictly increasing subsequence with the greatest sum."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "For each index, the best sum ending there extends the best smaller earlier element."
+   ],
+   "narration": "For each index, the best sum ending there extends the best smaller earlier element."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "All increasing subsequences → exponential",
+    "LIS-style DP on sums → O(n²)",
+    "prev[] to rebuild"
+   ],
+   "narration": "Enumerating subsequences is exponential. A longest-increasing-subsequence style DP on sums is quadratic."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. For each i, scan earlier j with smaller value",
+    "2. Keep best sums and predecessors",
+    "3. Rebuild the sequence from the best end"
+   ],
+   "narration": "Step by step. First, for each i, scan earlier j with smaller value. Second, keep best sums and predecessors. Third, rebuild the sequence from the best end."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      10,
+      70,
+      20,
+      30,
+      50,
+      11,
+      30
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      10,
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ],
+     "hl": {
+      "0": "ok"
+     },
+     "ptr": {},
+     "label": "best sum ending here",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "10: best sum ending here = 10",
+   "narration": "For 10, extend the best earlier smaller value; there's none, so it's just 10.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      10,
+      70,
+      20,
+      30,
+      50,
+      11,
+      30
+     ],
+     "hl": {
+      "1": "cur",
+      "0": "warn"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      10,
+      80,
+      "",
+      "",
+      "",
+      "",
+      ""
+     ],
+     "hl": {
+      "1": "ok"
+     },
+     "ptr": {},
+     "label": "best sum ending here",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "70: best sum ending here = 80",
+   "narration": "For 70, extend the best earlier smaller value, 10, giving 80.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      10,
+      70,
+      20,
+      30,
+      50,
+      11,
+      30
+     ],
+     "hl": {
+      "3": "cur",
+      "2": "warn"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      10,
+      80,
+      30,
+      60,
+      "",
+      "",
+      ""
+     ],
+     "hl": {
+      "3": "ok"
+     },
+     "ptr": {},
+     "label": "best sum ending here",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "30: best sum ending here = 60",
+   "narration": "For 30, extend the best earlier smaller value, 20, giving 60.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      10,
+      70,
+      20,
+      30,
+      50,
+      11,
+      30
+     ],
+     "hl": {
+      "4": "cur",
+      "3": "warn"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      10,
+      80,
+      30,
+      60,
+      110,
+      "",
+      ""
+     ],
+     "hl": {
+      "4": "ok"
+     },
+     "ptr": {},
+     "label": "best sum ending here",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "50: best sum ending here = 110",
+   "narration": "For 50, extend the best earlier smaller value, 30, giving 110.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      10,
+      70,
+      20,
+      30,
+      50,
+      11,
+      30
+     ],
+     "hl": {
+      "6": "cur",
+      "2": "warn"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      10,
+      80,
+      30,
+      60,
+      110,
+      21,
+      60
+     ],
+     "hl": {
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": "best sum ending here",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "30: best sum ending here = 60",
+   "narration": "For 30, extend the best earlier smaller value, 20, giving 60.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "sum 110: [10, 20, 30, 50]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Answer: 110 via [10, 20, 30, 50]",
+   "narration": "The best is 110: [10, 20, 30, 50].",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MaxSumIncreasingSubsequence {\n    public static List<List<Integer>> maxSumIncreasingSubsequence(int[] a) {\n        int n = a.length, bestIdx = 0;\n        int[] sums = a.clone(), prev = new int[n];\n        for (int i = 0; i < n; i++) {\n            prev[i] = -1;\n            for (int j = 0; j < i; j++)\n                if (a[j] < a[i] && sums[j] + a[i] > sums[i]) { sums[i] = sums[j] + a[i]; prev[i] = j; }\n            if (sums[i] > sums[bestIdx]) bestIdx = i;\n        }\n        List<Integer> seq = new ArrayList<>();\n        for (int i = bestIdx; i != -1; i = prev[i]) seq.add(a[i]);\n        Collections.reverse(seq);\n        return List.of(List.of(sums[bestIdx]), seq);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MaxSumIncreasingSubsequence.java",
+   "narration": "Sums starts as a copy. For each i and each earlier smaller j, extend if better and record prev. Rebuild from the best index."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^2)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n squared. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Strictly increasing",
+    "Negatives: single element might win",
+    "Track prev"
+   ],
+   "narration": "Keep it strictly increasing; with negatives, a single element may be best."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: O(n log n) with a BIT keyed by value"
+   ],
+   "narration": "A Fenwick tree keyed by value gets it to n log n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "For each index, the best sum ending there extends the best smaller earlier element.",
+    "Complexity: O(n^2)"
+   ],
+   "narration": "To recap Max Sum Increasing Subsequence: For each index, the best sum ending there extends the best smaller earlier element. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

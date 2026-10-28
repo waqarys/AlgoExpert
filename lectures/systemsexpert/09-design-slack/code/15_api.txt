@@ -1,0 +1,4 @@
+POST /channels/{id}/messages {text, clientMsgId}
+GET  /channels/{id}/messages?before=ts&limit=50
+POST /channels/{id}/read {ts}
+WS   events: message.new, message.edited, reaction.added, typing

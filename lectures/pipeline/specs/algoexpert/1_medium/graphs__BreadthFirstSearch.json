@@ -1,0 +1,849 @@
+{
+ "title": "AlgoExpert · Breadth First Search",
+ "out": "algoexpert/medium/graphs/BreadthFirstSearch",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Breadth First Search",
+   "subtitle": "AlgoExpert · Medium · Graphs",
+   "narration": "Let's solve Breadth First Search, a medium graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Return node names of a tree-like graph level by level."
+   ],
+   "narration": "Here's the problem. Return node names of a tree-like graph level by level."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Breadth-first search visits nodes level by level using a queue."
+   ],
+   "narration": "Breadth-first search visits nodes level by level using a queue."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Same O(V + E) as DFS — the order is what differs",
+    "Queue (FIFO) instead of stack/recursion",
+    "BFS gives shortest paths in unweighted graphs"
+   ],
+   "narration": "Breadth-first search is linear, like depth-first search; what changes is using a queue, so nodes come out level by level. That's why BFS finds shortest paths in unweighted graphs."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Enqueue the root",
+    "2. Pop, record the name, enqueue children",
+    "3. Repeat until the queue is empty"
+   ],
+   "narration": "Step by step. First, enqueue the root. Second, pop, record the name, enqueue children. Third, repeat until the queue is empty."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "A": [
+       0.5,
+       0.9
+      ],
+      "B": [
+       0.2,
+       0.65
+      ],
+      "C": [
+       0.5,
+       0.65
+      ],
+      "D": [
+       0.8,
+       0.65
+      ],
+      "E": [
+       0.08,
+       0.4
+      ],
+      "F": [
+       0.3,
+       0.4
+      ],
+      "G": [
+       0.7,
+       0.4
+      ],
+      "H": [
+       0.92,
+       0.4
+      ],
+      "I": [
+       0.22,
+       0.12
+      ],
+      "J": [
+       0.4,
+       0.12
+      ],
+      "K": [
+       0.7,
+       0.12
+      ]
+     },
+     "edges": [
+      [
+       "A",
+       "B"
+      ],
+      [
+       "A",
+       "C"
+      ],
+      [
+       "A",
+       "D"
+      ],
+      [
+       "B",
+       "E"
+      ],
+      [
+       "B",
+       "F"
+      ],
+      [
+       "D",
+       "G"
+      ],
+      [
+       "D",
+       "H"
+      ],
+      [
+       "F",
+       "I"
+      ],
+      [
+       "F",
+       "J"
+      ],
+      [
+       "G",
+       "K"
+      ]
+     ],
+     "hl": {
+      "A": "cur",
+      "B": "warn",
+      "C": "warn",
+      "D": "warn"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1.6
+    },
+    {
+     "type": "queue",
+     "items": [
+      "B",
+      "C",
+      "D"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Dequeue A; enqueue B, C, D",
+   "narration": "Dequeue A and record it. Its children, B, C, D, join the back of the queue.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "A": [
+       0.5,
+       0.9
+      ],
+      "B": [
+       0.2,
+       0.65
+      ],
+      "C": [
+       0.5,
+       0.65
+      ],
+      "D": [
+       0.8,
+       0.65
+      ],
+      "E": [
+       0.08,
+       0.4
+      ],
+      "F": [
+       0.3,
+       0.4
+      ],
+      "G": [
+       0.7,
+       0.4
+      ],
+      "H": [
+       0.92,
+       0.4
+      ],
+      "I": [
+       0.22,
+       0.12
+      ],
+      "J": [
+       0.4,
+       0.12
+      ],
+      "K": [
+       0.7,
+       0.12
+      ]
+     },
+     "edges": [
+      [
+       "A",
+       "B"
+      ],
+      [
+       "A",
+       "C"
+      ],
+      [
+       "A",
+       "D"
+      ],
+      [
+       "B",
+       "E"
+      ],
+      [
+       "B",
+       "F"
+      ],
+      [
+       "D",
+       "G"
+      ],
+      [
+       "D",
+       "H"
+      ],
+      [
+       "F",
+       "I"
+      ],
+      [
+       "F",
+       "J"
+      ],
+      [
+       "G",
+       "K"
+      ]
+     ],
+     "hl": {
+      "A": "done",
+      "B": "done",
+      "C": "cur",
+      "D": "warn",
+      "E": "warn",
+      "F": "warn"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1.6
+    },
+    {
+     "type": "queue",
+     "items": [
+      "D",
+      "E",
+      "F"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Dequeue C; enqueue nothing",
+   "narration": "Dequeue C and record it. It has no children.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "A": [
+       0.5,
+       0.9
+      ],
+      "B": [
+       0.2,
+       0.65
+      ],
+      "C": [
+       0.5,
+       0.65
+      ],
+      "D": [
+       0.8,
+       0.65
+      ],
+      "E": [
+       0.08,
+       0.4
+      ],
+      "F": [
+       0.3,
+       0.4
+      ],
+      "G": [
+       0.7,
+       0.4
+      ],
+      "H": [
+       0.92,
+       0.4
+      ],
+      "I": [
+       0.22,
+       0.12
+      ],
+      "J": [
+       0.4,
+       0.12
+      ],
+      "K": [
+       0.7,
+       0.12
+      ]
+     },
+     "edges": [
+      [
+       "A",
+       "B"
+      ],
+      [
+       "A",
+       "C"
+      ],
+      [
+       "A",
+       "D"
+      ],
+      [
+       "B",
+       "E"
+      ],
+      [
+       "B",
+       "F"
+      ],
+      [
+       "D",
+       "G"
+      ],
+      [
+       "D",
+       "H"
+      ],
+      [
+       "F",
+       "I"
+      ],
+      [
+       "F",
+       "J"
+      ],
+      [
+       "G",
+       "K"
+      ]
+     ],
+     "hl": {
+      "A": "done",
+      "B": "done",
+      "C": "done",
+      "D": "done",
+      "E": "cur",
+      "F": "warn",
+      "G": "warn",
+      "H": "warn"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1.6
+    },
+    {
+     "type": "queue",
+     "items": [
+      "F",
+      "G",
+      "H"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Dequeue E; enqueue nothing",
+   "narration": "Dequeue E and record it. It has no children.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "A": [
+       0.5,
+       0.9
+      ],
+      "B": [
+       0.2,
+       0.65
+      ],
+      "C": [
+       0.5,
+       0.65
+      ],
+      "D": [
+       0.8,
+       0.65
+      ],
+      "E": [
+       0.08,
+       0.4
+      ],
+      "F": [
+       0.3,
+       0.4
+      ],
+      "G": [
+       0.7,
+       0.4
+      ],
+      "H": [
+       0.92,
+       0.4
+      ],
+      "I": [
+       0.22,
+       0.12
+      ],
+      "J": [
+       0.4,
+       0.12
+      ],
+      "K": [
+       0.7,
+       0.12
+      ]
+     },
+     "edges": [
+      [
+       "A",
+       "B"
+      ],
+      [
+       "A",
+       "C"
+      ],
+      [
+       "A",
+       "D"
+      ],
+      [
+       "B",
+       "E"
+      ],
+      [
+       "B",
+       "F"
+      ],
+      [
+       "D",
+       "G"
+      ],
+      [
+       "D",
+       "H"
+      ],
+      [
+       "F",
+       "I"
+      ],
+      [
+       "F",
+       "J"
+      ],
+      [
+       "G",
+       "K"
+      ]
+     ],
+     "hl": {
+      "A": "done",
+      "B": "done",
+      "C": "done",
+      "D": "done",
+      "E": "done",
+      "F": "done",
+      "G": "cur",
+      "H": "warn",
+      "I": "warn",
+      "J": "warn",
+      "K": "warn"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1.6
+    },
+    {
+     "type": "queue",
+     "items": [
+      "H",
+      "I",
+      "J",
+      "K"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Dequeue G; enqueue K",
+   "narration": "Dequeue G and record it. Its children, K, join the back of the queue.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "A": [
+       0.5,
+       0.9
+      ],
+      "B": [
+       0.2,
+       0.65
+      ],
+      "C": [
+       0.5,
+       0.65
+      ],
+      "D": [
+       0.8,
+       0.65
+      ],
+      "E": [
+       0.08,
+       0.4
+      ],
+      "F": [
+       0.3,
+       0.4
+      ],
+      "G": [
+       0.7,
+       0.4
+      ],
+      "H": [
+       0.92,
+       0.4
+      ],
+      "I": [
+       0.22,
+       0.12
+      ],
+      "J": [
+       0.4,
+       0.12
+      ],
+      "K": [
+       0.7,
+       0.12
+      ]
+     },
+     "edges": [
+      [
+       "A",
+       "B"
+      ],
+      [
+       "A",
+       "C"
+      ],
+      [
+       "A",
+       "D"
+      ],
+      [
+       "B",
+       "E"
+      ],
+      [
+       "B",
+       "F"
+      ],
+      [
+       "D",
+       "G"
+      ],
+      [
+       "D",
+       "H"
+      ],
+      [
+       "F",
+       "I"
+      ],
+      [
+       "F",
+       "J"
+      ],
+      [
+       "G",
+       "K"
+      ]
+     ],
+     "hl": {
+      "A": "done",
+      "B": "done",
+      "C": "done",
+      "D": "done",
+      "E": "done",
+      "F": "done",
+      "G": "done",
+      "H": "done",
+      "I": "cur",
+      "J": "warn",
+      "K": "warn"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1.6
+    },
+    {
+     "type": "queue",
+     "items": [
+      "J",
+      "K"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Dequeue I; enqueue nothing",
+   "narration": "Dequeue I and record it. It has no children.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "graph",
+     "nodes": {
+      "A": [
+       0.5,
+       0.9
+      ],
+      "B": [
+       0.2,
+       0.65
+      ],
+      "C": [
+       0.5,
+       0.65
+      ],
+      "D": [
+       0.8,
+       0.65
+      ],
+      "E": [
+       0.08,
+       0.4
+      ],
+      "F": [
+       0.3,
+       0.4
+      ],
+      "G": [
+       0.7,
+       0.4
+      ],
+      "H": [
+       0.92,
+       0.4
+      ],
+      "I": [
+       0.22,
+       0.12
+      ],
+      "J": [
+       0.4,
+       0.12
+      ],
+      "K": [
+       0.7,
+       0.12
+      ]
+     },
+     "edges": [
+      [
+       "A",
+       "B"
+      ],
+      [
+       "A",
+       "C"
+      ],
+      [
+       "A",
+       "D"
+      ],
+      [
+       "B",
+       "E"
+      ],
+      [
+       "B",
+       "F"
+      ],
+      [
+       "D",
+       "G"
+      ],
+      [
+       "D",
+       "H"
+      ],
+      [
+       "F",
+       "I"
+      ],
+      [
+       "F",
+       "J"
+      ],
+      [
+       "G",
+       "K"
+      ]
+     ],
+     "hl": {
+      "A": "done",
+      "B": "done",
+      "C": "done",
+      "D": "done",
+      "E": "done",
+      "F": "done",
+      "G": "done",
+      "H": "done",
+      "I": "done",
+      "J": "done",
+      "K": "cur"
+     },
+     "ehl": [],
+     "directed": true,
+     "label": null,
+     "notes": {},
+     "names": {},
+     "h": 1.6
+    },
+    {
+     "type": "queue",
+     "items": [],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Dequeue K; enqueue nothing",
+   "narration": "Dequeue K and record it. It has no children.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class BreadthFirstSearch {\n    public static class Node {\n        public final String name;\n        public final List<Node> children = new ArrayList<>();\n        public Node(String name) { this.name = name; }\n        public Node addChild(String n) { children.add(new Node(n)); return this; }\n\n        public List<String> breadthFirstSearch(List<String> out) {\n            ArrayDeque<Node> q = new ArrayDeque<>();\n            q.add(this);\n            while (!q.isEmpty()) { Node c = q.poll(); out.add(c.name); q.addAll(c.children); }\n            return out;\n        }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "BreadthFirstSearch.java",
+   "narration": "We push the start node onto an array deque. While it's non-empty, we poll a node, append its name, and add all its children to the back."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(v + e)",
+    "Space: O(v)"
+   ],
+   "narration": "Time is O of v plus e. Space is O of v."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Use a real queue (ArrayDeque), not list.remove(0)",
+    "General graphs need a visited set",
+    "Children enqueued left to right"
+   ],
+   "narration": "Use a proper queue; removing from the front of an array list is linear. On general graphs, mark nodes visited when you enqueue them."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: level-order with level boundaries",
+    "Follow-up: shortest path in a grid"
+   ],
+   "narration": "Follow-ups print each level separately or find shortest paths in a grid."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Breadth-first search visits nodes level by level using a queue.",
+    "Complexity: O(v + e)"
+   ],
+   "narration": "To recap Breadth First Search: Breadth-first search visits nodes level by level using a queue. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

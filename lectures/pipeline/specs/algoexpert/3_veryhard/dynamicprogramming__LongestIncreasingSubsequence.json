@@ -1,0 +1,426 @@
+{
+ "title": "AlgoExpert · Longest Increasing Subsequence",
+ "out": "algoexpert/veryhard/dynamicprogramming/LongestIncreasingSubsequence",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Longest Increasing Subsequence",
+   "subtitle": "AlgoExpert · Very Hard · Dynamic Programming",
+   "narration": "Let's solve Longest Increasing Subsequence, a very hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "One strictly increasing subsequence of maximum length (patience sorting with predecessor links)."
+   ],
+   "narration": "Here's the problem. One strictly increasing subsequence of maximum length (patience sorting with predecessor links)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Patience sorting: keep the smallest possible tail for each length and binary search where each number goes."
+   ],
+   "narration": "Patience sorting: keep the smallest possible tail for each length and binary search where each number goes."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "DP: for each i check all j < i → O(n²)",
+    "Patience sorting tails + binary search → O(n log n)",
+    "prev pointers rebuild the sequence"
+   ],
+   "narration": "The classic DP is quadratic. Keeping the smallest possible tail for each length, and binary-searching where each value goes, is n log n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Tails array of indices",
+    "2. Binary search the position",
+    "3. Record predecessors",
+    "4. Rebuild from the last tail"
+   ],
+   "narration": "Step by step. First, tails array of indices. Second, binary search the position. Third, record predecessors. Fourth, rebuild from the last tail."
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      7,
+      -24,
+      12,
+      10,
+      2,
+      3,
+      12,
+      5,
+      6,
+      35
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      5
+     ],
+     "hl": {
+      "0": "ok"
+     },
+     "ptr": {},
+     "label": "smallest tail for each length",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "5 → tails[0]",
+   "narration": "Binary search where 5 fits among the tails: position 0. It extends the longest so far.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      7,
+      -24,
+      12,
+      10,
+      2,
+      3,
+      12,
+      5,
+      6,
+      35
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      -24,
+      7
+     ],
+     "hl": {
+      "0": "ok"
+     },
+     "ptr": {},
+     "label": "smallest tail for each length",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "-24 → tails[0]",
+   "narration": "Binary search where -24 fits among the tails: position 0. It replaces a larger tail, keeping that length's tail as small as possible.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      7,
+      -24,
+      12,
+      10,
+      2,
+      3,
+      12,
+      5,
+      6,
+      35
+     ],
+     "hl": {
+      "3": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      -24,
+      7,
+      12
+     ],
+     "hl": {
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": "smallest tail for each length",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "12 → tails[2]",
+   "narration": "Binary search where 12 fits among the tails: position 2. It extends the longest so far.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      7,
+      -24,
+      12,
+      10,
+      2,
+      3,
+      12,
+      5,
+      6,
+      35
+     ],
+     "hl": {
+      "5": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      -24,
+      2,
+      10
+     ],
+     "hl": {
+      "1": "ok"
+     },
+     "ptr": {},
+     "label": "smallest tail for each length",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "2 → tails[1]",
+   "narration": "Binary search where 2 fits among the tails: position 1. It replaces a larger tail, keeping that length's tail as small as possible.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      7,
+      -24,
+      12,
+      10,
+      2,
+      3,
+      12,
+      5,
+      6,
+      35
+     ],
+     "hl": {
+      "7": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      -24,
+      2,
+      3,
+      12
+     ],
+     "hl": {
+      "3": "ok"
+     },
+     "ptr": {},
+     "label": "smallest tail for each length",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "12 → tails[3]",
+   "narration": "Binary search where 12 fits among the tails: position 3. It extends the longest so far.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      7,
+      -24,
+      12,
+      10,
+      2,
+      3,
+      12,
+      5,
+      6,
+      35
+     ],
+     "hl": {
+      "9": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      -24,
+      2,
+      3,
+      5,
+      6
+     ],
+     "hl": {
+      "4": "ok"
+     },
+     "ptr": {},
+     "label": "smallest tail for each length",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "6 → tails[4]",
+   "narration": "Binary search where 6 fits among the tails: position 4. It extends the longest so far.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      7,
+      -24,
+      12,
+      10,
+      2,
+      3,
+      12,
+      5,
+      6,
+      35
+     ],
+     "hl": {
+      "10": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      -24,
+      2,
+      3,
+      5,
+      6,
+      35
+     ],
+     "hl": {
+      "5": "ok"
+     },
+     "ptr": {},
+     "label": "smallest tail for each length",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "35 → tails[5]",
+   "narration": "Binary search where 35 fits among the tails: position 5. It extends the longest so far.",
+   "layout": "rows"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class LongestIncreasingSubsequence {\n    public static List<Integer> longestIncreasingSubsequence(int[] a) {\n        int n = a.length, len = 0;\n        int[] tails = new int[n], prev = new int[n];\n        for (int i = 0; i < n; i++) {\n            int lo = 0, hi = len;\n            while (lo < hi) { int m = (lo + hi) >>> 1; if (a[tails[m]] < a[i]) lo = m + 1; else hi = m; }\n            prev[i] = lo > 0 ? tails[lo - 1] : -1;\n            tails[lo] = i;\n            if (lo == len) len++;\n        }\n        List<Integer> out = new ArrayList<>();\n        for (int i = len == 0 ? -1 : tails[len - 1]; i != -1; i = prev[i]) out.add(a[i]);\n        Collections.reverse(out);\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LongestIncreasingSubsequence.java",
+   "narration": "For each i, binary search tails for the first value not less than a i, set prev to the index before, store i, and grow length if at the end. Then follow prev from the last tail."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n log n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "tails isn't the LIS itself — rebuild with prev",
+    "Strictly increasing → lower bound",
+    "Empty input"
+   ],
+   "narration": "The tails array isn't the sequence; keep prev pointers to rebuild it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why small tails help"
+   ],
+   "narration": "Explain why smaller tails leave room to extend."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Patience sorting: keep the smallest possible tail for each length and binary search where each number goes.",
+    "Complexity: O(n log n)"
+   ],
+   "narration": "To recap Longest Increasing Subsequence: Patience sorting: keep the smallest possible tail for each length and binary search where each number goes. Try re-implementing it from scratch without looking."
+  }
+ ]
+}
