@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "String replacement loops → fragile, O(n²)",
+    "Stack of path tokens → O(n)",
+    "Handle absolute vs relative paths"
+   ],
+   "narration": "Repeated string replacement is fragile. Splitting on slashes and using a stack handles dots and double dots cleanly in linear time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Split on slashes",
@@ -37,13 +47,171 @@
    "narration": "Step by step. First, split on slashes. Second, skip empty tokens and single dots. Third, double dot pops, or is kept for relative paths. Fourth, join back."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      "foo"
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "token 'foo': push"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "'foo': push",
+   "narration": "Token foo: a directory name, push.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      "test"
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "token 'test': push"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "'test': push",
+   "narration": "Token test: a directory name, push.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      "test"
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "token 'test': push"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "'test': push",
+   "narration": "Token test: a directory name, push.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      "(empty)"
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "token '..': pop"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "'..': pop",
+   "narration": "Token ..: go up a directory, pop.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "stack",
+     "items": [
+      "bar",
+      "foo"
+     ],
+     "label": null,
+     "hl": {},
+     "h": 1,
+     "w": 0.4
+    },
+    {
+     "type": "text",
+     "lines": [
+      "token 'bar': push"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.6
+    }
+   ],
+   "caption": "'bar': push",
+   "narration": "Token bar: a directory name, push.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "/foo/bar/baz"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Join the stack",
+   "narration": "Join the stack with slashes: slash foo, bar, baz.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ShortenPath {\n    public static String shortenPath(String path) {\n        boolean abs = path.startsWith(\"/\");\n        ArrayDeque<String> st = new ArrayDeque<>();\n        for (String t : path.split(\"/\")) {\n            if (t.isEmpty() || t.equals(\".\")) continue;\n            if (t.equals(\"..\")) {\n                if (!st.isEmpty() && !st.peekLast().equals(\"..\")) st.pollLast();\n                else if (!abs) st.addLast(\"..\");\n            } else st.addLast(t);\n        }\n        String joined = String.join(\"/\", st);\n        return abs ? \"/\" + joined : joined;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ShortenPath.java",
-   "narration": "Here's the Java solution, starting with shorten path. It follows the steps we just described."
+   "narration": "We split on slash, skip empty and dot tokens, pop on dot-dot unless the stack is empty or ends in dot-dot (then push it for relative paths), and push names. Join and prefix a slash if absolute."
   },
   {
    "kind": "bullets",
@@ -53,6 +221,24 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "'..' at root of absolute path → ignore",
+    "Relative paths keep leading '..'",
+    "Empty tokens from '//'"
+   ],
+   "narration": "At the root of an absolute path, dot-dot does nothing; in relative paths, leading dot-dots are kept."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same as Simplify Path"
+   ],
+   "narration": "This is simplify path."
   },
   {
    "kind": "bullets",

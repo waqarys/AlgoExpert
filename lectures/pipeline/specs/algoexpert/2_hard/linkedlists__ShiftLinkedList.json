@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Shift one node at a time k times → O(n·k)",
+    "Length + one cut → O(n)",
+    "Negative k: floor mod"
+   ],
+   "narration": "Rotating one step at a time is n times k. Computing the length and cutting once is linear."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Find length and tail",
@@ -36,13 +46,98 @@
    "narration": "Step by step. First, find length and tail. Second, normalise k modulo length. Third, walk to the new tail. Fourth, rewire and return the new head."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "ptr": {
+      "tail": 5
+     },
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Length 6; shift 2 → effective 2",
+   "narration": "Find the length, 6, and the tail. Shifting by 2 is the same as 2 modulo the length.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "ptr": {
+      "new tail": 3,
+      "new head": 4
+     },
+     "hl": {
+      "3": "cur",
+      "4": "ok"
+     },
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "New tail at index 3",
+   "narration": "The new tail is 3 steps from the start: node 3. Its next, 4, becomes the new head.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      4,
+      5,
+      0,
+      1,
+      2,
+      3
+     ],
+     "ptr": {
+      "head": 0
+     },
+     "hl": {},
+     "cycle_to": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Cut and reconnect",
+   "narration": "Cut after the new tail and connect the old tail to the old head.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ShiftLinkedList {\n    public static LinkedListNode shiftLinkedList(LinkedListNode head, int k) {\n        int len = 1;\n        LinkedListNode tail = head;\n        while (tail.next != null) { tail = tail.next; len++; }\n        int shift = Math.floorMod(k, len);\n        if (shift == 0) return head;\n        LinkedListNode newTail = head;\n        for (int i = 1; i < len - shift; i++) newTail = newTail.next;\n        LinkedListNode newHead = newTail.next;\n        newTail.next = null;\n        tail.next = head;\n        return newHead;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ShiftLinkedList.java",
-   "narration": "Here's the Java solution, starting with shift linked list. It follows the steps we just described."
+   "narration": "We walk to the tail counting length, compute the effective shift, walk to the new tail, cut, link the old tail to the old head, and return the new head."
   },
   {
    "kind": "bullets",
@@ -52,6 +147,24 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "k ≥ length → mod",
+    "Negative k shifts backward",
+    "Shift 0 → same list"
+   ],
+   "narration": "Take k mod length, using floor mod so negative k works."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same as Rotate List"
+   ],
+   "narration": "This is rotate list."
   },
   {
    "kind": "bullets",

@@ -28,6 +28,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Flip each water cell and recount → O((w·h)²)",
+    "Label islands once, then check each water cell's distinct neighbours → O(w·h)",
+    "Use a set so an island isn't counted twice"
+   ],
+   "narration": "Flipping each water cell and flood-filling again is quadratic in the grid size. Label islands once with their sizes, then each water cell just sums its distinct neighbouring islands."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Flood-fill to label islands and record sizes",
@@ -38,13 +48,132 @@
    "narration": "Step by step. First, flood-fill to label islands and record sizes. Second, for each water cell, collect unique neighbouring labels. Third, sum sizes plus one. Fourth, take the max."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       1,
+       1
+      ],
+      [
+       0,
+       0,
+       1
+      ],
+      [
+       1,
+       1,
+       0
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "0 = land, 1 = water: flip one 1 to maximise the island",
+   "narration": "Here zeros are land and ones are water. We may flip one water cell to land; what's the largest island?",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "A",
+       1,
+       1
+      ],
+      [
+       "A",
+       "A",
+       1
+      ],
+      [
+       1,
+       1,
+       "B"
+      ]
+     ],
+     "hl": {
+      "0,0": "acc",
+      "1,0": "acc",
+      "1,1": "acc",
+      "2,2": "warn"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Label islands: A = 3, B = 1",
+   "narration": "First label each island and record its size: A has three cells, B has one.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       0,
+       1,
+       1
+      ],
+      [
+       0,
+       0,
+       1
+      ],
+      [
+       1,
+       1,
+       0
+      ]
+     ],
+     "hl": {
+      "1,2": "ok",
+      "1,1": "acc",
+      "2,2": "warn"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "flip (1,2): touches A (3) + B (1) → 1 + 3 + 1 = 5"
+     ],
+     "label": null,
+     "h": 0.4
+    }
+   ],
+   "caption": "Flip (1,2): 1 + A + B = 5",
+   "narration": "Now for each water cell, add one plus the sizes of the distinct islands next to it. Flipping row one, column two joins A and B: five.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class LargestIsland {\n    public static int largestIsland(int[][] matrix) {\n        int R = matrix.length, C = matrix[0].length, id = 2;\n        int[][] m = new int[R][];\n        for (int r = 0; r < R; r++) m[r] = matrix[r].clone();\n        Map<Integer, Integer> size = new HashMap<>();\n        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n        int best = 0;\n        for (int r = 0; r < R; r++) for (int c = 0; c < C; c++) {\n            if (m[r][c] != 0) continue;\n            int s = 0;\n            ArrayDeque<int[]> st = new ArrayDeque<>();\n            st.push(new int[]{r, c});\n            m[r][c] = id;\n            while (!st.isEmpty()) {\n                int[] p = st.pop(); s++;\n                for (int[] d : dirs) {\n                    int nr = p[0] + d[0], nc = p[1] + d[1];\n                    if (nr >= 0 && nc >= 0 && nr < R && nc < C && m[nr][nc] == 0) { m[nr][nc] = id; st.push(new int[]{nr, nc}); }\n                }\n            }\n            size.put(id++, s);",
    "lang": "java",
    "font_size": 26,
    "filename": "LargestIsland_part1.java",
-   "narration": "Here's the Java solution, starting with largest island. It follows the steps we just described."
+   "narration": "We label each land component with an ID from two upward and record its size. Then for each water cell we collect distinct neighbouring IDs, sum one plus their sizes, and keep the best."
   },
   {
    "kind": "code",
@@ -53,7 +182,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "LargestIsland_part2.java",
-   "narration": "Continuing the implementation."
+   "narration": "We label each land component with an ID from two upward and record its size. Then for each water cell we collect distinct neighbouring IDs, sum one plus their sizes, and keep the best."
   },
   {
    "kind": "bullets",
@@ -63,6 +192,24 @@
     "Space: O(w*h)"
    ],
    "narration": "Time is O of w times h. Space is O of w times h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Count each neighbouring island once (set of IDs)",
+    "No water → whole grid",
+    "No land → 1"
+   ],
+   "narration": "Use a set of island IDs so an island touching a cell from two sides isn't counted twice. If there's no water, the answer is the whole grid."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same as LeetCode Making a Large Island"
+   ],
+   "narration": "This is making a large island."
   },
   {
    "kind": "bullets",

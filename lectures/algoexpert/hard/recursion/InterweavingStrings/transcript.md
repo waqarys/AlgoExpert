@@ -14,18 +14,42 @@ Here's the problem. Can three be formed by interleaving one and two keeping each
 
 Each prefix pair of the two strings either explains the next character of three or not, so memoise by indices.
 
-## 4. Approach (0:25) — `slides/04.png`
+## 4. Brute force vs optimal (0:25) — `slides/04.png`
+
+Recursing on which string supplies the next letter is exponential. The state is just i and j, so memoising makes it n times m.
+
+## 5. Approach (0:34) — `slides/05.png`
 
 Step by step. First, recursive i and j into one and two. Second, next character of three must come from one or the other. Third, memoise failed states. Fourth, succeed when all are used.
 
-## 5. Java solution (0:40) — `slides/05.png`
+## 6. Worked example (0:49) — `slides/06.png`
 
-Here's the Java solution, starting with interweaving strings. It follows the steps we just described.
+Can we build fralgogo by interleaving algo and frog, keeping each in order?
 
-## 6. Complexity (0:48) — `slides/06.png`
+## 7. Worked example (0:55) — `slides/07.png`
+
+Dp i, j says whether the first i letters of one and j letters of two make the first i plus j letters of three. A cell is reachable from above if one's letter matches, or from the left if two's does.
+
+## 8. Worked example (1:07) — `slides/08.png`
+
+The bottom-right cell is true, so the answer is yes.
+
+## 9. Java solution (1:11) — `slides/09.png`
+
+We check lengths, then recurse on i and j with a memo: if one's letter matches the next of three try advancing i, and if two's matches try advancing j.
+
+## 10. Complexity (1:20) — `slides/10.png`
 
 Time is O of n times m. Space is O of m.
 
-## 7. Recap (0:52) — `slides/07.png`
+## 11. Edge cases & pitfalls (1:24) — `slides/11.png`
+
+If lengths don't add up, return false immediately.
+
+## 12. Interview tips & follow-ups (1:28) — `slides/12.png`
+
+A one-dimensional DP row is enough.
+
+## 13. Recap (1:32) — `slides/13.png`
 
 To recap Interweaving Strings: Each prefix pair of the two strings either explains the next character of three or not, so memoise by indices. Try re-implementing it from scratch without looking.

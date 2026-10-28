@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Copy into array, rebuild → O(n) space",
+    "Recursive → O(n) stack",
+    "Iterative three pointers → O(1)"
+   ],
+   "narration": "Rebuilding from an array uses extra memory. The iterative version flips one pointer at a time with prev, current and next."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Previous starts null",
@@ -36,13 +46,155 @@
    "narration": "Step by step. First, previous starts null. Second, save next, point current at previous. Third, advance both. Fourth, previous is the new head."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      "∅"
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "reversed (prev)",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "remaining (head)",
+     "h": 1
+    }
+   ],
+   "caption": "After 0 steps",
+   "narration": "After reversing 0 nodes, prev heads nothing and the remaining list starts at 0.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      0
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "reversed (prev)",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      2,
+      3,
+      4,
+      5
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "remaining (head)",
+     "h": 1
+    }
+   ],
+   "caption": "After 2 steps",
+   "narration": "After reversing 2 nodes, prev heads 1 and the remaining list starts at 2.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "reversed (prev)",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      4,
+      5
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "remaining (head)",
+     "h": 1
+    }
+   ],
+   "caption": "After 4 steps",
+   "narration": "After reversing 4 nodes, prev heads 3 and the remaining list starts at 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      5,
+      4,
+      3,
+      2,
+      1,
+      0
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "reversed (prev)",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      "∅"
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "remaining (head)",
+     "h": 1
+    }
+   ],
+   "caption": "After 6 steps",
+   "narration": "After reversing 6 nodes, prev heads 5 and the remaining list starts at null.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ReverseLinkedList {\n    public static LinkedListNode reverseLinkedList(LinkedListNode head) {\n        LinkedListNode prev = null;\n        while (head != null) { LinkedListNode n = head.next; head.next = prev; prev = head; head = n; }\n        return prev;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ReverseLinkedList.java",
-   "narration": "Here's the Java solution, starting with reverse linked list. It follows the steps we just described."
+   "narration": "While head isn't null, save next, point head at prev, move prev to head and head to next. Return prev."
   },
   {
    "kind": "bullets",
@@ -52,6 +204,24 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Save next before overwriting",
+    "Empty / single node",
+    "Return prev, not head"
+   ],
+   "narration": "Save next before you overwrite the pointer, and return prev at the end."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: reverse in groups of k"
+   ],
+   "narration": "A follow-up reverses in groups of k."
   },
   {
    "kind": "bullets",

@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Selection sort → O(n²)",
+    "Heap sort → O(n log n), in place",
+    "Not stable"
+   ],
+   "narration": "Selection sort finds the max by scanning each time. A heap finds it in log n, giving n log n in place."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Heapify from the last parent down",
@@ -35,13 +45,256 @@
    "narration": "Step by step. First, heapify from the last parent down. Second, swap root with the last element. Third, sift down within the shrinking heap."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       9,
+       "1",
+       "2"
+      ],
+      "1": [
+       8,
+       "3",
+       "4"
+      ],
+      "2": [
+       6,
+       "5",
+       "6"
+      ],
+      "3": [
+       5,
+       null,
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       2,
+       null,
+       null
+      ],
+      "6": [
+       3,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {},
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "array",
+     "values": [
+      9,
+      8,
+      6,
+      5,
+      5,
+      2,
+      3
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Build a max-heap",
+   "narration": "First build a max-heap bottom-up. The largest, nine, is at the root.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      8,
+      5,
+      6,
+      3,
+      5,
+      2,
+      9
+     ],
+     "hl": {
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      5
+     ]
+    }
+   ],
+   "caption": "Swap max to index 6, sift down",
+   "narration": "Swap the root into position 6; that part is sorted. Sift the new root down to restore the heap.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      6,
+      5,
+      2,
+      3,
+      5,
+      8,
+      9
+     ],
+     "hl": {
+      "5": "ok",
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      4
+     ]
+    }
+   ],
+   "caption": "Swap max to index 5, sift down",
+   "narration": "Swap the root into position 5; that part is sorted. Sift the new root down to restore the heap.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      5,
+      2,
+      3,
+      6,
+      8,
+      9
+     ],
+     "hl": {
+      "4": "ok",
+      "5": "ok",
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      3
+     ]
+    }
+   ],
+   "caption": "Swap max to index 4, sift down",
+   "narration": "Swap the root into position 4; that part is sorted. Sift the new root down to restore the heap.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      2,
+      5,
+      5,
+      6,
+      8,
+      9
+     ],
+     "hl": {
+      "2": "ok",
+      "3": "ok",
+      "4": "ok",
+      "5": "ok",
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      1
+     ]
+    }
+   ],
+   "caption": "Swap max to index 2, sift down",
+   "narration": "Swap the root into position 2; that part is sorted. Sift the new root down to restore the heap.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      5,
+      5,
+      6,
+      8,
+      9
+     ],
+     "hl": {
+      "1": "ok",
+      "2": "ok",
+      "3": "ok",
+      "4": "ok",
+      "5": "ok",
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      0
+     ]
+    }
+   ],
+   "caption": "Swap max to index 1, sift down",
+   "narration": "Swap the root into position 1; that part is sorted. Sift the new root down to restore the heap.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class HeapSort {\n    public static int[] heapSort(int[] a) {\n        for (int i = a.length / 2 - 1; i >= 0; i--) sift(a, i, a.length);\n        for (int end = a.length - 1; end > 0; end--) { int t = a[0]; a[0] = a[end]; a[end] = t; sift(a, 0, end); }\n        return a;\n    }\n\n    private static void sift(int[] a, int i, int n) {\n        while (2 * i + 1 < n) {\n            int c = 2 * i + 1;\n            if (c + 1 < n && a[c + 1] > a[c]) c++;\n            if (a[i] >= a[c]) return;\n            int t = a[i]; a[i] = a[c]; a[c] = t;\n            i = c;\n        }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "HeapSort.java",
-   "narration": "Here's the Java solution, starting with heap sort. It follows the steps we just described."
+   "narration": "We sift down from the last parent to build the heap, then repeatedly swap the root with end and sift the root down within end."
   },
   {
    "kind": "bullets",
@@ -51,6 +304,24 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n log n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Build bottom-up in O(n)",
+    "Shrink the heap each step",
+    "Not stable"
+   ],
+   "narration": "Build bottom-up, and shrink the heap boundary each step."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Compare with quick/merge sort"
+   ],
+   "narration": "Heap sort guarantees n log n with constant memory, but is cache-unfriendly and unstable."
   },
   {
    "kind": "bullets",

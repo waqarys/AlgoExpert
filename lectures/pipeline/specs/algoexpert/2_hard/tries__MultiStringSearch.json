@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "indexOf per small string → O(b · Σs)",
+    "Trie of smalls, walk from each index of big → O(b · maxS + Σs)",
+    "Aho–Corasick → linear"
+   ],
+   "narration": "Searching for each small string separately repeats scans. A trie of the small strings lets each start index check all of them at once. Aho-Corasick makes it linear."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Build a trie",
@@ -37,13 +47,105 @@
    "narration": "Step by step. First, build a trie. Second, start a walk at each index of the big string. Third, mark words found. Fourth, return booleans."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "this",
+      "yo",
+      "is",
+      "a",
+      "bigger",
+      "string",
+      "kappa"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 18
+    }
+   ],
+   "caption": "Build a trie of the small strings",
+   "narration": "Put all the small strings in a trie.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "this is a big string",
+      "start at each index, walk the trie"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Walk the trie from each start index",
+   "narration": "From each index of the big string, walk the trie as far as letters match, recording any word endings.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "this",
+       "✓"
+      ],
+      [
+       "yo",
+       "✗"
+      ],
+      [
+       "is",
+       "✓"
+      ],
+      [
+       "a",
+       "✓"
+      ],
+      [
+       "bigger",
+       "✗"
+      ],
+      [
+       "string",
+       "✓"
+      ],
+      [
+       "kappa",
+       "✗"
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "small",
+      "found"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Results",
+   "narration": "This, is, a and string are found; yo, bigger and kappa aren't.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MultiStringSearch {\n    private static class Trie { Map<Character, Trie> next = new HashMap<>(); String word; }\n\n    public static List<Boolean> multiStringSearch(String big, String[] smalls) {\n        Trie root = new Trie();\n        for (String s : smalls) {\n            Trie t = root;\n            for (char c : s.toCharArray()) t = t.next.computeIfAbsent(c, k -> new Trie());\n            t.word = s;\n        }\n        Set<String> found = new HashSet<>();\n        for (int i = 0; i < big.length(); i++) {\n            Trie t = root;\n            for (int j = i; j < big.length(); j++) {\n                t = t.next.get(big.charAt(j));\n                if (t == null) break;\n                if (t.word != null) found.add(t.word);\n            }\n        }\n        List<Boolean> out = new ArrayList<>();\n        for (String s : smalls) out.add(found.contains(s));\n        return out;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "MultiStringSearch.java",
-   "narration": "Here's the Java solution, starting with multi string search. It follows the steps we just described."
+   "narration": "We build a trie with words at terminal nodes. For each start index, follow children while they exist, adding words. Then map each small to whether it was found."
   },
   {
    "kind": "bullets",
@@ -53,6 +155,24 @@
     "Space: O(ns)"
    ],
    "narration": "Time is O of ns plus bs where b is the big length, s the longest small. Space is O of ns."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Overlapping matches",
+    "Duplicate small strings",
+    "Small longer than big"
+   ],
+   "narration": "Duplicates and overlaps are handled naturally by the set of found words."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention Aho–Corasick"
+   ],
+   "narration": "Mention Aho-Corasick for true linear time."
   },
   {
    "kind": "bullets",

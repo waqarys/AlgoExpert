@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Search each word separately on the board → O(words · cells · 8^L)",
+    "Trie + single DFS from each cell → prunes shared prefixes",
+    "Mark cells used on the current path"
+   ],
+   "narration": "Searching for each word separately repeats work for shared prefixes. A trie of all words lets one DFS from each cell explore them together and prune early."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Insert words into a trie",
@@ -37,13 +47,228 @@
    "narration": "Step by step. First, insert words into a trie. Second, dFS from every cell along trie edges. Third, mark visited cells. Fourth, record words at word-end markers."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "t",
+       "h",
+       "i",
+       "s"
+      ],
+      [
+       "w",
+       "a",
+       "t",
+       "s"
+      ],
+      [
+       "o",
+       "a",
+       "h",
+       "g"
+      ],
+      [
+       "f",
+       "g",
+       "d",
+       "t"
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "words: this, two, fat, that…"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "Board and dictionary (built into a trie)",
+   "narration": "Put every word in a trie, then search the board from each cell.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "t",
+       "h",
+       "i",
+       "s"
+      ],
+      [
+       "w",
+       "a",
+       "t",
+       "s"
+      ],
+      [
+       "o",
+       "a",
+       "h",
+       "g"
+      ],
+      [
+       "f",
+       "g",
+       "d",
+       "t"
+      ]
+     ],
+     "hl": {
+      "0,0": "cur"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "t → trie has 't' ✓"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "Start at 't'",
+   "narration": "From the t in the corner, the trie has a branch for t, so continue.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "t",
+       "h",
+       "i",
+       "s"
+      ],
+      [
+       "w",
+       "a",
+       "t",
+       "s"
+      ],
+      [
+       "o",
+       "a",
+       "h",
+       "g"
+      ],
+      [
+       "f",
+       "g",
+       "d",
+       "t"
+      ]
+     ],
+     "hl": {
+      "0,0": "ok",
+      "0,1": "ok",
+      "0,2": "ok",
+      "0,3": "ok"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "t-h-i-s → word 'this' ✓"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "t → h → i → s: found 'this'",
+   "narration": "Moving to neighbours h, i, s, we reach a trie node marking the word this.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "t",
+       "h",
+       "i",
+       "s"
+      ],
+      [
+       "w",
+       "a",
+       "t",
+       "s"
+      ],
+      [
+       "o",
+       "a",
+       "h",
+       "g"
+      ],
+      [
+       "f",
+       "g",
+       "d",
+       "t"
+      ]
+     ],
+     "hl": {
+      "0,0": "cur",
+      "1,0": "warn"
+     },
+     "rowh": null,
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "t → w: trie has 'tw' ✓ (two)",
+      "t → a: … prune if no branch"
+     ],
+     "label": null,
+     "h": 0.5
+    }
+   ],
+   "caption": "Prune when the trie has no branch",
+   "narration": "Any time the trie has no branch for the next letter, we stop exploring that path. That pruning is what makes it fast.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class BoggleBoard {\n    private static class Trie { Map<Character, Trie> next = new HashMap<>(); String word; }\n\n    public static List<String> boggleBoard(char[][] board, String[] words) {\n        Trie root = new Trie();\n        for (String w : words) {\n            Trie t = root;\n            for (char c : w.toCharArray()) t = t.next.computeIfAbsent(c, k -> new Trie());\n            t.word = w;\n        }\n        Set<String> found = new LinkedHashSet<>();\n        boolean[][] used = new boolean[board.length][board[0].length];\n        for (int r = 0; r < board.length; r++) for (int c = 0; c < board[0].length; c++) dfs(board, r, c, root, used, found);\n        return new ArrayList<>(found);\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "BoggleBoard_part1.java",
-   "narration": "Here's the Java solution, starting with boggle board. It follows the steps we just described."
+   "narration": "We build a trie with words at terminal nodes. DFS from every cell follows the trie child for the cell's letter, records any word, marks the cell, recurses in eight directions, then unmarks it."
   },
   {
    "kind": "code",
@@ -52,7 +277,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "BoggleBoard_part2.java",
-   "narration": "Continuing with dfs."
+   "narration": "We build a trie with words at terminal nodes. DFS from every cell follows the trie child for the cell's letter, records any word, marks the cell, recurses in eight directions, then unmarks it."
   },
   {
    "kind": "bullets",
@@ -62,6 +287,25 @@
     "Space: O(ws + w*h)"
    ],
    "narration": "Time is O of ws plus w times h times 8 to the s. Space is O of ws plus w times h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "8-directional moves",
+    "Don't reuse a cell in one word",
+    "Dedupe found words"
+   ],
+   "narration": "Moves include diagonals, a cell can't be reused in one word, and the same word may be found twice."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why the trie prunes",
+    "Follow-up: remove found words from the trie"
+   ],
+   "narration": "Explain the pruning. Removing found words from the trie speeds things up further."
   },
   {
    "kind": "bullets",

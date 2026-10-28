@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Find each report's path from top, compare → O(n) + paths",
+    "Single post-order counting reports → O(n)",
+    "Return the first node reaching count 2"
+   ],
+   "narration": "Building both paths from the top and comparing works. A single post-order pass that counts how many target reports each subtree contains finds the lowest common manager directly."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Recurse into reports",
@@ -37,13 +47,220 @@
    "narration": "Step by step. First, recurse into reports. Second, count matches in each subtree. Third, the first node reaching two is the answer. Fourth, return it upward."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "A": [
+       "A",
+       "B",
+       "C"
+      ],
+      "B": [
+       "B",
+       "D",
+       "E"
+      ],
+      "C": [
+       "C",
+       "F",
+       "G"
+      ],
+      "D": [
+       "D",
+       "H",
+       "I"
+      ],
+      "E": [
+       "E",
+       null,
+       null
+      ],
+      "F": [
+       "F",
+       null,
+       null
+      ],
+      "G": [
+       "G",
+       null,
+       null
+      ],
+      "H": [
+       "H",
+       null,
+       null
+      ],
+      "I": [
+       "I",
+       null,
+       null
+      ]
+     },
+     "root": "A",
+     "hl": {
+      "E": "cur",
+      "I": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Reports E and I: who's their lowest common manager?",
+   "narration": "Find the lowest manager above both E and I.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "A": [
+       "A",
+       "B",
+       "C"
+      ],
+      "B": [
+       "B",
+       "D",
+       "E"
+      ],
+      "C": [
+       "C",
+       "F",
+       "G"
+      ],
+      "D": [
+       "D",
+       "H",
+       "I"
+      ],
+      "E": [
+       "E",
+       null,
+       null
+      ],
+      "F": [
+       "F",
+       null,
+       null
+      ],
+      "G": [
+       "G",
+       null,
+       null
+      ],
+      "H": [
+       "H",
+       null,
+       null
+      ],
+      "I": [
+       "I",
+       null,
+       null
+      ]
+     },
+     "root": "A",
+     "hl": {
+      "D": "warn",
+      "E": "warn"
+     },
+     "label": null,
+     "notes": {
+      "D": "1 found",
+      "E": "1 found",
+      "H": "0",
+      "I": "1"
+     },
+     "h": 1
+    }
+   ],
+   "caption": "Post-order: each manager returns how many reports it covers",
+   "narration": "Recursively, each manager returns how many of the two reports are in its subtree. D covers I, so one; E is itself one.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "A": [
+       "A",
+       "B",
+       "C"
+      ],
+      "B": [
+       "B",
+       "D",
+       "E"
+      ],
+      "C": [
+       "C",
+       "F",
+       "G"
+      ],
+      "D": [
+       "D",
+       "H",
+       "I"
+      ],
+      "E": [
+       "E",
+       null,
+       null
+      ],
+      "F": [
+       "F",
+       null,
+       null
+      ],
+      "G": [
+       "G",
+       null,
+       null
+      ],
+      "H": [
+       "H",
+       null,
+       null
+      ],
+      "I": [
+       "I",
+       null,
+       null
+      ]
+     },
+     "root": "A",
+     "hl": {
+      "B": "ok"
+     },
+     "label": null,
+     "notes": {
+      "B": "2 → answer"
+     },
+     "h": 1
+    }
+   ],
+   "caption": "First manager with count 2 → B",
+   "narration": "B's subtree covers both, so B is the first manager to reach two. It's the answer, and we pass it upward unchanged.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LowestCommonManager {\n    public static class OrgChart {\n        public final char name;\n        public final List<OrgChart> directReports = new ArrayList<>();\n        public OrgChart(char name) { this.name = name; }\n        public OrgChart add(OrgChart... r) { directReports.addAll(List.of(r)); return this; }\n    }\n\n    public static OrgChart getLowestCommonManager(OrgChart top, OrgChart a, OrgChart b) {\n        OrgChart[] ans = {null};\n        count(top, a, b, ans);\n        return ans[0];\n    }\n\n    private static int count(OrgChart m, OrgChart a, OrgChart b, OrgChart[] ans) {\n        int n = (m == a ? 1 : 0) + (m == b ? 1 : 0);\n        for (OrgChart r : m.directReports) { n += count(r, a, b, ans); if (ans[0] != null) return 2; }\n        if (n == 2 && ans[0] == null) ans[0] = m;\n        return n;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LowestCommonManager.java",
-   "narration": "Here's the Java solution, starting with org chart. It follows the steps we just described."
+   "narration": "The helper visits each direct report, summing counts and returning early if a child already found the answer. It adds one if the current node is a target, and if the count hits two, records itself."
   },
   {
    "kind": "bullets",
@@ -53,6 +270,24 @@
     "Space: O(d)"
    ],
    "narration": "Time is O of n. Space is O of d."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "A report may be the manager of the other",
+    "Org charts are n-ary",
+    "Stop after found"
+   ],
+   "narration": "A report can itself be the manager of the other; the count still works."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Relate to LCA in binary trees"
+   ],
+   "narration": "This is lowest common ancestor generalised to n-ary trees."
   },
   {
    "kind": "bullets",

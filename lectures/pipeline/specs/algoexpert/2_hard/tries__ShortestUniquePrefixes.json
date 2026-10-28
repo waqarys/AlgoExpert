@@ -27,6 +27,15 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Compare each word with all others → O(n² · L)",
+    "Trie with counts → O(total chars)"
+   ],
+   "narration": "Comparing every pair of words is quadratic. A trie with counts finds each word's first unique node in its own length."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Insert all strings counting",
@@ -36,13 +45,113 @@
    "narration": "Step by step. First, insert all strings counting. Second, for each string, walk until a count of one. Third, return that prefix, or the full string."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "f",
+       2
+      ],
+      [
+       "fo",
+       2
+      ],
+      [
+       "foo",
+       1
+      ],
+      [
+       "foa",
+       1
+      ],
+      [
+       "c",
+       2
+      ],
+      [
+       "ca",
+       2
+      ],
+      [
+       "cat",
+       1
+      ],
+      [
+       "cap",
+       1
+      ],
+      [
+       "b",
+       1
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "prefix",
+      "count"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Trie with prefix counts",
+   "narration": "Insert each word, counting how many words pass through each node.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "foo",
+       "foo"
+      ],
+      [
+       "bar",
+       "b"
+      ],
+      [
+       "cat",
+       "cat"
+      ],
+      [
+       "cape",
+       "cap"
+      ],
+      [
+       "foam",
+       "foa"
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "word",
+      "shortest unique prefix"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "First node with count 1",
+   "narration": "For each word, the shortest unique prefix ends at the first node with count one.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ShortestUniquePrefixes {\n    private static class Node { final Map<Character, Node> next = new HashMap<>(); int count; }\n\n    public static String[] shortestUniquePrefixes(String[] strings) {\n        Node root = new Node();\n        for (String s : strings) {\n            Node n = root;\n            for (char c : s.toCharArray()) { n = n.next.computeIfAbsent(c, k -> new Node()); n.count++; }\n        }\n        String[] out = new String[strings.length];\n        for (int k = 0; k < strings.length; k++) {\n            String s = strings[k];\n            Node n = root;\n            int len = s.length();\n            for (int i = 0; i < s.length(); i++) {\n                n = n.next.get(s.charAt(i));\n                if (n.count == 1) { len = i + 1; break; }\n            }\n            out[k] = s.substring(0, len);\n        }\n        return out;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "ShortestUniquePrefixes.java",
-   "narration": "Here's the Java solution, starting with shortest unique prefixes. It follows the steps we just described."
+   "narration": "We insert all words with counts, then for each word walk until a node's count is one, returning the prefix up to there or the whole word."
   },
   {
    "kind": "bullets",
@@ -52,6 +161,23 @@
     "Space: O(n*m)"
    ],
    "narration": "Time is O of n times m. Space is O of n times m."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "A word that's a prefix of another → whole word",
+    "Duplicates"
+   ],
+   "narration": "If a word is a prefix of another, the answer is the whole word."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain the count invariant"
+   ],
+   "narration": "Explain that the count is how many words share the prefix."
   },
   {
    "kind": "bullets",

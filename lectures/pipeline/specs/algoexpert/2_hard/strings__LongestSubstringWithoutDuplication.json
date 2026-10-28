@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Check every substring → O(n³)",
+    "Sliding window with a set → O(n)",
+    "Last-seen map lets start jump directly"
+   ],
+   "narration": "Checking every substring for duplicates is cubic. A sliding window with a last-seen map lets the start jump past a repeat directly, linear time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Map characters to last index",
@@ -35,13 +45,268 @@
    "narration": "Step by step. First, map characters to last index. Second, move start past a repeat. Third, track the longest window."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "c",
+      "l",
+      "e",
+      "m",
+      "e",
+      "n",
+      "t",
+      "i",
+      "s",
+      "a",
+      "c",
+      "a",
+      "p"
+     ],
+     "hl": {
+      "0": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false,
+     "window": [
+      0,
+      0
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "window 'c'",
+      "best 'c'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'c' at 0",
+   "narration": "At c, no repeat. The best is c.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "c",
+      "l",
+      "e",
+      "m",
+      "e",
+      "n",
+      "t",
+      "i",
+      "s",
+      "a",
+      "c",
+      "a",
+      "p"
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false,
+     "window": [
+      3,
+      4
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "window 'me'",
+      "best 'clem'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'e' at 4 repeats → move start",
+   "narration": "At e, it already appeared in the window, so the start jumps past it to index 3. The best is clem.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "c",
+      "l",
+      "e",
+      "m",
+      "e",
+      "n",
+      "t",
+      "i",
+      "s",
+      "a",
+      "c",
+      "a",
+      "p"
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false,
+     "window": [
+      3,
+      6
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "window 'ment'",
+      "best 'clem'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'t' at 6",
+   "narration": "At t, no repeat. The best is clem.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "c",
+      "l",
+      "e",
+      "m",
+      "e",
+      "n",
+      "t",
+      "i",
+      "s",
+      "a",
+      "c",
+      "a",
+      "p"
+     ],
+     "hl": {
+      "3": "ok",
+      "4": "ok",
+      "5": "ok",
+      "6": "ok",
+      "7": "ok",
+      "8": "ok",
+      "9": "ok",
+      "10": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false,
+     "window": [
+      10,
+      11
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "window 'ca'",
+      "best 'mentisac'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'a' at 11 repeats → move start",
+   "narration": "At a, it already appeared in the window, so the start jumps past it to index 10. The best is mentisac.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "c",
+      "l",
+      "e",
+      "m",
+      "e",
+      "n",
+      "t",
+      "i",
+      "s",
+      "a",
+      "c",
+      "a",
+      "p"
+     ],
+     "hl": {
+      "3": "ok",
+      "4": "ok",
+      "5": "ok",
+      "6": "ok",
+      "7": "ok",
+      "8": "ok",
+      "9": "ok",
+      "10": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false,
+     "window": [
+      10,
+      12
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "window 'cap'",
+      "best 'mentisac'"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'p' at 12",
+   "narration": "At p, no repeat. The best is mentisac.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LongestSubstringWithoutDuplication {\n    public static String longestSubstringWithoutDuplication(String s) {\n        Map<Character, Integer> last = new HashMap<>();\n        int start = 0, bs = 0, be = 0;\n        for (int i = 0; i < s.length(); i++) {\n            Integer p = last.get(s.charAt(i));\n            if (p != null && p >= start) start = p + 1;\n            last.put(s.charAt(i), i);\n            if (i + 1 - start > be - bs) { bs = start; be = i + 1; }\n        }\n        return s.substring(bs, be);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LongestSubstringWithoutDuplication.java",
-   "narration": "Here's the Java solution, starting with longest substring without duplication. It follows the steps we just described."
+   "narration": "For each index, if the character's last position is within the window, move start past it. Update last and the best."
   },
   {
    "kind": "bullets",
@@ -51,6 +316,24 @@
     "Space: O(min(n, a))"
    ],
    "narration": "Time is O of n. Space is O of min(n, a)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Only jump if last ≥ start",
+    "Empty string",
+    "Return the substring, not length"
+   ],
+   "narration": "Only move the start if the previous occurrence is inside the window."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention the array[128] map"
+   ],
+   "narration": "A fixed-size array works as the map for ASCII."
   },
   {
    "kind": "bullets",

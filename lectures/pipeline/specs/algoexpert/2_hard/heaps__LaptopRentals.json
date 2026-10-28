@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Check overlaps for every pair → O(n²)",
+    "Sort by start + min-heap of end times → O(n log n)",
+    "Or sweep sorted starts/ends"
+   ],
+   "narration": "Counting overlaps pairwise is quadratic. Sorting by start and keeping a min-heap of end times reuses the laptop that frees up earliest, in n log n."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Sort starts and ends separately",
@@ -36,13 +46,304 @@
    "narration": "Step by step. First, sort starts and ends separately. Second, sweep with two pointers. Third, a start before the next end needs a laptop. Fourth, otherwise reuse one."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "0–2",
+      "0–4",
+      "1–4",
+      "3–10",
+      "4–6",
+      "7–8",
+      "9–11"
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "array",
+     "values": [
+      2
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "laptop free times (min-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "reuse a laptop → 1 laptops"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "[0, 2]: reuse",
+   "narration": "Interval 0 to 2: the earliest laptop is free by then, so reuse it. That's 1 in use.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "0–2",
+      "0–4",
+      "1–4",
+      "3–10",
+      "4–6",
+      "7–8",
+      "9–11"
+     ],
+     "hl": {
+      "1": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "array",
+     "values": [
+      2,
+      4
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "laptop free times (min-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "need a new laptop → 2 laptops"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "[0, 4]: new laptop",
+   "narration": "Interval 0 to 4: no laptop is free yet, so we need another. That's 2 in use.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "0–2",
+      "0–4",
+      "1–4",
+      "3–10",
+      "4–6",
+      "7–8",
+      "9–11"
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "array",
+     "values": [
+      2,
+      4,
+      4
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "laptop free times (min-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "need a new laptop → 3 laptops"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "[1, 4]: new laptop",
+   "narration": "Interval 1 to 4: no laptop is free yet, so we need another. That's 3 in use.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "0–2",
+      "0–4",
+      "1–4",
+      "3–10",
+      "4–6",
+      "7–8",
+      "9–11"
+     ],
+     "hl": {
+      "4": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "array",
+     "values": [
+      4,
+      6,
+      10
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "laptop free times (min-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "reuse a laptop → 3 laptops"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "[4, 6]: reuse",
+   "narration": "Interval 4 to 6: the earliest laptop is free by then, so reuse it. That's 3 in use.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "0–2",
+      "0–4",
+      "1–4",
+      "3–10",
+      "4–6",
+      "7–8",
+      "9–11"
+     ],
+     "hl": {
+      "5": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "array",
+     "values": [
+      6,
+      8,
+      10
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "laptop free times (min-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "reuse a laptop → 3 laptops"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "[7, 8]: reuse",
+   "narration": "Interval 7 to 8: the earliest laptop is free by then, so reuse it. That's 3 in use.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "0–2",
+      "0–4",
+      "1–4",
+      "3–10",
+      "4–6",
+      "7–8",
+      "9–11"
+     ],
+     "hl": {
+      "6": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "array",
+     "values": [
+      8,
+      10,
+      11
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "laptop free times (min-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "reuse a laptop → 3 laptops"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "[9, 11]: reuse",
+   "narration": "Interval 9 to 11: the earliest laptop is free by then, so reuse it. That's 3 in use.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class LaptopRentals {\n    public static int laptopRentals(int[][] times) {\n        int[][] t = times.clone();\n        Arrays.sort(t, (a, b) -> Integer.compare(a[0], b[0]));\n        PriorityQueue<Integer> ends = new PriorityQueue<>();\n        for (int[] iv : t) {\n            if (!ends.isEmpty() && ends.peek() <= iv[0]) ends.poll();\n            ends.add(iv[1]);\n        }\n        return ends.size();\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "LaptopRentals.java",
-   "narration": "Here's the Java solution, starting with laptop rentals. It follows the steps we just described."
+   "narration": "We sort by start, and for each interval pop the heap if its earliest end is at most the start, then push the end. The heap size is the answer."
   },
   {
    "kind": "bullets",
@@ -52,6 +353,24 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n log n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "End == start can reuse",
+    "Sort by start time",
+    "Empty → 0"
+   ],
+   "narration": "A laptop returned at time t can be reused for a rental starting at t."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Same as Meeting Rooms II"
+   ],
+   "narration": "This is meeting rooms two."
   },
   {
    "kind": "bullets",

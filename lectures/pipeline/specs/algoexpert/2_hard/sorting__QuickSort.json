@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Bubble/insertion → O(n²)",
+    "Quick sort → O(n log n) average, O(log n) stack",
+    "Recurse on smaller side first"
+   ],
+   "narration": "Quadratic sorts compare everything. Quick sort partitions around a pivot and recurses, n log n on average."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Pick a pivot",
@@ -36,13 +46,141 @@
    "narration": "Step by step. First, pick a pivot. Second, partition with two pointers. Third, recurse into the smaller side first. Fourth, loop on the larger to bound the stack."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      6,
+      5,
+      2,
+      3,
+      5,
+      8,
+      9
+     ],
+     "hl": {
+      "5": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      6
+     ]
+    }
+   ],
+   "caption": "Pivot 8 placed at 5",
+   "narration": "Partition indices 0 to 6 around 8: smaller to the left, larger to the right. It's now in its final spot, index 5.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      5,
+      2,
+      3,
+      6,
+      8,
+      9
+     ],
+     "hl": {
+      "4": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      4
+     ]
+    }
+   ],
+   "caption": "Pivot 6 placed at 4",
+   "narration": "Partition indices 0 to 4 around 6: smaller to the left, larger to the right. It's now in its final spot, index 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      5,
+      2,
+      5,
+      6,
+      8,
+      9
+     ],
+     "hl": {
+      "3": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      3
+     ]
+    }
+   ],
+   "caption": "Pivot 5 placed at 3",
+   "narration": "Partition indices 0 to 3 around 5: smaller to the left, larger to the right. It's now in its final spot, index 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      5,
+      5,
+      6,
+      8,
+      9
+     ],
+     "hl": {
+      "1": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      2
+     ]
+    }
+   ],
+   "caption": "Pivot 3 placed at 1",
+   "narration": "Partition indices 0 to 2 around 3: smaller to the left, larger to the right. It's now in its final spot, index 1.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class QuickSort {\n    public static int[] quickSort(int[] a) { sort(a, 0, a.length - 1); return a; }\n\n    private static void sort(int[] a, int lo, int hi) {\n        while (lo < hi) {\n            int p = lo, l = lo + 1, r = hi;\n            while (l <= r) {\n                if (a[l] > a[p] && a[r] < a[p]) swap(a, l, r);\n                if (a[l] <= a[p]) l++;\n                if (a[r] >= a[p]) r--;\n            }\n            swap(a, p, r);\n            if (r - lo < hi - r) { sort(a, lo, r - 1); lo = r + 1; } else { sort(a, r + 1, hi); hi = r - 1; }\n        }\n    }\n\n    private static void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "QuickSort.java",
-   "narration": "Here's the Java solution, starting with quick sort. It follows the steps we just described."
+   "narration": "Sort loops while lo is below hi: partition, place the pivot at r, recurse on the smaller side and loop on the larger."
   },
   {
    "kind": "bullets",
@@ -52,6 +190,24 @@
     "Space: O(log n)"
    ],
    "narration": "Time is O of n log n avg, O of n squared worst. Space is O of log n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Worst case O(n²) on sorted input → random pivot",
+    "Recurse smaller side to bound stack",
+    "Duplicates"
+   ],
+   "narration": "Sorted input with a first-element pivot is quadratic; randomise. Recurse into the smaller side first to keep the stack logarithmic."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention 3-way partition for duplicates"
+   ],
+   "narration": "Three-way partitioning handles many duplicates well."
   },
   {
    "kind": "bullets",

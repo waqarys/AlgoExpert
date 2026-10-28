@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Linear scan → O(n)",
+    "Binary search on a[i] − i (non-decreasing) → O(log n)",
+    "Keep searching left for the first"
+   ],
+   "narration": "A linear scan works. Because values are distinct sorted integers, a i minus i never decreases, so binary search finds the first index where they match."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Binary search",
@@ -36,13 +46,135 @@
    "narration": "Step by step. First, binary search. Second, if the value is below the index, go right. Third, otherwise record a match and go left for the smallest."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -5,
+      -3,
+      0,
+      3,
+      4,
+      5,
+      9
+     ],
+     "hl": {
+      "3": "ok"
+     },
+     "ptr": {
+      "mid": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      2
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "a[3] = 3 = 3 → record, look left"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "a[3] = 3 = 3 → record, look left",
+   "narration": "a at 3 = 3 = 3 , so record, look left.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -5,
+      -3,
+      0,
+      3,
+      4,
+      5,
+      9
+     ],
+     "hl": {
+      "3": "ok"
+     },
+     "ptr": {
+      "mid": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      2,
+      2
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "a[1] = -3 < 1 → go right"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "a[1] = -3 < 1 → go right",
+   "narration": "a at 1 = -3 < 1 , so go right.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -5,
+      -3,
+      0,
+      3,
+      4,
+      5,
+      9
+     ],
+     "hl": {
+      "3": "ok"
+     },
+     "ptr": {
+      "mid": 2
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "a[2] = 0 < 2 → go right"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "a[2] = 0 < 2 → go right",
+   "narration": "a at 2 = 0 < 2 , so go right.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class IndexEqualsValue {\n    public static int indexEqualsValue(int[] a) {\n        int lo = 0, hi = a.length - 1, ans = -1;\n        while (lo <= hi) {\n            int m = (lo + hi) >>> 1;\n            if (a[m] < m) lo = m + 1;\n            else { if (a[m] == m) ans = m; hi = m - 1; }\n        }\n        return ans;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "IndexEqualsValue.java",
-   "narration": "Here's the Java solution, starting with index equals value. It follows the steps we just described."
+   "narration": "Binary search: if a mid is less than mid, go right; otherwise record a match and go left."
   },
   {
    "kind": "bullets",
@@ -52,6 +184,24 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of log n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Return the first such index",
+    "None → −1",
+    "Distinct integers required"
+   ],
+   "narration": "Keep searching left after a match to get the first one."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why a[i] − i is monotone"
+   ],
+   "narration": "Explain why a i minus i is non-decreasing."
   },
   {
    "kind": "bullets",

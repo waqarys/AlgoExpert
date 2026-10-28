@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Keep a sorted list, insert in place → O(n) per insert",
+    "Two heaps (max-heap low, min-heap high) → O(log n) insert, O(1) median",
+    "Balance sizes within 1"
+   ],
+   "narration": "Inserting into a sorted list is linear each time. Two heaps, a max-heap for the lower half and a min-heap for the upper, give log n inserts and constant-time median."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Insert into the right heap",
@@ -35,13 +45,260 @@
    "narration": "Step by step. First, insert into the right heap. Second, rebalance so sizes differ by at most one. Third, median is the top of the bigger heap or the average of tops."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "lower half (max-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      "∅"
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "upper half (min-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "insert 5 → median 5"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Insert 5: median 5",
+   "narration": "Insert 5 into the lower half and rebalance so the sizes differ by at most one. The median is 5.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "lower half (max-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      10
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "upper half (min-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "insert 10 → median 7.5"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Insert 10: median 7.5",
+   "narration": "Insert 10 into the upper half and rebalance so the sizes differ by at most one. The median is 7.5.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "lower half (max-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      10,
+      100
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "upper half (min-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "insert 100 → median 10"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Insert 100: median 10",
+   "narration": "Insert 100 into the upper half and rebalance so the sizes differ by at most one. The median is 10.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      6,
+      10
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "lower half (max-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      100,
+      200
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "upper half (min-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "insert 6 → median 10"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Insert 6: median 10",
+   "narration": "Insert 6 into the lower half and rebalance so the sizes differ by at most one. The median is 10.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      6,
+      10
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "lower half (max-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      13,
+      100,
+      200
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "upper half (min-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "insert 13 → median 11.5"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Insert 13: median 11.5",
+   "narration": "Insert 13 into the upper half and rebalance so the sizes differ by at most one. The median is 11.5.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      6,
+      10
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "lower half (max-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      13,
+      14,
+      100,
+      200
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "upper half (min-heap)",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "insert 14 → median 13"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Insert 14: median 13",
+   "narration": "Insert 14 into the upper half and rebalance so the sizes differ by at most one. The median is 13.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ContinuousMedian {\n    public static class ContinuousMedianHandler {\n        private final PriorityQueue<Integer> lower = new PriorityQueue<>(Collections.reverseOrder());\n        private final PriorityQueue<Integer> upper = new PriorityQueue<>();\n        private double median;\n\n        public void insert(int n) {\n            if (lower.isEmpty() || n < lower.peek()) lower.add(n); else upper.add(n);\n            if (lower.size() > upper.size() + 1) upper.add(lower.poll());\n            else if (upper.size() > lower.size() + 1) lower.add(upper.poll());\n            if (lower.size() == upper.size()) median = (lower.peek() + (double) upper.peek()) / 2;\n            else median = lower.size() > upper.size() ? lower.peek() : upper.peek();\n        }\n\n        public double getMedian() { return median; }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ContinuousMedian.java",
-   "narration": "Here's the Java solution, starting with insert. It follows the steps we just described."
+   "narration": "Insert adds to the lower heap if empty or smaller than its top, otherwise upper. Then we move one element if sizes differ by two, and compute the median from the tops."
   },
   {
    "kind": "bullets",
@@ -51,6 +308,24 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of log n insert, constant median. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Rebalance after every insert",
+    "Even count → average",
+    "Use double division"
+   ],
+   "narration": "Rebalance after every insert, and average the two tops when the sizes are equal."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: sliding-window median"
+   ],
+   "narration": "A follow-up is the sliding-window median, which needs deletions."
   },
   {
    "kind": "bullets",

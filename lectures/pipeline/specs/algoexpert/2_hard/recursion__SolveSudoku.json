@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Try all fillings → 9^(empty cells)",
+    "Backtracking with constraint checks → prunes heavily",
+    "Bitmasks make checks O(1)"
+   ],
+   "narration": "Trying every filling is astronomically large. Backtracking with row, column and box checks prunes almost everything. Bitmasks make each check constant time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Record used digits",
@@ -36,13 +46,67 @@
    "narration": "Step by step. First, record used digits. Second, find the next empty cell. Third, try each allowed digit and recurse. Fourth, undo on failure."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "rows[r], cols[c], boxes[b] as bitmasks of used digits",
+      "box = r/3·3 + c/3"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Track used digits per row, column, box",
+   "narration": "Keep a bitmask of used digits for every row, column and three-by-three box, so checking a digit is constant time.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "cell (0,2): row uses {5,3,7}, col {8}, box {5,3,6,9,8}",
+      "candidates: 1, 2, 4"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Try candidates in an empty cell",
+   "narration": "At the first empty cell, the digits not used in its row, column or box are one, two and four. Try them in order.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "place 1 → recurse → dead end later",
+      "undo 1, try 2 …"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Backtrack on dead ends",
+   "narration": "Place a digit and recurse to the next cell. If we hit a cell with no candidates, undo and try the next digit.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class SolveSudoku {\n    public static int[][] solveSudoku(int[][] b) {\n        int[] rows = new int[9], cols = new int[9], boxes = new int[9];\n        for (int r = 0; r < 9; r++) for (int c = 0; c < 9; c++) if (b[r][c] != 0) {\n            int bit = 1 << b[r][c];\n            rows[r] |= bit; cols[c] |= bit; boxes[r / 3 * 3 + c / 3] |= bit;\n        }\n        solve(b, 0, rows, cols, boxes);\n        return b;\n    }",
    "lang": "java",
    "font_size": 26,
    "filename": "SolveSudoku_part1.java",
-   "narration": "Here's the Java solution, starting with solve sudoku. It follows the steps we just described."
+   "narration": "We initialise the masks from the given digits, then solve recursively over positions zero to eighty: skip filled cells, try each digit whose bit is free in row, column and box, set the bits, recurse, and clear on failure."
   },
   {
    "kind": "code",
@@ -51,7 +115,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "SolveSudoku_part2.java",
-   "narration": "Continuing with solve."
+   "narration": "We initialise the masks from the given digits, then solve recursively over positions zero to eighty: skip filled cells, try each digit whose bit is free in row, column and box, set the bits, recurse, and clear on failure."
   },
   {
    "kind": "bullets",
@@ -61,6 +125,24 @@
     "Space: O(1) besides recursion"
    ],
    "narration": "Time is O of 9 to the empty worst. Space is constant besides recursion."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Undo bits when backtracking",
+    "Box index formula",
+    "Given board is valid"
+   ],
+   "narration": "Always clear the bits when you backtrack."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention most-constrained-cell heuristic"
+   ],
+   "narration": "Choosing the cell with the fewest candidates first speeds it up a lot."
   },
   {
    "kind": "bullets",

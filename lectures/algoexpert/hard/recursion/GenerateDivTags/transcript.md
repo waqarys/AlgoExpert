@@ -14,18 +14,42 @@ Here's the problem. All valid strings of n matched under div over under /div ove
 
 Backtracking: you can open a tag while some remain and close one only if more are open than closed.
 
-## 4. Approach (0:27) — `slides/04.png`
+## 4. Brute force vs optimal (0:27) — `slides/04.png`
+
+Generating every string and filtering valid ones is wasteful. Backtracking with remaining counts only builds valid prefixes; the output size is the Catalan number.
+
+## 5. Approach (0:38) — `slides/05.png`
 
 Step by step. First, track opening and closing tags left. Second, add an opening tag if available. Third, add a closing tag if it keeps balance. Fourth, record complete strings.
 
-## 5. Java solution (0:42) — `slides/05.png`
+## 6. Worked example (0:53) — `slides/06.png`
 
-Here's the Java solution, starting with generate div tags. It follows the steps we just described.
+Track how many opening and closing tags remain. Open if any opens remain; close only if more closes than opens remain.
 
-## 6. Complexity (0:50) — `slides/06.png`
+## 7. Worked example (1:01) — `slides/07.png`
+
+Depth first, we open three times, then close three times: the first answer.
+
+## 8. Worked example (1:07) — `slides/08.png`
+
+Backtracking yields all 5 valid combinations, shown here with angle brackets for div tags.
+
+## 9. Java solution (1:13) — `slides/09.png`
+
+Gen records the string when no closes remain. It appends an opening tag if opens remain and recurses, and a closing tag if closes exceed opens, undoing each append.
+
+## 10. Complexity (1:24) — `slides/10.png`
 
 Time is O of Catalan(n) times n. Space is O of Catalan(n) times n.
 
-## 7. Recap (0:55) — `slides/07.png`
+## 11. Edge cases & pitfalls (1:30) — `slides/11.png`
+
+Only close when more closes than opens remain.
+
+## 12. Interview tips & follow-ups (1:34) — `slides/12.png`
+
+Mention Catalan numbers.
+
+## 13. Recap (1:37) — `slides/13.png`
 
 To recap Generate Div Tags: Backtracking: you can open a tag while some remain and close one only if more are open than closed. Try re-implementing it from scratch without looking.

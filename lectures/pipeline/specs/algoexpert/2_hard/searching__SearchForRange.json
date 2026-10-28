@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Linear scan → O(n)",
+    "Binary search then expand → O(n) worst",
+    "Two lower-bound searches → O(log n)"
+   ],
+   "narration": "Scanning, or finding one match and expanding, can be linear with many duplicates. Two lower-bound searches give both ends in log n."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Search keeping left on matches",
@@ -36,13 +46,146 @@
    "narration": "Step by step. First, search keeping left on matches. Second, search keeping right on matches. Third, return both indices or minus ones."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      1,
+      21,
+      33,
+      45,
+      45,
+      45,
+      45,
+      45,
+      45,
+      61,
+      71,
+      73
+     ],
+     "hl": {
+      "4": "ok"
+     },
+     "ptr": {
+      "lower": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "first index with a[i] ≥ 45 → 4"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Lower bound of 45: 4",
+   "narration": "Binary search for the first index whose value is at least 45: index 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      1,
+      21,
+      33,
+      45,
+      45,
+      45,
+      45,
+      45,
+      45,
+      61,
+      71,
+      73
+     ],
+     "hl": {
+      "9": "ok"
+     },
+     "ptr": {
+      "lower": 4,
+      "upper−1": 9
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "first index with a[i] ≥ 46 → 10, minus 1 = 9"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Upper end: 9",
+   "narration": "Search again for 46: index 10. One before it, 9, is the last 45.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      1,
+      21,
+      33,
+      45,
+      45,
+      45,
+      45,
+      45,
+      45,
+      61,
+      71,
+      73
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      4,
+      9
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "answer [4, 9]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Answer: [4, 9]",
+   "narration": "So 45 occupies indices 4 to 9.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SearchForRange {\n    public static int[] searchForRange(int[] a, int t) {\n        int l = bound(a, t), r = bound(a, t + 1) - 1;\n        return l <= r && l < a.length && a[l] == t ? new int[]{l, r} : new int[]{-1, -1};\n    }\n\n    private static int bound(int[] a, int t) {\n        int lo = 0, hi = a.length;\n        while (lo < hi) { int m = (lo + hi) >>> 1; if (a[m] < t) lo = m + 1; else hi = m; }\n        return lo;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SearchForRange.java",
-   "narration": "Here's the Java solution, starting with search for range. It follows the steps we just described."
+   "narration": "Bound returns the first index whose value is at least t. The range is bound of t through bound of t plus one minus one, if the value at the lower bound equals t."
   },
   {
    "kind": "bullets",
@@ -52,6 +195,24 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of log n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Target absent → [−1, −1]",
+    "Half-open bounds",
+    "Overflow-safe mid"
+   ],
+   "narration": "Check the target actually exists at the lower bound."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention lower/upper bound terminology"
+   ],
+   "narration": "Use the lower-bound and upper-bound vocabulary."
   },
   {
    "kind": "bullets",

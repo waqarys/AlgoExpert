@@ -14,18 +14,42 @@ Here's the problem. Measuring cups each measure a low, high range. Can repeated 
 
 Try every cup recursively, shrinking the target range, and memoise the ranges already tried.
 
-## 4. Approach (0:31) — `slides/04.png`
+## 4. Brute force vs optimal (0:31) — `slides/04.png`
+
+Trying every sequence of cups is exponential. Memoising on the remaining low and high bounds collapses repeats.
+
+## 5. Approach (0:39) — `slides/05.png`
 
 Step by step. First, if a cup fits inside the range, success. Second, otherwise subtract the cup from both bounds and recurse. Third, memoise by range.
 
-## 5. Java solution (0:44) — `slides/05.png`
+## 6. Worked example (0:52) — `slides/06.png`
 
-Here's the Java solution, starting with ambiguous measurements. It follows the steps we just described.
+Each cup measures somewhere between its min and max. Can we guarantee a total between twenty-one hundred and twenty-three hundred?
 
-## 6. Complexity (0:51) — `slides/06.png`
+## 7. Worked example (1:00) — `slides/07.png`
+
+Using a cup shrinks the remaining range by its min and max. Recurse on the remaining range.
+
+## 8. Worked example (1:06) — `slides/08.png`
+
+We succeed when one cup's range fits inside the remaining range. The same remaining range repeats, so memoise on low and high.
+
+## 9. Java solution (1:15) — `slides/09.png`
+
+Can memoises on low and high. A cup succeeds if its range fits; otherwise we recurse with the range reduced by the cup, clamped at zero.
+
+## 10. Complexity (1:24) — `slides/10.png`
 
 Time is O of low times high times n. Space is O of low times high.
 
-## 7. Recap (0:56) — `slides/07.png`
+## 11. Edge cases & pitfalls (1:29) — `slides/11.png`
+
+Clamp at zero, and skip cups that never make progress, to avoid infinite recursion.
+
+## 12. Interview tips & follow-ups (1:35) — `slides/12.png`
+
+Explain why low and high fully describe the state.
+
+## 13. Recap (1:39) — `slides/13.png`
 
 To recap Ambiguous Measurements: Try every cup recursively, shrinking the target range, and memoise the ranges already tried. Try re-implementing it from scratch without looking.
