@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (154)
+## AlgoExpert (170)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -209,3 +209,19 @@ Built with [`pipeline/`](pipeline/README.md).
 | hard / sorting / Heap Sort | 0:57 | [mp4](algoexpert/hard/sorting/HeapSort/lecture.mp4) | [pdf](algoexpert/hard/sorting/HeapSort/slides.pdf) | [md](algoexpert/hard/sorting/HeapSort/transcript.md) |
 | hard / sorting / Quick Sort | 1:03 | [mp4](algoexpert/hard/sorting/QuickSort/lecture.mp4) | [pdf](algoexpert/hard/sorting/QuickSort/slides.pdf) | [md](algoexpert/hard/sorting/QuickSort/transcript.md) |
 | hard / sorting / Radix Sort | 1:01 | [mp4](algoexpert/hard/sorting/RadixSort/lecture.mp4) | [pdf](algoexpert/hard/sorting/RadixSort/slides.pdf) | [md](algoexpert/hard/sorting/RadixSort/transcript.md) |
+| hard / stacks / Largest Rectangle Under Skyline | 1:07 | [mp4](algoexpert/hard/stacks/LargestRectangleUnderSkyline/lecture.mp4) | [pdf](algoexpert/hard/stacks/LargestRectangleUnderSkyline/slides.pdf) | [md](algoexpert/hard/stacks/LargestRectangleUnderSkyline/transcript.md) |
+| hard / stacks / Shorten Path | 1:05 | [mp4](algoexpert/hard/stacks/ShortenPath/lecture.mp4) | [pdf](algoexpert/hard/stacks/ShortenPath/slides.pdf) | [md](algoexpert/hard/stacks/ShortenPath/transcript.md) |
+| hard / strings / Longest Substring Without Duplication | 0:59 | [mp4](algoexpert/hard/strings/LongestSubstringWithoutDuplication/lecture.mp4) | [pdf](algoexpert/hard/strings/LongestSubstringWithoutDuplication/slides.pdf) | [md](algoexpert/hard/strings/LongestSubstringWithoutDuplication/transcript.md) |
+| hard / strings / Pattern Matcher | 1:07 | [mp4](algoexpert/hard/strings/PatternMatcher/lecture.mp4) | [pdf](algoexpert/hard/strings/PatternMatcher/slides.pdf) | [md](algoexpert/hard/strings/PatternMatcher/transcript.md) |
+| hard / strings / Underscorify Substring | 1:01 | [mp4](algoexpert/hard/strings/UnderscorifySubstring/lecture.mp4) | [pdf](algoexpert/hard/strings/UnderscorifySubstring/slides.pdf) | [md](algoexpert/hard/strings/UnderscorifySubstring/transcript.md) |
+| hard / tries / Longest Most Frequent Prefix | 1:02 | [mp4](algoexpert/hard/tries/LongestMostFrequentPrefix/lecture.mp4) | [pdf](algoexpert/hard/tries/LongestMostFrequentPrefix/slides.pdf) | [md](algoexpert/hard/tries/LongestMostFrequentPrefix/transcript.md) |
+| hard / tries / Multi String Search | 1:06 | [mp4](algoexpert/hard/tries/MultiStringSearch/lecture.mp4) | [pdf](algoexpert/hard/tries/MultiStringSearch/slides.pdf) | [md](algoexpert/hard/tries/MultiStringSearch/transcript.md) |
+| hard / tries / Shortest Unique Prefixes | 1:04 | [mp4](algoexpert/hard/tries/ShortestUniquePrefixes/lecture.mp4) | [pdf](algoexpert/hard/tries/ShortestUniquePrefixes/slides.pdf) | [md](algoexpert/hard/tries/ShortestUniquePrefixes/transcript.md) |
+| veryhard / arrays / Apartment Hunting | 1:14 | [mp4](algoexpert/veryhard/arrays/ApartmentHunting/lecture.mp4) | [pdf](algoexpert/veryhard/arrays/ApartmentHunting/slides.pdf) | [md](algoexpert/veryhard/arrays/ApartmentHunting/transcript.md) |
+| veryhard / arrays / Calendar Matching | 1:14 | [mp4](algoexpert/veryhard/arrays/CalendarMatching/lecture.mp4) | [pdf](algoexpert/veryhard/arrays/CalendarMatching/slides.pdf) | [md](algoexpert/veryhard/arrays/CalendarMatching/transcript.md) |
+| veryhard / arrays / Line Through Points | 1:05 | [mp4](algoexpert/veryhard/arrays/LineThroughPoints/lecture.mp4) | [pdf](algoexpert/veryhard/arrays/LineThroughPoints/slides.pdf) | [md](algoexpert/veryhard/arrays/LineThroughPoints/transcript.md) |
+| veryhard / arrays / Minimum Area Rectangle | 1:06 | [mp4](algoexpert/veryhard/arrays/MinimumAreaRectangle/lecture.mp4) | [pdf](algoexpert/veryhard/arrays/MinimumAreaRectangle/slides.pdf) | [md](algoexpert/veryhard/arrays/MinimumAreaRectangle/transcript.md) |
+| veryhard / arrays / Waterfall Streams | 1:16 | [mp4](algoexpert/veryhard/arrays/WaterfallStreams/lecture.mp4) | [pdf](algoexpert/veryhard/arrays/WaterfallStreams/slides.pdf) | [md](algoexpert/veryhard/arrays/WaterfallStreams/transcript.md) |
+| veryhard / binarysearchtrees / Right Smaller Than | 1:13 | [mp4](algoexpert/veryhard/binarysearchtrees/RightSmallerThan/lecture.mp4) | [pdf](algoexpert/veryhard/binarysearchtrees/RightSmallerThan/slides.pdf) | [md](algoexpert/veryhard/binarysearchtrees/RightSmallerThan/transcript.md) |
+| veryhard / binarytrees / All Kinds Of Node Depths | 1:07 | [mp4](algoexpert/veryhard/binarytrees/AllKindsOfNodeDepths/lecture.mp4) | [pdf](algoexpert/veryhard/binarytrees/AllKindsOfNodeDepths/slides.pdf) | [md](algoexpert/veryhard/binarytrees/AllKindsOfNodeDepths/transcript.md) |
+| veryhard / binarytrees / Compare Leaf Traversal | 1:02 | [mp4](algoexpert/veryhard/binarytrees/CompareLeafTraversal/lecture.mp4) | [pdf](algoexpert/veryhard/binarytrees/CompareLeafTraversal/slides.pdf) | [md](algoexpert/veryhard/binarytrees/CompareLeafTraversal/transcript.md) |
