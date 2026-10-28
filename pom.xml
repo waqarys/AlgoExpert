@@ -7,12 +7,12 @@
     <groupId>groupId</groupId>
     <artifactId>AlgoExpert</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
+    <!-- Aggregator: `mvn test` from the repo root builds the AlgoExpert module.
+         leetcode/ and hackerrank/ are kept as-is (outside AlgoExpert scope); leetcode depends on
+         common.* classes that live in algoexpert/ and is not wired into this build. -->
     <modules>
-        
-        
-        <module>leetcode</module>
-        <module>hackerrank</module>
         <module>algoexpert</module>
     </modules>
 
