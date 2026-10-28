@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (12)
+## AlgoExpert (22)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -67,3 +67,13 @@ Built with [`pipeline/`](pipeline/README.md).
 | easy / binarytrees / Node Depths | 0:58 | [mp4](algoexpert/easy/binarytrees/NodeDepths/lecture.mp4) | [pdf](algoexpert/easy/binarytrees/NodeDepths/slides.pdf) | [md](algoexpert/easy/binarytrees/NodeDepths/transcript.md) |
 | easy / graphs / Depth First Search | 0:58 | [mp4](algoexpert/easy/graphs/DepthFirstSearch/lecture.mp4) | [pdf](algoexpert/easy/graphs/DepthFirstSearch/slides.pdf) | [md](algoexpert/easy/graphs/DepthFirstSearch/transcript.md) |
 | easy / greedyalgorithms / Class Photos | 1:10 | [mp4](algoexpert/easy/greedyalgorithms/ClassPhotos/lecture.mp4) | [pdf](algoexpert/easy/greedyalgorithms/ClassPhotos/slides.pdf) | [md](algoexpert/easy/greedyalgorithms/ClassPhotos/transcript.md) |
+| easy / greedyalgorithms / Minimum Waiting Time | 1:10 | [mp4](algoexpert/easy/greedyalgorithms/MinimumWaitingTime/lecture.mp4) | [pdf](algoexpert/easy/greedyalgorithms/MinimumWaitingTime/slides.pdf) | [md](algoexpert/easy/greedyalgorithms/MinimumWaitingTime/transcript.md) |
+| easy / greedyalgorithms / Optimal Freelancing | 1:14 | [mp4](algoexpert/easy/greedyalgorithms/OptimalFreelancing/lecture.mp4) | [pdf](algoexpert/easy/greedyalgorithms/OptimalFreelancing/slides.pdf) | [md](algoexpert/easy/greedyalgorithms/OptimalFreelancing/transcript.md) |
+| easy / greedyalgorithms / Tandem Bicycle | 1:12 | [mp4](algoexpert/easy/greedyalgorithms/TandemBicycle/lecture.mp4) | [pdf](algoexpert/easy/greedyalgorithms/TandemBicycle/slides.pdf) | [md](algoexpert/easy/greedyalgorithms/TandemBicycle/transcript.md) |
+| easy / linkedlists / Middle Node | 1:01 | [mp4](algoexpert/easy/linkedlists/MiddleNode/lecture.mp4) | [pdf](algoexpert/easy/linkedlists/MiddleNode/slides.pdf) | [md](algoexpert/easy/linkedlists/MiddleNode/transcript.md) |
+| easy / linkedlists / Remove Duplicates From Linked List | 1:00 | [mp4](algoexpert/easy/linkedlists/RemoveDuplicatesFromLinkedList/lecture.mp4) | [pdf](algoexpert/easy/linkedlists/RemoveDuplicatesFromLinkedList/slides.pdf) | [md](algoexpert/easy/linkedlists/RemoveDuplicatesFromLinkedList/transcript.md) |
+| easy / recursion / Nth Fibonacci | 1:02 | [mp4](algoexpert/easy/recursion/NthFibonacci/lecture.mp4) | [pdf](algoexpert/easy/recursion/NthFibonacci/slides.pdf) | [md](algoexpert/easy/recursion/NthFibonacci/transcript.md) |
+| easy / recursion / Product Sum | 1:04 | [mp4](algoexpert/easy/recursion/ProductSum/lecture.mp4) | [pdf](algoexpert/easy/recursion/ProductSum/slides.pdf) | [md](algoexpert/easy/recursion/ProductSum/transcript.md) |
+| easy / searching / Binary Search | 1:00 | [mp4](algoexpert/easy/searching/BinarySearch/lecture.mp4) | [pdf](algoexpert/easy/searching/BinarySearch/slides.pdf) | [md](algoexpert/easy/searching/BinarySearch/transcript.md) |
+| easy / searching / Find Three Largest Numbers | 1:05 | [mp4](algoexpert/easy/searching/FindThreeLargestNumbers/lecture.mp4) | [pdf](algoexpert/easy/searching/FindThreeLargestNumbers/slides.pdf) | [md](algoexpert/easy/searching/FindThreeLargestNumbers/transcript.md) |
+| easy / sorting / Bubble Sort | 1:01 | [mp4](algoexpert/easy/sorting/BubbleSort/lecture.mp4) | [pdf](algoexpert/easy/sorting/BubbleSort/slides.pdf) | [md](algoexpert/easy/sorting/BubbleSort/transcript.md) |
