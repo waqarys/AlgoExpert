@@ -1,0 +1,5 @@
+POST /builds          {sha}                -> {jobId}
+GET  /builds/{sha}                         -> status, artifact
+POST /deployments     {service, sha, strategy: canary|all}
+GET  /deployments/{id}                     -> per-region progress
+POST /deployments/{id}/rollback

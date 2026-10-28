@@ -28,10 +28,20 @@ Built with [`pipeline/`](pipeline/README.md).
 | Learning to Rank | 1:42 | [mp4](mlexpert/19_learning_to_rank/lecture.mp4) | [pdf](mlexpert/19_learning_to_rank/slides.pdf) | [md](mlexpert/19_learning_to_rank/transcript.md) |
 | ML System Design | 2:25 | [mp4](mlexpert/20_ml_system_design/lecture.mp4) | [pdf](mlexpert/20_ml_system_design/slides.pdf) | [md](mlexpert/20_ml_system_design/transcript.md) |
 
-## SystemsExpert (0)
+## SystemsExpert (10)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
+| Interview Framework | 1:31 | [mp4](systemsexpert/00a_interview_framework/lecture.mp4) | [pdf](systemsexpert/00a_interview_framework/slides.pdf) | [md](systemsexpert/00a_interview_framework/transcript.md) |
+| Fundamentals 1/4 | 1:47 | [mp4](systemsexpert/00b_fundamentals_1/lecture.mp4) | [pdf](systemsexpert/00b_fundamentals_1/slides.pdf) | [md](systemsexpert/00b_fundamentals_1/transcript.md) |
+| Fundamentals 2/4 | 1:25 | [mp4](systemsexpert/00c_fundamentals_2/lecture.mp4) | [pdf](systemsexpert/00c_fundamentals_2/slides.pdf) | [md](systemsexpert/00c_fundamentals_2/transcript.md) |
+| Fundamentals 3/4 | 1:34 | [mp4](systemsexpert/00d_fundamentals_3/lecture.mp4) | [pdf](systemsexpert/00d_fundamentals_3/slides.pdf) | [md](systemsexpert/00d_fundamentals_3/transcript.md) |
+| Fundamentals 4/4 | 1:33 | [mp4](systemsexpert/00e_fundamentals_4/lecture.mp4) | [pdf](systemsexpert/00e_fundamentals_4/slides.pdf) | [md](systemsexpert/00e_fundamentals_4/transcript.md) |
+| Design AlgoExpert | 4:17 | [mp4](systemsexpert/01-design-algoexpert/lecture.mp4) | [pdf](systemsexpert/01-design-algoexpert/slides.pdf) | [md](systemsexpert/01-design-algoexpert/transcript.md) |
+| Design a Code-Deployment System | 3:58 | [mp4](systemsexpert/02-design-a-code-deployment-system/lecture.mp4) | [pdf](systemsexpert/02-design-a-code-deployment-system/slides.pdf) | [md](systemsexpert/02-design-a-code-deployment-system/transcript.md) |
+| Design a Stockbroker | 3:31 | [mp4](systemsexpert/03-design-a-stockbroker/lecture.mp4) | [pdf](systemsexpert/03-design-a-stockbroker/slides.pdf) | [md](systemsexpert/03-design-a-stockbroker/transcript.md) |
+| Design Facebook News Feed | 3:25 | [mp4](systemsexpert/04-design-facebook-news-feed/lecture.mp4) | [pdf](systemsexpert/04-design-facebook-news-feed/slides.pdf) | [md](systemsexpert/04-design-facebook-news-feed/transcript.md) |
+| Design Google Drive | 3:22 | [mp4](systemsexpert/05-design-google-drive/lecture.mp4) | [pdf](systemsexpert/05-design-google-drive/slides.pdf) | [md](systemsexpert/05-design-google-drive/transcript.md) |
 
 ## AlgoExpert (0)
 

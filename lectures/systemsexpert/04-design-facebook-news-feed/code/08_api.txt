@@ -1,0 +1,2 @@
+POST /posts {body, media}
+GET  /feed?cursor=...&limit=20 -> posts[], nextCursor

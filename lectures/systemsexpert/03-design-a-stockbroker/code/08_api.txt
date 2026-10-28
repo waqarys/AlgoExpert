@@ -1,0 +1,4 @@
+POST   /orders  {idempotencyKey, symbol, side, qty, type, limitPrice?} -> order
+DELETE /orders/{id}
+GET    /orders?status=open
+GET    /portfolio -> balances, positions

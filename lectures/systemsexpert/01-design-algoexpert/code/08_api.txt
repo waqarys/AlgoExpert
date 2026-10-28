@@ -1,0 +1,5 @@
+GET  /questions                          -> [{id, name, difficulty, category, completed}]
+GET  /questions/{id}                     -> prompt, hints, starter code
+PUT  /questions/{id}/code/{language}     body {code}
+POST /questions/{id}/run                 body {language, code} -> {runId}
+GET  /runs/{runId}                       -> {status, results[]}
