@@ -54,4 +54,4 @@ See [systemsexpert/README.md](systemsexpert/README.md).
 
 ## MLExpert
 Linear/ridge regression, logistic & softmax regression, GD/SGD/momentum/Adam, k-NN, k-means++, CART decision tree,
-random forest, Gaussian naive Bayes, PCA, MLP with backprop, metrics, preprocessing. See [mlexpert/](mlexpert/).
+random forest, gradient boosting, Gaussian + multinomial naive Bayes, linear SVM, lasso/ridge/elastic net, k-fold CV, bias-variance demo, SVD, PCA, ALS recommender, learning to rank, MLP with backprop, metrics, preprocessing. Mapped to the 18-lesson crash course. See [mlexpert/](mlexpert/).
