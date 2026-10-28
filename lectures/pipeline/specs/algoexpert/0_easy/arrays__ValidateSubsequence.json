@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: try every way to pick positions → exponential",
+    "Optimal: one greedy pass, matching in order",
+    "Greedy is safe: matching early never hurts"
+   ],
+   "narration": "A brute-force approach would try every way of choosing positions in the array, which is exponential. But matching each sequence element at its earliest opportunity is always safe, so one pass with two indices is enough."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Keep an index into the sequence",
@@ -36,13 +46,241 @@
    "narration": "Step by step. First, keep an index into the sequence. Second, scan the array. Third, advance the index on every match. Fourth, valid if the index reaches the end."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      1,
+      22,
+      25,
+      6,
+      -1,
+      8,
+      10
+     ],
+     "hl": {
+      "1": "ok"
+     },
+     "ptr": {
+      "i": 1
+     },
+     "label": "array",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      6,
+      -1,
+      10
+     ],
+     "hl": {
+      "0": "ok"
+     },
+     "ptr": {
+      "j": 1
+     },
+     "label": "sequence",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "1 matches → advance j to 1",
+   "narration": "The array value 1 matches the next sequence item, so j advances to 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      1,
+      22,
+      25,
+      6,
+      -1,
+      8,
+      10
+     ],
+     "hl": {
+      "4": "ok"
+     },
+     "ptr": {
+      "i": 4
+     },
+     "label": "array",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      6,
+      -1,
+      10
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok"
+     },
+     "ptr": {
+      "j": 2
+     },
+     "label": "sequence",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "6 matches → advance j to 2",
+   "narration": "The array value 6 matches the next sequence item, so j advances to 2.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      1,
+      22,
+      25,
+      6,
+      -1,
+      8,
+      10
+     ],
+     "hl": {
+      "5": "ok"
+     },
+     "ptr": {
+      "i": 5
+     },
+     "label": "array",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      6,
+      -1,
+      10
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok"
+     },
+     "ptr": {
+      "j": 3
+     },
+     "label": "sequence",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "-1 matches → advance j to 3",
+   "narration": "The array value -1 matches the next sequence item, so j advances to 3.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      1,
+      22,
+      25,
+      6,
+      -1,
+      8,
+      10
+     ],
+     "hl": {
+      "7": "ok"
+     },
+     "ptr": {
+      "i": 7
+     },
+     "label": "array",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      6,
+      -1,
+      10
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok"
+     },
+     "ptr": {},
+     "label": "sequence",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "10 matches → advance j to 4",
+   "narration": "The array value 10 matches the next sequence item, so j advances to 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      6,
+      -1,
+      10
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok"
+     },
+     "ptr": {},
+     "label": "sequence",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "j = 4 = len(sequence) → valid",
+   "narration": "We matched every element of the sequence, so it's a valid subsequence.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ValidateSubsequence {\n    public static boolean isValidSubsequence(List<Integer> array, List<Integer> sequence) {\n        int j = 0;\n        for (int i = 0; i < array.size() && j < sequence.size(); i++)\n            if (array.get(i).equals(sequence.get(j))) j++;\n        return j == sequence.size();\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ValidateSubsequence.java",
-   "narration": "Here's the Java solution, starting with is valid subsequence. It follows the steps we just described."
+   "narration": "We keep an index into the sequence. Scanning the array, whenever the current value equals the next sequence element, we advance that index. The answer is whether the index reached the sequence length."
   },
   {
    "kind": "bullets",
@@ -52,6 +290,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Sequence longer than array → false",
+    "Repeated values: each array element used once",
+    "Single-element sequence"
+   ],
+   "narration": "If the sequence is longer than the array it can't be a subsequence. Each array element can only be used once, which the single forward pass guarantees."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Clarify: subsequence ≠ subarray (no contiguity)",
+    "Follow-up: check many sequences against one array"
+   ],
+   "narration": "Clarify the difference between a subsequence and a subarray: subsequences don't have to be contiguous. A follow-up is checking many sequences quickly, where you'd preprocess positions of each value."
   },
   {
    "kind": "bullets",

@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Naive: collect each root-to-leaf path, then sum it → O(n·h)",
+    "Optimal: carry the running sum down → O(n)",
+    "Pre-order DFS keeps left-to-right order"
+   ],
+   "narration": "A naive approach stores each full path and sums it at the leaf, repeating work for shared prefixes. Instead we pass the running sum down the recursion, so each node is added exactly once."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Depth-first from the root with sum zero",
@@ -36,13 +46,456 @@
    "narration": "Step by step. First, depth-first from the root with sum zero. Second, add the node's value. Third, at a leaf, record the sum. Fourth, recurse left then right to keep left-to-right order."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       "9",
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ],
+      "7": [
+       8,
+       null,
+       null
+      ],
+      "8": [
+       9,
+       null,
+       null
+      ],
+      "9": [
+       10,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "cur",
+      "1": "cur",
+      "3": "cur",
+      "7": "ok"
+     },
+     "label": null,
+     "notes": {
+      "7": "Σ=15"
+     },
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "sums:",
+      "15"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Leaf 8: branch sum 1 + 2 + 4 + 8 = 15",
+   "narration": "Reaching leaf 8, the running total along this path is 15, so we record it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       "9",
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ],
+      "7": [
+       8,
+       null,
+       null
+      ],
+      "8": [
+       9,
+       null,
+       null
+      ],
+      "9": [
+       10,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "cur",
+      "1": "cur",
+      "3": "cur",
+      "8": "ok"
+     },
+     "label": null,
+     "notes": {
+      "8": "Σ=16"
+     },
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "sums:",
+      "15",
+      "16"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Leaf 9: branch sum 1 + 2 + 4 + 9 = 16",
+   "narration": "Reaching leaf 9, the running total along this path is 16, so we record it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       "9",
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ],
+      "7": [
+       8,
+       null,
+       null
+      ],
+      "8": [
+       9,
+       null,
+       null
+      ],
+      "9": [
+       10,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "cur",
+      "1": "cur",
+      "4": "cur",
+      "9": "ok"
+     },
+     "label": null,
+     "notes": {
+      "9": "Σ=18"
+     },
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "sums:",
+      "15",
+      "16",
+      "18"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Leaf 10: branch sum 1 + 2 + 5 + 10 = 18",
+   "narration": "Reaching leaf 10, the running total along this path is 18, so we record it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       "9",
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ],
+      "7": [
+       8,
+       null,
+       null
+      ],
+      "8": [
+       9,
+       null,
+       null
+      ],
+      "9": [
+       10,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "cur",
+      "2": "cur",
+      "5": "ok"
+     },
+     "label": null,
+     "notes": {
+      "5": "Σ=10"
+     },
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "sums:",
+      "15",
+      "16",
+      "18",
+      "10"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Leaf 6: branch sum 1 + 3 + 6 = 10",
+   "narration": "Reaching leaf 6, the running total along this path is 10, so we record it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       "5",
+       "6"
+      ],
+      "3": [
+       4,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       "9",
+       null
+      ],
+      "5": [
+       6,
+       null,
+       null
+      ],
+      "6": [
+       7,
+       null,
+       null
+      ],
+      "7": [
+       8,
+       null,
+       null
+      ],
+      "8": [
+       9,
+       null,
+       null
+      ],
+      "9": [
+       10,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "cur",
+      "2": "cur",
+      "6": "ok"
+     },
+     "label": null,
+     "notes": {
+      "6": "Σ=11"
+     },
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "sums:",
+      "15",
+      "16",
+      "18",
+      "10",
+      "11"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "Leaf 7: branch sum 1 + 3 + 7 = 11",
+   "narration": "Reaching leaf 7, the running total along this path is 11, so we record it.",
+   "layout": "cols"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class BranchSums {\n    public static List<Integer> branchSums(BinaryTree root) {\n        List<Integer> sums = new ArrayList<>();\n        dfs(root, 0, sums);\n        return sums;\n    }\n\n    private static void dfs(BinaryTree node, int running, List<Integer> sums) {\n        if (node == null) return;\n        int s = running + node.value;\n        if (node.left == null && node.right == null) { sums.add(s); return; }\n        dfs(node.left, s, sums);\n        dfs(node.right, s, sums);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "BranchSums.java",
-   "narration": "Here's the Java solution, starting with branch sums. It follows the steps we just described."
+   "narration": "The helper takes a node, the running sum and the result list. It adds the node's value, records the sum at a leaf, and otherwise recurses left then right."
   },
   {
    "kind": "bullets",
@@ -52,6 +505,26 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "A node is a leaf only if BOTH children are null",
+    "Single-node tree → [root.value]",
+    "Recursion depth = tree height"
+   ],
+   "narration": "The common bug is treating a node with one child as a leaf. A node is a leaf only when both children are null."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: return the paths themselves",
+    "Follow-up: path sum equals target?",
+    "Iterative version with an explicit stack"
+   ],
+   "narration": "Follow-ups include returning the paths, or checking whether any path sums to a target. You can also do it iteratively with a stack of node and sum pairs."
   },
   {
    "kind": "bullets",

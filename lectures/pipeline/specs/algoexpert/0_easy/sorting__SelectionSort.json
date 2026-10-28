@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Always O(n²) comparisons, even if sorted",
+    "At most n−1 swaps (useful when writes are expensive)",
+    "Use an O(n log n) sort in practice"
+   ],
+   "narration": "Selection sort always does quadratic comparisons, even on sorted input. Its niche is making at most n minus one swaps, which matters when writes are expensive."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. For each position",
@@ -35,13 +45,175 @@
    "narration": "Step by step. First, for each position. Second, find the minimum in the unsorted suffix. Third, swap it into place."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      5,
+      8,
+      9,
+      5,
+      6,
+      3
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {
+      "i": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Min of suffix = 2 → swap into index 0",
+   "narration": "The smallest value in the unsorted part is 2, so we swap it into index 0.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      8,
+      9,
+      5,
+      6,
+      5
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "cur"
+     },
+     "ptr": {
+      "i": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Min of suffix = 3 → swap into index 1",
+   "narration": "The smallest value in the unsorted part is 3, so we swap it into index 1.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      5,
+      9,
+      8,
+      6,
+      5
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "cur"
+     },
+     "ptr": {
+      "i": 2
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Min of suffix = 5 → swap into index 2",
+   "narration": "The smallest value in the unsorted part is 5, so we swap it into index 2.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      5,
+      5,
+      6,
+      8,
+      9
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok",
+      "4": "cur"
+     },
+     "ptr": {
+      "i": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Min of suffix = 6 → swap into index 4",
+   "narration": "The smallest value in the unsorted part is 6, so we swap it into index 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      5,
+      5,
+      6,
+      8,
+      9
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok",
+      "4": "ok",
+      "5": "cur"
+     },
+     "ptr": {
+      "i": 5
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Min of suffix = 8 → swap into index 5",
+   "narration": "The smallest value in the unsorted part is 8, so we swap it into index 5.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SelectionSort {\n    public static int[] selectionSort(int[] a) {\n        for (int i = 0; i < a.length - 1; i++) {\n            int min = i;\n            for (int j = i + 1; j < a.length; j++) if (a[j] < a[min]) min = j;\n            int t = a[i]; a[i] = a[min]; a[min] = t;\n        }\n        return a;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SelectionSort.java",
-   "narration": "Here's the Java solution, starting with selection sort. It follows the steps we just described."
+   "narration": "For each starting index we scan the rest to find the smallest index, then swap it into the start position."
   },
   {
    "kind": "bullets",
@@ -51,6 +223,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n squared. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Not stable (long-distance swaps)",
+    "Stop at n − 1",
+    "Track the index of the min, not the value"
+   ],
+   "narration": "Selection sort isn't stable because of its long-distance swaps. Track the index of the minimum, not just its value."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Compare with bubble and insertion sort",
+    "Follow-up: make it stable (shift instead of swap)"
+   ],
+   "narration": "Compare it with bubble and insertion sort, and know how to make it stable by shifting instead of swapping."
   },
   {
    "kind": "bullets",

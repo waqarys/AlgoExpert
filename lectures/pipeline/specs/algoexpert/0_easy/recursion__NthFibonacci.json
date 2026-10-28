@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Naive recursion: fib(n−1) + fib(n−2) → O(2ⁿ)",
+    "Memoisation → O(n) time, O(n) space",
+    "Iterate with two variables → O(n) time, O(1) space"
+   ],
+   "narration": "Naive recursion recomputes the same values exponentially many times. Memoising fixes that with linear space. The best version just keeps the last two numbers and slides forward."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Handle n of one and two",
@@ -37,13 +47,208 @@
    "narration": "Step by step. First, handle n of one and two. Second, keep the last two values. Third, slide them forward n minus two times. Fourth, return the latest."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "F1=0",
+      "F2=1",
+      "F3",
+      "F4",
+      "F5",
+      "F6",
+      "F7"
+     ],
+     "hl": {
+      "0": "done",
+      "1": "cur",
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "last two = (1, 1)",
+      "F3 = 1"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "F3 = 1 + 0 = 1",
+   "narration": "To get F 3, add the last two values: 0 plus 1 equals 1. Then slide the window forward.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "F1=0",
+      "F2=1",
+      "F3",
+      "F4",
+      "F5",
+      "F6",
+      "F7"
+     ],
+     "hl": {
+      "1": "done",
+      "2": "cur",
+      "3": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "last two = (1, 2)",
+      "F4 = 2"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "F4 = 1 + 1 = 2",
+   "narration": "To get F 4, add the last two values: 1 plus 1 equals 2. Then slide the window forward.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "F1=0",
+      "F2=1",
+      "F3",
+      "F4",
+      "F5",
+      "F6",
+      "F7"
+     ],
+     "hl": {
+      "2": "done",
+      "3": "cur",
+      "4": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "last two = (2, 3)",
+      "F5 = 3"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "F5 = 2 + 1 = 3",
+   "narration": "To get F 5, add the last two values: 1 plus 2 equals 3. Then slide the window forward.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "F1=0",
+      "F2=1",
+      "F3",
+      "F4",
+      "F5",
+      "F6",
+      "F7"
+     ],
+     "hl": {
+      "3": "done",
+      "4": "cur",
+      "5": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "last two = (3, 5)",
+      "F6 = 5"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "F6 = 3 + 2 = 5",
+   "narration": "To get F 6, add the last two values: 2 plus 3 equals 5. Then slide the window forward.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "F1=0",
+      "F2=1",
+      "F3",
+      "F4",
+      "F5",
+      "F6",
+      "F7"
+     ],
+     "hl": {
+      "4": "done",
+      "5": "cur",
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "last two = (5, 8)",
+      "F7 = 8"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "F7 = 5 + 3 = 8",
+   "narration": "To get F 7, add the last two values: 3 plus 5 equals 8. Then slide the window forward.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class NthFibonacci {\n    public static int getNthFib(int n) {\n        int a = 0, b = 1;\n        if (n == 1) return 0;\n        for (int i = 3; i <= n; i++) { int c = a + b; a = b; b = c; }\n        return b;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "NthFibonacci.java",
-   "narration": "Here's the Java solution, starting with get nth fib. It follows the steps we just described."
+   "narration": "We return zero and one for the base cases. Otherwise we keep two variables and loop n minus two times, replacing them with the next pair."
   },
   {
    "kind": "bullets",
@@ -53,6 +258,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "This problem is 1-indexed: F(1) = 0, F(2) = 1",
+    "Overflow for large n (use long / BigInteger)",
+    "n = 1 and n = 2 base cases"
+   ],
+   "narration": "Note this problem's indexing: the first Fibonacci number is zero and the second is one. For large n, values overflow, so use a long or a big integer."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Show the recursion tree to explain the blow-up",
+    "Follow-up: O(log n) via matrix exponentiation"
+   ],
+   "narration": "Draw the recursion tree to explain the exponential blow-up. A strong follow-up is the log n matrix-power method."
   },
   {
    "kind": "bullets",

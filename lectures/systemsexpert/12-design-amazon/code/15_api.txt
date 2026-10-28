@@ -1,0 +1,3 @@
+POST /cart/items {sku, qty}
+POST /checkout {cartId, addressId, paymentMethodId, idempotencyKey} -> order
+GET  /orders/{id}

@@ -28,7 +28,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Learning to Rank | 1:42 | [mp4](mlexpert/19_learning_to_rank/lecture.mp4) | [pdf](mlexpert/19_learning_to_rank/slides.pdf) | [md](mlexpert/19_learning_to_rank/transcript.md) |
 | ML System Design | 2:25 | [mp4](mlexpert/20_ml_system_design/lecture.mp4) | [pdf](mlexpert/20_ml_system_design/slides.pdf) | [md](mlexpert/20_ml_system_design/transcript.md) |
 
-## SystemsExpert (16)
+## SystemsExpert (18)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -48,6 +48,8 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Slack | 4:31 | [mp4](systemsexpert/09-design-slack/lecture.mp4) | [pdf](systemsexpert/09-design-slack/slides.pdf) | [md](systemsexpert/09-design-slack/transcript.md) |
 | Design Airbnb | 4:20 | [mp4](systemsexpert/10-design-airbnb/lecture.mp4) | [pdf](systemsexpert/10-design-airbnb/slides.pdf) | [md](systemsexpert/10-design-airbnb/transcript.md) |
 | Design Tinder | 3:53 | [mp4](systemsexpert/11-design-tinder/lecture.mp4) | [pdf](systemsexpert/11-design-tinder/slides.pdf) | [md](systemsexpert/11-design-tinder/transcript.md) |
+| Design Amazon | 3:43 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
+| Design the Twitch API | 5:02 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
 ## AlgoExpert (200)
 

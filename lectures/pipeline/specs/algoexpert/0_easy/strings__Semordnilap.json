@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: compare every pair → O(n²·m)",
+    "Optimal: hash set of words → O(n·m)",
+    "Remove both words once paired"
+   ],
+   "narration": "Comparing every pair of words is quadratic. With a hash set, each word checks for its reverse in constant time, so the whole thing is linear in the total characters."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Put all words in a set",
@@ -35,13 +45,119 @@
    "narration": "Step by step. First, put all words in a set. Second, for each word, check whether its reverse is present and different. Third, record the pair and remove both."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "diaper",
+      "abc",
+      "test",
+      "cba",
+      "repaid"
+     ],
+     "hl": {
+      "0": "ok",
+      "4": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "reverse('diaper') = 'repaid' ✓",
+      "pairs = [['diaper', 'repaid']]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'diaper' ↔ 'repaid'",
+   "narration": "The reverse of diaper is repaid, which is in the set. Record the pair and remove both so it isn't counted twice.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "diaper",
+      "abc",
+      "test",
+      "cba",
+      "repaid"
+     ],
+     "hl": {
+      "1": "ok",
+      "3": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "reverse('abc') = 'cba' ✓",
+      "pairs = [['diaper', 'repaid'], ['abc', 'cba']]"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'abc' ↔ 'cba'",
+   "narration": "The reverse of abc is cba, which is in the set. Record the pair and remove both so it isn't counted twice.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "diaper",
+      "abc",
+      "test",
+      "cba",
+      "repaid"
+     ],
+     "hl": {
+      "2": "bad"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "reverse('test') = 'tset' ✗"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "'tset' not present",
+   "narration": "The reverse of test, tset, isn't in the list.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class Semordnilap {\n    public static List<List<String>> semordnilap(String[] words) {\n        Set<String> set = new HashSet<>(Arrays.asList(words));\n        List<List<String>> out = new ArrayList<>();\n        for (String w : words) {\n            String r = new StringBuilder(w).reverse().toString();\n            if (!r.equals(w) && set.contains(r)) {\n                out.add(List.of(w, r));\n                set.remove(w);\n                set.remove(r);\n            }\n        }\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "Semordnilap.java",
-   "narration": "Here's the Java solution, starting with semordnilap. It follows the steps we just described."
+   "narration": "We put all words in a set. For each word, we reverse it; if the reverse is in the set and differs from the word, we add the pair and remove both words."
   },
   {
    "kind": "bullets",
@@ -51,6 +167,24 @@
     "Space: O(n*m)"
    ],
    "narration": "Time is O of n times m. Space is O of n times m."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Palindromes like 'aba' don't pair with themselves",
+    "Remove matched words to avoid duplicate pairs",
+    "Order of output pairs"
+   ],
+   "narration": "A palindrome would match itself, so skip that case. Removing matched words prevents duplicate pairs."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: count pairs, or allow duplicates"
+   ],
+   "narration": "Follow-ups include counting pairs or handling duplicate words."
   },
   {
    "kind": "bullets",

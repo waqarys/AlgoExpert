@@ -28,6 +28,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: try every subset and order of jobs → exponential",
+    "Greedy: highest pay first, as late as possible → O(n log n)",
+    "Scheduling late keeps early days free for tight deadlines"
+   ],
+   "narration": "Brute force would try every subset and ordering. Instead, take jobs from highest pay to lowest and place each on the latest free day before its deadline. Placing late keeps early days open for jobs with tight deadlines."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Sort jobs by payment, highest first",
@@ -38,13 +48,259 @@
    "narration": "Step by step. First, sort jobs by payment, highest first. Second, keep seven day slots. Third, place each job in the latest free day before its deadline. Fourth, sum the payments of placed jobs."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "C",
+       "D",
+       "A",
+       "B"
+      ],
+      [
+       3,
+       2,
+       1,
+       2
+      ],
+      [
+       2,
+       2,
+       1,
+       1
+      ]
+     ],
+     "hl": {
+      "0,0": "cur"
+     },
+     "rowh": [
+      "job",
+      "deadline",
+      "pay"
+     ],
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "array",
+     "values": [
+      "",
+      "",
+      "C:2",
+      "",
+      "",
+      "",
+      ""
+     ],
+     "hl": {
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": "days 1–7 (index = day − 1)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Job C (pay 2, deadline 3) → day 3; earned 2",
+   "narration": "Job C pays 2 with deadline 3. The latest free day on or before the deadline is day 3, so we book it. Earnings so far: 2.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "C",
+       "D",
+       "A",
+       "B"
+      ],
+      [
+       3,
+       2,
+       1,
+       2
+      ],
+      [
+       2,
+       2,
+       1,
+       1
+      ]
+     ],
+     "hl": {
+      "0,1": "cur"
+     },
+     "rowh": [
+      "job",
+      "deadline",
+      "pay"
+     ],
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "array",
+     "values": [
+      "",
+      "D:2",
+      "C:2",
+      "",
+      "",
+      "",
+      ""
+     ],
+     "hl": {
+      "1": "ok"
+     },
+     "ptr": {},
+     "label": "days 1–7 (index = day − 1)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Job D (pay 2, deadline 2) → day 2; earned 4",
+   "narration": "Job D pays 2 with deadline 2. The latest free day on or before the deadline is day 2, so we book it. Earnings so far: 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "C",
+       "D",
+       "A",
+       "B"
+      ],
+      [
+       3,
+       2,
+       1,
+       2
+      ],
+      [
+       2,
+       2,
+       1,
+       1
+      ]
+     ],
+     "hl": {
+      "0,2": "cur"
+     },
+     "rowh": [
+      "job",
+      "deadline",
+      "pay"
+     ],
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "array",
+     "values": [
+      "A:1",
+      "D:2",
+      "C:2",
+      "",
+      "",
+      "",
+      ""
+     ],
+     "hl": {
+      "0": "ok"
+     },
+     "ptr": {},
+     "label": "days 1–7 (index = day − 1)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Job A (pay 1, deadline 1) → day 1; earned 5",
+   "narration": "Job A pays 1 with deadline 1. The latest free day on or before the deadline is day 1, so we book it. Earnings so far: 5.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "C",
+       "D",
+       "A",
+       "B"
+      ],
+      [
+       3,
+       2,
+       1,
+       2
+      ],
+      [
+       2,
+       2,
+       1,
+       1
+      ]
+     ],
+     "hl": {
+      "0,3": "cur"
+     },
+     "rowh": [
+      "job",
+      "deadline",
+      "pay"
+     ],
+     "colh": null,
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "array",
+     "values": [
+      "A:1",
+      "D:2",
+      "C:2",
+      "",
+      "",
+      "",
+      ""
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "days 1–7 (index = day − 1)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Job B (pay 1, deadline 2) → no free day, skip; earned 5",
+   "narration": "Job B pays 1 with deadline 2. Every day up to its deadline is taken, so we skip it. Earnings so far: 5.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class OptimalFreelancing {\n    public static int optimalFreelancing(List<Map<String, Integer>> jobs) {\n        final int days = 7;\n        boolean[] taken = new boolean[days];\n        int profit = 0;\n        List<Map<String, Integer>> sorted = new java.util.ArrayList<>(jobs);\n        sorted.sort((a, b) -> Integer.compare(b.get(\"payment\"), a.get(\"payment\")));\n        for (Map<String, Integer> job : sorted) {\n            for (int d = Math.min(job.get(\"deadline\"), days) - 1; d >= 0; d--) {\n                if (!taken[d]) { taken[d] = true; profit += job.get(\"payment\"); break; }\n            }\n        }\n        return profit;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "OptimalFreelancing.java",
-   "narration": "Here's the Java solution, starting with optimal freelancing. It follows the steps we just described."
+   "narration": "We sort jobs by payment descending and keep a seven-slot boolean array. For each job, we scan backwards from its capped deadline for a free day, mark it, and add the payment."
   },
   {
    "kind": "bullets",
@@ -54,6 +310,25 @@
     "Space: O(1) (7 slots)"
    ],
    "narration": "Time is O of n log n. Space is constant (7 slots)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Deadlines beyond 7 → cap at day 7",
+    "Equal payments: any order works",
+    "No jobs → 0"
+   ],
+   "narration": "Cap deadlines at seven since the week only has seven days. With no jobs, the answer is zero."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why 'as late as possible' matters",
+    "Follow-up: n days instead of 7 → union-find for free slots"
+   ],
+   "narration": "Explain why scheduling late matters. With many days instead of seven, a union-find of free slots makes the search fast."
   },
   {
    "kind": "bullets",

@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: try every order → n! permutations",
+    "Greedy: shortest first is optimal → O(n log n)",
+    "Each duration counts once per query behind it"
+   ],
+   "narration": "Trying every execution order is factorial. Exchange argument: if a longer query runs before a shorter one, swapping them reduces total waiting. So shortest first is optimal, and sorting costs n log n."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Sort durations ascending",
@@ -36,13 +46,208 @@
    "narration": "Step by step. First, sort durations ascending. Second, each duration is waited on by the queries remaining after it. Third, add duration times queries left. Fourth, return the total."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      2,
+      1,
+      2,
+      6
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "queries",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      2,
+      3,
+      6
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": "sorted",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Sort: [3, 2, 1, 2, 6] → [1, 2, 2, 3, 6]",
+   "narration": "Take the queries three, two, one, two, six. Sorted, they become one, two, two, three, six.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      2,
+      3,
+      6
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {
+      "i": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "duration 1 × 4 waiting = 4",
+      "total = 4"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "1 s is waited on by 4 queries → total 4",
+   "narration": "Query 0 takes 1 seconds, and the 4 queries after it all wait for it, adding 4. The total is now 4.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      2,
+      3,
+      6
+     ],
+     "hl": {
+      "0": "done",
+      "1": "cur"
+     },
+     "ptr": {
+      "i": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "duration 2 × 3 waiting = 6",
+      "total = 10"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "2 s is waited on by 3 queries → total 10",
+   "narration": "Query 1 takes 2 seconds, and the 3 queries after it all wait for it, adding 6. The total is now 10.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      2,
+      3,
+      6
+     ],
+     "hl": {
+      "0": "done",
+      "1": "done",
+      "2": "done",
+      "3": "cur"
+     },
+     "ptr": {
+      "i": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "duration 3 × 1 waiting = 3",
+      "total = 17"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "3 s is waited on by 1 queries → total 17",
+   "narration": "Query 3 takes 3 seconds, and the 1 queries after it all wait for it, adding 3. The total is now 17.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      2,
+      3,
+      6
+     ],
+     "hl": {
+      "0": "done",
+      "1": "done",
+      "2": "done",
+      "3": "done",
+      "4": "cur"
+     },
+     "ptr": {
+      "i": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "duration 6 × 0 waiting = 0",
+      "total = 17"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "6 s is waited on by 0 queries → total 17",
+   "narration": "Query 4 takes 6 seconds, and the 0 queries after it all wait for it, adding 0. The total is now 17.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MinimumWaitingTime {\n    public static int minimumWaitingTime(int[] queries) {\n        Arrays.sort(queries);\n        int total = 0;\n        for (int i = 0; i < queries.length; i++) total += queries[i] * (queries.length - 1 - i);\n        return total;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MinimumWaitingTime.java",
-   "narration": "Here's the Java solution, starting with minimum waiting time. It follows the steps we just described."
+   "narration": "We sort the array, then for each index multiply the duration by the number of queries left after it and add it to the total."
   },
   {
    "kind": "bullets",
@@ -52,6 +257,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is queries with durations run one at a time; choose an order minimising the total time all queries spend waiting. Shortest-first is optimal. Time is O of n log n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "The last query adds 0 (nobody waits for it)",
+    "Sorting in place mutates input (mention it)",
+    "Use long for large totals"
+   ],
+   "narration": "The last query contributes nothing. Sorting in place mutates the input, which you should mention. Use a long if totals can be large."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Prove with an exchange argument",
+    "Follow-up: weighted queries (Smith's rule: sort by time/weight)"
+   ],
+   "narration": "Prove the greedy with an exchange argument. A follow-up adds weights, where you sort by duration divided by weight."
   },
   {
    "kind": "bullets",

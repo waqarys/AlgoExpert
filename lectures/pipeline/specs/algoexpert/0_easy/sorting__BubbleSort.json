@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Bubble sort is O(n²) — fine for learning, not for production",
+    "Better: merge/quick/heap sort → O(n log n)",
+    "Early exit makes sorted input O(n)"
+   ],
+   "narration": "Bubble sort is quadratic, so in practice you'd use an n log n sort. Its one strength is the early exit: if a pass makes no swaps, the array is sorted, so already-sorted input takes linear time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Loop until a pass makes no swaps",
@@ -35,13 +45,165 @@
    "narration": "Step by step. First, loop until a pass makes no swaps. Second, swap adjacent pairs that are out of order. Third, shrink the range each pass."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      5,
+      2,
+      8,
+      5,
+      6,
+      3,
+      9
+     ],
+     "hl": {
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "After pass 1: 9 bubbled to index 6",
+   "narration": "After pass 1, the largest remaining value, 9, has bubbled to position 6. Green cells are final.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      5,
+      5,
+      6,
+      3,
+      8,
+      9
+     ],
+     "hl": {
+      "5": "ok",
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "After pass 2: 8 bubbled to index 5",
+   "narration": "After pass 2, the largest remaining value, 8, has bubbled to position 5. Green cells are final.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      5,
+      5,
+      3,
+      6,
+      8,
+      9
+     ],
+     "hl": {
+      "4": "ok",
+      "5": "ok",
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "After pass 3: 6 bubbled to index 4",
+   "narration": "After pass 3, the largest remaining value, 6, has bubbled to position 4. Green cells are final.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      5,
+      5,
+      6,
+      8,
+      9
+     ],
+     "hl": {
+      "2": "ok",
+      "3": "ok",
+      "4": "ok",
+      "5": "ok",
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "After pass 5: 5 bubbled to index 2",
+   "narration": "After pass 5, the largest remaining value, 5, has bubbled to position 2. Green cells are final.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      2,
+      3,
+      5,
+      5,
+      6,
+      8,
+      9
+     ],
+     "hl": {
+      "1": "ok",
+      "2": "ok",
+      "3": "ok",
+      "4": "ok",
+      "5": "ok",
+      "6": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "After pass 6: 3 bubbled to index 1",
+   "narration": "After pass 6, the largest remaining value, 3, has bubbled to position 1. Green cells are final.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class BubbleSort {\n    public static int[] bubbleSort(int[] a) {\n        boolean swapped = true;\n        for (int end = a.length - 1; swapped && end > 0; end--) {\n            swapped = false;\n            for (int i = 0; i < end; i++)\n                if (a[i] > a[i + 1]) { int t = a[i]; a[i] = a[i + 1]; a[i + 1] = t; swapped = true; }\n        }\n        return a;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "BubbleSort.java",
-   "narration": "Here's the Java solution, starting with bubble sort. It follows the steps we just described."
+   "narration": "The outer loop repeats until no swaps happen. The inner loop compares each adjacent pair and swaps if out of order, and the range shrinks by one each pass."
   },
   {
    "kind": "bullets",
@@ -51,6 +213,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n squared worst, O of n best. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Shrink the inner range each pass",
+    "Stop when a pass makes no swaps",
+    "Stable: equal elements keep order"
+   ],
+   "narration": "Shrink the range each pass and stop early when nothing swaps. Bubble sort is stable, so equal elements keep their order."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Know the complexity of all simple sorts",
+    "Follow-up: why is it stable? how many swaps = inversions?"
+   ],
+   "narration": "Be ready to compare it with insertion and selection sort. The number of swaps equals the number of inversions."
   },
   {
    "kind": "bullets",

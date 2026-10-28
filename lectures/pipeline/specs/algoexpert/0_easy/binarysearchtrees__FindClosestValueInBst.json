@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: visit every node → O(n)",
+    "Optimal: follow the BST ordering → O(log n) average",
+    "Worst case O(n) on a skewed tree"
+   ],
+   "narration": "Brute force visits every node and tracks the closest, which is linear. Using the BST property, each comparison discards an entire subtree, so on a balanced tree we only walk one root-to-leaf path, log n on average."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Start at the root, tracking the closest value",
@@ -37,13 +47,253 @@
    "narration": "Step by step. First, start at the root, tracking the closest value. Second, update closest if this node is nearer. Third, go left if the target is smaller, right if larger. Fourth, stop on an exact match or a null child."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       15,
+       "5",
+       "6"
+      ],
+      "3": [
+       2,
+       "7",
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       13,
+       null,
+       "8"
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       1,
+       null,
+       null
+      ],
+      "8": [
+       14,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "target = 12",
+      "node = 10",
+      "closest = 10",
+      "go right"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "At 10: closest so far 10; 12 > 10 → go right",
+   "narration": "At node 10, the closest value so far is 10. The target 12 is larger, so we go right and ignore the other subtree.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       15,
+       "5",
+       "6"
+      ],
+      "3": [
+       2,
+       "7",
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       13,
+       null,
+       "8"
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       1,
+       null,
+       null
+      ],
+      "8": [
+       14,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "done",
+      "2": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "target = 12",
+      "node = 15",
+      "closest = 10",
+      "go left"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "At 15: closest so far 10; 12 < 15 → go left",
+   "narration": "At node 15, the closest value so far is 10. The target 12 is smaller, so we go left and ignore the other subtree.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       15,
+       "5",
+       "6"
+      ],
+      "3": [
+       2,
+       "7",
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       13,
+       null,
+       "8"
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       1,
+       null,
+       null
+      ],
+      "8": [
+       14,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "done",
+      "2": "done",
+      "5": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.7
+    },
+    {
+     "type": "text",
+     "lines": [
+      "target = 12",
+      "node = 13",
+      "closest = 13",
+      "go left"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.3
+    }
+   ],
+   "caption": "At 13: closest so far 13; 12 < 13 → go left",
+   "narration": "At node 13, the closest value so far is 13. The target 12 is smaller, so we go left and ignore the other subtree.",
+   "layout": "cols"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class FindClosestValueInBst {\n    public static int findClosestValueInBst(BST tree, int target) {\n        int closest = tree.value;\n        BST cur = tree;\n        while (cur != null) {\n            if (Math.abs(target - cur.value) < Math.abs(target - closest)) closest = cur.value;\n            if (target < cur.value) cur = cur.left;\n            else if (target > cur.value) cur = cur.right;\n            else break;\n        }\n        return closest;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "FindClosestValueInBst.java",
-   "narration": "Here's the Java solution, starting with find closest value in bst. It follows the steps we just described."
+   "narration": "We start at the root with the closest set to its value. In the loop we update closest if this node is nearer, then move left if the target is smaller, right if it's larger, and return immediately on an exact match."
   },
   {
    "kind": "bullets",
@@ -53,6 +303,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of log n avg, O of n worst. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Exact match → stop early",
+    "Skewed (linked-list-like) tree → O(n)",
+    "Use absolute difference; watch integer overflow"
+   ],
+   "narration": "Stop early on an exact match. On a skewed tree the path can be n long. And compute differences carefully if values are near the integer limits."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Prefer the iterative version: O(1) space",
+    "Follow-up: k closest values (in-order + window)"
+   ],
+   "narration": "Mention that the iterative version uses constant space while recursion uses the call stack. A follow-up is finding the k closest values."
   },
   {
    "kind": "bullets",

@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "With a hash set: works for unsorted lists, O(n) space",
+    "Sorted list: duplicates are adjacent → O(1) space",
+    "Rewire next pointers in place"
+   ],
+   "narration": "A hash set would work even for unsorted lists, but costs extra space. Because this list is sorted, duplicates are always adjacent, so we can just skip over them in place."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Walk the list",
@@ -36,13 +46,242 @@
    "narration": "Step by step. First, walk the list. Second, while the next node has the same value, bypass it. Third, move to the next distinct node. Fourth, return the head."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      1,
+      3,
+      4,
+      4,
+      4,
+      5,
+      6,
+      6
+     ],
+     "ptr": {
+      "cur": 0
+     },
+     "hl": {
+      "1": "bad",
+      "0": "cur"
+     },
+     "cycle_to": null,
+     "label": "original",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      1
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "result so far",
+     "h": 1
+    }
+   ],
+   "caption": "Value 1: skip 1 duplicate(s)",
+   "narration": "At value 1, the next 1 node is the same, so we bypass it.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      1,
+      3,
+      4,
+      4,
+      4,
+      5,
+      6,
+      6
+     ],
+     "ptr": {
+      "cur": 2
+     },
+     "hl": {
+      "2": "cur"
+     },
+     "cycle_to": null,
+     "label": "original",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      1,
+      3
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "result so far",
+     "h": 1
+    }
+   ],
+   "caption": "Value 3: skip 0 duplicate(s)",
+   "narration": "At value 3, the next node is different, so we just move on.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      1,
+      3,
+      4,
+      4,
+      4,
+      5,
+      6,
+      6
+     ],
+     "ptr": {
+      "cur": 3
+     },
+     "hl": {
+      "4": "bad",
+      "5": "bad",
+      "3": "cur"
+     },
+     "cycle_to": null,
+     "label": "original",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      1,
+      3,
+      4
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "result so far",
+     "h": 1
+    }
+   ],
+   "caption": "Value 4: skip 2 duplicate(s)",
+   "narration": "At value 4, the next 2 nodes are the same, so we bypass them.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      1,
+      3,
+      4,
+      4,
+      4,
+      5,
+      6,
+      6
+     ],
+     "ptr": {
+      "cur": 6
+     },
+     "hl": {
+      "6": "cur"
+     },
+     "cycle_to": null,
+     "label": "original",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      1,
+      3,
+      4,
+      5
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "result so far",
+     "h": 1
+    }
+   ],
+   "caption": "Value 5: skip 0 duplicate(s)",
+   "narration": "At value 5, the next node is different, so we just move on.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "linked",
+     "values": [
+      1,
+      1,
+      3,
+      4,
+      4,
+      4,
+      5,
+      6,
+      6
+     ],
+     "ptr": {
+      "cur": 7
+     },
+     "hl": {
+      "8": "bad",
+      "7": "cur"
+     },
+     "cycle_to": null,
+     "label": "original",
+     "h": 1
+    },
+    {
+     "type": "linked",
+     "values": [
+      1,
+      3,
+      4,
+      5,
+      6
+     ],
+     "ptr": {},
+     "hl": {},
+     "cycle_to": null,
+     "label": "result so far",
+     "h": 1
+    }
+   ],
+   "caption": "Value 6: skip 1 duplicate(s)",
+   "narration": "At value 6, the next 1 node is the same, so we bypass it.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class RemoveDuplicatesFromLinkedList {\n    public static LinkedListNode removeDuplicatesFromLinkedList(LinkedListNode head) {\n        LinkedListNode cur = head;\n        while (cur != null) {\n            LinkedListNode next = cur.next;\n            while (next != null && next.value == cur.value) next = next.next;\n            cur.next = next;\n            cur = next;\n        }\n        return head;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "RemoveDuplicatesFromLinkedList.java",
-   "narration": "Here's the Java solution, starting with remove duplicates from linked list. It follows the steps we just described."
+   "narration": "For each node, we find the next node with a different value, point current dot next at it, and move current forward."
   },
   {
    "kind": "bullets",
@@ -52,6 +291,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Empty list or single node",
+    "Runs of 3+ duplicates (loop, don't just skip one)",
+    "Last node duplicates"
+   ],
+   "narration": "Handle long runs of duplicates with an inner loop, not a single skip, and make sure the end of the list works."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: remove ALL nodes that had duplicates",
+    "Follow-up: unsorted list"
+   ],
+   "narration": "A tricky follow-up removes every value that had duplicates entirely. For unsorted lists, use a hash set."
   },
   {
    "kind": "bullets",

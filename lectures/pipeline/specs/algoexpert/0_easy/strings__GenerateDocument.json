@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: for each doc char, count it in both strings → O(m·(n+m))",
+    "Optimal: one frequency map → O(n + m)",
+    "Fail fast as soon as a count goes negative"
+   ],
+   "narration": "Recounting each character in both strings is quadratic. Counting the available characters once and decrementing for the document is linear, and we can stop as soon as a count goes negative."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Count available characters",
@@ -35,13 +45,278 @@
    "narration": "Step by step. First, count available characters. Second, for each document character, decrement its count. Third, if any count goes negative, return false."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "available: \"Bste!hetsi ogEAxpelrt x \"",
+      "document:  \"AlgoExpert is the Best!\""
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Count the available characters first",
+   "narration": "We count every available character, including spaces and punctuation.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "A",
+      "l",
+      "g",
+      "o",
+      "E",
+      "x",
+      "p",
+      "e",
+      "r",
+      "t",
+      " ",
+      "i",
+      "s",
+      " ",
+      "t",
+      "h",
+      "e",
+      " ",
+      "B",
+      "e",
+      "s",
+      "t",
+      "!"
+     ],
+     "hl": {
+      "0": "ok"
+     },
+     "ptr": {
+      "i": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "use 'A' → 0 left"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Use 'A'",
+   "narration": "Use one A; 0 left.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "A",
+      "l",
+      "g",
+      "o",
+      "E",
+      "x",
+      "p",
+      "e",
+      "r",
+      "t",
+      " ",
+      "i",
+      "s",
+      " ",
+      "t",
+      "h",
+      "e",
+      " ",
+      "B",
+      "e",
+      "s",
+      "t",
+      "!"
+     ],
+     "hl": {
+      "0": "done",
+      "1": "done",
+      "2": "done",
+      "3": "done",
+      "4": "ok"
+     },
+     "ptr": {
+      "i": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "use 'E' → 0 left"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Use 'E'",
+   "narration": "Use one E; 0 left.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "A",
+      "l",
+      "g",
+      "o",
+      "E",
+      "x",
+      "p",
+      "e",
+      "r",
+      "t",
+      " ",
+      "i",
+      "s",
+      " ",
+      "t",
+      "h",
+      "e",
+      " ",
+      "B",
+      "e",
+      "s",
+      "t",
+      "!"
+     ],
+     "hl": {
+      "0": "done",
+      "1": "done",
+      "2": "done",
+      "3": "done",
+      "4": "done",
+      "5": "done",
+      "6": "done",
+      "7": "done",
+      "8": "done",
+      "9": "done",
+      "10": "done",
+      "11": "done",
+      "12": "done",
+      "13": "done",
+      "14": "done",
+      "15": "ok"
+     },
+     "ptr": {
+      "i": 15
+     },
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "use 'h' → 0 left"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Use 'h'",
+   "narration": "Use one h; 0 left.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "A",
+      "l",
+      "g",
+      "o",
+      "E",
+      "x",
+      "p",
+      "e",
+      "r",
+      "t",
+      " ",
+      "i",
+      "s",
+      " ",
+      "t",
+      "h",
+      "e",
+      " ",
+      "B",
+      "e",
+      "s",
+      "t",
+      "!"
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok",
+      "4": "ok",
+      "5": "ok",
+      "6": "ok",
+      "7": "ok",
+      "8": "ok",
+      "9": "ok",
+      "10": "ok",
+      "11": "ok",
+      "12": "ok",
+      "13": "ok",
+      "14": "ok",
+      "15": "ok",
+      "16": "ok",
+      "17": "ok",
+      "18": "ok",
+      "19": "ok",
+      "20": "ok",
+      "21": "ok",
+      "22": "ok"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": false
+    }
+   ],
+   "caption": "Every character was available → true",
+   "narration": "Every character of the document was available, so the answer is true.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class GenerateDocument {\n    public static boolean generateDocument(String characters, String document) {\n        Map<Character, Integer> counts = new HashMap<>();\n        for (char c : characters.toCharArray()) counts.merge(c, 1, Integer::sum);\n        for (char c : document.toCharArray()) {\n            int left = counts.getOrDefault(c, 0);\n            if (left == 0) return false;\n            counts.put(c, left - 1);\n        }\n        return true;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "GenerateDocument.java",
-   "narration": "Here's the Java solution, starting with generate document. It follows the steps we just described."
+   "narration": "We count the available characters in a map, then for each document character decrement its count and return false if it drops below zero."
   },
   {
    "kind": "bullets",
@@ -51,6 +326,25 @@
     "Space: O(c)"
    ],
    "narration": "Time is O of n plus m. Space is O of c."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Case-sensitive; spaces and punctuation count",
+    "Empty document → true",
+    "Unicode beyond ASCII → use a map"
+   ],
+   "narration": "Matching is case-sensitive and spaces count. An empty document can always be generated."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Ask about character set size",
+    "Follow-up: many documents from one pool"
+   ],
+   "narration": "Ask about the character set. If you need to answer for many documents, reuse the counts."
   },
   {
    "kind": "bullets",

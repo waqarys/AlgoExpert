@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Linear scan: O(n)",
+    "Binary search: halve the range each step → O(log n)",
+    "1,000,000 items → about 20 comparisons"
+   ],
+   "narration": "A linear scan checks every element. Binary search halves the remaining range with each comparison, so a million items need only about twenty steps."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Keep left and right bounds",
@@ -36,13 +46,218 @@
    "narration": "Step by step. First, keep left and right bounds. Second, check the middle. Third, discard the half that can't contain the target. Fourth, return the index or minus one."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      1,
+      21,
+      33,
+      45,
+      45,
+      61,
+      71,
+      72,
+      73
+     ],
+     "hl": {
+      "4": "cur"
+     },
+     "ptr": {
+      "L": 0,
+      "M": 4,
+      "R": 9
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "target = 33",
+      "a[4] = 45"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "45 > 33 → search left half",
+   "narration": "The middle is index 4 with value 45, which is larger than 33, so we discard the right half.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      1,
+      21,
+      33,
+      45,
+      45,
+      61,
+      71,
+      72,
+      73
+     ],
+     "hl": {
+      "1": "cur"
+     },
+     "ptr": {
+      "L": 0,
+      "M": 1,
+      "R": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "dim": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "target = 33",
+      "a[1] = 1"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "1 < 33 → search right half",
+   "narration": "The middle is index 1 with value 1, which is smaller than 33, so we discard the left half.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      1,
+      21,
+      33,
+      45,
+      45,
+      61,
+      71,
+      72,
+      73
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {
+      "L": 2,
+      "M": 2,
+      "R": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "dim": [
+      0,
+      1,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "target = 33",
+      "a[2] = 21"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "21 < 33 → search right half",
+   "narration": "The middle is index 2 with value 21, which is smaller than 33, so we discard the left half.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      0,
+      1,
+      21,
+      33,
+      45,
+      45,
+      61,
+      71,
+      72,
+      73
+     ],
+     "hl": {
+      "3": "ok"
+     },
+     "ptr": {
+      "L": 3,
+      "M": 3,
+      "R": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "dim": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ]
+    },
+    {
+     "type": "text",
+     "lines": [
+      "target = 33",
+      "a[3] = 33"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "a[3] = 33 → found",
+   "narration": "The middle value is 33. Found it at index 3.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class BinarySearch {\n    public static int binarySearch(int[] array, int target) {\n        int lo = 0, hi = array.length - 1;\n        while (lo <= hi) {\n            int mid = (lo + hi) >>> 1;\n            if (array[mid] == target) return mid;\n            if (array[mid] < target) lo = mid + 1; else hi = mid - 1;\n        }\n        return -1;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "BinarySearch.java",
-   "narration": "Here's the Java solution, starting with binary search. It follows the steps we just described."
+   "narration": "We keep left and right. While left is at most right, compute mid. Return mid on a match, otherwise move left past mid or right before it. Return minus one at the end."
   },
   {
    "kind": "bullets",
@@ -52,6 +267,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of log n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Loop condition is left ≤ right",
+    "Mid as left + (right − left) / 2 avoids overflow",
+    "Not found → −1"
+   ],
+   "narration": "Use left less than or equal to right, compute mid without overflow, and return minus one if not found."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Know recursive + iterative",
+    "Follow-ups: first/last occurrence, rotated arrays, search on answer"
+   ],
+   "narration": "Know both versions. Variations like first occurrence, rotated arrays, and binary search on the answer appear constantly."
   },
   {
    "kind": "bullets",

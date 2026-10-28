@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Naive: string concatenation in a loop → O(n²)",
+    "Optimal: StringBuilder, single pass → O(n)",
+    "Cap runs at 9 so counts stay one digit"
+   ],
+   "narration": "Concatenating strings in a loop is quadratic in Java. A single pass with a string builder is linear. The twist is capping runs at nine, so the encoded counts are always a single digit and decoding stays unambiguous."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Scan with a running count",
@@ -35,13 +45,273 @@
    "narration": "Step by step. First, scan with a running count. Second, flush when the character changes or the count hits nine. Third, write count then character."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "B",
+      "B",
+      "C",
+      "C",
+      "C",
+      "C",
+      "D",
+      "D"
+     ],
+     "hl": {
+      "8": "cur"
+     },
+     "ptr": {
+      "i": 9
+     },
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "flush 9A  (cap at 9)",
+      "output = \"9A\""
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Flush run → 9A",
+   "narration": "The run of A ends because it hit nine, so we write 9 A.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "B",
+      "B",
+      "C",
+      "C",
+      "C",
+      "C",
+      "D",
+      "D"
+     ],
+     "hl": {
+      "11": "cur"
+     },
+     "ptr": {
+      "i": 12
+     },
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "flush 3A",
+      "output = \"9A3A\""
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Flush run → 3A",
+   "narration": "The run of A ends, so we write 3 A.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "B",
+      "B",
+      "C",
+      "C",
+      "C",
+      "C",
+      "D",
+      "D"
+     ],
+     "hl": {
+      "13": "cur"
+     },
+     "ptr": {
+      "i": 14
+     },
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "flush 2B",
+      "output = \"9A3A2B\""
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Flush run → 2B",
+   "narration": "The run of B ends, so we write 2 B.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "B",
+      "B",
+      "C",
+      "C",
+      "C",
+      "C",
+      "D",
+      "D"
+     ],
+     "hl": {
+      "17": "cur"
+     },
+     "ptr": {
+      "i": 18
+     },
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "flush 4C",
+      "output = \"9A3A2B4C\""
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Flush run → 4C",
+   "narration": "The run of C ends, so we write 4 C.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "B",
+      "B",
+      "C",
+      "C",
+      "C",
+      "C",
+      "D",
+      "D"
+     ],
+     "hl": {
+      "19": "cur"
+     },
+     "ptr": {
+      "i": 19
+     },
+     "label": null,
+     "h": 1,
+     "idx": false
+    },
+    {
+     "type": "text",
+     "lines": [
+      "flush 2D",
+      "output = \"9A3A2B4C2D\""
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Flush run → 2D",
+   "narration": "The run of D ends, so we write 2 D.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class RunLengthEncoding {\n    public static String runLengthEncoding(String s) {\n        StringBuilder sb = new StringBuilder();\n        int run = 1;\n        for (int i = 1; i <= s.length(); i++) {\n            if (i == s.length() || s.charAt(i) != s.charAt(i - 1) || run == 9) {\n                sb.append(run).append(s.charAt(i - 1));\n                run = 1;\n            } else run++;\n        }\n        return sb.toString();\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "RunLengthEncoding.java",
-   "narration": "Here's the Java solution, starting with run length encoding. It follows the steps we just described."
+   "narration": "We scan from index one, counting the current run. When the character changes or the run reaches nine, we append the count and the previous character, then reset. After the loop we flush the final run."
   },
   {
    "kind": "bullets",
@@ -51,6 +321,25 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Runs longer than 9 split (12 A's → 9A3A)",
+    "Flush the final run after the loop",
+    "Digits in the input"
+   ],
+   "narration": "Twelve A's must become nine A three A, not twelve A. And don't forget to flush the last run after the loop."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why the cap avoids ambiguity",
+    "Follow-up: write the decoder"
+   ],
+   "narration": "Explain why the cap avoids ambiguity, and be ready to write the decoder."
   },
   {
    "kind": "bullets",

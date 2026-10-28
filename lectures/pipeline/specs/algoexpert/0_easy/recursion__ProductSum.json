@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Only real approach: recursive descent, O(n) total elements",
+    "Mistake to avoid: multiplying by depth too early or twice",
+    "Iterative version uses a stack of (list, depth)"
+   ],
+   "narration": "There's no shortcut: every element must be visited once. The key is where the multiplication happens. Each list sums its elements, including nested results, and multiplies once by its own depth."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Sum the elements at this level",
@@ -36,13 +46,148 @@
    "narration": "Step by step. First, sum the elements at this level. Second, for a nested list, recurse with depth plus one. Third, multiply the level sum by the depth. Fourth, return it."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "[5, 2, [7, −1], 3, [6, [−13, 8], 4]]"
+     ],
+     "label": null,
+     "h": 0.5,
+     "size": 26
+    },
+    {
+     "type": "text",
+     "lines": [
+      "depth 1: 5 + 2 + 3 = 10 (+ nested)"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 26
+    }
+   ],
+   "caption": "Depth 1: add plain numbers 5, 2, 3",
+   "narration": "At depth one, we add the plain numbers five, two and three, and recurse into each nested list.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "[5, 2, [7, −1], 3, [6, [−13, 8], 4]]"
+     ],
+     "label": null,
+     "h": 0.5,
+     "size": 26
+    },
+    {
+     "type": "text",
+     "lines": [
+      "[7, −1] at depth 2: (7 − 1) × 2 = 12"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 26
+    }
+   ],
+   "caption": "Nested [7, −1]: sum 6 × depth 2 = 12",
+   "narration": "The list seven, minus one sums to six. It's at depth two, so it contributes twelve.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "[5, 2, [7, −1], 3, [6, [−13, 8], 4]]"
+     ],
+     "label": null,
+     "h": 0.5,
+     "size": 26
+    },
+    {
+     "type": "text",
+     "lines": [
+      "[−13, 8] at depth 3: (−5) × 3 = −15"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 26
+    }
+   ],
+   "caption": "Innermost [−13, 8]: −5 × 3 = −15",
+   "narration": "The innermost list sums to minus five, times depth three gives minus fifteen.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "[5, 2, [7, −1], 3, [6, [−13, 8], 4]]"
+     ],
+     "label": null,
+     "h": 0.5,
+     "size": 26
+    },
+    {
+     "type": "text",
+     "lines": [
+      "[6, [−13, 8], 4] at depth 2: (6 − 15 + 4) × 2 = −10"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 26
+    }
+   ],
+   "caption": "Middle list: (6 + (−15) + 4) × 2 = −10",
+   "narration": "Back in the list six, the inner list, four: that's six minus fifteen plus four, minus five, times two, minus ten.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "[5, 2, [7, −1], 3, [6, [−13, 8], 4]]"
+     ],
+     "label": null,
+     "h": 0.5,
+     "size": 26
+    },
+    {
+     "type": "text",
+     "lines": [
+      "total: (5 + 2 + 12 + 3 − 10) × 1 = 12"
+     ],
+     "label": null,
+     "h": 0.6,
+     "size": 26
+    }
+   ],
+   "caption": "Answer: 12",
+   "narration": "At the top: five plus two plus twelve plus three minus ten is twelve, times depth one. The answer is twelve.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ProductSum {\n    public static int productSum(List<Object> array) { return productSum(array, 1); }\n\n    @SuppressWarnings(\"unchecked\")\n    private static int productSum(List<Object> array, int depth) {\n        int sum = 0;\n        for (Object o : array) sum += (o instanceof List) ? productSum((List<Object>) o, depth + 1) : (Integer) o;\n        return sum * depth;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ProductSum.java",
-   "narration": "Here's the Java solution, starting with product sum. It follows the steps we just described."
+   "narration": "We loop over the list. Integers are added directly. Nested lists recurse with depth plus one. At the end we multiply the sum by the current depth."
   },
   {
    "kind": "bullets",
@@ -52,6 +197,25 @@
     "Space: O(d) depth"
    ],
    "narration": "Time is O of n total elements. Space is O of d depth."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Empty nested lists contribute 0",
+    "Multiply nested results by their own depth only",
+    "Negative numbers"
+   ],
+   "narration": "Empty lists contribute zero. Make sure each nested result is multiplied only by its own depth, not by every ancestor's."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Clarify the input type (Object list in Java)",
+    "Follow-up: weight inversely by depth"
+   ],
+   "narration": "In Java the input is a list of objects, so you need an instanceof check. A follow-up flips the weighting so deeper lists count less."
   },
   {
    "kind": "bullets",

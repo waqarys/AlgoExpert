@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Reverse the string and compare → O(n) time, O(n) space",
+    "Naive concatenation in a loop → O(n²)",
+    "Two pointers → O(n) time, O(1) space"
+   ],
+   "narration": "Reversing and comparing works but needs extra space, and building the reverse with repeated concatenation is quadratic. Two pointers from both ends need no extra space."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Left pointer at the start, right at the end",
@@ -35,13 +45,152 @@
    "narration": "Step by step. First, left pointer at the start, right at the end. Second, compare and move inward. Third, stop when they meet."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "c",
+      "b",
+      "a"
+     ],
+     "hl": {
+      "0": "ok",
+      "6": "ok"
+     },
+     "ptr": {
+      "L": 0,
+      "R": 6
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "'a' = 'a' → move inward",
+   "narration": "Left a matches right a, so both pointers move inward.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "c",
+      "b",
+      "a"
+     ],
+     "hl": {
+      "1": "ok",
+      "5": "ok",
+      "0": "done",
+      "6": "done"
+     },
+     "ptr": {
+      "L": 1,
+      "R": 5
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "'b' = 'b' → move inward",
+   "narration": "Left b matches right b, so both pointers move inward.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "c",
+      "b",
+      "a"
+     ],
+     "hl": {
+      "2": "ok",
+      "4": "ok",
+      "0": "done",
+      "1": "done",
+      "5": "done",
+      "6": "done"
+     },
+     "ptr": {
+      "L": 2,
+      "R": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "'c' = 'c' → move inward",
+   "narration": "Left c matches right c, so both pointers move inward.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "c",
+      "b",
+      "a"
+     ],
+     "hl": {
+      "0": "ok",
+      "1": "ok",
+      "2": "ok",
+      "3": "ok",
+      "4": "ok",
+      "5": "ok",
+      "6": "ok"
+     },
+     "ptr": {
+      "L": 3,
+      "R": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "Pointers met → palindrome",
+   "narration": "The pointers meet in the middle with no mismatch, so it's a palindrome.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class PalindromeCheck {\n    public static boolean isPalindrome(String s) {\n        for (int i = 0, j = s.length() - 1; i < j; i++, j--) if (s.charAt(i) != s.charAt(j)) return false;\n        return true;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "PalindromeCheck.java",
-   "narration": "Here's the Java solution, starting with is palindrome. It follows the steps we just described."
+   "narration": "Left starts at zero and right at the end. While left is less than right, mismatching characters return false; otherwise both move inward. Return true."
   },
   {
    "kind": "bullets",
@@ -51,6 +200,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Empty / single char → true",
+    "Even vs odd length",
+    "Clarify case and non-letters"
+   ],
+   "narration": "Empty and single-character strings are palindromes. Clarify whether to ignore case and punctuation."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: valid palindrome with one deletion",
+    "Longest palindromic substring"
+   ],
+   "narration": "A common follow-up allows deleting one character, or asks for the longest palindromic substring."
   },
   {
    "kind": "bullets",

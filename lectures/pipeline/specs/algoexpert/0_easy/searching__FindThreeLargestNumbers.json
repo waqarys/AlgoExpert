@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Sort the array and take the last three → O(n log n)",
+    "Optimal: one pass with three slots → O(n)",
+    "No sorting, no extra memory"
+   ],
+   "narration": "Sorting and taking the last three costs n log n. A single pass that maintains three slots does it in linear time with constant space."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Start with three empty slots",
@@ -36,13 +46,248 @@
    "narration": "Step by step. First, start with three empty slots. Second, compare each number with the largest slot first. Third, shift smaller values down to make room. Fourth, return the three values ascending."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      141,
+      1,
+      17,
+      -7,
+      -17,
+      -27,
+      18,
+      541,
+      8,
+      7,
+      7
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      "–",
+      "–",
+      141
+     ],
+     "hl": {
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": "three largest (ascending)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "141 goes into slot 2",
+   "narration": "141 beats slot 2, so it goes there, and smaller values shift down.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      141,
+      1,
+      17,
+      -7,
+      -17,
+      -27,
+      18,
+      541,
+      8,
+      7,
+      7
+     ],
+     "hl": {
+      "1": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      "–",
+      1,
+      141
+     ],
+     "hl": {
+      "1": "ok"
+     },
+     "ptr": {},
+     "label": "three largest (ascending)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "1 goes into slot 1",
+   "narration": "1 beats slot 1, so it goes there, and smaller values shift down.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      141,
+      1,
+      17,
+      -7,
+      -17,
+      -27,
+      18,
+      541,
+      8,
+      7,
+      7
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      17,
+      141
+     ],
+     "hl": {
+      "1": "ok"
+     },
+     "ptr": {},
+     "label": "three largest (ascending)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "17 goes into slot 1",
+   "narration": "17 beats slot 1, so it goes there, and smaller values shift down.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      141,
+      1,
+      17,
+      -7,
+      -17,
+      -27,
+      18,
+      541,
+      8,
+      7,
+      7
+     ],
+     "hl": {
+      "6": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      17,
+      18,
+      141
+     ],
+     "hl": {
+      "1": "ok"
+     },
+     "ptr": {},
+     "label": "three largest (ascending)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "18 goes into slot 1",
+   "narration": "18 beats slot 1, so it goes there, and smaller values shift down.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      141,
+      1,
+      17,
+      -7,
+      -17,
+      -27,
+      18,
+      541,
+      8,
+      7,
+      7
+     ],
+     "hl": {
+      "7": "cur"
+     },
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      18,
+      141,
+      541
+     ],
+     "hl": {
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": "three largest (ascending)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "541 goes into slot 2",
+   "narration": "541 beats slot 2, so it goes there, and smaller values shift down.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class FindThreeLargestNumbers {\n    public static int[] findThreeLargestNumbers(int[] array) {\n        int[] top = {Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE};\n        for (int x : array) {\n            if (x > top[2]) { top[0] = top[1]; top[1] = top[2]; top[2] = x; }\n            else if (x > top[1]) { top[0] = top[1]; top[1] = x; }\n            else if (x > top[0]) top[0] = x;\n        }\n        return top;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "FindThreeLargestNumbers.java",
-   "narration": "Here's the Java solution, starting with find three largest numbers. It follows the steps we just described."
+   "narration": "For each number we compare against the largest slot first, then the middle, then the smallest, and a small shift-and-insert helper moves the smaller values down."
   },
   {
    "kind": "bullets",
@@ -52,6 +297,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Duplicates can fill several slots (7, 7)",
+    "Negative numbers: start slots as empty, not 0",
+    "Shift order matters: move down before overwriting"
+   ],
+   "narration": "Initialise slots as empty rather than zero, or negatives break. Duplicates may occupy multiple slots, and shifting must happen before you overwrite."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: k largest → min-heap of size k, O(n log k)",
+    "Quickselect for O(n) average"
+   ],
+   "narration": "For k largest, use a min-heap of size k, or quickselect."
   },
   {
    "kind": "bullets",

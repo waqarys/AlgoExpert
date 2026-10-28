@@ -27,6 +27,15 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: square everything, then sort → O(n log n)",
+    "Optimal: largest squares are at the ends → two pointers, O(n)"
+   ],
+   "narration": "The brute-force approach squares every value and sorts the result, which is n log n. But since the input is sorted, the largest square must come from one of the two ends, so two pointers fill the output from the back in linear time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Put pointers at both ends",
@@ -37,13 +46,243 @@
    "narration": "Step by step. First, put pointers at both ends. Second, compare absolute values. Third, write the larger square into the result from the back. Fourth, move that pointer inward."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -7,
+      -3,
+      1,
+      4,
+      8
+     ],
+     "hl": {
+      "4": "cur"
+     },
+     "ptr": {
+      "L": 0,
+      "R": 4
+     },
+     "label": "input",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      "",
+      "",
+      "",
+      "",
+      64
+     ],
+     "hl": {
+      "4": "ok"
+     },
+     "ptr": {},
+     "label": "output (filled from the back)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "|8| is larger → write 64 at index 4",
+   "narration": "Compare the absolute values at the two ends. The right one, 8, is larger, so its square, 64, goes into position 4, and we move that pointer inward.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -7,
+      -3,
+      1,
+      4,
+      8
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {
+      "L": 0,
+      "R": 3
+     },
+     "label": "input",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      "",
+      "",
+      "",
+      49,
+      64
+     ],
+     "hl": {
+      "3": "ok"
+     },
+     "ptr": {},
+     "label": "output (filled from the back)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "|-7| is larger → write 49 at index 3",
+   "narration": "Compare the absolute values at the two ends. The left one, -7, is larger, so its square, 49, goes into position 3, and we move that pointer inward.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -7,
+      -3,
+      1,
+      4,
+      8
+     ],
+     "hl": {
+      "3": "cur"
+     },
+     "ptr": {
+      "L": 1,
+      "R": 3
+     },
+     "label": "input",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      "",
+      "",
+      16,
+      49,
+      64
+     ],
+     "hl": {
+      "2": "ok"
+     },
+     "ptr": {},
+     "label": "output (filled from the back)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "|4| is larger → write 16 at index 2",
+   "narration": "Compare the absolute values at the two ends. The right one, 4, is larger, so its square, 16, goes into position 2, and we move that pointer inward.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -7,
+      -3,
+      1,
+      4,
+      8
+     ],
+     "hl": {
+      "1": "cur"
+     },
+     "ptr": {
+      "L": 1,
+      "R": 2
+     },
+     "label": "input",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      "",
+      9,
+      16,
+      49,
+      64
+     ],
+     "hl": {
+      "1": "ok"
+     },
+     "ptr": {},
+     "label": "output (filled from the back)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "|-3| is larger → write 9 at index 1",
+   "narration": "Compare the absolute values at the two ends. The left one, -3, is larger, so its square, 9, goes into position 1, and we move that pointer inward.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      -7,
+      -3,
+      1,
+      4,
+      8
+     ],
+     "hl": {
+      "2": "cur"
+     },
+     "ptr": {
+      "L": 2,
+      "R": 2
+     },
+     "label": "input",
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "array",
+     "values": [
+      1,
+      9,
+      16,
+      49,
+      64
+     ],
+     "hl": {
+      "0": "ok"
+     },
+     "ptr": {},
+     "label": "output (filled from the back)",
+     "h": 1,
+     "idx": true
+    }
+   ],
+   "caption": "|1| is larger → write 1 at index 0",
+   "narration": "Compare the absolute values at the two ends. The right one, 1, is larger, so its square, 1, goes into position 0, and we move that pointer inward.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SortedSquaredArray {\n    public static int[] sortedSquaredArray(int[] array) {\n        int[] out = new int[array.length];\n        int l = 0, r = array.length - 1;\n        for (int k = array.length - 1; k >= 0; k--) {\n            if (Math.abs(array[l]) > Math.abs(array[r])) { out[k] = array[l] * array[l]; l++; }\n            else { out[k] = array[r] * array[r]; r--; }\n        }\n        return out;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SortedSquaredArray.java",
-   "narration": "Here's the Java solution, starting with sorted squared array. It follows the steps we just described."
+   "narration": "We keep left and right pointers and an output array. Walking k from the last index down, we compare absolute values at both ends, write the larger square at k, and move that pointer inward."
   },
   {
    "kind": "bullets",
@@ -53,6 +292,27 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "All negatives: squares come out reversed",
+    "Zeros and duplicates are fine",
+    "Fill the output from the back, not the front",
+    "Don't modify the input in place"
+   ],
+   "narration": "Watch out for an all-negative input, where the order fully reverses, and remember that the output must be filled from the back, because we always find the largest remaining square."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "State the brute force first, then improve",
+    "Follow-up: do it in place? (not easily — need extra array)",
+    "Generalise: merge of two sorted sequences"
+   ],
+   "narration": "Mention the sort-based solution first, then improve it. This is really a merge of two sorted sequences, the negatives reversed and the non-negatives, which is a nice way to explain it."
   },
   {
    "kind": "bullets",

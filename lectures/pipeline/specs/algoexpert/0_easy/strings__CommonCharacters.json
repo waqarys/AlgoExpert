@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: for each char of word 1, scan every other word",
+    "Optimal: count distinct chars per word → O(total chars)",
+    "Use a set per word so repeats count once"
+   ],
+   "narration": "Brute force would check each character of the first word against every other word. Counting how many words contain each distinct character does it in one pass over all the characters."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. For each string, take its set of characters",
@@ -35,13 +45,191 @@
    "narration": "Step by step. First, for each string, take its set of characters. Second, count the number of strings containing each one. Third, keep characters whose count equals the number of strings."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "word: abc"
+     ],
+     "label": null,
+     "h": 0.4
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       "a",
+       1
+      ],
+      [
+       "b",
+       1
+      ],
+      [
+       "c",
+       1
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "char",
+      "#strings"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "After 'abc': counts updated",
+   "narration": "Process abc: each distinct character's count goes up by one. Characters with count 3 appear in every word so far.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "word: bcd"
+     ],
+     "label": null,
+     "h": 0.4
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       "a",
+       1
+      ],
+      [
+       "b",
+       2
+      ],
+      [
+       "c",
+       2
+      ],
+      [
+       "d",
+       1
+      ]
+     ],
+     "hl": {},
+     "rowh": null,
+     "colh": [
+      "char",
+      "#strings"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "After 'bcd': counts updated",
+   "narration": "Process bcd: each distinct character's count goes up by one. Characters with count 3 appear in every word so far.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "text",
+     "lines": [
+      "word: cbad"
+     ],
+     "label": null,
+     "h": 0.4
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       "a",
+       2
+      ],
+      [
+       "b",
+       3
+      ],
+      [
+       "c",
+       3
+      ],
+      [
+       "d",
+       2
+      ]
+     ],
+     "hl": {
+      "1,1": "ok",
+      "2,1": "ok"
+     },
+     "rowh": null,
+     "colh": [
+      "char",
+      "#strings"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "After 'cbad': counts updated",
+   "narration": "Process cbad: each distinct character's count goes up by one. Characters with count 3 appear in every word so far.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "a",
+       2
+      ],
+      [
+       "b",
+       3
+      ],
+      [
+       "c",
+       3
+      ],
+      [
+       "d",
+       2
+      ]
+     ],
+     "hl": {
+      "1,1": "ok",
+      "2,1": "ok"
+     },
+     "rowh": null,
+     "colh": [
+      "char",
+      "#strings"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Answer: b, c",
+   "narration": "Characters that reached the number of words, b and c, are common to all of them.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class CommonCharacters {\n    public static String[] commonCharacters(String[] strings) {\n        Set<Character> common = null;\n        for (String s : strings) {\n            Set<Character> cur = new HashSet<>();\n            for (char c : s.toCharArray()) cur.add(c);\n            if (common == null) common = cur; else common.retainAll(cur);\n        }\n        List<String> out = new ArrayList<>();\n        for (char c : new TreeSet<>(common)) out.add(String.valueOf(c));\n        return out.toArray(new String[0]);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "CommonCharacters.java",
-   "narration": "Here's the Java solution, starting with common characters. It follows the steps we just described."
+   "narration": "We loop over the strings, build a set of each string's characters, and increment counts in a map. Finally, we collect characters whose count equals the number of strings."
   },
   {
    "kind": "bullets",
@@ -51,6 +239,25 @@
     "Space: O(c) distinct chars"
    ],
    "narration": "Time is O of n times m. Space is O of c distinct chars."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Count each char once per word (use a set)",
+    "Single word → all its unique chars",
+    "Empty string → no common chars"
+   ],
+   "narration": "Use a set per word so repeated letters count once. A single word returns all its unique characters."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Optimise: start from the shortest word's chars",
+    "Follow-up: include multiplicity (min counts)"
+   ],
+   "narration": "An optimisation starts from the shortest word. A follow-up includes multiplicity, keeping minimum counts per character."
   },
   {
    "kind": "bullets",

@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: check every pair → O(n²)",
+    "Sorting + two pointers → O(n log n), O(1) space",
+    "Hash set of seen values → O(n) time, O(n) space"
+   ],
+   "narration": "The brute force checks every pair, which is n squared. Sorting and using two pointers gets n log n with constant extra space. The hash-set approach is linear: for each number, we just ask whether its partner has already appeared."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Walk the array once",
@@ -37,13 +47,258 @@
    "narration": "Step by step. First, walk the array once. Second, check whether target minus x is in the set. Third, if so, return the pair. Fourth, otherwise add x to the set."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      5,
+      -4,
+      8,
+      11,
+      1,
+      -1,
+      6
+     ],
+     "hl": {},
+     "ptr": {},
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "target = 10"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "array = [3, 5, -4, 8, 11, 1, -1, 6], target = 10",
+   "narration": "Let's trace the array three, five, minus four, eight, eleven, one, minus one, six, with a target of ten.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      5,
+      -4,
+      8,
+      11,
+      1,
+      -1,
+      6
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {
+      "i": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "x = 3, need 7",
+      "seen = {}  ✗ → add 3"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "7 not seen yet → remember 3",
+   "narration": "At index 0 the value is 3, so we need 7. It isn't in the set yet, so we add 3 and move on.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      5,
+      -4,
+      8,
+      11,
+      1,
+      -1,
+      6
+     ],
+     "hl": {
+      "0": "done",
+      "1": "done",
+      "2": "cur"
+     },
+     "ptr": {
+      "i": 2
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "x = -4, need 14",
+      "seen = {3, 5}  ✗ → add -4"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "14 not seen yet → remember -4",
+   "narration": "At index 2 the value is -4, so we need 14. It isn't in the set yet, so we add -4 and move on.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      5,
+      -4,
+      8,
+      11,
+      1,
+      -1,
+      6
+     ],
+     "hl": {
+      "0": "done",
+      "1": "done",
+      "2": "done",
+      "3": "cur"
+     },
+     "ptr": {
+      "i": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "x = 8, need 2",
+      "seen = {3, 5, -4}  ✗ → add 8"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "2 not seen yet → remember 8",
+   "narration": "At index 3 the value is 8, so we need 2. It isn't in the set yet, so we add 8 and move on.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      5,
+      -4,
+      8,
+      11,
+      1,
+      -1,
+      6
+     ],
+     "hl": {
+      "0": "done",
+      "1": "done",
+      "2": "done",
+      "3": "done",
+      "4": "cur"
+     },
+     "ptr": {
+      "i": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "x = 11, need -1",
+      "seen = {3, 5, -4, 8}  ✗ → add 11"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "-1 not seen yet → remember 11",
+   "narration": "At index 4 the value is 11, so we need -1. It isn't in the set yet, so we add 11 and move on.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      3,
+      5,
+      -4,
+      8,
+      11,
+      1,
+      -1,
+      6
+     ],
+     "hl": {
+      "6": "ok",
+      "4": "ok"
+     },
+     "ptr": {
+      "i": 6
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "text",
+     "lines": [
+      "x = -1, need 10 − -1 = 11",
+      "seen = {3, 5, -4, 8, 11, 1}  ✓ contains 11"
+     ],
+     "label": null,
+     "h": 0.6
+    }
+   ],
+   "caption": "Found: 11 + -1 = 10",
+   "narration": "At -1 we need 11, and it's already in the set. We return 11 and -1.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class TwoNumberSum {\n    public static int[] twoNumberSum(int[] array, int target) {\n        Set<Integer> seen = new HashSet<>();\n        for (int x : array) {\n            if (seen.contains(target - x)) return new int[]{target - x, x};\n            seen.add(x);\n        }\n        return new int[0];\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "TwoNumberSum.java",
-   "narration": "Here's the Java solution, starting with two number sum. It follows the steps we just described."
+   "narration": "We create a hash set, loop over the array, and for each value x check whether target minus x is in the set. If it is, we return the pair right away; otherwise we add x. Falling out of the loop means no pair exists."
   },
   {
    "kind": "bullets",
@@ -53,6 +308,26 @@
     "Space: O(n) using a hash set of seen values"
    ],
    "narration": "Time is O of n. Space is O of n using a hash set of seen values."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "No pair → return an empty array",
+    "Don't pair a number with itself (check before adding)",
+    "Negative numbers work the same way"
+   ],
+   "narration": "If there's no pair, return an empty array. Checking the set before adding the current number guarantees we never pair a number with itself."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Mention all three approaches and their trade-offs",
+    "Follow-up: return indices; or all pairs; or 3-sum",
+    "Ask whether the input fits in memory"
+   ],
+   "narration": "Walk through all three approaches and their trade-offs. Common follow-ups are returning indices, finding all pairs, or extending to three-number sum."
   },
   {
    "kind": "bullets",

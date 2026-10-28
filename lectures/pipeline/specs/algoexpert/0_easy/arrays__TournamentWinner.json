@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Brute force: recount every team's points at the end — still O(n)",
+    "Simplest optimal: one hash map + running leader",
+    "Avoid a second pass by updating the leader on the fly"
+   ],
+   "narration": "There isn't a slow brute force here so much as a clumsy one: tally everything, then scan the table for the max. We can do it in a single pass by updating the leader whenever a team's score passes it."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Keep a hash map of team to points",
@@ -37,13 +47,174 @@
    "narration": "Step by step. First, keep a hash map of team to points. Second, for each match, credit the winner. Third, track the leader as scores change. Fourth, return the best team."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "HTML",
+       "C#",
+       0,
+       "C#"
+      ]
+     ],
+     "hl": {
+      "0,3": "ok"
+     },
+     "rowh": null,
+     "colh": [
+      "home",
+      "away",
+      "result",
+      "winner"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       "C#",
+       3
+      ]
+     ],
+     "hl": {
+      "0,0": "cur"
+     },
+     "rowh": null,
+     "colh": [
+      "team",
+      "points"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "C# wins (+3) → leader: C#",
+   "narration": "HTML plays C#, and the result is 0, so C# wins and gets three points. The current leader is C#.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "C#",
+       "Python",
+       0,
+       "Python"
+      ]
+     ],
+     "hl": {
+      "0,3": "ok"
+     },
+     "rowh": null,
+     "colh": [
+      "home",
+      "away",
+      "result",
+      "winner"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       "C#",
+       3
+      ],
+      [
+       "Python",
+       3
+      ]
+     ],
+     "hl": {
+      "0,0": "cur"
+     },
+     "rowh": null,
+     "colh": [
+      "team",
+      "points"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Python wins (+3) → leader: C#",
+   "narration": "C# plays Python, and the result is 0, so Python wins and gets three points. The current leader is C#.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "table",
+     "rows": [
+      [
+       "Python",
+       "HTML",
+       1,
+       "Python"
+      ]
+     ],
+     "hl": {
+      "0,3": "ok"
+     },
+     "rowh": null,
+     "colh": [
+      "home",
+      "away",
+      "result",
+      "winner"
+     ],
+     "label": null,
+     "h": 1
+    },
+    {
+     "type": "table",
+     "rows": [
+      [
+       "C#",
+       3
+      ],
+      [
+       "Python",
+       6
+      ]
+     ],
+     "hl": {
+      "1,0": "cur"
+     },
+     "rowh": null,
+     "colh": [
+      "team",
+      "points"
+     ],
+     "label": null,
+     "h": 1
+    }
+   ],
+   "caption": "Python wins (+3) → leader: Python",
+   "narration": "Python plays HTML, and the result is 1, so Python wins and gets three points. The current leader is Python.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class TournamentWinner {\n    public static String tournamentWinner(List<List<String>> competitions, List<Integer> results) {\n        Map<String, Integer> score = new HashMap<>();\n        String best = \"\";\n        score.put(best, 0);\n        for (int i = 0; i < competitions.size(); i++) {\n            String winner = results.get(i) == 1 ? competitions.get(i).get(0) : competitions.get(i).get(1);\n            int s = score.merge(winner, 3, Integer::sum);\n            if (s > score.get(best)) best = winner;\n        }\n        return best;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "TournamentWinner.java",
-   "narration": "Here's the Java solution, starting with tournament winner. It follows the steps we just described."
+   "narration": "We loop over competitions and results together, pick the winner, add three points in the map, and update the leader if this team now has more points than the current leader."
   },
   {
    "kind": "bullets",
@@ -53,6 +224,26 @@
     "Space: O(k) teams"
    ],
    "narration": "Time is O of n. Space is O of k teams."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "result = 1 means the HOME team won",
+    "Ties can't happen (problem guarantees one winner)",
+    "Initialise the leader with an empty team at 0 points"
+   ],
+   "narration": "The main pitfall is reading the result backwards: one means the home team won. Initialise the leader as an empty name with zero points so the first winner takes over."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Clarify the meaning of result before coding",
+    "Follow-up: handle ties (e.g. alphabetical)",
+    "Mention O(k) space for k teams"
+   ],
+   "narration": "Clarify the result encoding before you start. A natural follow-up is how you'd break ties, for example alphabetically."
   },
   {
    "kind": "bullets",
