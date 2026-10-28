@@ -51,9 +51,19 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (2)
+## AlgoExpert (12)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
 | easy / arrays / Non Constructible Change | 1:17 | [mp4](algoexpert/easy/arrays/NonConstructibleChange/lecture.mp4) | [pdf](algoexpert/easy/arrays/NonConstructibleChange/slides.pdf) | [md](algoexpert/easy/arrays/NonConstructibleChange/transcript.md) |
 | easy / arrays / Sorted Squared Array | 1:06 | [mp4](algoexpert/easy/arrays/SortedSquaredArray/lecture.mp4) | [pdf](algoexpert/easy/arrays/SortedSquaredArray/slides.pdf) | [md](algoexpert/easy/arrays/SortedSquaredArray/transcript.md) |
+| easy / arrays / Tournament Winner | 1:06 | [mp4](algoexpert/easy/arrays/TournamentWinner/lecture.mp4) | [pdf](algoexpert/easy/arrays/TournamentWinner/slides.pdf) | [md](algoexpert/easy/arrays/TournamentWinner/transcript.md) |
+| easy / arrays / Transpose Matrix | 0:58 | [mp4](algoexpert/easy/arrays/TransposeMatrix/lecture.mp4) | [pdf](algoexpert/easy/arrays/TransposeMatrix/slides.pdf) | [md](algoexpert/easy/arrays/TransposeMatrix/transcript.md) |
+| easy / arrays / Two Number Sum | 1:08 | [mp4](algoexpert/easy/arrays/TwoNumberSum/lecture.mp4) | [pdf](algoexpert/easy/arrays/TwoNumberSum/slides.pdf) | [md](algoexpert/easy/arrays/TwoNumberSum/transcript.md) |
+| easy / arrays / Validate Subsequence | 1:03 | [mp4](algoexpert/easy/arrays/ValidateSubsequence/lecture.mp4) | [pdf](algoexpert/easy/arrays/ValidateSubsequence/slides.pdf) | [md](algoexpert/easy/arrays/ValidateSubsequence/transcript.md) |
+| easy / binarysearchtrees / Find Closest Value In Bst | 1:13 | [mp4](algoexpert/easy/binarysearchtrees/FindClosestValueInBst/lecture.mp4) | [pdf](algoexpert/easy/binarysearchtrees/FindClosestValueInBst/slides.pdf) | [md](algoexpert/easy/binarysearchtrees/FindClosestValueInBst/transcript.md) |
+| easy / binarytrees / Branch Sums | 0:58 | [mp4](algoexpert/easy/binarytrees/BranchSums/lecture.mp4) | [pdf](algoexpert/easy/binarytrees/BranchSums/slides.pdf) | [md](algoexpert/easy/binarytrees/BranchSums/transcript.md) |
+| easy / binarytrees / Evaluate Expression Tree | 1:10 | [mp4](algoexpert/easy/binarytrees/EvaluateExpressionTree/lecture.mp4) | [pdf](algoexpert/easy/binarytrees/EvaluateExpressionTree/slides.pdf) | [md](algoexpert/easy/binarytrees/EvaluateExpressionTree/transcript.md) |
+| easy / binarytrees / Node Depths | 0:58 | [mp4](algoexpert/easy/binarytrees/NodeDepths/lecture.mp4) | [pdf](algoexpert/easy/binarytrees/NodeDepths/slides.pdf) | [md](algoexpert/easy/binarytrees/NodeDepths/transcript.md) |
+| easy / graphs / Depth First Search | 0:58 | [mp4](algoexpert/easy/graphs/DepthFirstSearch/lecture.mp4) | [pdf](algoexpert/easy/graphs/DepthFirstSearch/slides.pdf) | [md](algoexpert/easy/graphs/DepthFirstSearch/transcript.md) |
+| easy / greedyalgorithms / Class Photos | 1:10 | [mp4](algoexpert/easy/greedyalgorithms/ClassPhotos/lecture.mp4) | [pdf](algoexpert/easy/greedyalgorithms/ClassPhotos/slides.pdf) | [md](algoexpert/easy/greedyalgorithms/ClassPhotos/transcript.md) |
