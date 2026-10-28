@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "In-order traversal into a list, find node, take next → O(n)",
+    "Parent pointers: two cases → O(h) time, O(1) space",
+    "No full traversal needed"
+   ],
+   "narration": "The simple approach does a full in-order traversal and returns the next element, linear time and space. With parent pointers, we only need two cases, costing at most the tree's height and constant space."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. If there's a right subtree, go right then all the way left",
@@ -34,13 +44,264 @@
    "narration": "Step by step. First, if there's a right subtree, go right then all the way left. Second, otherwise climb parents until we come from a left child."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       null,
+       null
+      ],
+      "3": [
+       4,
+       "7",
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "7": [
+       6,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "4": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.68
+    },
+    {
+     "type": "text",
+     "lines": [
+      "in-order:",
+      "6 4 2 5 1 3"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.32
+    }
+   ],
+   "caption": "Successor of 5: no right child",
+   "narration": "Find the in-order successor of five. Five has no right child, so the successor is above it.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       null,
+       null
+      ],
+      "3": [
+       4,
+       "7",
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "7": [
+       6,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "4": "done",
+      "1": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.68
+    },
+    {
+     "type": "text",
+     "lines": [
+      "in-order:",
+      "6 4 2 5 1 3"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.32
+    }
+   ],
+   "caption": "5 is 2's RIGHT child → keep climbing",
+   "narration": "Five is its parent two's right child, so two comes before it. Keep climbing.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       null,
+       null
+      ],
+      "3": [
+       4,
+       "7",
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "7": [
+       6,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "1": "done",
+      "0": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.68
+    },
+    {
+     "type": "text",
+     "lines": [
+      "in-order:",
+      "6 4 2 5 1 3"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.32
+    }
+   ],
+   "caption": "2 is 1's LEFT child → successor is 1",
+   "narration": "Two is the left child of one, so one is the successor.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       3,
+       null,
+       null
+      ],
+      "3": [
+       4,
+       "7",
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "7": [
+       6,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "cur",
+      "2": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.68
+    },
+    {
+     "type": "text",
+     "lines": [
+      "in-order:",
+      "6 4 2 5 1 3"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.32
+    }
+   ],
+   "caption": "Successor of 1: leftmost of right subtree → 3",
+   "narration": "For node one, which has a right subtree, the successor is the leftmost node of that subtree: three.",
+   "layout": "cols"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class FindSuccessor {\n    public static BinaryTree findSuccessor(BinaryTree tree, BinaryTree node) {\n        if (node.right != null) {\n            BinaryTree c = node.right;\n            while (c.left != null) c = c.left;\n            return c;\n        }\n        BinaryTree c = node;\n        while (c.parent != null && c.parent.right == c) c = c.parent;\n        return c.parent;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "FindSuccessor.java",
-   "narration": "Here's the Java solution, starting with find successor. It follows the steps we just described."
+   "narration": "If the node has a right child, we go right once and then all the way left. Otherwise we climb while the current node is its parent's right child and return the parent, which is null if we ran off the top."
   },
   {
    "kind": "bullets",
@@ -50,6 +311,25 @@
     "Space: O(1)"
    ],
    "narration": "Time is O of h. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Last node in order → null",
+    "Node with right subtree → leftmost of it",
+    "Climb while we're a right child"
+   ],
+   "narration": "The last node in order has no successor, so return null. Climb only while the current node is its parent's right child."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: predecessor (mirror image)",
+    "Follow-up: without parent pointers in a BST"
+   ],
+   "narration": "The predecessor is the mirror image. In a BST without parent pointers, search from the root tracking the last left turn."
   },
   {
    "kind": "bullets",

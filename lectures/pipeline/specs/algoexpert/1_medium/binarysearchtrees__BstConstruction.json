@@ -27,6 +27,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Unbalanced BST ops: O(h) — O(log n) average, O(n) worst",
+    "Alternative: sorted array → O(log n) search but O(n) insert",
+    "Self-balancing trees (AVL, red-black) guarantee O(log n)"
+   ],
+   "narration": "A sorted array gives fast search but slow inserts. A BST makes insert, search and remove all proportional to the height: log n on average, but linear if the tree degenerates. Self-balancing trees guarantee log n."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Walk left or right by comparison",
@@ -37,13 +47,458 @@
    "narration": "Step by step. First, walk left or right by comparison. Second, insert at the empty spot. Third, to remove with two children, copy the right subtree's minimum and delete it there. Fourth, handle the root carefully."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       15,
+       "5",
+       "6"
+      ],
+      "3": [
+       2,
+       "7",
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       13,
+       null,
+       null
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       1,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {},
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Start: BST built from 10, 5, 15, 2, 5, 13, 22, 1",
+   "narration": "Here's a BST built by inserting ten, five, fifteen, two, five, thirteen, twenty-two and one. Equal values go right.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       15,
+       "5",
+       "6"
+      ],
+      "3": [
+       2,
+       "7",
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       13,
+       null,
+       null
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       1,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "insert(14): at 10 → go right",
+   "narration": "To insert fourteen, compare with 10: fourteen is larger, so go right.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       15,
+       "5",
+       "6"
+      ],
+      "3": [
+       2,
+       "7",
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       13,
+       null,
+       null
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       1,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "done",
+      "2": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "insert(14): at 15 → go left",
+   "narration": "To insert fourteen, compare with 15: fourteen is smaller, so go left.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       15,
+       "5",
+       "6"
+      ],
+      "3": [
+       2,
+       "7",
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       13,
+       null,
+       "8"
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       1,
+       null,
+       null
+      ],
+      "8": [
+       14,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "done",
+      "2": "done",
+      "5": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "insert(14): at 13 → go right",
+   "narration": "To insert fourteen, compare with 13: fourteen is larger, so go right.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       15,
+       "5",
+       "6"
+      ],
+      "3": [
+       2,
+       "7",
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       13,
+       null,
+       "8"
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       1,
+       null,
+       null
+      ],
+      "8": [
+       14,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "8": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "14 becomes 13's right child",
+   "narration": "Thirteen has no right child, so fourteen goes there.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       15,
+       "5",
+       "6"
+      ],
+      "3": [
+       2,
+       "7",
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       13,
+       null,
+       "8"
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       1,
+       null,
+       null
+      ],
+      "8": [
+       14,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "bad",
+      "5": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "remove(10): two children → copy min of right subtree (13)",
+   "narration": "Removing the root, ten, which has two children: copy the smallest value of its right subtree, thirteen, into the root, then remove thirteen from the right subtree, where it has at most one child.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       13,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       15,
+       "8",
+       "6"
+      ],
+      "3": [
+       2,
+       "7",
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       1,
+       null,
+       null
+      ],
+      "8": [
+       14,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "ok",
+      "8": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Result: 13 at the root; 14 moves up",
+   "narration": "The result: thirteen at the root, and fourteen takes thirteen's old place.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution (1/2)",
    "code": "public class BstConstruction {\n    public static class BST {\n        public int value;\n        public BST left, right;\n\n        public BST(int value) { this.value = value; }\n\n        public BST insert(int v) {\n            BST cur = this;\n            while (true) {\n                if (v < cur.value) { if (cur.left == null) { cur.left = new BST(v); return this; } cur = cur.left; }\n                else { if (cur.right == null) { cur.right = new BST(v); return this; } cur = cur.right; }\n            }\n        }\n\n        public boolean contains(int v) {\n            BST cur = this;\n            while (cur != null) {\n                if (v == cur.value) return true;\n                cur = v < cur.value ? cur.left : cur.right;\n            }\n            return false;",
    "lang": "java",
    "font_size": 26,
    "filename": "BstConstruction_part1.java",
-   "narration": "Here's the Java solution, starting with bst. It follows the steps we just described."
+   "narration": "Insert walks down comparing values, going left for smaller and right otherwise, and attaches a new node at the first empty spot. Contains walks the same way and returns true on equality."
   },
   {
    "kind": "code",
@@ -52,7 +507,7 @@
    "lang": "java",
    "font_size": 26,
    "filename": "BstConstruction_part2.java",
-   "narration": "Continuing with remove, remove, min value."
+   "narration": "Remove finds the node while tracking its parent. With two children, it copies the right subtree's minimum and removes that. With one child, it splices the child in, handling the root specially by copying the child's value and pointers."
   },
   {
    "kind": "bullets",
@@ -62,6 +517,25 @@
     "Space: O(1) (iterative)"
    ],
    "narration": "Time is O of log n avg, O of n worst per op. Space is constant (iterative)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Remove the root when it has one child (no parent to relink)",
+    "Equal values go right — be consistent",
+    "Remove a value that doesn't exist → no-op"
+   ],
+   "narration": "The nastiest case is removing the root when it has only one child, since there's no parent to relink. Be consistent that equal values go right."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Iterative versions use O(1) space",
+    "Follow-up: make it self-balancing; add size for rank queries"
+   ],
+   "narration": "Iterative versions avoid recursion overhead. Follow-ups include balancing and augmenting nodes with subtree sizes."
   },
   {
    "kind": "bullets",

@@ -246,3 +246,227 @@ def ZeroSumSubarray():
              ["Follow-up: count zero-sum subarrays (map of counts)", "Follow-up: subarray sum = k"],
              "Follow-ups count zero-sum subarrays with a map of counts, or look for a target sum k.",
              ["We seed a set with zero, keep a running sum, and return true as soon as adding a sum to the set fails because it's already there."])
+
+def _tw(nodes, root, hl, cap, nar, side=None, notes=None):
+    p = [TR(nodes, root, hl=hl, notes=notes, w=0.68 if side else None)]
+    if side: p.append(TX(side, w=0.32, h=1))
+    return S("Worked example", p, cap, nar, layout="cols" if side else "rows")
+
+def BstConstruction():
+    vals = [10, 5, 15, 2, 5, 13, 22, 1]; nodes, root = bst(vals); st = []
+    nodes2, root2 = bst(vals + [14]); path = ["0", "2", "5"]
+    st.append(_tw(nodes, root, {}, "Start: BST built from 10, 5, 15, 2, 5, 13, 22, 1", "Here's a BST built by inserting ten, five, fifteen, two, five, thirteen, twenty-two and one. Equal values go right."))
+    for k, pid in enumerate(path):
+        st.append(_tw(nodes2 if k == 2 else nodes, root, {**{p: "done" for p in path[:k]}, pid: "cur"}, f"insert(14): at {nodes[pid][0]} → go {'right' if 14 >= nodes[pid][0] else 'left'}", f"To insert fourteen, compare with {nodes[pid][0]}: fourteen is {'larger' if 14 >= nodes[pid][0] else 'smaller'}, so go {'right' if 14 >= nodes[pid][0] else 'left'}."))
+    st.append(_tw(nodes2, root, {"8": "ok"}, "14 becomes 13's right child", "Thirteen has no right child, so fourteen goes there."))
+    # remove 10: replace with min of right subtree (13), then remove 13 from right subtree
+    st.append(_tw(nodes2, root, {"0": "bad", "5": "ok"}, "remove(10): two children → copy min of right subtree (13)", "Removing the root, ten, which has two children: copy the smallest value of its right subtree, thirteen, into the root, then remove thirteen from the right subtree, where it has at most one child."))
+    n3 = {k: v[:] for k, v in nodes2.items()}; n3["0"][0] = 13; n3["2"][1] = "8"; del n3["5"]
+    st.append(_tw(n3, root, {"0": "ok", "8": "cur"}, "Result: 13 at the root; 14 moves up", "The result: thirteen at the root, and fourteen takes thirteen's old place."))
+    return E(["Unbalanced BST ops: O(h) — O(log n) average, O(n) worst", "Alternative: sorted array → O(log n) search but O(n) insert", "Self-balancing trees (AVL, red-black) guarantee O(log n)"],
+             "A sorted array gives fast search but slow inserts. A BST makes insert, search and remove all proportional to the height: log n on average, but linear if the tree degenerates. Self-balancing trees guarantee log n.",
+             st, ["Remove the root when it has one child (no parent to relink)", "Equal values go right — be consistent", "Remove a value that doesn't exist → no-op"],
+             "The nastiest case is removing the root when it has only one child, since there's no parent to relink. Be consistent that equal values go right.",
+             ["Iterative versions use O(1) space", "Follow-up: make it self-balancing; add size for rank queries"],
+             "Iterative versions avoid recursion overhead. Follow-ups include balancing and augmenting nodes with subtree sizes.",
+             ["Insert walks down comparing values, going left for smaller and right otherwise, and attaches a new node at the first empty spot. Contains walks the same way and returns true on equality.",
+              "Remove finds the node while tracking its parent. With two children, it copies the right subtree's minimum and removes that. With one child, it splices the child in, handling the root specially by copying the child's value and pointers."])
+
+def BstTraversal():
+    nodes, root = bst([10, 5, 15, 2, 5, 22, 1]); st = []; outs = {}
+    def ino(i, o):
+        if i is None: return
+        ino(nodes[i][1], o); o.append(i); ino(nodes[i][2], o)
+    def pre(i, o):
+        if i is None: return
+        o.append(i); pre(nodes[i][1], o); pre(nodes[i][2], o)
+    def post(i, o):
+        if i is None: return
+        post(nodes[i][1], o); post(nodes[i][2], o); o.append(i)
+    for name, f, rule in [("In-order", ino, "left, node, right"), ("Pre-order", pre, "node, left, right"), ("Post-order", post, "left, right, node")]:
+        o = []; f(root, o); vals = [nodes[i][0] for i in o]
+        st.append(_tw(nodes, root, {o[0]: "cur", o[-1]: "ok"}, f"{name} ({rule}): {vals}", f"{name}, {rule}: {', '.join(map(str, vals))}." + (" Notice in-order gives sorted values." if name == "In-order" else ""), side=[name, " ".join(map(str, vals))], notes={i: str(k + 1) for k, i in enumerate(o)}))
+    return E(["All three are O(n) time, O(h) stack", "Only the position of 'visit' changes", "Iterative versions use an explicit stack"],
+             "All three traversals visit every node once, linear time, with recursion depth equal to the height. The only difference is when we record the node relative to its children.",
+             st, ["In-order of a BST = sorted order", "Empty tree → unchanged list", "Deep trees can overflow the call stack"],
+             "In-order traversal of a BST yields sorted values. Very deep trees can overflow the call stack, so know the iterative versions.",
+             ["Pre-order serialises/copies a tree; post-order deletes/evaluates", "Follow-up: Morris traversal with O(1) space"],
+             "Pre-order is used to copy or serialise a tree; post-order to delete it or evaluate expressions. Morris traversal achieves constant space.",
+             ["Each method checks for null, then the only difference is the line that adds the value: between the recursive calls for in-order, before them for pre-order, and after them for post-order."])
+
+def FindKthLargestValueInBst():
+    nodes, root = bst([15, 5, 20, 2, 5, 17, 22, 1, 3]); k = 3; order = []; st = []
+    def rev(i):
+        if i is None or len(order) >= k: return
+        rev(nodes[i][2])
+        if len(order) < k:
+            order.append(i)
+            st.append(_tw(nodes, root, {**{x: "done" for x in order[:-1]}, i: "ok" if len(order) == k else "cur"}, f"Visit #{len(order)}: {nodes[i][0]}" + (" ← k-th largest" if len(order) == k else ""), f"Reverse in-order visit number {len(order)} is {nodes[i][0]}." + (" That's the third largest, so we stop." if len(order) == k else ""), side=[f"k = {k}", "visited: " + " ".join(str(nodes[x][0]) for x in order)]))
+            rev(nodes[i][1])
+    rev(root)
+    return E(["In-order into a list, take list[n−k] → O(n) time and space", "Reverse in-order, stop at k → O(h + k)", "Only visits what's needed"],
+             "The simple approach collects all values in sorted order and indexes from the end, costing linear time and space. A reverse in-order traversal visits values from largest down and stops after k, so it costs only height plus k.",
+             st, ["Duplicates count separately (5, 5)", "k = 1 → the maximum", "Stop recursion once k values are seen"],
+             "Duplicate values count separately. Make sure recursion stops as soon as the k-th value is found.",
+             ["Follow-up: many queries → augment nodes with subtree sizes", "Iterative reverse in-order with a stack"],
+             "For repeated queries, store subtree sizes in each node to answer in log n.",
+             ["The walk function returns early if the node is null or we've already seen k values. It recurses right first, then counts the current node, records it as the answer if it's the k-th, and only then goes left."])
+
+def MinHeightBst():
+    a = [1, 2, 5, 7, 10, 13, 14, 15, 22]; nodes = {}; st = []
+    def build(lo, hi):
+        if lo > hi: return None
+        mid = (lo + hi) // 2; nid = str(mid); nodes[nid] = [a[mid], None, None]
+        st.append(S("Worked example", [A(a, hl={mid: "ok"}, window=(lo, hi), ptr={"mid": mid}), TR({k: v[:] for k, v in nodes.items()}, "4", hl={nid: "cur"})], f"Range [{lo}, {hi}] → root {a[mid]}", f"In the range from {lo} to {hi}, the middle element {a[mid]} becomes the root of this subtree."))
+        nodes[nid][1] = build(lo, mid - 1); nodes[nid][2] = build(mid + 1, hi); return nid
+    build(0, len(a) - 1)
+    return E(["Insert in sorted order → a linked-list-shaped tree, height n", "Insert values one by one in a smart order → O(n log n)", "Build directly from midpoints → O(n), height ⌈log₂(n+1)⌉"],
+             "Inserting sorted values one at a time creates a chain of height n. Picking the middle element as the root and recursing on each half yields minimum height, and building nodes directly takes linear time.",
+             pick(st, 6), ["Even-length ranges: either middle works", "Empty array → null", "Build nodes directly; don't call insert (O(n log n))"],
+             "With an even range, either middle is fine. Creating nodes directly instead of calling insert keeps it linear.",
+             ["Prove the height is minimal", "Follow-up: sorted linked list → BST in O(n)"],
+             "A good follow-up converts a sorted linked list into a balanced BST in linear time by building in in-order.",
+             ["Build takes a low and high index. If the range is empty it returns null. Otherwise it creates a node from the middle value and recursively builds its left from the lower half and its right from the upper half."])
+
+def ReconstructBst():
+    pre = [10, 4, 2, 1, 5, 17, 19, 18]; nodes = {}; st = []; idx = [0]
+    def build(lo, hi, parent=None):
+        if idx[0] == len(pre): return None
+        v = pre[idx[0]]
+        if not (lo <= v < hi): return None
+        nid = str(idx[0]); idx[0] += 1; nodes[nid] = [v, None, None]
+        st.append(S("Worked example", [A(pre, hl={int(nid): "cur", **{k: "done" for k in range(int(nid))}}, ptr={"idx": int(nid)}), TR({k: x[:] for k, x in nodes.items()}, "0", hl={nid: "cur"}), TX([f"bounds [{'-∞' if lo < -10**9 else lo}, {'∞' if hi > 10**9 else hi})"], h=0.35)],
+                    f"{v} fits bounds → new node", f"The next value, {v}, fits within the bounds, so it becomes a node here. Its left subtree accepts values below {v}, its right subtree values from {v} up."))
+        nodes[nid][1] = build(lo, v); nodes[nid][2] = build(v, hi); return nid
+    build(-10**18, 10**18)
+    return E(["Insert each value into a BST → O(n²) worst, O(n log n) average", "For each node, scan for where the right subtree starts → O(n²)", "Bounds recursion with a shared index → O(n)"],
+             "Inserting each value from the root is quadratic in the worst case. Scanning for where the right subtree begins is also quadratic. Passing value bounds down and consuming the pre-order list with one shared index builds the tree in linear time.",
+             pick(st, 6), ["Duplicates go right: use [lo, hi) bounds", "Use long bounds to avoid overflow", "Reset the shared index per call"],
+             "Duplicates belong on the right, so the left bound is inclusive and the right exclusive. Use long bounds for infinity.",
+             ["Explain why the index only moves forward", "Follow-up: from post-order; from in-order + pre-order (general tree)"],
+             "Explain that each value is consumed exactly once. Follow-ups rebuild from post-order, or a general binary tree from in-order and pre-order.",
+             ["We keep a shared index. Build returns null if the list is exhausted or the next value falls outside the current bounds. Otherwise it consumes the value, creates a node, builds the left with upper bound v, then the right with lower bound v."])
+
+def ValidateBst():
+    nodes, root = bst([10, 5, 15, 2, 5, 13, 22, 1]); nodes["5"][0] = 9  # make invalid: 9 in right subtree of 10? no: node5 is 13's slot
+    nodes, root = bst([10, 5, 15, 2, 5, 13, 22, 1]); nodes["6"][0] = 22
+    nodes["5"] = [8, None, None]  # 13 replaced by 8 → violates lower bound 10
+    st = []
+    for nid, lo, hi in [("0", "-∞", "∞"), ("1", "-∞", 10), ("2", 10, "∞"), ("5", 10, 15)]:
+        v = nodes[nid][0]; ok = not ((lo != "-∞" and v < lo) or (hi != "∞" and v >= hi))
+        st.append(_tw(nodes, root, {nid: "ok" if ok else "bad"}, f"{v} must be in [{lo}, {hi}) → {'ok' if ok else 'INVALID'}", f"Node {v} must be at least {lo} and less than {hi}. " + ("It is, so we continue." if ok else "It isn't: eight is in ten's right subtree, so the tree is not a valid BST."), side=[f"node {v}", f"bounds [{lo}, {hi})"]))
+    return E(["Naive: compare each node only with its children — WRONG", "In-order traversal must be sorted → O(n)", "Bounds passed down → O(n), early exit"],
+             "The tempting mistake is to compare each node only with its direct children, which misses violations deeper down. Either check that in-order traversal is sorted, or pass down bounds inherited from all ancestors, which lets us stop at the first violation.",
+             st, ["Grandchild violations (the classic bug)", "Duplicates go right: left bound inclusive", "Use long bounds for Integer.MIN/MAX values"],
+             "The classic bug is a grandchild that's fine relative to its parent but violates an ancestor. Duplicates go right, and long bounds handle extreme integer values.",
+             ["Draw the counterexample before coding", "Follow-up: fix a BST with two swapped nodes (Repair BST)"],
+             "Draw a counterexample for the naive approach before coding. The hard follow-up repairs a BST with two swapped nodes.",
+             ["Valid returns true for null. It fails if the value is below the minimum or at least the maximum. Then it recurses left with the max tightened to the node's value, and right with the min raised to it."])
+
+def BinaryTreeDiameter():
+    nodes, root = level_tree([1, 3, 2, 7, 4, None, None, 8, None, None, 5, None, None, None, None, 9, None, None, None, None, None, 6]); best = [0]; st = []
+    def h(i):
+        if i is None: return 0
+        l, r = h(nodes[i][1]), h(nodes[i][2])
+        if l + r > best[0]: best[0] = l + r
+        if l + r >= 1: st.append(_tw(nodes, root, {i: "cur"}, f"At {nodes[i][0]}: left {l} + right {r} = {l + r}; best {best[0]}", f"At node {nodes[i][0]}, the left height is {l} and the right height is {r}. A path through here has {l + r} edges. Best so far: {best[0]}.", side=[f"h(left) = {l}", f"h(right) = {r}", f"best = {best[0]}"]))
+        return 1 + max(l, r)
+    h(root)
+    return E(["Brute force: diameter through each node via separate height calls → O(n²)", "Post-order computing height once per node → O(n)", "Diameter need not pass through the root"],
+             "Computing heights separately for every node repeats work and is quadratic. A single post-order pass returns each subtree's height and, along the way, checks the path that bends through each node.",
+             pick(st, 5), ["Diameter counts edges, not nodes", "Longest path may avoid the root", "Single node → 0"],
+             "The diameter counts edges, and it often doesn't pass through the root, as in this example.",
+             ["Return height, track best in a field/array", "Follow-up: max path SUM (Hard)"],
+             "Return the height and track the best in a shared variable. The hard follow-up maximises path sum instead of length.",
+             ["Height returns zero for null. It computes left and right heights, updates the best diameter with their sum, and returns one plus the larger height."])
+
+def FindSuccessor():
+    nodes, root = level_tree([1, 2, 3, 4, 5, None, None, 6]); st = []
+    st.append(_tw(nodes, root, {"4": "cur"}, "Successor of 5: no right child", "Find the in-order successor of five. Five has no right child, so the successor is above it.", side=["in-order:", "6 4 2 5 1 3"]))
+    st.append(_tw(nodes, root, {"4": "done", "1": "cur"}, "5 is 2's RIGHT child → keep climbing", "Five is its parent two's right child, so two comes before it. Keep climbing.", side=["in-order:", "6 4 2 5 1 3"]))
+    st.append(_tw(nodes, root, {"1": "done", "0": "ok"}, "2 is 1's LEFT child → successor is 1", "Two is the left child of one, so one is the successor.", side=["in-order:", "6 4 2 5 1 3"]))
+    st.append(_tw(nodes, root, {"0": "cur", "2": "ok"}, "Successor of 1: leftmost of right subtree → 3", "For node one, which has a right subtree, the successor is the leftmost node of that subtree: three.", side=["in-order:", "6 4 2 5 1 3"]))
+    return E(["In-order traversal into a list, find node, take next → O(n)", "Parent pointers: two cases → O(h) time, O(1) space", "No full traversal needed"],
+             "The simple approach does a full in-order traversal and returns the next element, linear time and space. With parent pointers, we only need two cases, costing at most the tree's height and constant space.",
+             st, ["Last node in order → null", "Node with right subtree → leftmost of it", "Climb while we're a right child"],
+             "The last node in order has no successor, so return null. Climb only while the current node is its parent's right child.",
+             ["Follow-up: predecessor (mirror image)", "Follow-up: without parent pointers in a BST"],
+             "The predecessor is the mirror image. In a BST without parent pointers, search from the root tracking the last left turn.",
+             ["If the node has a right child, we go right once and then all the way left. Otherwise we climb while the current node is its parent's right child and return the parent, which is null if we ran off the top."])
+
+def HeightBalancedBinaryTree():
+    nodes, root = level_tree([1, 2, 3, 4, 5, None, 6, None, None, 7, 8]); st = []
+    def h(i):
+        if i is None: return 0
+        l, r = h(nodes[i][1]), h(nodes[i][2]); bad = l == -1 or r == -1 or abs(l - r) > 1; res = -1 if bad else 1 + max(l, r)
+        st.append(_tw(nodes, root, {i: "bad" if bad else "ok"}, f"Node {nodes[i][0]}: heights {l} and {r} → " + ("unbalanced" if bad else f"height {res}"), f"At node {nodes[i][0]}, the subtree heights are {l} and {r}. " + ("They differ by more than one, so it's unbalanced." if bad else f"That's balanced, with height {res}.")))
+        return res
+    ok = h(root) != -1
+    return E(["Naive: compute height separately at every node → O(n²)", "Single post-order returning height or −1 → O(n)", "Fail fast propagates up immediately"],
+             "Calling a separate height function at every node repeats work and is quadratic on skewed trees. A single post-order pass that returns the height, or minus one for unbalanced, checks everything in linear time.",
+             pick(st, 5), ["Empty tree is balanced", "Check every node, not just the root", "Use a sentinel (−1) to short-circuit"],
+             "An empty tree is balanced, and the condition must hold at every node, not just the root.",
+             ["Follow-up: rebalance via rotations (AVL)", "Return a small object instead of a sentinel"],
+             "In a real codebase, return a small object with height and balanced flag. A follow-up is how AVL trees rebalance with rotations.",
+             ["The helper returns zero for null. It computes both child heights; if either is minus one or they differ by more than one, it returns minus one. Otherwise it returns one plus the larger."])
+
+def InvertBinaryTree():
+    nodes, root = level_tree([1, 2, 3, 4, 5, 6, 7]); st = [_tw(nodes, root, {}, "Original tree", "Here's the original tree.")]
+    for i in ["0", "1", "2"]:
+        nodes[i][1], nodes[i][2] = nodes[i][2], nodes[i][1]
+        st.append(_tw(nodes, root, {i: "cur"}, f"Swap children of {nodes[i][0]}", f"At node {nodes[i][0]}, swap its left and right children."))
+    return E(["Every node must be swapped once → O(n) is optimal", "Recursive (O(h) stack) or BFS queue (O(w) space)", "Order of visiting doesn't matter"],
+             "Every node's children must be swapped, so linear time is optimal. Recursion uses stack space proportional to height; a breadth-first queue uses space proportional to the widest level. Order doesn't matter.",
+             st, ["Null children are swapped too", "Swap before or after recursion — both fine", "Deep trees: prefer iterative"],
+             "Swapping a null child is fine. For very deep trees, prefer the iterative version.",
+             ["Mention the iterative BFS version", "Follow-up: check if two trees are mirrors (Symmetrical Tree)"],
+             "Mention the iterative version, and relate it to checking whether two trees are mirrors.",
+             ["If the node is null, return. Otherwise swap left and right with a temporary, then invert both subtrees."])
+
+def MergeBinaryTrees():
+    a, ra = level_tree([1, 3, 2, 7, 4]); b, rb = level_tree([1, 5, 9, 2, None, 7, 6]); st = []
+    st.append(S("Worked example", [TR(a, ra, label="tree 1", w=0.5), TR(b, rb, label="tree 2", w=0.5)], "Two trees to overlay", "We overlay two trees: where both have a node, add the values; otherwise keep whichever exists.", layout="cols"))
+    m = {k: v[:] for k, v in a.items()}
+    for k, v in b.items():
+        if k in m: m[k][0] += v[0]
+        else: m[k] = v[:]
+        p = (int(k) - 1) // 2
+        if k != "0": m[str(p)][1 if int(k) % 2 else 2] = k
+    st.append(S("Worked example", [TR(m, "0", hl={k: "ok" for k in a if k in b})], "Overlapping nodes summed", "Root one plus one gives two; three plus five gives eight; two plus nine gives eleven; seven plus two gives nine."))
+    st.append(S("Worked example", [TR(m, "0", hl={k: "warn" for k in m if (k in a) != (k in b)})], "Missing on one side → reuse the other subtree", "Where only one tree has a node, like four from tree one, or seven and six from tree two, we simply reuse that subtree."))
+    return E(["Build a brand-new tree → O(n + m) extra space", "Merge into tree 1 in place → O(min(n, m)) time", "Reuse subtrees where only one side exists"],
+             "Building a new tree copies everything. Merging into the first tree in place is cheaper: we only recurse where both trees have nodes, and reuse a subtree whenever one side is missing.",
+             st, ["Either tree may be null", "Mutates tree 1 (mention it)", "Reused subtrees are shared"],
+             "Handle either tree being null, and mention that the result mutates and shares structure with the inputs.",
+             ["Ask if inputs may be modified", "Iterative with a stack of pairs"],
+             "Ask whether modifying the inputs is acceptable; otherwise build new nodes.",
+             ["If either tree is null, return the other. Otherwise add the second value into the first, merge the left children, merge the right children, and return the first tree."])
+
+def SplitBinaryTree():
+    nodes, root = level_tree([1, 3, -2, 6, -5, 5, 2, 2]); st = []; sums = {}
+    def s(i):
+        if i is None: return 0
+        v = nodes[i][0] + s(nodes[i][1]) + s(nodes[i][2]); sums[i] = v; return v
+    tot = s(root); half = tot // 2
+    st.append(_tw(nodes, root, {}, f"Total sum = {tot} → need a subtree summing to {half}", f"The whole tree sums to {tot}, which is even, so we need some subtree summing to exactly {half}.", notes={k: f"Σ{v}" for k, v in sums.items()}))
+    hit = [k for k, v in sums.items() if v == half and k != root][0]
+    st.append(_tw(nodes, root, {hit: "ok"}, f"Subtree at {nodes[hit][0]} sums to {half} → cut its edge", f"The subtree rooted at {nodes[hit][0]} sums to {half}. Cutting the edge above it splits the tree into two halves of {half} each.", notes={k: f"Σ{v}" for k, v in sums.items()}))
+    return E(["Brute force: try cutting each edge, re-sum both parts → O(n²)", "Two passes: total, then post-order subtree sums → O(n)", "Need a subtree (not the whole tree) = total / 2"],
+             "Cutting each edge and re-summing both parts is quadratic. Instead compute the total once, then a post-order pass gives every subtree sum; if any non-root subtree equals half the total, we can split.",
+             st, ["Odd total → impossible (return 0)", "Exclude the root's own sum", "Negative values make greedy pruning unsafe"],
+             "An odd total can't split. Exclude the root, since cutting nothing isn't a split. With negative values, you can't prune early.",
+             ["Return the half-sum (problem's convention)", "Follow-up: maximise product of the two parts"],
+             "This version returns the half sum, or zero. A popular follow-up maximises the product of the two parts.",
+             ["We sum the whole tree; if the total is odd we return zero. Then check computes each subtree sum in post-order and sets a flag when a non-root subtree equals half."])
+
+def SymmetricalTree():
+    nodes, root = level_tree([1, 2, 2, 3, 4, 4, 3, 5, 6, None, None, None, None, 6, 5]); st = []
+    for a, b in [("1", "2"), ("3", "6"), ("4", "5"), ("7", "14")]:
+        st.append(_tw(nodes, root, {a: "cur", b: "cur"}, f"Compare {nodes[a][0]} (left) with {nodes[b][0]} (right) ✓", f"Compare the mirrored pair: {nodes[a][0]} on the left with {nodes[b][0]} on the right. They match, so continue with outer and inner children."))
+    return E(["Build the mirror tree and compare → O(n) time, O(n) space", "Recursive pairwise mirror check → O(n), O(h) space", "Or BFS checking each level is a palindrome"],
+             "You could build a mirrored copy and compare, using extra memory. Better is checking pairs directly: the left subtree's outer child pairs with the right subtree's outer child, and inner with inner.",
+             st, ["One side null, the other not → false", "Values must match, not just shapes", "Empty tree → symmetric"],
+             "If one side is null and the other isn't, return false. Both structure and values must mirror.",
+             ["Iterative with a queue of pairs", "Relation to Invert Binary Tree"],
+             "An iterative version uses a queue of node pairs. Note that a tree is symmetric when it equals its own inversion.",
+             ["Mirror returns true if both nodes are null and false if just one is. Otherwise values must be equal, and we recursively compare left's left with right's right, and left's right with right's left."])

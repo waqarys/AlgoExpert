@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Build the mirror tree and compare → O(n) time, O(n) space",
+    "Recursive pairwise mirror check → O(n), O(h) space",
+    "Or BFS checking each level is a palindrome"
+   ],
+   "narration": "You could build a mirrored copy and compare, using extra memory. Better is checking pairs directly: the left subtree's outer child pairs with the right subtree's outer child, and inner with inner."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Compare two nodes at a time",
@@ -35,13 +45,321 @@
    "narration": "Step by step. First, compare two nodes at a time. Second, values must match. Third, outer children pair together and inner children pair together."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       2,
+       "5",
+       "6"
+      ],
+      "3": [
+       3,
+       "7",
+       "8"
+      ],
+      "4": [
+       4,
+       null,
+       null
+      ],
+      "5": [
+       4,
+       null,
+       null
+      ],
+      "6": [
+       3,
+       "13",
+       "14"
+      ],
+      "7": [
+       5,
+       null,
+       null
+      ],
+      "8": [
+       6,
+       null,
+       null
+      ],
+      "13": [
+       6,
+       null,
+       null
+      ],
+      "14": [
+       5,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "1": "cur",
+      "2": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Compare 2 (left) with 2 (right) ✓",
+   "narration": "Compare the mirrored pair: 2 on the left with 2 on the right. They match, so continue with outer and inner children.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       2,
+       "5",
+       "6"
+      ],
+      "3": [
+       3,
+       "7",
+       "8"
+      ],
+      "4": [
+       4,
+       null,
+       null
+      ],
+      "5": [
+       4,
+       null,
+       null
+      ],
+      "6": [
+       3,
+       "13",
+       "14"
+      ],
+      "7": [
+       5,
+       null,
+       null
+      ],
+      "8": [
+       6,
+       null,
+       null
+      ],
+      "13": [
+       6,
+       null,
+       null
+      ],
+      "14": [
+       5,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "3": "cur",
+      "6": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Compare 3 (left) with 3 (right) ✓",
+   "narration": "Compare the mirrored pair: 3 on the left with 3 on the right. They match, so continue with outer and inner children.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       2,
+       "5",
+       "6"
+      ],
+      "3": [
+       3,
+       "7",
+       "8"
+      ],
+      "4": [
+       4,
+       null,
+       null
+      ],
+      "5": [
+       4,
+       null,
+       null
+      ],
+      "6": [
+       3,
+       "13",
+       "14"
+      ],
+      "7": [
+       5,
+       null,
+       null
+      ],
+      "8": [
+       6,
+       null,
+       null
+      ],
+      "13": [
+       6,
+       null,
+       null
+      ],
+      "14": [
+       5,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "4": "cur",
+      "5": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Compare 4 (left) with 4 (right) ✓",
+   "narration": "Compare the mirrored pair: 4 on the left with 4 on the right. They match, so continue with outer and inner children.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       1,
+       "1",
+       "2"
+      ],
+      "1": [
+       2,
+       "3",
+       "4"
+      ],
+      "2": [
+       2,
+       "5",
+       "6"
+      ],
+      "3": [
+       3,
+       "7",
+       "8"
+      ],
+      "4": [
+       4,
+       null,
+       null
+      ],
+      "5": [
+       4,
+       null,
+       null
+      ],
+      "6": [
+       3,
+       "13",
+       "14"
+      ],
+      "7": [
+       5,
+       null,
+       null
+      ],
+      "8": [
+       6,
+       null,
+       null
+      ],
+      "13": [
+       6,
+       null,
+       null
+      ],
+      "14": [
+       5,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "7": "cur",
+      "14": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Compare 5 (left) with 5 (right) ✓",
+   "narration": "Compare the mirrored pair: 5 on the left with 5 on the right. They match, so continue with outer and inner children.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class SymmetricalTree {\n    public static boolean symmetricalTree(BinaryTree t) { return t == null || mirror(t.left, t.right); }\n\n    private static boolean mirror(BinaryTree a, BinaryTree b) {\n        if (a == null || b == null) return a == b;\n        return a.value == b.value && mirror(a.left, b.right) && mirror(a.right, b.left);\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "SymmetricalTree.java",
-   "narration": "Here's the Java solution, starting with symmetrical tree. It follows the steps we just described."
+   "narration": "Mirror returns true if both nodes are null and false if just one is. Otherwise values must be equal, and we recursively compare left's left with right's right, and left's right with right's left."
   },
   {
    "kind": "bullets",
@@ -51,6 +369,25 @@
     "Space: O(h)"
    ],
    "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "One side null, the other not → false",
+    "Values must match, not just shapes",
+    "Empty tree → symmetric"
+   ],
+   "narration": "If one side is null and the other isn't, return false. Both structure and values must mirror."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Iterative with a queue of pairs",
+    "Relation to Invert Binary Tree"
+   ],
+   "narration": "An iterative version uses a queue of node pairs. Note that a tree is symmetric when it equals its own inversion."
   },
   {
    "kind": "bullets",

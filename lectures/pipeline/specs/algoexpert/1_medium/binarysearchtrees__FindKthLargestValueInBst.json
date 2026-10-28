@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "In-order into a list, take list[n−k] → O(n) time and space",
+    "Reverse in-order, stop at k → O(h + k)",
+    "Only visits what's needed"
+   ],
+   "narration": "The simple approach collects all values in sorted order and indexes from the end, costing linear time and space. A reverse in-order traversal visits values from largest down and stops after k, so it costs only height plus k."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Traverse right, node, left",
@@ -35,13 +45,247 @@
    "narration": "Step by step. First, traverse right, node, left. Second, count visited nodes. Third, stop at the kth and return its value."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       15,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       20,
+       "5",
+       "6"
+      ],
+      "3": [
+       2,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       17,
+       null,
+       null
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       1,
+       null,
+       null
+      ],
+      "8": [
+       3,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "6": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.68
+    },
+    {
+     "type": "text",
+     "lines": [
+      "k = 3",
+      "visited: 22"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.32
+    }
+   ],
+   "caption": "Visit #1: 22",
+   "narration": "Reverse in-order visit number 1 is 22.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       15,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       20,
+       "5",
+       "6"
+      ],
+      "3": [
+       2,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       17,
+       null,
+       null
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       1,
+       null,
+       null
+      ],
+      "8": [
+       3,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "6": "done",
+      "2": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.68
+    },
+    {
+     "type": "text",
+     "lines": [
+      "k = 3",
+      "visited: 22 20"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.32
+    }
+   ],
+   "caption": "Visit #2: 20",
+   "narration": "Reverse in-order visit number 2 is 20.",
+   "layout": "cols"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       15,
+       "1",
+       "2"
+      ],
+      "1": [
+       5,
+       "3",
+       "4"
+      ],
+      "2": [
+       20,
+       "5",
+       "6"
+      ],
+      "3": [
+       2,
+       "7",
+       "8"
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       17,
+       null,
+       null
+      ],
+      "6": [
+       22,
+       null,
+       null
+      ],
+      "7": [
+       1,
+       null,
+       null
+      ],
+      "8": [
+       3,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "6": "done",
+      "2": "done",
+      "5": "ok"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1,
+     "w": 0.68
+    },
+    {
+     "type": "text",
+     "lines": [
+      "k = 3",
+      "visited: 22 20 17"
+     ],
+     "label": null,
+     "h": 1,
+     "w": 0.32
+    }
+   ],
+   "caption": "Visit #3: 17 ← k-th largest",
+   "narration": "Reverse in-order visit number 3 is 17. That's the third largest, so we stop.",
+   "layout": "cols"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class FindKthLargestValueInBst {\n    private static int seen, answer;\n\n    public static synchronized int findKthLargestValueInBst(BST tree, int k) {\n        seen = 0; answer = -1;\n        walk(tree, k);\n        return answer;\n    }\n\n    private static void walk(BST n, int k) {\n        if (n == null || seen >= k) return;\n        walk(n.right, k);\n        if (seen < k) { seen++; if (seen == k) { answer = n.value; return; } walk(n.left, k); }\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "FindKthLargestValueInBst.java",
-   "narration": "Here's the Java solution, starting with find kth largest value in bst. It follows the steps we just described."
+   "narration": "The walk function returns early if the node is null or we've already seen k values. It recurses right first, then counts the current node, records it as the answer if it's the k-th, and only then goes left."
   },
   {
    "kind": "bullets",
@@ -51,6 +295,25 @@
     "Space: O(h)"
    ],
    "narration": "Time is O of h plus k. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Duplicates count separately (5, 5)",
+    "k = 1 → the maximum",
+    "Stop recursion once k values are seen"
+   ],
+   "narration": "Duplicate values count separately. Make sure recursion stops as soon as the k-th value is found."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Follow-up: many queries → augment nodes with subtree sizes",
+    "Iterative reverse in-order with a stack"
+   ],
+   "narration": "For repeated queries, store subtree sizes in each node to answer in log n."
   },
   {
    "kind": "bullets",

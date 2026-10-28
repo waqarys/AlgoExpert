@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Insert each value into a BST → O(n²) worst, O(n log n) average",
+    "For each node, scan for where the right subtree starts → O(n²)",
+    "Bounds recursion with a shared index → O(n)"
+   ],
+   "narration": "Inserting each value from the root is quadratic in the worst case. Scanning for where the right subtree begins is also quadratic. Passing value bounds down and consuming the pre-order list with one shared index builds the tree in linear time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Read values in order",
@@ -35,13 +45,475 @@
    "narration": "Step by step. First, read values in order. Second, each recursion accepts values within a lower and upper bound. Third, root first, then left with an upper bound, then right."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      10,
+      4,
+      2,
+      1,
+      5,
+      17,
+      19,
+      18
+     ],
+     "hl": {
+      "0": "cur"
+     },
+     "ptr": {
+      "idx": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "0": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "bounds [-∞, ∞)"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "10 fits bounds → new node",
+   "narration": "The next value, 10, fits within the bounds, so it becomes a node here. Its left subtree accepts values below 10, its right subtree values from 10 up.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      10,
+      4,
+      2,
+      1,
+      5,
+      17,
+      19,
+      18
+     ],
+     "hl": {
+      "1": "cur",
+      "0": "done"
+     },
+     "ptr": {
+      "idx": 1
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       null,
+       null
+      ],
+      "1": [
+       4,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "1": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "bounds [-∞, 10)"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "4 fits bounds → new node",
+   "narration": "The next value, 4, fits within the bounds, so it becomes a node here. Its left subtree accepts values below 4, its right subtree values from 4 up.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      10,
+      4,
+      2,
+      1,
+      5,
+      17,
+      19,
+      18
+     ],
+     "hl": {
+      "3": "cur",
+      "0": "done",
+      "1": "done",
+      "2": "done"
+     },
+     "ptr": {
+      "idx": 3
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       null,
+       null
+      ],
+      "1": [
+       4,
+       null,
+       null
+      ],
+      "2": [
+       2,
+       null,
+       null
+      ],
+      "3": [
+       1,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "3": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "bounds [-∞, 2)"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "1 fits bounds → new node",
+   "narration": "The next value, 1, fits within the bounds, so it becomes a node here. Its left subtree accepts values below 1, its right subtree values from 1 up.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      10,
+      4,
+      2,
+      1,
+      5,
+      17,
+      19,
+      18
+     ],
+     "hl": {
+      "4": "cur",
+      "0": "done",
+      "1": "done",
+      "2": "done",
+      "3": "done"
+     },
+     "ptr": {
+      "idx": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       null,
+       null
+      ],
+      "1": [
+       4,
+       "2",
+       null
+      ],
+      "2": [
+       2,
+       "3",
+       null
+      ],
+      "3": [
+       1,
+       null,
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "4": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "bounds [4, 10)"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "5 fits bounds → new node",
+   "narration": "The next value, 5, fits within the bounds, so it becomes a node here. Its left subtree accepts values below 5, its right subtree values from 5 up.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      10,
+      4,
+      2,
+      1,
+      5,
+      17,
+      19,
+      18
+     ],
+     "hl": {
+      "6": "cur",
+      "0": "done",
+      "1": "done",
+      "2": "done",
+      "3": "done",
+      "4": "done",
+      "5": "done"
+     },
+     "ptr": {
+      "idx": 6
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       "1",
+       null
+      ],
+      "1": [
+       4,
+       "2",
+       "4"
+      ],
+      "2": [
+       2,
+       "3",
+       null
+      ],
+      "3": [
+       1,
+       null,
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       17,
+       null,
+       null
+      ],
+      "6": [
+       19,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "6": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "bounds [17, ∞)"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "19 fits bounds → new node",
+   "narration": "The next value, 19, fits within the bounds, so it becomes a node here. Its left subtree accepts values below 19, its right subtree values from 19 up.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      10,
+      4,
+      2,
+      1,
+      5,
+      17,
+      19,
+      18
+     ],
+     "hl": {
+      "7": "cur",
+      "0": "done",
+      "1": "done",
+      "2": "done",
+      "3": "done",
+      "4": "done",
+      "5": "done",
+      "6": "done"
+     },
+     "ptr": {
+      "idx": 7
+     },
+     "label": null,
+     "h": 1,
+     "idx": true
+    },
+    {
+     "type": "tree",
+     "nodes": {
+      "0": [
+       10,
+       "1",
+       null
+      ],
+      "1": [
+       4,
+       "2",
+       "4"
+      ],
+      "2": [
+       2,
+       "3",
+       null
+      ],
+      "3": [
+       1,
+       null,
+       null
+      ],
+      "4": [
+       5,
+       null,
+       null
+      ],
+      "5": [
+       17,
+       null,
+       null
+      ],
+      "6": [
+       19,
+       null,
+       null
+      ],
+      "7": [
+       18,
+       null,
+       null
+      ]
+     },
+     "root": "0",
+     "hl": {
+      "7": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    },
+    {
+     "type": "text",
+     "lines": [
+      "bounds [17, 19)"
+     ],
+     "label": null,
+     "h": 0.35
+    }
+   ],
+   "caption": "18 fits bounds → new node",
+   "narration": "The next value, 18, fits within the bounds, so it becomes a node here. Its left subtree accepts values below 18, its right subtree values from 18 up.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class ReconstructBst {\n    private static int idx;\n\n    public static synchronized BST reconstructBst(List<Integer> pre) {\n        idx = 0;\n        return build(pre, Long.MIN_VALUE, Long.MAX_VALUE);\n    }\n\n    private static BST build(List<Integer> pre, long lo, long hi) {\n        if (idx == pre.size()) return null;\n        int v = pre.get(idx);\n        if (v < lo || v >= hi) return null;\n        idx++;\n        BST n = new BST(v);\n        n.left = build(pre, lo, v);\n        n.right = build(pre, v, hi);\n        return n;\n    }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "ReconstructBst.java",
-   "narration": "Here's the Java solution, starting with reconstruct bst. It follows the steps we just described."
+   "narration": "We keep a shared index. Build returns null if the list is exhausted or the next value falls outside the current bounds. Otherwise it consumes the value, creates a node, builds the left with upper bound v, then the right with lower bound v."
   },
   {
    "kind": "bullets",
@@ -51,6 +523,25 @@
     "Space: O(h)"
    ],
    "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Duplicates go right: use [lo, hi) bounds",
+    "Use long bounds to avoid overflow",
+    "Reset the shared index per call"
+   ],
+   "narration": "Duplicates belong on the right, so the left bound is inclusive and the right exclusive. Use long bounds for infinity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Explain why the index only moves forward",
+    "Follow-up: from post-order; from in-order + pre-order (general tree)"
+   ],
+   "narration": "Explain that each value is consumed exactly once. Follow-ups rebuild from post-order, or a general binary tree from in-order and pre-order."
   },
   {
    "kind": "bullets",

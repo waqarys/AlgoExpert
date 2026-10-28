@@ -26,6 +26,16 @@
   },
   {
    "kind": "bullets",
+   "heading": "Brute force vs optimal",
+   "bullets": [
+    "Insert in sorted order → a linked-list-shaped tree, height n",
+    "Insert values one by one in a smart order → O(n log n)",
+    "Build directly from midpoints → O(n), height ⌈log₂(n+1)⌉"
+   ],
+   "narration": "Inserting sorted values one at a time creates a chain of height n. Picking the middle element as the root and recursing on each half yields minimum height, and building nodes directly takes linear time."
+  },
+  {
+   "kind": "bullets",
    "heading": "Approach",
    "bullets": [
     "1. Take the middle of the sorted range as the root",
@@ -35,13 +45,451 @@
    "narration": "Step by step. First, take the middle of the sorted range as the root. Second, recurse on the left half. Third, recurse on the right half."
   },
   {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      5,
+      7,
+      10,
+      13,
+      14,
+      15,
+      22
+     ],
+     "hl": {
+      "4": "ok"
+     },
+     "ptr": {
+      "mid": 4
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      8
+     ]
+    },
+    {
+     "type": "tree",
+     "nodes": {
+      "4": [
+       10,
+       null,
+       null
+      ]
+     },
+     "root": "4",
+     "hl": {
+      "4": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Range [0, 8] → root 10",
+   "narration": "In the range from 0 to 8, the middle element 10 becomes the root of this subtree.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      5,
+      7,
+      10,
+      13,
+      14,
+      15,
+      22
+     ],
+     "hl": {
+      "0": "ok"
+     },
+     "ptr": {
+      "mid": 0
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      0,
+      0
+     ]
+    },
+    {
+     "type": "tree",
+     "nodes": {
+      "4": [
+       10,
+       null,
+       null
+      ],
+      "1": [
+       2,
+       null,
+       null
+      ],
+      "0": [
+       1,
+       null,
+       null
+      ]
+     },
+     "root": "4",
+     "hl": {
+      "0": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Range [0, 0] → root 1",
+   "narration": "In the range from 0 to 0, the middle element 1 becomes the root of this subtree.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      5,
+      7,
+      10,
+      13,
+      14,
+      15,
+      22
+     ],
+     "hl": {
+      "2": "ok"
+     },
+     "ptr": {
+      "mid": 2
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      2,
+      3
+     ]
+    },
+    {
+     "type": "tree",
+     "nodes": {
+      "4": [
+       10,
+       null,
+       null
+      ],
+      "1": [
+       2,
+       "0",
+       null
+      ],
+      "0": [
+       1,
+       null,
+       null
+      ],
+      "2": [
+       5,
+       null,
+       null
+      ]
+     },
+     "root": "4",
+     "hl": {
+      "2": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Range [2, 3] → root 5",
+   "narration": "In the range from 2 to 3, the middle element 5 becomes the root of this subtree.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      5,
+      7,
+      10,
+      13,
+      14,
+      15,
+      22
+     ],
+     "hl": {
+      "6": "ok"
+     },
+     "ptr": {
+      "mid": 6
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      5,
+      8
+     ]
+    },
+    {
+     "type": "tree",
+     "nodes": {
+      "4": [
+       10,
+       "1",
+       null
+      ],
+      "1": [
+       2,
+       "0",
+       "2"
+      ],
+      "0": [
+       1,
+       null,
+       null
+      ],
+      "2": [
+       5,
+       null,
+       "3"
+      ],
+      "3": [
+       7,
+       null,
+       null
+      ],
+      "6": [
+       14,
+       null,
+       null
+      ]
+     },
+     "root": "4",
+     "hl": {
+      "6": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Range [5, 8] → root 14",
+   "narration": "In the range from 5 to 8, the middle element 14 becomes the root of this subtree.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      5,
+      7,
+      10,
+      13,
+      14,
+      15,
+      22
+     ],
+     "hl": {
+      "5": "ok"
+     },
+     "ptr": {
+      "mid": 5
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      5,
+      5
+     ]
+    },
+    {
+     "type": "tree",
+     "nodes": {
+      "4": [
+       10,
+       "1",
+       null
+      ],
+      "1": [
+       2,
+       "0",
+       "2"
+      ],
+      "0": [
+       1,
+       null,
+       null
+      ],
+      "2": [
+       5,
+       null,
+       "3"
+      ],
+      "3": [
+       7,
+       null,
+       null
+      ],
+      "6": [
+       14,
+       null,
+       null
+      ],
+      "5": [
+       13,
+       null,
+       null
+      ]
+     },
+     "root": "4",
+     "hl": {
+      "5": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Range [5, 5] → root 13",
+   "narration": "In the range from 5 to 5, the middle element 13 becomes the root of this subtree.",
+   "layout": "rows"
+  },
+  {
+   "kind": "viz",
+   "heading": "Worked example",
+   "panels": [
+    {
+     "type": "array",
+     "values": [
+      1,
+      2,
+      5,
+      7,
+      10,
+      13,
+      14,
+      15,
+      22
+     ],
+     "hl": {
+      "8": "ok"
+     },
+     "ptr": {
+      "mid": 8
+     },
+     "label": null,
+     "h": 1,
+     "idx": true,
+     "window": [
+      8,
+      8
+     ]
+    },
+    {
+     "type": "tree",
+     "nodes": {
+      "4": [
+       10,
+       "1",
+       null
+      ],
+      "1": [
+       2,
+       "0",
+       "2"
+      ],
+      "0": [
+       1,
+       null,
+       null
+      ],
+      "2": [
+       5,
+       null,
+       "3"
+      ],
+      "3": [
+       7,
+       null,
+       null
+      ],
+      "6": [
+       14,
+       "5",
+       null
+      ],
+      "5": [
+       13,
+       null,
+       null
+      ],
+      "7": [
+       15,
+       null,
+       null
+      ],
+      "8": [
+       22,
+       null,
+       null
+      ]
+     },
+     "root": "4",
+     "hl": {
+      "8": "cur"
+     },
+     "label": null,
+     "notes": {},
+     "h": 1
+    }
+   ],
+   "caption": "Range [8, 8] → root 22",
+   "narration": "In the range from 8 to 8, the middle element 22 becomes the root of this subtree.",
+   "layout": "rows"
+  },
+  {
    "kind": "code",
    "heading": "Java solution",
    "code": "public class MinHeightBst {\n    public static BST minHeightBst(List<Integer> a) { return build(a, 0, a.size() - 1); }\n\n    private static BST build(List<Integer> a, int lo, int hi) {\n        if (lo > hi) return null;\n        int mid = (lo + hi) / 2;\n        BST n = new BST(a.get(mid));\n        n.left = build(a, lo, mid - 1);\n        n.right = build(a, mid + 1, hi);\n        return n;\n    }\n\n    public static int height(BST t) { return t == null ? 0 : 1 + Math.max(height(t.left), height(t.right)); }\n}",
    "lang": "java",
    "font_size": 26,
    "filename": "MinHeightBst.java",
-   "narration": "Here's the Java solution, starting with min height bst. It follows the steps we just described."
+   "narration": "Build takes a low and high index. If the range is empty it returns null. Otherwise it creates a node from the middle value and recursively builds its left from the lower half and its right from the upper half."
   },
   {
    "kind": "bullets",
@@ -51,6 +499,25 @@
     "Space: O(n)"
    ],
    "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Edge cases & pitfalls",
+   "bullets": [
+    "Even-length ranges: either middle works",
+    "Empty array → null",
+    "Build nodes directly; don't call insert (O(n log n))"
+   ],
+   "narration": "With an even range, either middle is fine. Creating nodes directly instead of calling insert keeps it linear."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Interview tips & follow-ups",
+   "bullets": [
+    "Prove the height is minimal",
+    "Follow-up: sorted linked list → BST in O(n)"
+   ],
+   "narration": "A good follow-up converts a sorted linked list into a balanced BST in linear time by building in in-order."
   },
   {
    "kind": "bullets",
