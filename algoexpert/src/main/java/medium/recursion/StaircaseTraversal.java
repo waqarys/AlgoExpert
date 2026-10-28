@@ -1,0 +1,19 @@
+package medium.recursion;
+
+/**
+ * Staircase Traversal: ways to climb `height` steps taking 1..maxSteps at a time. Sliding-window sum DP.
+ * Time: O(n) | Space: O(n).
+ */
+public class StaircaseTraversal {
+    public static int staircaseTraversal(int height, int maxSteps) {
+        int[] ways = new int[height + 1];
+        ways[0] = 1;
+        int window = 0;
+        for (int h = 1; h <= height; h++) {
+            window += ways[h - 1];
+            if (h - maxSteps - 1 >= 0) window -= ways[h - maxSteps - 1];
+            ways[h] = window;
+        }
+        return ways[height];
+    }
+}
