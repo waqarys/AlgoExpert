@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Continuous Median",
+ "out": "algoexpert/hard/heaps/ContinuousMedian",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Continuous Median",
+   "subtitle": "AlgoExpert · Hard · Heaps",
+   "narration": "Let's solve Continuous Median, a hard heaps problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Insert numbers one at a time and query the running median, using a max-heap for the lower half and a min-heap for the upper half."
+   ],
+   "narration": "Here's the problem. Insert numbers one at a time and query the running median, using a max-heap for the lower half and a min-heap for the upper half."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ContinuousMedian {\n    public static class ContinuousMedianHandler {\n        private final PriorityQueue<Integer> lower = new PriorityQueue<>(Collections.reverseOrder());\n        private final PriorityQueue<Integer> upper = new PriorityQueue<>();\n        private double median;\n\n        public void insert(int n) {\n            if (lower.isEmpty() || n < lower.peek()) lower.add(n); else upper.add(n);\n            if (lower.size() > upper.size() + 1) upper.add(lower.poll());\n            else if (upper.size() > lower.size() + 1) lower.add(upper.poll());\n            if (lower.size() == upper.size()) median = (lower.peek() + (double) upper.peek()) / 2;\n            else median = lower.size() > upper.size() ? lower.peek() : upper.peek();\n        }\n\n        public double getMedian() { return median; }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ContinuousMedian.java",
+   "narration": "Here's the Java solution, starting with insert. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(log n) insert, O(1) median",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of log n insert, constant median. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Insert numbers one at a time and query the running median, using a max-heap for the lower half and a min-heap for the upper half.",
+    "Complexity: O(log n) insert, O(1) median"
+   ],
+   "narration": "To recap Continuous Median: Insert numbers one at a time and query the running median, using a max-heap for the lower half and a min-heap for the upper half. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

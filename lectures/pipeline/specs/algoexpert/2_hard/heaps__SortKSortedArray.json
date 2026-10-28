@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Sort K Sorted Array",
+ "out": "algoexpert/hard/heaps/SortKSortedArray",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Sort K Sorted Array",
+   "subtitle": "AlgoExpert · Hard · Heaps",
+   "narration": "Let's solve Sort K Sorted Array, a hard heaps problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Every element is at most k positions from its sorted position; sort with a size-(k+1) min-heap."
+   ],
+   "narration": "Here's the problem. Every element is at most k positions from its sorted position; sort with a size-(k plus 1) min-heap."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SortKSortedArray {\n    public static int[] sortKSortedArray(int[] a, int k) {\n        PriorityQueue<Integer> pq = new PriorityQueue<>();\n        int w = 0;\n        for (int i = 0; i < a.length; i++) {\n            pq.add(a[i]);\n            if (pq.size() > k) a[w++] = pq.poll();\n        }\n        while (!pq.isEmpty()) a[w++] = pq.poll();\n        return a;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SortKSortedArray.java",
+   "narration": "Here's the Java solution, starting with sort k sorted array. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log k)",
+    "Space: O(k)"
+   ],
+   "narration": "Time is O of n log k. Space is O of k."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Every element is at most k positions from its sorted position; sort with a size-(k+1) min-heap.",
+    "Complexity: O(n log k)"
+   ],
+   "narration": "To recap Sort K Sorted Array: Every element is at most k positions from its sorted position; sort with a size-(k plus 1) min-heap. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

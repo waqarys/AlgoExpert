@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Min Max Stack Construction",
+ "out": "algoexpert/medium/stacks/MinMaxStackConstruction",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Min Max Stack Construction",
+   "subtitle": "AlgoExpert · Medium · Stacks",
+   "narration": "Let's solve Min Max Stack Construction, a medium stacks problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "A stack with O(1) push, pop, peek, getMin and getMax by storing the running min/max alongside each element."
+   ],
+   "narration": "Here's the problem. A stack with constant push, pop, peek, getMin and getMax by storing the running min or max alongside each element."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MinMaxStackConstruction {\n    public static class MinMaxStack {\n        private final List<int[]> st = new ArrayList<>();\n\n        public int peek() { return st.get(st.size() - 1)[0]; }\n        public int pop() { return st.remove(st.size() - 1)[0]; }\n        public void push(int v) {\n            if (st.isEmpty()) st.add(new int[]{v, v, v});\n            else { int[] t = st.get(st.size() - 1); st.add(new int[]{v, Math.min(v, t[1]), Math.max(v, t[2])}); }\n        }\n        public int getMin() { return st.get(st.size() - 1)[1]; }\n        public int getMax() { return st.get(st.size() - 1)[2]; }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MinMaxStackConstruction.java",
+   "narration": "Here's the Java solution, starting with peek. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(1) per op",
+    "Space: O(n)"
+   ],
+   "narration": "Time is constant per op. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "A stack with O(1) push, pop, peek, getMin and getMax by storing the running min/max alongside each element.",
+    "Complexity: O(1) per op"
+   ],
+   "narration": "To recap Min Max Stack Construction: A stack with constant push, pop, peek, getMin and getMax by storing the running min or max alongside each element. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

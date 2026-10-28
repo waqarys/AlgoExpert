@@ -1,0 +1,57 @@
+{
+ "title": "AlgoExpert · Lru Cache",
+ "out": "algoexpert/veryhard/linkedlists/LruCache",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Lru Cache",
+   "subtitle": "AlgoExpert · Very Hard · Linked Lists",
+   "narration": "Let's solve Lru Cache, a very hard linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "InsertKeyValuePair, getValueFromKey (null if missing) and getMostRecentKey, evicting the least recently used key at capacity.",
+    "Hash map + doubly linked list."
+   ],
+   "narration": "Here's the problem. InsertKeyValuePair, getValueFromKey (null if missing) and getMostRecentKey, evicting the least recently used key at capacity. Hash map plus doubly linked list."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (1/2)",
+   "code": "public class LruCache {\n    private static class Node { String key; int value; Node prev, next; Node(String k, int v) { key = k; value = v; } }\n\n    private final int capacity;\n    private final Map<String, Node> map = new HashMap<>();\n    private final Node head = new Node(null, 0), tail = new Node(null, 0);\n\n    public LruCache(int capacity) {\n        this.capacity = Math.max(1, capacity);\n        head.next = tail; tail.prev = head;\n    }\n\n    public void insertKeyValuePair(String key, int value) {\n        Node n = map.get(key);\n        if (n != null) { n.value = value; moveToFront(n); return; }\n        if (map.size() == capacity) { Node lru = tail.prev; unlink(lru); map.remove(lru.key); }\n        n = new Node(key, value);\n        map.put(key, n);\n        addFront(n);\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LruCache_part1.java",
+   "narration": "Here's the Java solution, starting with lru cache. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (2/2)",
+   "code": "    public Integer getValueFromKey(String key) {\n        Node n = map.get(key);\n        if (n == null) return null;\n        moveToFront(n);\n        return n.value;\n    }\n\n    public String getMostRecentKey() { return head.next == tail ? null : head.next.key; }\n\n    private void moveToFront(Node n) { unlink(n); addFront(n); }\n    private void unlink(Node n) { n.prev.next = n.next; n.next.prev = n.prev; }\n    private void addFront(Node n) { n.next = head.next; n.prev = head; head.next.prev = n; head.next = n; }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LruCache_part2.java",
+   "narration": "Continuing with get value from key, get most recent key, move to front."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(1) per op",
+    "Space: O(capacity)"
+   ],
+   "narration": "Time is constant per op. Space is O of capacity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "InsertKeyValuePair, getValueFromKey (null if missing) and getMostRecentKey, evicting the least recently used key at capacity.",
+    "Complexity: O(1) per op"
+   ],
+   "narration": "To recap Lru Cache: InsertKeyValuePair, getValueFromKey (null if missing) and getMostRecentKey, evicting the least recently used key at capacity. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "title": "AlgoExpert · Largest Island",
+ "out": "algoexpert/hard/graphs/LargestIsland",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Largest Island",
+   "subtitle": "AlgoExpert · Hard · Graphs",
+   "narration": "Let's solve Largest Island, a hard graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Matrix of 0 (land) and 1 (water).",
+    "Flip at most one water cell to land to maximise the largest 4-connected land island; return its size.",
+    "Label islands with ids and sizes first."
+   ],
+   "narration": "Here's the problem. Matrix of 0 (land) and 1 (water). Flip at most one water cell to land to maximise the largest 4-connected land island; return its size. Label islands with ids and sizes first."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (1/2)",
+   "code": "public class LargestIsland {\n    public static int largestIsland(int[][] matrix) {\n        int R = matrix.length, C = matrix[0].length, id = 2;\n        int[][] m = new int[R][];\n        for (int r = 0; r < R; r++) m[r] = matrix[r].clone();\n        Map<Integer, Integer> size = new HashMap<>();\n        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n        int best = 0;\n        for (int r = 0; r < R; r++) for (int c = 0; c < C; c++) {\n            if (m[r][c] != 0) continue;\n            int s = 0;\n            ArrayDeque<int[]> st = new ArrayDeque<>();\n            st.push(new int[]{r, c});\n            m[r][c] = id;\n            while (!st.isEmpty()) {\n                int[] p = st.pop(); s++;\n                for (int[] d : dirs) {\n                    int nr = p[0] + d[0], nc = p[1] + d[1];\n                    if (nr >= 0 && nc >= 0 && nr < R && nc < C && m[nr][nc] == 0) { m[nr][nc] = id; st.push(new int[]{nr, nc}); }\n                }\n            }\n            size.put(id++, s);",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LargestIsland_part1.java",
+   "narration": "Here's the Java solution, starting with largest island. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (2/2)",
+   "code": "            best = Math.max(best, s);\n        }\n        for (int r = 0; r < R; r++) for (int c = 0; c < C; c++) {\n            if (m[r][c] != 1) continue;\n            Set<Integer> ids = new HashSet<>();\n            for (int[] d : dirs) {\n                int nr = r + d[0], nc = c + d[1];\n                if (nr >= 0 && nc >= 0 && nr < R && nc < C && m[nr][nc] > 1) ids.add(m[nr][nc]);\n            }\n            int s = 1;\n            for (int i : ids) s += size.get(i);\n            best = Math.max(best, s);\n        }\n        return best;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LargestIsland_part2.java",
+   "narration": "Continuing the implementation."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(w*h)",
+    "Space: O(w*h)"
+   ],
+   "narration": "Time is O of w times h. Space is O of w times h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Matrix of 0 (land) and 1 (water).",
+    "Complexity: O(w*h)"
+   ],
+   "narration": "To recap Largest Island: Matrix of 0 (land) and 1 (water). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

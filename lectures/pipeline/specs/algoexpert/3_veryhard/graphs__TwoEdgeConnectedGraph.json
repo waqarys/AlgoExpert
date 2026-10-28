@@ -1,0 +1,58 @@
+{
+ "title": "AlgoExpert · Two Edge Connected Graph",
+ "out": "algoexpert/veryhard/graphs/TwoEdgeConnectedGraph",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Two Edge Connected Graph",
+   "subtitle": "AlgoExpert · Very Hard · Graphs",
+   "narration": "Let's solve Two Edge Connected Graph, a very hard graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Undirected adjacency list; is the graph connected and free of bridges (stays connected after removing any single edge)?",
+    "Empty graph counts as true.",
+    "Tarjan low-link."
+   ],
+   "narration": "Here's the problem. Undirected adjacency list; is the graph connected and free of bridges (stays connected after removing any single edge)? Empty graph counts as true. Tarjan low-link."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (1/2)",
+   "code": "public class TwoEdgeConnectedGraph {\n    public static boolean twoEdgeConnectedGraph(int[][] edges) {\n        int n = edges.length;\n        if (n == 0) return true;\n        int[] disc = new int[n], low = new int[n];\n        java.util.Arrays.fill(disc, -1);\n        int[] time = {0};\n        if (hasBridge(0, -1, edges, disc, low, time)) return false;\n        for (int d : disc) if (d == -1) return false;\n        return true;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "TwoEdgeConnectedGraph_part1.java",
+   "narration": "Here's the Java solution, starting with two edge connected graph. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (2/2)",
+   "code": "    private static boolean hasBridge(int v, int parent, int[][] edges, int[] disc, int[] low, int[] time) {\n        disc[v] = low[v] = time[0]++;\n        boolean skippedParent = false;\n        for (int w : edges[v]) {\n            if (w == parent && !skippedParent) { skippedParent = true; continue; }\n            if (disc[w] == -1) {\n                if (hasBridge(w, v, edges, disc, low, time)) return true;\n                low[v] = Math.min(low[v], low[w]);\n                if (low[w] > disc[v]) return true;\n            } else low[v] = Math.min(low[v], disc[w]);\n        }\n        return false;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "TwoEdgeConnectedGraph_part2.java",
+   "narration": "Continuing with has bridge."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(v + e)",
+    "Space: O(v)"
+   ],
+   "narration": "Time is O of v plus e. Space is O of v."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Undirected adjacency list; is the graph connected and free of bridges (stays connected after removing any single edge)?",
+    "Complexity: O(v + e)"
+   ],
+   "narration": "To recap Two Edge Connected Graph: Undirected adjacency list; is the graph connected and free of bridges (stays connected after removing any single edge)? Try re-implementing it from scratch without looking."
+  }
+ ]
+}

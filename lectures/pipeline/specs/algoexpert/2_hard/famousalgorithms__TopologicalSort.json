@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Topological Sort",
+ "out": "algoexpert/hard/famousalgorithms/TopologicalSort",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Topological Sort",
+   "subtitle": "AlgoExpert · Hard · Famous Algorithms",
+   "narration": "Let's solve Topological Sort, a hard famous algorithms problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Jobs with [prereq, job] dependencies; return a valid order or [] if there is a cycle (Kahn's algorithm)."
+   ],
+   "narration": "Here's the problem. Jobs with prereq, job dependencies; return a valid order or if there is a cycle (Kahn's algorithm)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class TopologicalSort {\n    public static List<Integer> topologicalSort(List<Integer> jobs, List<Integer[]> deps) {\n        Map<Integer, List<Integer>> g = new HashMap<>();\n        Map<Integer, Integer> indeg = new HashMap<>();\n        for (int j : jobs) { g.put(j, new ArrayList<>()); indeg.put(j, 0); }\n        for (Integer[] d : deps) { g.get(d[0]).add(d[1]); indeg.merge(d[1], 1, Integer::sum); }\n        ArrayDeque<Integer> q = new ArrayDeque<>();\n        for (int j : jobs) if (indeg.get(j) == 0) q.add(j);\n        List<Integer> out = new ArrayList<>();\n        while (!q.isEmpty()) {\n            int j = q.poll();\n            out.add(j);\n            for (int k : g.get(j)) if (indeg.merge(k, -1, Integer::sum) == 0) q.add(k);\n        }\n        return out.size() == jobs.size() ? out : new ArrayList<>();\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "TopologicalSort.java",
+   "narration": "Here's the Java solution, starting with topological sort. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(j + d)",
+    "Space: O(j + d)"
+   ],
+   "narration": "Time is O of j plus d. Space is O of j plus d."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Jobs with [prereq, job] dependencies; return a valid order or [] if there is a cycle (Kahn's algorithm).",
+    "Complexity: O(j + d)"
+   ],
+   "narration": "To recap Topological Sort: Jobs with prereq, job dependencies; return a valid order or if there is a cycle (Kahn's algorithm). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

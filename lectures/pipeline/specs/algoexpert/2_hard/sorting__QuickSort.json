@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Quick Sort",
+ "out": "algoexpert/hard/sorting/QuickSort",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Quick Sort",
+   "subtitle": "AlgoExpert · Hard · Sorting",
+   "narration": "Let's solve Quick Sort, a hard sorting problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "In-place quicksort, recursing into the smaller partition first to bound stack depth."
+   ],
+   "narration": "Here's the problem. In-place quicksort, recursing into the smaller partition first to bound stack depth."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class QuickSort {\n    public static int[] quickSort(int[] a) { sort(a, 0, a.length - 1); return a; }\n\n    private static void sort(int[] a, int lo, int hi) {\n        while (lo < hi) {\n            int p = lo, l = lo + 1, r = hi;\n            while (l <= r) {\n                if (a[l] > a[p] && a[r] < a[p]) swap(a, l, r);\n                if (a[l] <= a[p]) l++;\n                if (a[r] >= a[p]) r--;\n            }\n            swap(a, p, r);\n            if (r - lo < hi - r) { sort(a, lo, r - 1); lo = r + 1; } else { sort(a, r + 1, hi); hi = r - 1; }\n        }\n    }\n\n    private static void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "QuickSort.java",
+   "narration": "Here's the Java solution, starting with quick sort. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log n) avg, O(n^2) worst",
+    "Space: O(log n)"
+   ],
+   "narration": "Time is O of n log n avg, O of n squared worst. Space is O of log n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "In-place quicksort, recursing into the smaller partition first to bound stack depth.",
+    "Complexity: O(n log n) avg, O(n^2) worst"
+   ],
+   "narration": "To recap Quick Sort: In-place quicksort, recursing into the smaller partition first to bound stack depth. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

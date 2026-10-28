@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Rectangle Mania",
+ "out": "algoexpert/veryhard/graphs/RectangleMania",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Rectangle Mania",
+   "subtitle": "AlgoExpert · Very Hard · Graphs",
+   "narration": "Let's solve Rectangle Mania, a very hard graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Count axis-aligned rectangles whose four corners are all in the point set.",
+    "Each pair forming a strictly up-right diagonal identifies one rectangle exactly once."
+   ],
+   "narration": "Here's the problem. Count axis-aligned rectangles whose four corners are all in the point set. Each pair forming a strictly up-right diagonal identifies one rectangle exactly once."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class RectangleMania {\n    public static int rectangleMania(int[][] coords) {\n        Set<String> set = new HashSet<>();\n        for (int[] p : coords) set.add(p[0] + \",\" + p[1]);\n        int count = 0;\n        for (int[] a : coords) for (int[] b : coords)\n            if (b[0] > a[0] && b[1] > a[1] && set.contains(a[0] + \",\" + b[1]) && set.contains(b[0] + \",\" + a[1])) count++;\n        return count;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "RectangleMania.java",
+   "narration": "Here's the Java solution, starting with rectangle mania. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^2)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n squared. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Count axis-aligned rectangles whose four corners are all in the point set.",
+    "Complexity: O(n^2)"
+   ],
+   "narration": "To recap Rectangle Mania: Count axis-aligned rectangles whose four corners are all in the point set. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

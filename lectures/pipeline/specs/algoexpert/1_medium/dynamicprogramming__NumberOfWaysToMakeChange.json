@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Number Of Ways To Make Change",
+ "out": "algoexpert/medium/dynamicprogramming/NumberOfWaysToMakeChange",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Number Of Ways To Make Change",
+   "subtitle": "AlgoExpert · Medium · Dynamic Programming",
+   "narration": "Let's solve Number Of Ways To Make Change, a medium dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Count combinations of unlimited coins that sum to n."
+   ],
+   "narration": "Here's the problem. Count combinations of unlimited coins that sum to n."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class NumberOfWaysToMakeChange {\n    public static int numberOfWaysToMakeChange(int n, int[] denoms) {\n        int[] ways = new int[n + 1];\n        ways[0] = 1;\n        for (int d : denoms) for (int a = d; a <= n; a++) ways[a] += ways[a - d];\n        return ways[n];\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "NumberOfWaysToMakeChange.java",
+   "narration": "Here's the Java solution, starting with number of ways to make change. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n*d)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n times d. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Count combinations of unlimited coins that sum to n.",
+    "Complexity: O(n*d)"
+   ],
+   "narration": "To recap Number Of Ways To Make Change: Count combinations of unlimited coins that sum to n. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

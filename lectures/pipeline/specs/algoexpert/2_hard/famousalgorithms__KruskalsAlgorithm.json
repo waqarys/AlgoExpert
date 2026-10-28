@@ -1,0 +1,57 @@
+{
+ "title": "AlgoExpert · Kruskals Algorithm",
+ "out": "algoexpert/hard/famousalgorithms/KruskalsAlgorithm",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Kruskals Algorithm",
+   "subtitle": "AlgoExpert · Hard · Famous Algorithms",
+   "narration": "Let's solve Kruskals Algorithm, a hard famous algorithms problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Undirected weighted graph as adjacency list ([dest, weight]); return its minimum spanning tree (forest) in the same format.",
+    "Sort edges + union-find."
+   ],
+   "narration": "Here's the problem. Undirected weighted graph as adjacency list ( dest, weight ); return its minimum spanning tree (forest) in the same format. Sort edges plus union-find."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (1/2)",
+   "code": "public class KruskalsAlgorithm {\n    public static int[][][] kruskalsAlgorithm(int[][][] edges) {\n        int n = edges.length;\n        List<int[]> all = new ArrayList<>();\n        for (int u = 0; u < n; u++) for (int[] e : edges[u]) if (u < e[0]) all.add(new int[]{u, e[0], e[1]});\n        all.sort(Comparator.comparingInt(e -> e[2]));\n        int[] parent = new int[n];\n        for (int i = 0; i < n; i++) parent[i] = i;\n        List<List<int[]>> mst = new ArrayList<>();\n        for (int i = 0; i < n; i++) mst.add(new ArrayList<>());\n        for (int[] e : all) {\n            int a = find(parent, e[0]), b = find(parent, e[1]);\n            if (a == b) continue;\n            parent[a] = b;\n            mst.get(e[0]).add(new int[]{e[1], e[2]});\n            mst.get(e[1]).add(new int[]{e[0], e[2]});\n        }\n        int[][][] out = new int[n][][];\n        for (int i = 0; i < n; i++) out[i] = mst.get(i).toArray(new int[0][]);\n        return out;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "KruskalsAlgorithm_part1.java",
+   "narration": "Here's the Java solution, starting with kruskals algorithm. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (2/2)",
+   "code": "    private static int find(int[] p, int x) { while (p[x] != x) { p[x] = p[p[x]]; x = p[x]; } return x; }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "KruskalsAlgorithm_part2.java",
+   "narration": "Continuing with find."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(e log e)",
+    "Space: O(v + e)"
+   ],
+   "narration": "Time is O of e log e. Space is O of v plus e."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Undirected weighted graph as adjacency list ([dest, weight]); return its minimum spanning tree (forest) in the same format.",
+    "Complexity: O(e log e)"
+   ],
+   "narration": "To recap Kruskals Algorithm: Undirected weighted graph as adjacency list ( dest, weight ); return its minimum spanning tree (forest) in the same format. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

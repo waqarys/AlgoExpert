@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Laptop Rentals",
+ "out": "algoexpert/hard/heaps/LaptopRentals",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Laptop Rentals",
+   "subtitle": "AlgoExpert · Hard · Heaps",
+   "narration": "Let's solve Laptop Rentals, a hard heaps problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Given [start, end) rental intervals, minimum number of laptops needed so nobody waits."
+   ],
+   "narration": "Here's the problem. Given start, end) rental intervals, minimum number of laptops needed so nobody waits."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class LaptopRentals {\n    public static int laptopRentals(int[][] times) {\n        int[][] t = times.clone();\n        Arrays.sort(t, (a, b) -> Integer.compare(a[0], b[0]));\n        PriorityQueue<Integer> ends = new PriorityQueue<>();\n        for (int[] iv : t) {\n            if (!ends.isEmpty() && ends.peek() <= iv[0]) ends.poll();\n            ends.add(iv[1]);\n        }\n        return ends.size();\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LaptopRentals.java",
+   "narration": "Here's the Java solution, starting with laptop rentals. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n log n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Given [start, end) rental intervals, minimum number of laptops needed so nobody waits.",
+    "Complexity: O(n log n)"
+   ],
+   "narration": "To recap Laptop Rentals: Given start, end) rental intervals, minimum number of laptops needed so nobody waits. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

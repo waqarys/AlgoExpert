@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Subarray Sort",
+ "out": "algoexpert/hard/arrays/SubarraySort",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Subarray Sort",
+   "subtitle": "AlgoExpert · Hard · Arrays",
+   "narration": "Let's solve Subarray Sort, a hard arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Smallest [start, end] range which, if sorted, makes the whole array sorted; [-1, -1] if sorted."
+   ],
+   "narration": "Here's the problem. Smallest start, end range which, if sorted, makes the whole array sorted; -1, -1 if sorted."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SubarraySort {\n    public static int[] subarraySort(int[] a) {\n        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;\n        for (int i = 0; i < a.length; i++) {\n            boolean out = (i > 0 && a[i] < a[i - 1]) || (i < a.length - 1 && a[i] > a[i + 1]);\n            if (out) { min = Math.min(min, a[i]); max = Math.max(max, a[i]); }\n        }\n        if (min == Integer.MAX_VALUE) return new int[]{-1, -1};\n        int l = 0, r = a.length - 1;\n        while (a[l] <= min) l++;\n        while (a[r] >= max) r--;\n        return new int[]{l, r};\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SubarraySort.java",
+   "narration": "Here's the Java solution, starting with subarray sort. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Smallest [start, end] range which, if sorted, makes the whole array sorted; [-1, -1] if sorted.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Subarray Sort: Smallest start, end range which, if sorted, makes the whole array sorted; -1, -1 if sorted. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

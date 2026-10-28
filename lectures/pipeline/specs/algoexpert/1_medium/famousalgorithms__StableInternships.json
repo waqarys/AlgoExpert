@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Stable Internships",
+ "out": "algoexpert/medium/famousalgorithms/StableInternships",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Stable Internships",
+   "subtitle": "AlgoExpert · Medium · Famous Algorithms",
+   "narration": "Let's solve Stable Internships, a medium famous algorithms problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "N interns and n teams each rank the other side; produce a stable matching (Gale-Shapley with interns proposing).",
+    "Returns pairs [intern, team]."
+   ],
+   "narration": "Here's the problem. N interns and n teams each rank the other side; produce a stable matching (Gale-Shapley with interns proposing). Returns pairs intern, team ."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class StableInternships {\n    public static int[][] stableInternships(int[][] interns, int[][] teams) {\n        int n = interns.length;\n        int[][] teamRank = new int[n][n];\n        for (int t = 0; t < n; t++) for (int r = 0; r < n; r++) teamRank[t][teams[t][r]] = r;\n        int[] teamMatch = new int[n], next = new int[n];\n        java.util.Arrays.fill(teamMatch, -1);\n        java.util.ArrayDeque<Integer> free = new java.util.ArrayDeque<>();\n        for (int i = 0; i < n; i++) free.add(i);\n        while (!free.isEmpty()) {\n            int i = free.poll(), t = interns[i][next[i]++];\n            int cur = teamMatch[t];\n            if (cur == -1) teamMatch[t] = i;\n            else if (teamRank[t][i] < teamRank[t][cur]) { teamMatch[t] = i; free.add(cur); }\n            else free.add(i);\n        }\n        int[][] out = new int[n][];\n        for (int t = 0; t < n; t++) out[teamMatch[t]] = new int[]{teamMatch[t], t};\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "StableInternships.java",
+   "narration": "Here's the Java solution, starting with stable internships. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^2)",
+    "Space: O(n^2)"
+   ],
+   "narration": "Time is O of n squared. Space is O of n squared."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "N interns and n teams each rank the other side; produce a stable matching (Gale-Shapley with interns proposing).",
+    "Complexity: O(n^2)"
+   ],
+   "narration": "To recap Stable Internships: N interns and n teams each rank the other side; produce a stable matching (Gale-Shapley with interns proposing). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

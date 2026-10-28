@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Knight Connection",
+ "out": "algoexpert/hard/arrays/KnightConnection",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Knight Connection",
+   "subtitle": "AlgoExpert · Hard · Arrays",
+   "narration": "Let's solve Knight Connection, a hard arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Two knights on an infinite board move alternately/together; minimum number of turns for them to meet = ceil(knight-move distance / 2).",
+    "BFS from one knight to the other."
+   ],
+   "narration": "Here's the problem. Two knights on an infinite board move alternately or together; minimum number of turns for them to meet equals ceil(knight-move distance / 2). BFS from one knight to the other."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class KnightConnection {\n    public static int knightConnection(int[] a, int[] b) {\n        int[][] mv = {{1, 2}, {2, 1}, {-1, 2}, {-2, 1}, {1, -2}, {2, -1}, {-1, -2}, {-2, -1}};\n        ArrayDeque<int[]> q = new ArrayDeque<>();\n        Set<Long> seen = new HashSet<>();\n        q.add(new int[]{a[0], a[1], 0});\n        seen.add(key(a[0], a[1]));\n        while (true) {\n            int[] c = q.poll();\n            if (c[0] == b[0] && c[1] == b[1]) return (c[2] + 1) / 2;\n            for (int[] m : mv) {\n                int x = c[0] + m[0], y = c[1] + m[1];\n                if (seen.add(key(x, y))) q.add(new int[]{x, y, c[2] + 1});\n            }\n        }\n    }\n\n    private static long key(int x, int y) { return ((long) x << 32) ^ (y & 0xffffffffL); }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "KnightConnection.java",
+   "narration": "Here's the Java solution, starting with knight connection. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(d^2) for distance d",
+    "Space: O(d^2)"
+   ],
+   "narration": "Time is O of d squared for distance d. Space is O of d squared."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Two knights on an infinite board move alternately/together; minimum number of turns for them to meet = ceil(knight-move distance / 2).",
+    "Complexity: O(d^2) for distance d"
+   ],
+   "narration": "To recap Knight Connection: Two knights on an infinite board move alternately or together; minimum number of turns for them to meet equals ceil(knight-move distance / 2). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

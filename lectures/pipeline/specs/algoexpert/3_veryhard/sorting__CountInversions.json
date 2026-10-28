@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Count Inversions",
+ "out": "algoexpert/veryhard/sorting/CountInversions",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Count Inversions",
+   "subtitle": "AlgoExpert · Very Hard · Sorting",
+   "narration": "Let's solve Count Inversions, a very hard sorting problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Number of pairs i < j with a[i] > a[j], counted during merge sort."
+   ],
+   "narration": "Here's the problem. Number of pairs i under j with a i over a j , counted during merge sort."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class CountInversions {\n    public static int countInversions(int[] array) {\n        int[] a = array.clone();\n        return (int) count(a, new int[a.length], 0, a.length - 1);\n    }\n\n    private static long count(int[] a, int[] aux, int lo, int hi) {\n        if (lo >= hi) return 0;\n        int mid = (lo + hi) >>> 1;\n        long inv = count(a, aux, lo, mid) + count(a, aux, mid + 1, hi);\n        System.arraycopy(a, lo, aux, lo, hi - lo + 1);\n        int i = lo, j = mid + 1;\n        for (int k = lo; k <= hi; k++) {\n            if (i > mid) a[k] = aux[j++];\n            else if (j > hi) a[k] = aux[i++];\n            else if (aux[j] < aux[i]) { a[k] = aux[j++]; inv += mid - i + 1; }\n            else a[k] = aux[i++];\n        }\n        return inv;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "CountInversions.java",
+   "narration": "Here's the Java solution, starting with count inversions. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n log n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Number of pairs i < j with a[i] > a[j], counted during merge sort.",
+    "Complexity: O(n log n)"
+   ],
+   "narration": "To recap Count Inversions: Number of pairs i under j with a i over a j , counted during merge sort. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

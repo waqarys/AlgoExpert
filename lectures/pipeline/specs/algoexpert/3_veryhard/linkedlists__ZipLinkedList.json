@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Zip Linked List",
+ "out": "algoexpert/veryhard/linkedlists/ZipLinkedList",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Zip Linked List",
+   "subtitle": "AlgoExpert · Very Hard · Linked Lists",
+   "narration": "Let's solve Zip Linked List, a very hard linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Reorder in place to first, last, second, second-to-last, … Split at middle, reverse second half, interleave."
+   ],
+   "narration": "Here's the problem. Reorder in place to first, last, second, second-to-last, Split at middle, reverse second half, interleave."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ZipLinkedList {\n    public static LinkedListNode zipLinkedList(LinkedListNode head) {\n        if (head == null || head.next == null) return head;\n        LinkedListNode slow = head, fast = head;\n        while (fast.next != null && fast.next.next != null) { slow = slow.next; fast = fast.next.next; }\n        LinkedListNode second = slow.next, prev = null;\n        slow.next = null;\n        while (second != null) { LinkedListNode n = second.next; second.next = prev; prev = second; second = n; }\n        LinkedListNode a = head, b = prev;\n        while (b != null) {\n            LinkedListNode an = a.next, bn = b.next;\n            a.next = b; b.next = an;\n            a = an; b = bn;\n        }\n        return head;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ZipLinkedList.java",
+   "narration": "Here's the Java solution, starting with zip linked list. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Reorder in place to first, last, second, second-to-last, … Split at middle, reverse second half, interleave.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Zip Linked List: Reorder in place to first, last, second, second-to-last, Split at middle, reverse second half, interleave. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

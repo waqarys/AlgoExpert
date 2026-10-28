@@ -6,7 +6,7 @@ Usage: python make_lecture.py SPEC [SPEC ...] [--voice en-US-GuyNeural] [--skip-
 A spec is a Python module (TITLE, OUT, SLIDES) or a JSON file {"title", "out", "slides"}.
 Outputs in lectures/<OUT>/: lecture.mp4, transcript.md, slides/NN.png (1920x1080), slides.pdf, code/*.
 """
-import argparse, asyncio, importlib.util, json, os, re, shutil, subprocess, sys, tempfile
+import argparse, asyncio, textwrap, importlib.util, json, os, re, shutil, subprocess, sys, tempfile
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
@@ -37,32 +37,45 @@ def canvas(heading, idx, total, title):
     fig.text(0.95, 0.03, f"{idx}/{total}", fontsize=12, color=MUTED, ha="right")
     return fig
 
-def draw_diagram(fig, edges, rect=(0.05, 0.1, 0.9, 0.72)):
+def draw_diagram(fig, edges, rect=(0.03, 0.08, 0.94, 0.76)):
     """Layered left-to-right box diagram from [(src, dst, label?)]."""
     nodes = []
     for e in edges:
         for n in e[:2]:
             if n not in nodes: nodes.append(n)
+    adj = {n: [] for n in nodes}
+    for e in edges: adj[e[0]].append(e[1])
+    state, back = {}, set()
+    def dfs(u):
+        state[u] = 1
+        for v in adj[u]:
+            if state.get(v) == 1: back.add((u, v))
+            elif v not in state: dfs(v)
+        state[u] = 2
+    for n in nodes:
+        if n not in state: dfs(n)
     level = {n: 0 for n in nodes}
     for _ in range(len(nodes)):
         for e in edges:
-            if level[e[1]] <= level[e[0]] and level[e[0]] < len(nodes): level[e[1]] = level[e[0]] + 1
+            if (e[0], e[1]) not in back: level[e[1]] = max(level[e[1]], level[e[0]] + 1)
     L = max(level.values()) + 1
     cols = {l: [n for n in nodes if level[n] == l] for l in range(L)}
     ax = fig.add_axes(rect); ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
-    pos, bw = {}, min(0.8 / L, 0.2)
+    pos, bw = {}, min(0.75 / L, 0.2)
     for l, ns in cols.items():
         for j, n in enumerate(ns):
             pos[n] = ((l + 0.5) / L, 1 - (j + 0.5) / len(ns))
-    bh = min(0.12, 0.8 / max(len(c) for c in cols.values()))
+    bh = min(0.16, 0.85 / max(len(c) for c in cols.values()))
     for e in edges:
         (x1, y1), (x2, y2) = pos[e[0]], pos[e[1]]
         ax.annotate("", xy=(x2 - bw / 2 if x2 > x1 else x2, y2), xytext=(x1 + bw / 2 if x2 > x1 else x1, y1),
-                    arrowprops=dict(arrowstyle="-|>", color=MUTED, lw=1.5, shrinkA=0, shrinkB=2))
+                    arrowprops=dict(arrowstyle="-|>", color=MUTED, lw=1.5, shrinkA=0, shrinkB=2,
+                                    connectionstyle="arc3,rad=0" if x2 > x1 else "arc3,rad=0.35"))
     for n, (x, y) in pos.items():
         ax.add_patch(FancyBboxPatch((x - bw / 2, y - bh / 2), bw, bh, boxstyle="round,pad=0.005,rounding_size=0.015",
                                     fc=PANEL, ec=ACCENT, lw=1.5))
-        ax.text(x, y, n, ha="center", va="center", fontsize=11 if len(n) < 22 else 9, color=FG, wrap=True)
+        ax.text(x, y, "\n".join(textwrap.wrap(n, max(10, int(bw * 95)))), ha="center", va="center",
+                fontsize=14 if len(n) < 16 else 12 if len(n) < 34 else 10, color=FG, linespacing=1.1)
 
 def render(s, path, idx, total, title):
     k = s["kind"]
@@ -74,11 +87,18 @@ def render(s, path, idx, total, title):
         y = 0.76
         for b in s.get("equations", []):
             fig.text(0.5, y - 0.04, b, fontsize=s.get("eq_size", 34), ha="center", color=ACCENT); y -= 0.15
-        n = len(s.get("bullets", []))
-        size = s.get("size", 24 if n <= 5 else 21 if n <= 6 else 18)
-        step = 0.1 if size >= 22 else 0.085 if size >= 20 else 0.075
-        for b in s.get("bullets", []):
-            fig.text(0.07, y, "•  " + b, fontsize=size, color=FG); y -= step
+        bl = s.get("bullets", [])
+        avail = y - 0.08
+        for size in ([s["size"]] if "size" in s else [24, 22, 20, 18, 16, 14]):
+            width = int(1150 / size)                      # ~chars per line at this size
+            wrapped = [textwrap.wrap(b, width) or [""] for b in bl]
+            lh = size / 72 / (H / DPI) * 1.45             # line height in figure fraction
+            need = sum(len(w) for w in wrapped) * lh + len(bl) * lh * 0.45
+            if need <= avail: break
+        for w in wrapped:
+            for j, line in enumerate(w):
+                fig.text(0.07, y, ("•  " if j == 0 else "    ") + line, fontsize=size, color=FG); y -= lh
+            y -= lh * 0.45
     elif k == "plot":
         ax = fig.add_axes(s.get("rect", [0.08, 0.12, 0.55, 0.68]), facecolor=PANEL)
         for sp in ax.spines.values(): sp.set_color("#334155")

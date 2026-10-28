@@ -1,0 +1,67 @@
+{
+ "title": "AlgoExpert · Nth Fibonacci",
+ "out": "algoexpert/easy/recursion/NthFibonacci",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Nth Fibonacci",
+   "subtitle": "AlgoExpert · Easy · Recursion",
+   "narration": "Let's solve Nth Fibonacci, an easy recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "F(1)=0, F(2)=1.",
+    "Iterative with two variables."
+   ],
+   "narration": "Here's the problem. F(1) equals 0, F(2) equals 1. Iterative with two variables."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each number only depends on the previous two, so we don't need recursion or an array."
+   ],
+   "narration": "Each number only depends on the previous two, so we don't need recursion or an array."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Handle n of one and two",
+    "2. Keep the last two values",
+    "3. Slide them forward n minus two times",
+    "4. Return the latest"
+   ],
+   "narration": "Step by step. First, handle n of one and two. Second, keep the last two values. Third, slide them forward n minus two times. Fourth, return the latest."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class NthFibonacci {\n    public static int getNthFib(int n) {\n        int a = 0, b = 1;\n        if (n == 1) return 0;\n        for (int i = 3; i <= n; i++) { int c = a + b; a = b; b = c; }\n        return b;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "NthFibonacci.java",
+   "narration": "Here's the Java solution, starting with get nth fib. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Each number only depends on the previous two, so we don't need recursion or an array.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Nth Fibonacci: Each number only depends on the previous two, so we don't need recursion or an array. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

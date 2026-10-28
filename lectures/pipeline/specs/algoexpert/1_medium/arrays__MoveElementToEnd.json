@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Move Element To End",
+ "out": "algoexpert/medium/arrays/MoveElementToEnd",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Move Element To End",
+   "subtitle": "AlgoExpert · Medium · Arrays",
+   "narration": "Let's solve Move Element To End, a medium arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "In place, move every occurrence of `toMove` to the end (other order irrelevant)."
+   ],
+   "narration": "Here's the problem. In place, move every occurrence of toMove to the end (other order irrelevant)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MoveElementToEnd {\n    public static List<Integer> moveElementToEnd(List<Integer> array, int toMove) {\n        int l = 0, r = array.size() - 1;\n        while (l < r) {\n            while (l < r && array.get(r) == toMove) r--;\n            if (array.get(l) == toMove) Collections.swap(array, l, r);\n            l++;\n        }\n        return array;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MoveElementToEnd.java",
+   "narration": "Here's the Java solution, starting with move element to end. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "In place, move every occurrence of `toMove` to the end (other order irrelevant).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Move Element To End: In place, move every occurrence of toMove to the end (other order irrelevant). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

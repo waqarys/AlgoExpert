@@ -1,0 +1,67 @@
+{
+ "title": "AlgoExpert · Two Number Sum",
+ "out": "algoexpert/easy/arrays/TwoNumberSum",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Two Number Sum",
+   "subtitle": "AlgoExpert · Easy · Arrays",
+   "narration": "Let's solve Two Number Sum, an easy arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Given distinct integers and a target, return any pair summing to the target (empty array if none)."
+   ],
+   "narration": "Here's the problem. Given distinct integers and a target, return any pair summing to the target (empty array if none)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "For each number x, we need to know if its partner, target minus x, has already appeared.",
+    "A hash set answers that instantly."
+   ],
+   "narration": "For each number x, we need to know if its partner, target minus x, has already appeared. A hash set answers that instantly."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Walk the array once",
+    "2. Check whether target minus x is in the set",
+    "3. If so, return the pair",
+    "4. Otherwise add x to the set"
+   ],
+   "narration": "Step by step. First, walk the array once. Second, check whether target minus x is in the set. Third, if so, return the pair. Fourth, otherwise add x to the set."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class TwoNumberSum {\n    public static int[] twoNumberSum(int[] array, int target) {\n        Set<Integer> seen = new HashSet<>();\n        for (int x : array) {\n            if (seen.contains(target - x)) return new int[]{target - x, x};\n            seen.add(x);\n        }\n        return new int[0];\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "TwoNumberSum.java",
+   "narration": "Here's the Java solution, starting with two number sum. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n) using a hash set of seen values"
+   ],
+   "narration": "Time is O of n. Space is O of n using a hash set of seen values."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "For each number x, we need to know if its partner, target minus x, has already appeared.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Two Number Sum: For each number x, we need to know if its partner, target minus x, has already appeared. A hash set answers that instantly. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

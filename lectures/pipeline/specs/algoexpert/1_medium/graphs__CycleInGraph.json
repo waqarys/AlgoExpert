@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Cycle In Graph",
+ "out": "algoexpert/medium/graphs/CycleInGraph",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Cycle In Graph",
+   "subtitle": "AlgoExpert · Medium · Graphs",
+   "narration": "Let's solve Cycle In Graph, a medium graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Directed graph as adjacency list; does it contain a cycle? 3-colour DFS."
+   ],
+   "narration": "Here's the problem. Directed graph as adjacency list; does it contain a cycle? 3-colour DFS."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class CycleInGraph {\n    public static boolean cycleInGraph(int[][] edges) {\n        int[] color = new int[edges.length];\n        for (int v = 0; v < edges.length; v++) if (color[v] == 0 && dfs(v, edges, color)) return true;\n        return false;\n    }\n\n    private static boolean dfs(int v, int[][] edges, int[] color) {\n        color[v] = 1;\n        for (int w : edges[v]) {\n            if (color[w] == 1) return true;\n            if (color[w] == 0 && dfs(w, edges, color)) return true;\n        }\n        color[v] = 2;\n        return false;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "CycleInGraph.java",
+   "narration": "Here's the Java solution, starting with cycle in graph. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(v + e)",
+    "Space: O(v)"
+   ],
+   "narration": "Time is O of v plus e. Space is O of v."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Directed graph as adjacency list; does it contain a cycle? 3-colour DFS.",
+    "Complexity: O(v + e)"
+   ],
+   "narration": "To recap Cycle In Graph: Directed graph as adjacency list; does it contain a cycle? 3-colour DFS. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,65 @@
+{
+ "title": "AlgoExpert · Depth First Search",
+ "out": "algoexpert/easy/graphs/DepthFirstSearch",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Depth First Search",
+   "subtitle": "AlgoExpert · Easy · Graphs",
+   "narration": "Let's solve Depth First Search, an easy graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Given a tree-like graph of named nodes, return names in DFS (pre-order) order."
+   ],
+   "narration": "Here's the problem. Given a tree-like graph of named nodes, return names in DFS (pre-order) order."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Depth-first search visits a node, then fully explores each child before moving to the next sibling."
+   ],
+   "narration": "Depth-first search visits a node, then fully explores each child before moving to the next sibling."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Append the node's name",
+    "2. Recurse into each child in order",
+    "3. Return the collected list"
+   ],
+   "narration": "Step by step. First, append the node's name. Second, recurse into each child in order. Third, return the collected list."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class DepthFirstSearch {\n    public static class Node {\n        public final String name;\n        public final List<Node> children = new ArrayList<>();\n        public Node(String name) { this.name = name; }\n        public Node addChild(String name) { children.add(new Node(name)); return this; }\n        public List<String> depthFirstSearch(List<String> out) {\n            out.add(name);\n            for (Node c : children) c.depthFirstSearch(out);\n            return out;\n        }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "DepthFirstSearch.java",
+   "narration": "Here's the Java solution, starting with node. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(v + e)",
+    "Space: O(v)"
+   ],
+   "narration": "Time is O of v plus e. Space is O of v."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Depth-first search visits a node, then fully explores each child before moving to the next sibling.",
+    "Complexity: O(v + e)"
+   ],
+   "narration": "To recap Depth First Search: Depth-first search visits a node, then fully explores each child before moving to the next sibling. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

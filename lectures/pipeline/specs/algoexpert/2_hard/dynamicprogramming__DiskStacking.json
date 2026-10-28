@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Disk Stacking",
+ "out": "algoexpert/hard/dynamicprogramming/DiskStacking",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Disk Stacking",
+   "subtitle": "AlgoExpert · Hard · Dynamic Programming",
+   "narration": "Let's solve Disk Stacking, a hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Disks [width, depth, height]; stack them so each disk is strictly smaller in all three dimensions than the one below, maximising total height.",
+    "Returns the chosen disks ordered from top (smallest) to bottom (largest)."
+   ],
+   "narration": "Here's the problem. Disks width, depth, height ; stack them so each disk is strictly smaller in all three dimensions than the one below, maximising total height. Returns the chosen disks ordered from top (smallest) to bottom (largest)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class DiskStacking {\n    public static List<Integer[]> diskStacking(List<Integer[]> disks) {\n        List<Integer[]> d = new ArrayList<>(disks);\n        d.sort(Comparator.comparingInt(x -> x[2]));\n        int n = d.size(), best = 0;\n        int[] h = new int[n], prev = new int[n];\n        for (int i = 0; i < n; i++) {\n            h[i] = d.get(i)[2];\n            prev[i] = -1;\n            for (int j = 0; j < i; j++) {\n                Integer[] a = d.get(j), b = d.get(i);\n                if (a[0] < b[0] && a[1] < b[1] && a[2] < b[2] && h[j] + b[2] > h[i]) { h[i] = h[j] + b[2]; prev[i] = j; }\n            }\n            if (h[i] > h[best]) best = i;\n        }\n        LinkedList<Integer[]> out = new LinkedList<>();\n        for (int i = best; i != -1; i = prev[i]) out.addFirst(d.get(i));\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "DiskStacking.java",
+   "narration": "Here's the Java solution, starting with disk stacking. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^2)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n squared. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Disks [width, depth, height]; stack them so each disk is strictly smaller in all three dimensions than the one below, maximising total height.",
+    "Complexity: O(n^2)"
+   ],
+   "narration": "To recap Disk Stacking: Disks width, depth, height ; stack them so each disk is strictly smaller in all three dimensions than the one below, maximising total height. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

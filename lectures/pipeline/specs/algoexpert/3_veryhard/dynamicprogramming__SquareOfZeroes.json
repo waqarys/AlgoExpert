@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Square Of Zeroes",
+ "out": "algoexpert/veryhard/dynamicprogramming/SquareOfZeroes",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Square Of Zeroes",
+   "subtitle": "AlgoExpert · Very Hard · Dynamic Programming",
+   "narration": "Let's solve Square Of Zeroes, a very hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Does the 0/1 matrix contain a square (side >= 2) whose border is entirely 0s?",
+    "Precompute consecutive zeros to the right and downward per cell."
+   ],
+   "narration": "Here's the problem. Does the 0 or 1 matrix contain a square (side over equals 2) whose border is entirely 0s? Precompute consecutive zeros to the right and downward per cell."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SquareOfZeroes {\n    public static boolean squareOfZeroes(int[][] m) {\n        int n = m.length;\n        int[][] right = new int[n + 1][n + 1], down = new int[n + 1][n + 1];\n        for (int r = n - 1; r >= 0; r--) for (int c = n - 1; c >= 0; c--) if (m[r][c] == 0) {\n            right[r][c] = right[r][c + 1] + 1;\n            down[r][c] = down[r + 1][c] + 1;\n        }\n        for (int r = 0; r < n; r++) for (int c = 0; c < n; c++)\n            for (int s = 2; r + s <= n && c + s <= n; s++)\n                if (right[r][c] >= s && down[r][c] >= s && right[r + s - 1][c] >= s && down[r][c + s - 1] >= s) return true;\n        return false;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SquareOfZeroes.java",
+   "narration": "Here's the Java solution, starting with square of zeroes. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^3)",
+    "Space: O(n^2)"
+   ],
+   "narration": "Time is O of n cubed. Space is O of n squared."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Does the 0/1 matrix contain a square (side >= 2) whose border is entirely 0s?",
+    "Complexity: O(n^3)"
+   ],
+   "narration": "To recap Square Of Zeroes: Does the 0 or 1 matrix contain a square (side over equals 2) whose border is entirely 0s? Try re-implementing it from scratch without looking."
+  }
+ ]
+}

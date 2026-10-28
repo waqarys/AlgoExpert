@@ -1,0 +1,148 @@
+{
+ "title": "SystemsExpert · Design the Twitch API",
+ "out": "systemsexpert/13-design-the-twitch-api",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Design the Twitch API",
+   "subtitle": "SystemsExpert design walkthrough",
+   "narration": "In this lecture we design the Twitch API. We'll follow the interview framework: clarify, set requirements, estimate, sketch the architecture, define the data and API, then dive into the hard parts and the trade-offs."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Clarifying questions",
+   "bullets": [
+    "Which parts of the page are in scope: video player, chat, viewer count, follow/subscribe buttons?",
+    "Logged-in and anonymous viewers?",
+    "Are there chat moderation features (bans, slow mode, emote-only)?",
+    "Does the API serve the video itself, or only metadata plus a playback URL?"
+   ],
+   "narration": "Start by clarifying the scope with your interviewer. Good questions here are: Which parts of the page are in scope: video player, chat, viewer count, follow or subscribe buttons? Logged-in and anonymous viewers? Are there chat moderation features (bans, slow mode, emote-only)? Does the API serve the video itself, or only metadata plus a playback URL?"
+  },
+  {
+   "kind": "bullets",
+   "heading": "Functional requirements",
+   "bullets": [
+    "Get stream info for a channel: title, game, live/offline, viewer count, playback URL",
+    "Real-time chat: send and receive messages, with moderation",
+    "Follow and unfollow a channel; subscribe (paid tiers)",
+    "Notify followers when a channel goes live"
+   ],
+   "narration": "The functional requirements. Get stream info for a channel: title, game, live or offline, viewer count, playback URL. Real-time chat: send and receive messages, with moderation. Follow and unfollow a channel; subscribe (paid tiers). Notify followers when a channel goes live."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Non-functional requirements",
+   "bullets": [
+    "Chat fan-out to 100k+ viewers in one channel, delivered in under a second",
+    "Viewer counts can be approximate and a few seconds stale",
+    "Subscriptions and payments must be strongly consistent and idempotent"
+   ],
+   "narration": "The non-functional requirements. Chat fan-out to 100k plus viewers in one channel, delivered in under a second. Viewer counts can be approximate and a few seconds stale. Subscriptions and payments must be strongly consistent and idempotent."
+  },
+  {
+   "kind": "code",
+   "heading": "Entities",
+   "code": "Channel   { id, ownerUserId, title, gameId, isLive, streamStartedAt }\nUser      { id, username, ... }\nFollow    { userId, channelId, createdAt }\nSubscription { id, userId, channelId, tier, status, renewsAt }\nChatMessage  { id, channelId, userId, text, createdAt }\nBan       { channelId, userId, expiresAt? }",
+   "lang": "text",
+   "font_size": 26,
+   "filename": "05_entities.txt",
+   "narration": "Here are the core entities. The main records are Channel, User, Follow, Subscription, ChatMessage, Ban. Each one maps to a table or a key-value record, keyed so that the hot queries are single lookups."
+  },
+  {
+   "kind": "code",
+   "heading": "API",
+   "code": "GET    /channels/{channelId}               -> Channel + viewerCount + playbackUrl (signed, short-lived)\nGET    /channels/{channelId}/viewers/count\nPOST   /channels/{channelId}/follow        (idempotent)\nDELETE /channels/{channelId}/follow\nPOST   /channels/{channelId}/subscriptions { tier, paymentToken, idempotencyKey }\nDELETE /subscriptions/{subscriptionId}\n\n# Chat: long-lived connection\nWS     /channels/{channelId}/chat\n  client -> { type: \"send\", text, clientMessageId }\n  server -> { type: \"message\", ChatMessage } | { type: \"moderation\", action, userId }\nPOST   /channels/{channelId}/bans { userId, durationSec? }   (moderators only)\nPOST   /channels/{channelId}/chat-settings { slowModeSec, emoteOnly, followersOnly }",
+   "lang": "text",
+   "font_size": 26,
+   "filename": "06_api.txt",
+   "narration": "The API. The main endpoints are: GET channels by channelId; GET channels by channelId viewers count; POST channels by channelId follow; DELETE channels by channelId follow; POST channels by channelId subscriptions; DELETE subscriptions by subscriptionId; WS channels by channelId chat; POST channels by channelId bans. Each one is small, resource-oriented and easy to version."
+  },
+  {
+   "kind": "bullets",
+   "heading": "API",
+   "bullets": [
+    "Pagination with cursors on list endpoints.",
+    "Auth with OAuth bearer tokens, scoped per action."
+   ],
+   "narration": "Pagination with cursors on list endpoints. Auth with OAuth bearer tokens, scoped per action."
+  },
+  {
+   "kind": "diagram",
+   "heading": "High-level architecture",
+   "edges": [
+    [
+     "Clients",
+     "API Gateway / LB"
+    ],
+    [
+     "API Gateway / LB",
+     "Channel & Follow API"
+    ],
+    [
+     "API Gateway / LB",
+     "Chat WebSocket servers"
+    ],
+    [
+     "Chat WebSocket servers",
+     "Pub/Sub per channel"
+    ],
+    [
+     "Channel & Follow API",
+     "SQL: channels, follows, subs"
+    ],
+    [
+     "Channel & Follow API",
+     "Redis: live state, viewer counts"
+    ],
+    [
+     "Chat WebSocket servers",
+     "Chat moderation service"
+    ],
+    [
+     "Stream ingest",
+     "Event queue"
+    ],
+    [
+     "Event queue",
+     "Notification service"
+    ]
+   ],
+   "narration": "Here's the high-level architecture. Clients connects to API Gateway / LB. API Gateway / LB connects to Channel and Follow API and Chat WebSocket servers. Chat WebSocket servers connects to Pub or Sub per channel and Chat moderation service. Channel and Follow API connects to SQL: channels, follows, subs and Redis: live state, viewer counts. Stream ingest connects to Event queue. Event queue connects to Notification service."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Deep dives",
+   "bullets": [
+    "Chat fan-out: clients hash to WebSocket servers; each server subscribes to the channel topic it has viewers for. A message is published once and each server pushes to its local sockets. For huge channels, batch messages every ~100 ms and sample or rate-limit sending.",
+    "Moderation: check bans and slow mode before publishing (cache them in Redis). Deletions are published as moderation events so clients remove messages.",
+    "Viewer count: each WS/edge server reports per-channel counts every few seconds; an aggregator sums them into Redis. Show approximate values.",
+    "Go-live notifications: an ingest event goes onto a queue; workers page through followers and send push/email in batches. Large channels take minutes, which is acceptable.",
+    "Subscriptions: require an idempotency key, call the payment provider, write the subscription in a transaction, then emit an event (badge in chat, emote unlock).",
+    "Video: the API returns only a signed CDN playlist URL (HLS); the video bytes never go through this API."
+   ],
+   "narration": "Let's go deeper on one of the hard parts: Chat fan-out: clients hash to WebSocket servers; each server subscribes to the channel topic it has viewers for. A message is published once and each server pushes to its local sockets. For huge channels, batch messages every about 100 ms and sample or rate-limit sending. Moderation: check bans and slow mode before publishing (cache them in Redis). Deletions are published as moderation events so clients remove messages. Viewer count: each WS or edge server reports per-channel counts every few seconds; an aggregator sums them into Redis. Show approximate values. Go-live notifications: an ingest event goes onto a queue; workers page through followers and send push or email in batches. Large channels take minutes, which is acceptable. Subscriptions: require an idempotency key, call the payment provider, write the subscription in a transaction, then emit an event (badge in chat, emote unlock). Video: the API returns only a signed CDN playlist URL (HLS); the video bytes never go through this API."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Trade-offs",
+   "bullets": [
+    "WebSockets versus long polling for chat: WS gives lower latency and less overhead.",
+    "Chat is persisted asynchronously (log/queue → storage). The live path doesn't wait on the database.",
+    "Viewer counts are eventually consistent; payments are strongly consistent."
+   ],
+   "narration": "Finally, the key trade-offs. WebSockets versus long polling for chat: WS gives lower latency and less overhead. Chat is persisted asynchronously (log or queue to storage). The live path doesn't wait on the database. Viewer counts are eventually consistent; payments are strongly consistent."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Clarify scope, then functional + non-functional needs",
+    "Estimate load to size storage and fan-out",
+    "Core pieces: Clients, API Gateway / LB, Channel & Follow API, Chat WebSocket servers, Pub/Sub per channel",
+    "Know your trade-offs and failure modes"
+   ],
+   "narration": "To recap the Twitch API: we clarified the scope, set functional and non-functional requirements, estimated the load, sketched an architecture built around Clients, API Gateway / LB, Channel and Follow API, Chat WebSocket servers, and walked through the deep dives and trade-offs. Practise explaining each decision out loud."
+  }
+ ]
+}

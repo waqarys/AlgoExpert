@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Reconstruct Bst",
+ "out": "algoexpert/medium/binarysearchtrees/ReconstructBst",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Reconstruct Bst",
+   "subtitle": "AlgoExpert · Medium · Binary Search Trees",
+   "narration": "Let's solve Reconstruct Bst, a medium binary search trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Rebuild a BST from its pre-order traversal (duplicates go right) using value bounds."
+   ],
+   "narration": "Here's the problem. Rebuild a BST from its pre-order traversal (duplicates go right) using value bounds."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ReconstructBst {\n    private static int idx;\n\n    public static synchronized BST reconstructBst(List<Integer> pre) {\n        idx = 0;\n        return build(pre, Long.MIN_VALUE, Long.MAX_VALUE);\n    }\n\n    private static BST build(List<Integer> pre, long lo, long hi) {\n        if (idx == pre.size()) return null;\n        int v = pre.get(idx);\n        if (v < lo || v >= hi) return null;\n        idx++;\n        BST n = new BST(v);\n        n.left = build(pre, lo, v);\n        n.right = build(pre, v, hi);\n        return n;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ReconstructBst.java",
+   "narration": "Here's the Java solution, starting with reconstruct bst. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Rebuild a BST from its pre-order traversal (duplicates go right) using value bounds.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Reconstruct Bst: Rebuild a BST from its pre-order traversal (duplicates go right) using value bounds. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

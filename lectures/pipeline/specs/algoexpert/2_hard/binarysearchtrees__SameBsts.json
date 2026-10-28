@@ -1,0 +1,57 @@
+{
+ "title": "AlgoExpert · Same Bsts",
+ "out": "algoexpert/hard/binarysearchtrees/SameBsts",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Same Bsts",
+   "subtitle": "AlgoExpert · Hard · Binary Search Trees",
+   "narration": "Let's solve Same Bsts, a hard binary search trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Would inserting the two arrays (left to right) produce identical BSTs, without building them?",
+    "Recurse on first-smaller / first-greater-or-equal descendants within value bounds, using indices only."
+   ],
+   "narration": "Here's the problem. Would inserting the two arrays (left to right) produce identical BSTs, without building them? Recurse on first-smaller / first-greater-or-equal descendants within value bounds, using indices only."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (1/2)",
+   "code": "public class SameBsts {\n    public static boolean sameBsts(List<Integer> a, List<Integer> b) {\n        if (a.size() != b.size()) return false;\n        if (a.isEmpty()) return true;\n        return same(a, b, 0, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);\n    }\n\n    private static boolean same(List<Integer> a, List<Integer> b, int ia, int ib, int min, int max) {\n        if (ia == -1 || ib == -1) return ia == ib;\n        if (!a.get(ia).equals(b.get(ib))) return false;\n        int v = a.get(ia);\n        return same(a, b, smaller(a, ia, min), smaller(b, ib, min), min, v)\n                && same(a, b, bigger(a, ia, max), bigger(b, ib, max), v, max);\n    }\n\n    private static int smaller(List<Integer> x, int start, int min) {\n        for (int i = start + 1; i < x.size(); i++) if (x.get(i) < x.get(start) && x.get(i) >= min) return i;\n        return -1;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SameBsts_part1.java",
+   "narration": "Here's the Java solution, starting with same bsts. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (2/2)",
+   "code": "    private static int bigger(List<Integer> x, int start, int max) {\n        for (int i = start + 1; i < x.size(); i++) if (x.get(i) >= x.get(start) && x.get(i) < max) return i;\n        return -1;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SameBsts_part2.java",
+   "narration": "Continuing with bigger."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^2)",
+    "Space: O(d)"
+   ],
+   "narration": "Time is O of n squared. Space is O of d."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Would inserting the two arrays (left to right) produce identical BSTs, without building them?",
+    "Complexity: O(n^2)"
+   ],
+   "narration": "To recap Same Bsts: Would inserting the two arrays (left to right) produce identical BSTs, without building them? Try re-implementing it from scratch without looking."
+  }
+ ]
+}

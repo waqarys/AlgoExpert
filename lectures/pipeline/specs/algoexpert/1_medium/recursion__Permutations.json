@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Permutations",
+ "out": "algoexpert/medium/recursion/Permutations",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Permutations",
+   "subtitle": "AlgoExpert · Medium · Recursion",
+   "narration": "Let's solve Permutations, a medium recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "All orderings of a list of distinct ints (empty input yields an empty list)."
+   ],
+   "narration": "Here's the problem. All orderings of a list of distinct ints (empty input yields an empty list)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class Permutations {\n    public static List<List<Integer>> getPermutations(List<Integer> array) {\n        List<List<Integer>> out = new ArrayList<>();\n        if (!array.isEmpty()) permute(0, new ArrayList<>(array), out);\n        return out;\n    }\n\n    private static void permute(int i, List<Integer> a, List<List<Integer>> out) {\n        if (i == a.size() - 1) { out.add(new ArrayList<>(a)); return; }\n        for (int j = i; j < a.size(); j++) { Collections.swap(a, i, j); permute(i + 1, a, out); Collections.swap(a, i, j); }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "Permutations.java",
+   "narration": "Here's the Java solution, starting with get permutations. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n * n!)",
+    "Space: O(n * n!)"
+   ],
+   "narration": "Time is O of n times n factorial. Space is O of n times n factorial."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "All orderings of a list of distinct ints (empty input yields an empty list).",
+    "Complexity: O(n * n!)"
+   ],
+   "narration": "To recap Permutations: All orderings of a list of distinct ints (empty input yields an empty list). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Minimum Characters For Words",
+ "out": "algoexpert/medium/strings/MinimumCharactersForWords",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Minimum Characters For Words",
+   "subtitle": "AlgoExpert · Medium · Strings",
+   "narration": "Let's solve Minimum Characters For Words, a medium strings problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Smallest multiset of characters that can spell each word (one at a time)."
+   ],
+   "narration": "Here's the problem. Smallest multiset of characters that can spell each word (one at a time)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MinimumCharactersForWords {\n    public static char[] minimumCharactersForWords(String[] words) {\n        TreeMap<Character, Integer> need = new TreeMap<>();\n        for (String w : words) {\n            TreeMap<Character, Integer> f = new TreeMap<>();\n            for (char c : w.toCharArray()) f.merge(c, 1, Integer::sum);\n            f.forEach((c, n) -> need.merge(c, n, Math::max));\n        }\n        List<Character> out = new ArrayList<>();\n        need.forEach((c, n) -> { for (int i = 0; i < n; i++) out.add(c); });\n        char[] r = new char[out.size()];\n        for (int i = 0; i < r.length; i++) r[i] = out.get(i);\n        return r;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MinimumCharactersForWords.java",
+   "narration": "Here's the Java solution, starting with minimum characters for words. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n * l)",
+    "Space: O(c)"
+   ],
+   "narration": "Time is O of n times l. Space is O of c."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Smallest multiset of characters that can spell each word (one at a time).",
+    "Complexity: O(n * l)"
+   ],
+   "narration": "To recap Minimum Characters For Words: Smallest multiset of characters that can spell each word (one at a time). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

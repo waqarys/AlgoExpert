@@ -1,0 +1,66 @@
+{
+ "title": "AlgoExpert · Binary Search",
+ "out": "algoexpert/easy/searching/BinarySearch",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Binary Search",
+   "subtitle": "AlgoExpert · Easy · Searching",
+   "narration": "Let's solve Binary Search, an easy searching problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Return the index of target in a sorted array, or -1."
+   ],
+   "narration": "Here's the problem. Return the index of target in a sorted array, or -1."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "In a sorted array, comparing with the middle element tells us which half can contain the target."
+   ],
+   "narration": "In a sorted array, comparing with the middle element tells us which half can contain the target."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Keep left and right bounds",
+    "2. Check the middle",
+    "3. Discard the half that can't contain the target",
+    "4. Return the index or minus one"
+   ],
+   "narration": "Step by step. First, keep left and right bounds. Second, check the middle. Third, discard the half that can't contain the target. Fourth, return the index or minus one."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class BinarySearch {\n    public static int binarySearch(int[] array, int target) {\n        int lo = 0, hi = array.length - 1;\n        while (lo <= hi) {\n            int mid = (lo + hi) >>> 1;\n            if (array[mid] == target) return mid;\n            if (array[mid] < target) lo = mid + 1; else hi = mid - 1;\n        }\n        return -1;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "BinarySearch.java",
+   "narration": "Here's the Java solution, starting with binary search. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(log n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of log n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "In a sorted array, comparing with the middle element tells us which half can contain the target.",
+    "Complexity: O(log n)"
+   ],
+   "narration": "To recap Binary Search: In a sorted array, comparing with the middle element tells us which half can contain the target. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Find Loop",
+ "out": "algoexpert/hard/linkedlists/FindLoop",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Find Loop",
+   "subtitle": "AlgoExpert · Hard · Linked Lists",
+   "narration": "Let's solve Find Loop, a hard linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "The list contains a cycle; return the node where the loop begins (Floyd's algorithm)."
+   ],
+   "narration": "Here's the problem. The list contains a cycle; return the node where the loop begins (Floyd's algorithm)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class FindLoop {\n    public static LinkedListNode findLoop(LinkedListNode head) {\n        LinkedListNode slow = head.next, fast = head.next.next;\n        while (slow != fast) { slow = slow.next; fast = fast.next.next; }\n        slow = head;\n        while (slow != fast) { slow = slow.next; fast = fast.next; }\n        return slow;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "FindLoop.java",
+   "narration": "Here's the Java solution, starting with find loop. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "The list contains a cycle; return the node where the loop begins (Floyd's algorithm).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Find Loop: The list contains a cycle; return the node where the loop begins (Floyd's algorithm). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

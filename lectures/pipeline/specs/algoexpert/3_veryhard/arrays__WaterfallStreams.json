@@ -1,0 +1,50 @@
+{
+ "title": "AlgoExpert · Waterfall Streams",
+ "out": "algoexpert/veryhard/arrays/WaterfallStreams",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Waterfall Streams",
+   "subtitle": "AlgoExpert · Very Hard · Arrays",
+   "narration": "Let's solve Waterfall Streams, a very hard arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Water poured at the top of `source` column falls through a grid of 0 (air) and 1 (block).",
+    "On hitting a block it splits half left, half right, flowing sideways until it can fall (or is lost at a wall).",
+    "Return percentages reaching each bottom-row column.",
+    "Row-by-row simulation."
+   ],
+   "narration": "Here's the problem. Water poured at the top of source column falls through a grid of 0 (air) and 1 (block). On hitting a block it splits half left, half right, flowing sideways until it can fall (or is lost at a wall). Return percentages reaching each bottom-row column. Row-by-row simulation."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class WaterfallStreams {\n    public static double[] waterfallStreams(double[][] array, int source) {\n        int w = array[0].length;\n        double[] row = new double[w];\n        row[source] = -1; // negative = water amount, to distinguish from blocks\n        for (int r = 1; r < array.length; r++) {\n            double[] cur = array[r].clone();\n            for (int c = 0; c < w; c++) {\n                double water = row[c];\n                if (water >= 0) continue;\n                if (cur[c] != 1.0) { cur[c] += water; continue; }\n                double split = water / 2;\n                for (int k = c - 1; k >= 0; k--) {\n                    if (row[k] == 1.0) break;\n                    if (cur[k] != 1.0) { cur[k] += split; break; }\n                }\n                for (int k = c + 1; k < w; k++) {\n                    if (row[k] == 1.0) break;\n                    if (cur[k] != 1.0) { cur[k] += split; break; }\n                }\n            }\n            row = cur;\n        }\n        double[] out = new double[w];\n        for (int c = 0; c < w; c++) out[c] = row[c] < 0 ? -row[c] * 100 : 0;\n        return out;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "WaterfallStreams.java",
+   "narration": "Here's the Java solution, starting with waterfall streams. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(w^2 * h)",
+    "Space: O(w)"
+   ],
+   "narration": "Time is O of w squared times h. Space is O of w."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Water poured at the top of `source` column falls through a grid of 0 (air) and 1 (block).",
+    "Complexity: O(w^2 * h)"
+   ],
+   "narration": "To recap Waterfall Streams: Water poured at the top of source column falls through a grid of 0 (air) and 1 (block). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

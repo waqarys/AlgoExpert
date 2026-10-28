@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Compare Leaf Traversal",
+ "out": "algoexpert/veryhard/binarytrees/CompareLeafTraversal",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Compare Leaf Traversal",
+   "subtitle": "AlgoExpert · Very Hard · Binary Trees",
+   "narration": "Let's solve Compare Leaf Traversal, a very hard binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Do two trees have the same sequence of leaves left-to-right?",
+    "Lazy iterators."
+   ],
+   "narration": "Here's the problem. Do two trees have the same sequence of leaves left-to-right? Lazy iterators."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class CompareLeafTraversal {\n    public static boolean compareLeafTraversal(BinaryTree a, BinaryTree b) {\n        ArrayDeque<BinaryTree> sa = new ArrayDeque<>(), sb = new ArrayDeque<>();\n        sa.push(a); sb.push(b);\n        while (true) {\n            BinaryTree la = nextLeaf(sa), lb = nextLeaf(sb);\n            if (la == null || lb == null) return la == lb;\n            if (la.value != lb.value) return false;\n        }\n    }\n\n    private static BinaryTree nextLeaf(ArrayDeque<BinaryTree> st) {\n        while (!st.isEmpty()) {\n            BinaryTree n = st.pop();\n            if (n.left == null && n.right == null) return n;\n            if (n.right != null) st.push(n.right);\n            if (n.left != null) st.push(n.left);\n        }\n        return null;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "CompareLeafTraversal.java",
+   "narration": "Here's the Java solution, starting with compare leaf traversal. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n + m)",
+    "Space: O(h1 + h2)"
+   ],
+   "narration": "Time is O of n plus m. Space is O of h1 plus h2."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Do two trees have the same sequence of leaves left-to-right?",
+    "Complexity: O(n + m)"
+   ],
+   "narration": "To recap Compare Leaf Traversal: Do two trees have the same sequence of leaves left-to-right? Try re-implementing it from scratch without looking."
+  }
+ ]
+}

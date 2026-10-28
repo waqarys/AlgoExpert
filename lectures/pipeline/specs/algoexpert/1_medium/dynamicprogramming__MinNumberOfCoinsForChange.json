@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Min Number Of Coins For Change",
+ "out": "algoexpert/medium/dynamicprogramming/MinNumberOfCoinsForChange",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Min Number Of Coins For Change",
+   "subtitle": "AlgoExpert · Medium · Dynamic Programming",
+   "narration": "Let's solve Min Number Of Coins For Change, a medium dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Fewest coins summing to n, or -1 if impossible."
+   ],
+   "narration": "Here's the problem. Fewest coins summing to n, or -1 if impossible."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MinNumberOfCoinsForChange {\n    public static int minNumberOfCoinsForChange(int n, int[] denoms) {\n        int[] dp = new int[n + 1];\n        Arrays.fill(dp, Integer.MAX_VALUE);\n        dp[0] = 0;\n        for (int d : denoms)\n            for (int a = d; a <= n; a++)\n                if (dp[a - d] != Integer.MAX_VALUE) dp[a] = Math.min(dp[a], dp[a - d] + 1);\n        return dp[n] == Integer.MAX_VALUE ? -1 : dp[n];\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MinNumberOfCoinsForChange.java",
+   "narration": "Here's the Java solution, starting with min number of coins for change. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n*d)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n times d. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Fewest coins summing to n, or -1 if impossible.",
+    "Complexity: O(n*d)"
+   ],
+   "narration": "To recap Min Number Of Coins For Change: Fewest coins summing to n, or -1 if impossible. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

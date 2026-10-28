@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Search In Sorted Matrix",
+ "out": "algoexpert/medium/searching/SearchInSortedMatrix",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Search In Sorted Matrix",
+   "subtitle": "AlgoExpert · Medium · Searching",
+   "narration": "Let's solve Search In Sorted Matrix, a medium searching problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Rows and columns are sorted ascending; return [row, col] of target or [-1, -1].",
+    "Start top-right and eliminate a row or column each step."
+   ],
+   "narration": "Here's the problem. Rows and columns are sorted ascending; return row, col of target or -1, -1 . Start top-right and eliminate a row or column each step."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SearchInSortedMatrix {\n    public static int[] searchInSortedMatrix(int[][] m, int target) {\n        int r = 0, c = m[0].length - 1;\n        while (r < m.length && c >= 0) {\n            if (m[r][c] == target) return new int[]{r, c};\n            if (m[r][c] > target) c--; else r++;\n        }\n        return new int[]{-1, -1};\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SearchInSortedMatrix.java",
+   "narration": "Here's the Java solution, starting with search in sorted matrix. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n + m)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n plus m. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Rows and columns are sorted ascending; return [row, col] of target or [-1, -1].",
+    "Complexity: O(n + m)"
+   ],
+   "narration": "To recap Search In Sorted Matrix: Rows and columns are sorted ascending; return row, col of target or -1, -1 . Try re-implementing it from scratch without looking."
+  }
+ ]
+}

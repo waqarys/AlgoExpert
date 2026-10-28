@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Maximize Expression",
+ "out": "algoexpert/hard/dynamicprogramming/MaximizeExpression",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Maximize Expression",
+   "subtitle": "AlgoExpert · Hard · Dynamic Programming",
+   "narration": "Let's solve Maximize Expression, a hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Max of a - b + c - d over indices a < b < c < d (0 if fewer than 4 elements).",
+    "Four rolling DP layers."
+   ],
+   "narration": "Here's the problem. Max of a - b plus c - d over indices a under b under c under d (0 if fewer than 4 elements). Four rolling DP layers."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MaximizeExpression {\n    public static int maximizeExpression(int[] a) {\n        if (a.length < 4) return 0;\n        long s1 = Long.MIN_VALUE / 4, s2 = Long.MIN_VALUE / 4, s3 = Long.MIN_VALUE / 4, s4 = Long.MIN_VALUE / 4;\n        for (int i = 0; i < a.length; i++) {\n            if (i >= 3) s4 = Math.max(s4, s3 - a[i]);\n            if (i >= 2) s3 = Math.max(s3, s2 + a[i]);\n            if (i >= 1) s2 = Math.max(s2, s1 - a[i]);\n            s1 = Math.max(s1, a[i]);\n        }\n        return (int) s4;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MaximizeExpression.java",
+   "narration": "Here's the Java solution, starting with maximize expression. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Max of a - b + c - d over indices a < b < c < d (0 if fewer than 4 elements).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Maximize Expression: Max of a - b plus c - d over indices a under b under c under d (0 if fewer than 4 elements). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

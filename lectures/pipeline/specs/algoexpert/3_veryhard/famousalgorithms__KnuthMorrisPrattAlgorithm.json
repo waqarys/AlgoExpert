@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Knuth Morris Pratt Algorithm",
+ "out": "algoexpert/veryhard/famousalgorithms/KnuthMorrisPrattAlgorithm",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Knuth Morris Pratt Algorithm",
+   "subtitle": "AlgoExpert · Very Hard · Famous Algorithms",
+   "narration": "Let's solve Knuth Morris Pratt Algorithm, a very hard famous algorithms problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Does `sub` occur in `str`?",
+    "Prefix-function (failure table) matching."
+   ],
+   "narration": "Here's the problem. Does sub occur in str? Prefix-function (failure table) matching."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class KnuthMorrisPrattAlgorithm {\n    public static boolean knuthMorrisPrattAlgorithm(String str, String sub) {\n        if (sub.isEmpty()) return true;\n        int[] fail = new int[sub.length()];\n        for (int i = 1, k = 0; i < sub.length(); i++) {\n            while (k > 0 && sub.charAt(i) != sub.charAt(k)) k = fail[k - 1];\n            if (sub.charAt(i) == sub.charAt(k)) k++;\n            fail[i] = k;\n        }\n        for (int i = 0, k = 0; i < str.length(); i++) {\n            while (k > 0 && str.charAt(i) != sub.charAt(k)) k = fail[k - 1];\n            if (str.charAt(i) == sub.charAt(k)) k++;\n            if (k == sub.length()) return true;\n        }\n        return false;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "KnuthMorrisPrattAlgorithm.java",
+   "narration": "Here's the Java solution, starting with knuth morris pratt algorithm. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n + m)",
+    "Space: O(m)"
+   ],
+   "narration": "Time is O of n plus m. Space is O of m."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Does `sub` occur in `str`?",
+    "Complexity: O(n + m)"
+   ],
+   "narration": "To recap Knuth Morris Pratt Algorithm: Does sub occur in str? Try re-implementing it from scratch without looking."
+  }
+ ]
+}

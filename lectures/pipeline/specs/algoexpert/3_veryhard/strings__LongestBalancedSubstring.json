@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Longest Balanced Substring",
+ "out": "algoexpert/veryhard/strings/LongestBalancedSubstring",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Longest Balanced Substring",
+   "subtitle": "AlgoExpert · Very Hard · Strings",
+   "narration": "Let's solve Longest Balanced Substring, a very hard strings problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Length of the longest balanced-parentheses substring.",
+    "Two counting passes."
+   ],
+   "narration": "Here's the problem. Length of the longest balanced-parentheses substring. Two counting passes."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class LongestBalancedSubstring {\n    public static int longestBalancedSubstring(String s) {\n        return Math.max(scan(s, false), scan(s, true));\n    }\n\n    private static int scan(String s, boolean reverse) {\n        int open = 0, close = 0, best = 0;\n        for (int k = 0; k < s.length(); k++) {\n            char c = s.charAt(reverse ? s.length() - 1 - k : k);\n            boolean opening = (c == '(') != reverse;\n            if (opening) open++; else close++;\n            if (open == close) best = Math.max(best, 2 * close);\n            else if (close > open) open = close = 0;\n        }\n        return best;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LongestBalancedSubstring.java",
+   "narration": "Here's the Java solution, starting with longest balanced substring. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Length of the longest balanced-parentheses substring.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Longest Balanced Substring: Length of the longest balanced-parentheses substring. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

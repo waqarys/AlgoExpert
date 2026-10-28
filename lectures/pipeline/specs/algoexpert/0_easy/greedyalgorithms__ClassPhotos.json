@@ -1,0 +1,68 @@
+{
+ "title": "AlgoExpert · Class Photos",
+ "out": "algoexpert/easy/greedyalgorithms/ClassPhotos",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Class Photos",
+   "subtitle": "AlgoExpert · Easy · Greedy Algorithms",
+   "narration": "Let's solve Class Photos, an easy greedy algorithms problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Equal numbers of red and blue shirted students; all of one colour in the back row, each back-row student strictly taller than the person in front.",
+    "Is a photo possible?"
+   ],
+   "narration": "Here's the problem. Equal numbers of red and blue shirted students; all of one colour in the back row, each back-row student strictly taller than the person in front. Is a photo possible?"
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Sort both groups.",
+    "The taller group must stand in the back, and then every back student must be taller than the one in front."
+   ],
+   "narration": "Sort both groups. The taller group must stand in the back, and then every back student must be taller than the one in front."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Sort red and blue shirts",
+    "2. The group with the taller tallest goes in the back",
+    "3. Check every pair strictly",
+    "4. Any failure means false"
+   ],
+   "narration": "Step by step. First, sort red and blue shirts. Second, the group with the taller tallest goes in the back. Third, check every pair strictly. Fourth, any failure means false."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ClassPhotos {\n    public static boolean classPhotos(List<Integer> red, List<Integer> blue) {\n        Collections.sort(red, Collections.reverseOrder());\n        Collections.sort(blue, Collections.reverseOrder());\n        boolean redBack = red.get(0) > blue.get(0);\n        for (int i = 0; i < red.size(); i++) {\n            int back = redBack ? red.get(i) : blue.get(i), front = redBack ? blue.get(i) : red.get(i);\n            if (back <= front) return false;\n        }\n        return true;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ClassPhotos.java",
+   "narration": "Here's the Java solution, starting with class photos. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n log n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Sort both groups.",
+    "Complexity: O(n log n)"
+   ],
+   "narration": "To recap Class Photos: Sort both groups. The taller group must stand in the back, and then every back student must be taller than the one in front. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

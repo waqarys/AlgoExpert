@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Knapsack Problem",
+ "out": "algoexpert/hard/dynamicprogramming/KnapsackProblem",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Knapsack Problem",
+   "subtitle": "AlgoExpert · Hard · Dynamic Programming",
+   "narration": "Let's solve Knapsack Problem, a hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Items are [value, weight].",
+    "Returns [[maxValue], [item indices]]."
+   ],
+   "narration": "Here's the problem. Items are value, weight . Returns maxValue , item indices ."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class KnapsackProblem {\n    public static List<List<Integer>> knapsackProblem(int[][] items, int capacity) {\n        int n = items.length;\n        int[][] dp = new int[n + 1][capacity + 1];\n        for (int i = 1; i <= n; i++) for (int c = 0; c <= capacity; c++) {\n            dp[i][c] = dp[i - 1][c];\n            int w = items[i - 1][1];\n            if (w <= c) dp[i][c] = Math.max(dp[i][c], dp[i - 1][c - w] + items[i - 1][0]);\n        }\n        List<Integer> chosen = new ArrayList<>();\n        for (int i = n, c = capacity; i > 0; i--)\n            if (dp[i][c] != dp[i - 1][c]) { chosen.add(0, i - 1); c -= items[i - 1][1]; }\n        return List.of(List.of(dp[n][capacity]), chosen);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "KnapsackProblem.java",
+   "narration": "Here's the Java solution, starting with knapsack problem. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n*c)",
+    "Space: O(n*c)"
+   ],
+   "narration": "Time is O of n times c. Space is O of n times c."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Items are [value, weight].",
+    "Complexity: O(n*c)"
+   ],
+   "narration": "To recap Knapsack Problem: Items are value, weight . Try re-implementing it from scratch without looking."
+  }
+ ]
+}

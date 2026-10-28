@@ -1,0 +1,65 @@
+{
+ "title": "AlgoExpert · Insertion Sort",
+ "out": "algoexpert/easy/sorting/InsertionSort",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Insertion Sort",
+   "subtitle": "AlgoExpert · Easy · Sorting",
+   "narration": "Let's solve Insertion Sort, an easy sorting problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Grow a sorted prefix by sinking each new element into place."
+   ],
+   "narration": "Here's the problem. Grow a sorted prefix by sinking each new element into place."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Grow a sorted prefix, inserting each new element into its correct position by shifting it left."
+   ],
+   "narration": "Grow a sorted prefix, inserting each new element into its correct position by shifting it left."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. For each element from the second",
+    "2. Swap it left while it's smaller than its neighbour",
+    "3. The prefix stays sorted"
+   ],
+   "narration": "Step by step. First, for each element from the second. Second, swap it left while it's smaller than its neighbour. Third, the prefix stays sorted."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class InsertionSort {\n    public static int[] insertionSort(int[] a) {\n        for (int i = 1; i < a.length; i++) {\n            int x = a[i], j = i - 1;\n            while (j >= 0 && a[j] > x) { a[j + 1] = a[j]; j--; }\n            a[j + 1] = x;\n        }\n        return a;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "InsertionSort.java",
+   "narration": "Here's the Java solution, starting with insertion sort. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^2) worst, O(n) best",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n squared worst, O of n best. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Grow a sorted prefix, inserting each new element into its correct position by shifting it left.",
+    "Complexity: O(n^2) worst, O(n) best"
+   ],
+   "narration": "To recap Insertion Sort: Grow a sorted prefix, inserting each new element into its correct position by shifting it left. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,65 @@
+{
+ "title": "AlgoExpert · Transpose Matrix",
+ "out": "algoexpert/easy/arrays/TransposeMatrix",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Transpose Matrix",
+   "subtitle": "AlgoExpert · Easy · Arrays",
+   "narration": "Let's solve Transpose Matrix, an easy arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Flip a 2D matrix over its main diagonal."
+   ],
+   "narration": "Here's the problem. Flip a 2D matrix over its main diagonal."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Transposing swaps rows and columns, so the cell at row i, column j moves to row j, column i."
+   ],
+   "narration": "Transposing swaps rows and columns, so the cell at row i, column j moves to row j, column i."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Allocate a matrix with the dimensions swapped",
+    "2. Copy each cell to its mirrored position",
+    "3. Return the new matrix"
+   ],
+   "narration": "Step by step. First, allocate a matrix with the dimensions swapped. Second, copy each cell to its mirrored position. Third, return the new matrix."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class TransposeMatrix {\n    public static int[][] transposeMatrix(int[][] matrix) {\n        int rows = matrix.length, cols = matrix[0].length;\n        int[][] out = new int[cols][rows];\n        for (int r = 0; r < rows; r++) for (int c = 0; c < cols; c++) out[c][r] = matrix[r][c];\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "TransposeMatrix.java",
+   "narration": "Here's the Java solution, starting with transpose matrix. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(w*h)",
+    "Space: O(w*h)"
+   ],
+   "narration": "Time is O of w times h. Space is O of w times h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Transposing swaps rows and columns, so the cell at row i, column j moves to row j, column i.",
+    "Complexity: O(w*h)"
+   ],
+   "narration": "To recap Transpose Matrix: Transposing swaps rows and columns, so the cell at row i, column j moves to row j, column i. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

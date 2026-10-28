@@ -1,0 +1,150 @@
+{
+ "title": "SystemsExpert · Design the Reddit API",
+ "out": "systemsexpert/06-design-the-reddit-api",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Design the Reddit API",
+   "subtitle": "SystemsExpert design walkthrough",
+   "narration": "In this lecture we design the Reddit API. We'll follow the interview framework: clarify, set requirements, estimate, sketch the architecture, define the data and API, then dive into the hard parts and the trade-offs."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Clarifying questions",
+   "bullets": [
+    "Which entities: subreddits, posts, comments, votes, awards?",
+    "Is this about API shape more than infrastructure?",
+    "Pagination and sorting requirements?"
+   ],
+   "narration": "Start by clarifying the scope with your interviewer. Good questions here are: Which entities: subreddits, posts, comments, votes, awards? Is this about API shape more than infrastructure? Pagination and sorting requirements?"
+  },
+  {
+   "kind": "bullets",
+   "heading": "Functional requirements",
+   "bullets": [
+    "Subreddits: create, get, list posts",
+    "Posts: create, edit, delete, vote",
+    "Comments: threaded create/edit/delete/vote",
+    "Sorting: hot, new, top"
+   ],
+   "narration": "The functional requirements. Subreddits: create, get, list posts. Posts: create, edit, delete, vote. Comments: threaded create or edit or delete or vote. Sorting: hot, new, top."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Non-functional requirements",
+   "bullets": [
+    "Consistent, versioned, paginated REST resources",
+    "Idempotent votes"
+   ],
+   "narration": "The non-functional requirements. Consistent, versioned, paginated REST resources. Idempotent votes."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Capacity estimates",
+   "bullets": [
+    "Read-heavy (~100:1); vote writes are the hottest write path"
+   ],
+   "narration": "Now some rough capacity estimates, which drive the design. Read-heavy (about 100:1); vote writes are the hottest write path."
+  },
+  {
+   "kind": "diagram",
+   "heading": "High-level architecture",
+   "edges": [
+    [
+     "Client",
+     "REST API"
+    ],
+    [
+     "REST API",
+     "Subreddits"
+    ],
+    [
+     "REST API",
+     "Posts"
+    ],
+    [
+     "REST API",
+     "Comments, tree by parent_id"
+    ],
+    [
+     "REST API",
+     "Votes PK user,target"
+    ],
+    [
+     "Votes PK user,target",
+     "Score aggregator"
+    ],
+    [
+     "Score aggregator",
+     "Posts"
+    ]
+   ],
+   "narration": "Here's the high-level architecture. Client connects to REST API. REST API connects to Subreddits and Posts and Comments, tree by parent id and Votes PK user,target. Votes PK user,target connects to Score aggregator. Score aggregator connects to Posts."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Data model",
+   "bullets": [
+    "subreddit(id, name, description, created_by)",
+    "post(id, subreddit_id, author_id, title, body, score, comment_count, created_at, edited_at, deleted_at)",
+    "comment(id, post_id, parent_id, author_id, body, score, ...)",
+    "vote(user_id, target_id, target_type, value in {-1,0,1})"
+   ],
+   "narration": "Here is the data model. subreddit(id, name, description, created by). post(id, subreddit id, author id, title, body, score, comment count, created at, edited at, deleted at). comment(id, post id, parent id, author id, body, score, ). vote(user id, target id, target type, value in -1,0,1 )."
+  },
+  {
+   "kind": "code",
+   "heading": "API",
+   "code": "GET    /v1/subreddits/{name}\nGET    /v1/subreddits/{name}/posts?sort=hot|new|top&cursor=..&limit=..\nPOST   /v1/subreddits/{name}/posts            {title, body}\nPATCH  /v1/posts/{postId}                     {body}\nDELETE /v1/posts/{postId}\nGET    /v1/posts/{postId}/comments?sort=..&depth=..&cursor=..\nPOST   /v1/posts/{postId}/comments            {parentId?, body}\nPUT    /v1/posts/{postId}/vote                {value: -1|0|1}\nPUT    /v1/comments/{commentId}/vote          {value}",
+   "lang": "text",
+   "font_size": 26,
+   "filename": "08_api.txt",
+   "narration": "The API. The main endpoints are: GET v1 subreddits by name; GET v1 subreddits by name posts with sort equals hot new top and cursor equals .. and limit equals ..; POST v1 subreddits by name posts; PATCH v1 posts by postId; DELETE v1 posts by postId; GET v1 posts by postId comments with sort equals .. and depth equals .. and cursor equals ..; POST v1 posts by postId comments; PUT v1 posts by postId vote. Each one is small, resource-oriented and easy to version."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Votes",
+   "bullets": [
+    "PUT with an absolute value makes votes idempotent; the aggregator applies (new - old) deltas to cached scores asynchronously."
+   ],
+   "narration": "Deep dive: Votes. PUT with an absolute value makes votes idempotent; the aggregator applies (new - old) deltas to cached scores asynchronously."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Comment trees",
+   "bullets": [
+    "Fetch top-N roots by score then children to a limited depth; 'load more' via cursor on parent_id."
+   ],
+   "narration": "Deep dive: Comment trees. Fetch top-N roots by score then children to a limited depth; 'load more' via cursor on parent id."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Pagination",
+   "bullets": [
+    "Opaque cursors (score, id) rather than offsets so lists stay stable while new content arrives."
+   ],
+   "narration": "Deep dive: Pagination. Opaque cursors (score, id) rather than offsets so lists stay stable while new content arrives."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Trade-offs & alternatives",
+   "bullets": [
+    "Soft deletes keep threads intact ('[deleted]')",
+    "Denormalised counts are eventually consistent",
+    "PUT for votes vs POST upvote/downvote endpoints: PUT is simpler to make idempotent"
+   ],
+   "narration": "Finally, the key trade-offs. Soft deletes keep threads intact (' deleted '). Denormalised counts are eventually consistent. PUT for votes versus POST upvote or downvote endpoints: PUT is simpler to make idempotent."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Clarify scope, then functional + non-functional needs",
+    "Estimate load to size storage and fan-out",
+    "Core pieces: Client, REST API, Subreddits, Posts, Comments, tree by parent_id",
+    "Know your trade-offs and failure modes"
+   ],
+   "narration": "To recap the Reddit API: we clarified the scope, set functional and non-functional requirements, estimated the load, sketched an architecture built around Client, REST API, Subreddits, Posts, and walked through the deep dives and trade-offs. Practise explaining each decision out loud."
+  }
+ ]
+}

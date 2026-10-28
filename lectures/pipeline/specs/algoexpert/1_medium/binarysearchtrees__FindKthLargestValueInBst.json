@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Find Kth Largest Value In Bst",
+ "out": "algoexpert/medium/binarysearchtrees/FindKthLargestValueInBst",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Find Kth Largest Value In Bst",
+   "subtitle": "AlgoExpert · Medium · Binary Search Trees",
+   "narration": "Let's solve Find Kth Largest Value In Bst, a medium binary search trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Reverse in-order traversal, stopping after k nodes."
+   ],
+   "narration": "Here's the problem. Reverse in-order traversal, stopping after k nodes."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class FindKthLargestValueInBst {\n    private static int seen, answer;\n\n    public static synchronized int findKthLargestValueInBst(BST tree, int k) {\n        seen = 0; answer = -1;\n        walk(tree, k);\n        return answer;\n    }\n\n    private static void walk(BST n, int k) {\n        if (n == null || seen >= k) return;\n        walk(n.right, k);\n        if (seen < k) { seen++; if (seen == k) { answer = n.value; return; } walk(n.left, k); }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "FindKthLargestValueInBst.java",
+   "narration": "Here's the Java solution, starting with find kth largest value in bst. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(h + k)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of h plus k. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Reverse in-order traversal, stopping after k nodes.",
+    "Complexity: O(h + k)"
+   ],
+   "narration": "To recap Find Kth Largest Value In Bst: Reverse in-order traversal, stopping after k nodes. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

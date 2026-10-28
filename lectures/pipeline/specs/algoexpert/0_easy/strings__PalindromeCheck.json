@@ -1,0 +1,65 @@
+{
+ "title": "AlgoExpert · Palindrome Check",
+ "out": "algoexpert/easy/strings/PalindromeCheck",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Palindrome Check",
+   "subtitle": "AlgoExpert · Easy · Strings",
+   "narration": "Let's solve Palindrome Check, an easy strings problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Does the string read the same forwards and backwards?"
+   ],
+   "narration": "Here's the problem. Does the string read the same forwards and backwards?"
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Compare characters from both ends moving inward; any mismatch means it isn't a palindrome."
+   ],
+   "narration": "Compare characters from both ends moving inward; any mismatch means it isn't a palindrome."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Left pointer at the start, right at the end",
+    "2. Compare and move inward",
+    "3. Stop when they meet"
+   ],
+   "narration": "Step by step. First, left pointer at the start, right at the end. Second, compare and move inward. Third, stop when they meet."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class PalindromeCheck {\n    public static boolean isPalindrome(String s) {\n        for (int i = 0, j = s.length() - 1; i < j; i++, j--) if (s.charAt(i) != s.charAt(j)) return false;\n        return true;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "PalindromeCheck.java",
+   "narration": "Here's the Java solution, starting with is palindrome. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Compare characters from both ends moving inward; any mismatch means it isn't a palindrome.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Palindrome Check: Compare characters from both ends moving inward; any mismatch means it isn't a palindrome. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

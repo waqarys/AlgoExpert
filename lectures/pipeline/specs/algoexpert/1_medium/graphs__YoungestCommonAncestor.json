@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Youngest Common Ancestor",
+ "out": "algoexpert/medium/graphs/YoungestCommonAncestor",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Youngest Common Ancestor",
+   "subtitle": "AlgoExpert · Medium · Graphs",
+   "narration": "Let's solve Youngest Common Ancestor, a medium graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Nodes have only an `ancestor` pointer; find the deepest common ancestor of two descendants.",
+    "Equalise depths, then walk up together."
+   ],
+   "narration": "Here's the problem. Nodes have only an ancestor pointer; find the deepest common ancestor of two descendants. Equalise depths, then walk up together."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class YoungestCommonAncestor {\n    public static class AncestralTree {\n        public final char name;\n        public AncestralTree ancestor;\n        public AncestralTree(char name) { this.name = name; }\n    }\n\n    public static AncestralTree getYoungestCommonAncestor(AncestralTree top, AncestralTree a, AncestralTree b) {\n        int da = depth(a, top), db = depth(b, top);\n        while (da > db) { a = a.ancestor; da--; }\n        while (db > da) { b = b.ancestor; db--; }\n        while (a != b) { a = a.ancestor; b = b.ancestor; }\n        return a;\n    }\n\n    private static int depth(AncestralTree n, AncestralTree top) {\n        int d = 0;\n        while (n != top) { n = n.ancestor; d++; }\n        return d;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "YoungestCommonAncestor.java",
+   "narration": "Here's the Java solution, starting with ancestral tree. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(d)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of d. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Nodes have only an `ancestor` pointer; find the deepest common ancestor of two descendants.",
+    "Complexity: O(d)"
+   ],
+   "narration": "To recap Youngest Common Ancestor: Nodes have only an ancestor pointer; find the deepest common ancestor of two descendants. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

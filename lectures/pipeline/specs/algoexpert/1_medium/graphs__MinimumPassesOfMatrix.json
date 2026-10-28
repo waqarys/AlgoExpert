@@ -1,0 +1,49 @@
+{
+ "title": "AlgoExpert · Minimum Passes Of Matrix",
+ "out": "algoexpert/medium/graphs/MinimumPassesOfMatrix",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Minimum Passes Of Matrix",
+   "subtitle": "AlgoExpert · Medium · Graphs",
+   "narration": "Let's solve Minimum Passes Of Matrix, a medium graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Each pass, every negative adjacent to a positive flips sign.",
+    "Return the number of passes to clear all negatives, or -1 if impossible.",
+    "Multi-source BFS by levels."
+   ],
+   "narration": "Here's the problem. Each pass, every negative adjacent to a positive flips sign. Return the number of passes to clear all negatives, or -1 if impossible. Multi-source BFS by levels."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MinimumPassesOfMatrix {\n    public static int minimumPassesOfMatrix(int[][] m) {\n        ArrayDeque<int[]> q = new ArrayDeque<>();\n        for (int r = 0; r < m.length; r++) for (int c = 0; c < m[0].length; c++) if (m[r][c] > 0) q.add(new int[]{r, c});\n        int passes = 0;\n        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n        while (!q.isEmpty()) {\n            int size = q.size();\n            boolean flipped = false;\n            for (int i = 0; i < size; i++) {\n                int[] p = q.poll();\n                for (int[] d : dirs) {\n                    int r = p[0] + d[0], c = p[1] + d[1];\n                    if (r >= 0 && c >= 0 && r < m.length && c < m[0].length && m[r][c] < 0) {\n                        m[r][c] = -m[r][c]; q.add(new int[]{r, c}); flipped = true;\n                    }\n                }\n            }\n            if (flipped) passes++;\n        }\n        for (int[] row : m) for (int v : row) if (v < 0) return -1;\n        return passes;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MinimumPassesOfMatrix.java",
+   "narration": "Here's the Java solution, starting with minimum passes of matrix. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(w*h)",
+    "Space: O(w*h)"
+   ],
+   "narration": "Time is O of w times h. Space is O of w times h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Each pass, every negative adjacent to a positive flips sign.",
+    "Complexity: O(w*h)"
+   ],
+   "narration": "To recap Minimum Passes Of Matrix: Each pass, every negative adjacent to a positive flips sign. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

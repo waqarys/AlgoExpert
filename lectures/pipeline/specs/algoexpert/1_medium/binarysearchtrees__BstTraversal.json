@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Bst Traversal",
+ "out": "algoexpert/medium/binarysearchtrees/BstTraversal",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Bst Traversal",
+   "subtitle": "AlgoExpert · Medium · Binary Search Trees",
+   "narration": "Let's solve Bst Traversal, a medium binary search trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "In-order, pre-order and post-order traversals appending into a list."
+   ],
+   "narration": "Here's the problem. In-order, pre-order and post-order traversals appending into a list."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class BstTraversal {\n    public static List<Integer> inOrderTraverse(BST t, List<Integer> out) {\n        if (t != null) { inOrderTraverse(t.left, out); out.add(t.value); inOrderTraverse(t.right, out); }\n        return out;\n    }\n\n    public static List<Integer> preOrderTraverse(BST t, List<Integer> out) {\n        if (t != null) { out.add(t.value); preOrderTraverse(t.left, out); preOrderTraverse(t.right, out); }\n        return out;\n    }\n\n    public static List<Integer> postOrderTraverse(BST t, List<Integer> out) {\n        if (t != null) { postOrderTraverse(t.left, out); postOrderTraverse(t.right, out); out.add(t.value); }\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "BstTraversal.java",
+   "narration": "Here's the Java solution, starting with in order traverse. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "In-order, pre-order and post-order traversals appending into a list.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Bst Traversal: In-order, pre-order and post-order traversals appending into a list. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

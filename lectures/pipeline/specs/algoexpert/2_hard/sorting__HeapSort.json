@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Heap Sort",
+ "out": "algoexpert/hard/sorting/HeapSort",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Heap Sort",
+   "subtitle": "AlgoExpert · Hard · Sorting",
+   "narration": "Let's solve Heap Sort, a hard sorting problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Build a max-heap in place then repeatedly move the max to the end."
+   ],
+   "narration": "Here's the problem. Build a max-heap in place then repeatedly move the max to the end."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class HeapSort {\n    public static int[] heapSort(int[] a) {\n        for (int i = a.length / 2 - 1; i >= 0; i--) sift(a, i, a.length);\n        for (int end = a.length - 1; end > 0; end--) { int t = a[0]; a[0] = a[end]; a[end] = t; sift(a, 0, end); }\n        return a;\n    }\n\n    private static void sift(int[] a, int i, int n) {\n        while (2 * i + 1 < n) {\n            int c = 2 * i + 1;\n            if (c + 1 < n && a[c + 1] > a[c]) c++;\n            if (a[i] >= a[c]) return;\n            int t = a[i]; a[i] = a[c]; a[c] = t;\n            i = c;\n        }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "HeapSort.java",
+   "narration": "Here's the Java solution, starting with heap sort. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n log n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Build a max-heap in place then repeatedly move the max to the end.",
+    "Complexity: O(n log n)"
+   ],
+   "narration": "To recap Heap Sort: Build a max-heap in place then repeatedly move the max to the end. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

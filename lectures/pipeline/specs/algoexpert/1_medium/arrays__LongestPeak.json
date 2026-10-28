@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Longest Peak",
+ "out": "algoexpert/medium/arrays/LongestPeak",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Longest Peak",
+   "subtitle": "AlgoExpert · Medium · Arrays",
+   "narration": "Let's solve Longest Peak, a medium arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Length of the longest strictly-increasing-then-strictly-decreasing run (needs >= 3 items)."
+   ],
+   "narration": "Here's the problem. Length of the longest strictly-increasing-then-strictly-decreasing run (needs over equals 3 items)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class LongestPeak {\n    public static int longestPeak(int[] a) {\n        int best = 0, i = 1;\n        while (i < a.length - 1) {\n            if (a[i - 1] < a[i] && a[i] > a[i + 1]) {\n                int l = i - 1, r = i + 1;\n                while (l > 0 && a[l - 1] < a[l]) l--;\n                while (r < a.length - 1 && a[r + 1] < a[r]) r++;\n                best = Math.max(best, r - l + 1);\n                i = r;\n            } else i++;\n        }\n        return best;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LongestPeak.java",
+   "narration": "Here's the Java solution, starting with longest peak. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Length of the longest strictly-increasing-then-strictly-decreasing run (needs >= 3 items).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Longest Peak: Length of the longest strictly-increasing-then-strictly-decreasing run (needs over equals 3 items). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

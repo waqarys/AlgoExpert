@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Split Binary Tree",
+ "out": "algoexpert/medium/binarytrees/SplitBinaryTree",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Split Binary Tree",
+   "subtitle": "AlgoExpert · Medium · Binary Trees",
+   "narration": "Let's solve Split Binary Tree, a medium binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Can removing one edge split the tree into two parts with equal sums?",
+    "Return that half-sum, else 0."
+   ],
+   "narration": "Here's the problem. Can removing one edge split the tree into two parts with equal sums? Return that half-sum, else 0."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SplitBinaryTree {\n    public static int splitBinaryTree(BinaryTree t) {\n        int total = sum(t);\n        if (total % 2 != 0) return 0;\n        boolean[] found = {false};\n        check(t, total / 2, found, true);\n        return found[0] ? total / 2 : 0;\n    }\n\n    private static int sum(BinaryTree t) { return t == null ? 0 : t.value + sum(t.left) + sum(t.right); }\n\n    private static int check(BinaryTree t, int half, boolean[] found, boolean root) {\n        if (t == null) return 0;\n        int s = t.value + check(t.left, half, found, false) + check(t.right, half, found, false);\n        if (!root && s == half) found[0] = true;\n        return s;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SplitBinaryTree.java",
+   "narration": "Here's the Java solution, starting with split binary tree. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Can removing one edge split the tree into two parts with equal sums?",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Split Binary Tree: Can removing one edge split the tree into two parts with equal sums? Try re-implementing it from scratch without looking."
+  }
+ ]
+}

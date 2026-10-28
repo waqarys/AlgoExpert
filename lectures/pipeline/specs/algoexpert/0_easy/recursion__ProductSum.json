@@ -1,0 +1,66 @@
+{
+ "title": "AlgoExpert · Product Sum",
+ "out": "algoexpert/easy/recursion/ProductSum",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Product Sum",
+   "subtitle": "AlgoExpert · Easy · Recursion",
+   "narration": "Let's solve Product Sum, an easy recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "A \"special\" array holds ints or nested special arrays; each nested array's sum is multiplied by its depth (outermost = 1)."
+   ],
+   "narration": "Here's the problem. A \"special\" array holds ints or nested special arrays; each nested array's sum is multiplied by its depth (outermost equals 1)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A nested array's sum is multiplied by its depth, which is naturally recursive."
+   ],
+   "narration": "A nested array's sum is multiplied by its depth, which is naturally recursive."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Sum the elements at this level",
+    "2. For a nested list, recurse with depth plus one",
+    "3. Multiply the level sum by the depth",
+    "4. Return it"
+   ],
+   "narration": "Step by step. First, sum the elements at this level. Second, for a nested list, recurse with depth plus one. Third, multiply the level sum by the depth. Fourth, return it."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ProductSum {\n    public static int productSum(List<Object> array) { return productSum(array, 1); }\n\n    @SuppressWarnings(\"unchecked\")\n    private static int productSum(List<Object> array, int depth) {\n        int sum = 0;\n        for (Object o : array) sum += (o instanceof List) ? productSum((List<Object>) o, depth + 1) : (Integer) o;\n        return sum * depth;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ProductSum.java",
+   "narration": "Here's the Java solution, starting with product sum. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n) total elements",
+    "Space: O(d) depth"
+   ],
+   "narration": "Time is O of n total elements. Space is O of d depth."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "A nested array's sum is multiplied by its depth, which is naturally recursive.",
+    "Complexity: O(n) total elements"
+   ],
+   "narration": "To recap Product Sum: A nested array's sum is multiplied by its depth, which is naturally recursive. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

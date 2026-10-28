@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Levenshtein Distance",
+ "out": "algoexpert/medium/dynamicprogramming/LevenshteinDistance",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Levenshtein Distance",
+   "subtitle": "AlgoExpert · Medium · Dynamic Programming",
+   "narration": "Let's solve Levenshtein Distance, a medium dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Minimum single-char inserts/deletes/substitutions turning a into b."
+   ],
+   "narration": "Here's the problem. Minimum single-char inserts or deletes or substitutions turning a into b."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class LevenshteinDistance {\n    public static int levenshteinDistance(String a, String b) {\n        if (a.length() < b.length()) { String t = a; a = b; b = t; }\n        int[] prev = new int[b.length() + 1], cur = new int[b.length() + 1];\n        for (int j = 0; j <= b.length(); j++) prev[j] = j;\n        for (int i = 1; i <= a.length(); i++) {\n            cur[0] = i;\n            for (int j = 1; j <= b.length(); j++)\n                cur[j] = a.charAt(i - 1) == b.charAt(j - 1) ? prev[j - 1]\n                        : 1 + Math.min(prev[j - 1], Math.min(prev[j], cur[j - 1]));\n            int[] t = prev; prev = cur; cur = t;\n        }\n        return prev[b.length()];\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LevenshteinDistance.java",
+   "narration": "Here's the Java solution, starting with levenshtein distance. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n*m)",
+    "Space: O(min(n, m))"
+   ],
+   "narration": "Time is O of n times m. Space is O of min(n, m)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Minimum single-char inserts/deletes/substitutions turning a into b.",
+    "Complexity: O(n*m)"
+   ],
+   "narration": "To recap Levenshtein Distance: Minimum single-char inserts or deletes or substitutions turning a into b. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

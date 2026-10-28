@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Max Profit With K Transactions",
+ "out": "algoexpert/veryhard/dynamicprogramming/MaxProfitWithKTransactions",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Max Profit With K Transactions",
+   "subtitle": "AlgoExpert · Very Hard · Dynamic Programming",
+   "narration": "Let's solve Max Profit With K Transactions, a very hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Daily prices, at most k buy/sell pairs (no overlap); max profit."
+   ],
+   "narration": "Here's the problem. Daily prices, at most k buy or sell pairs (no overlap); max profit."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MaxProfitWithKTransactions {\n    public static int maxProfitWithKTransactions(int[] prices, int k) {\n        if (prices.length == 0) return 0;\n        int[] prev = new int[prices.length], cur = new int[prices.length];\n        for (int t = 1; t <= k; t++) {\n            int bestBuy = Integer.MIN_VALUE;\n            for (int d = 0; d < prices.length; d++) {\n                bestBuy = Math.max(bestBuy, prev[d] - prices[d]);\n                cur[d] = Math.max(d > 0 ? cur[d - 1] : 0, bestBuy + prices[d]);\n            }\n            int[] tmp = prev; prev = cur; cur = tmp;\n        }\n        return prev[prices.length - 1];\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MaxProfitWithKTransactions.java",
+   "narration": "Here's the Java solution, starting with max profit with k transactions. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n*k)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n times k. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Daily prices, at most k buy/sell pairs (no overlap); max profit.",
+    "Complexity: O(n*k)"
+   ],
+   "narration": "To recap Max Profit With K Transactions: Daily prices, at most k buy or sell pairs (no overlap); max profit. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

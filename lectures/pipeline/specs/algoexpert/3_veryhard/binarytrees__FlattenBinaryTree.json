@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Flatten Binary Tree",
+ "out": "algoexpert/veryhard/binarytrees/FlattenBinaryTree",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Flatten Binary Tree",
+   "subtitle": "AlgoExpert · Very Hard · Binary Trees",
+   "narration": "Let's solve Flatten Binary Tree, a very hard binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Rewire the tree in place into a doubly linked list in in-order order (left = prev, right = next); return the leftmost node."
+   ],
+   "narration": "Here's the problem. Rewire the tree in place into a doubly linked list in in-order order (left equals prev, right equals next); return the leftmost node."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class FlattenBinaryTree {\n    public static BinaryTree flattenBinaryTree(BinaryTree root) { return flatten(root)[0]; }\n\n    /** returns {leftmost, rightmost} of the flattened subtree */\n    private static BinaryTree[] flatten(BinaryTree n) {\n        BinaryTree leftMost = n, rightMost = n;\n        if (n.left != null) {\n            BinaryTree[] l = flatten(n.left);\n            l[1].right = n; n.left = l[1]; leftMost = l[0];\n        }\n        if (n.right != null) {\n            BinaryTree[] r = flatten(n.right);\n            r[0].left = n; n.right = r[0]; rightMost = r[1];\n        }\n        return new BinaryTree[]{leftMost, rightMost};\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "FlattenBinaryTree.java",
+   "narration": "Here's the Java solution, starting with flatten binary tree. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Rewire the tree in place into a doubly linked list in in-order order (left = prev, right = next); return the leftmost node.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Flatten Binary Tree: Rewire the tree in place into a doubly linked list in in-order order (left equals prev, right equals next); return the leftmost node. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

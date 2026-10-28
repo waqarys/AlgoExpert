@@ -1,0 +1,152 @@
+{
+ "title": "SystemsExpert · Design Slack",
+ "out": "systemsexpert/09-design-slack",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Design Slack",
+   "subtitle": "SystemsExpert design walkthrough",
+   "narration": "In this lecture we design Slack. We'll follow the interview framework: clarify, set requirements, estimate, sketch the architecture, define the data and API, then dive into the hard parts and the trade-offs."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Clarifying questions",
+   "bullets": [
+    "Channels and DMs? Threads, reactions, file uploads?",
+    "Max workspace size?",
+    "Must messages sync across devices with unread counts?"
+   ],
+   "narration": "Start by clarifying the scope with your interviewer. Good questions here are: Channels and DMs? Threads, reactions, file uploads? Max workspace size? Must messages sync across devices with unread counts?"
+  },
+  {
+   "kind": "bullets",
+   "heading": "Functional requirements",
+   "bullets": [
+    "Send/receive messages in channels and DMs in real time",
+    "Load message history with pagination",
+    "Unread indicators and mentions",
+    "Workspaces/organisations"
+   ],
+   "narration": "The functional requirements. Send or receive messages in channels and DMs in real time. Load message history with pagination. Unread indicators and mentions. Workspaces or organisations."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Non-functional requirements",
+   "bullets": [
+    "Messages delivered in < ~500 ms",
+    "No message loss; ordering per channel",
+    "Large orgs (100k members) supported"
+   ],
+   "narration": "The non-functional requirements. Messages delivered in under about 500 ms. No message loss; ordering per channel. Large orgs (100k members) supported."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Capacity estimates",
+   "bullets": [
+    "~10M DAU, ~100 messages/user/day -> ~1B messages/day ~ 12k/s avg",
+    "Messages ~1 KB -> ~1 TB/day"
+   ],
+   "narration": "Now some rough capacity estimates, which drive the design. about 10M DAU, about 100 messages per user per day to about 1B messages per day about 12k per s avg. Messages about 1 KB to about 1 TB per day."
+  },
+  {
+   "kind": "diagram",
+   "heading": "High-level architecture",
+   "edges": [
+    [
+     "Client",
+     "Gateway servers"
+    ],
+    [
+     "Client",
+     "REST API"
+    ],
+    [
+     "REST API",
+     "Messages DB sharded by channel_id"
+    ],
+    [
+     "REST API",
+     "Pub/Sub by channel"
+    ],
+    [
+     "Pub/Sub by channel",
+     "Gateway servers"
+    ],
+    [
+     "REST API",
+     "Read state: user, channel, last_read_ts"
+    ],
+    [
+     "REST API",
+     "Search index"
+    ]
+   ],
+   "narration": "Here's the high-level architecture. Client connects to Gateway servers and REST API. REST API connects to Messages DB sharded by channel id and Pub or Sub by channel and Read state: user, channel, last read ts and Search index. Pub or Sub by channel connects to Gateway servers."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Data model",
+   "bullets": [
+    "channels(id, workspace_id, name, type)",
+    "memberships(channel_id, user_id)",
+    "messages(channel_id, ts, author_id, body, thread_ts) PK(channel_id, ts)",
+    "read_state(user_id, channel_id, last_read_ts)"
+   ],
+   "narration": "Here is the data model. channels(id, workspace id, name, type). memberships(channel id, user id). messages(channel id, ts, author id, body, thread ts) PK(channel id, ts). read state(user id, channel id, last read ts)."
+  },
+  {
+   "kind": "code",
+   "heading": "API",
+   "code": "POST /channels/{id}/messages {text, clientMsgId}\nGET  /channels/{id}/messages?before=ts&limit=50\nPOST /channels/{id}/read {ts}\nWS   events: message.new, message.edited, reaction.added, typing",
+   "lang": "text",
+   "font_size": 26,
+   "filename": "08_api.txt",
+   "narration": "The API. The main endpoints are: POST channels by id messages; GET channels by id messages with before equals ts and limit equals 50; POST channels by id read; WS events:. Each one is small, resource-oriented and easy to version."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Real-time fan-out",
+   "bullets": [
+    "Gateways subscribe to channels their connected users belong to; a message is persisted first, then published; gateways push to sockets.",
+    "Very large channels fan out through hierarchical pub/sub."
+   ],
+   "narration": "Deep dive: Real-time fan-out. Gateways subscribe to channels their connected users belong to; a message is persisted first, then published; gateways push to sockets. Very large channels fan out through hierarchical pub or sub."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Ordering",
+   "bullets": [
+    "Server-assigned ts per channel (monotonic per shard); client dedupes with clientMsgId."
+   ],
+   "narration": "Deep dive: Ordering. Server-assigned ts per channel (monotonic per shard); client dedupes with clientMsgId."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Unreads",
+   "bullets": [
+    "Compare channel latest ts with read_state; computed on connect and kept live by events."
+   ],
+   "narration": "Deep dive: Unreads. Compare channel latest ts with read state; computed on connect and kept live by events."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Trade-offs & alternatives",
+   "bullets": [
+    "Sharding by channel keeps history queries local; huge workspaces need channel-level partitioning",
+    "Persist-then-publish adds a few ms but guarantees no lost messages"
+   ],
+   "narration": "Finally, the key trade-offs. Sharding by channel keeps history queries local; huge workspaces need channel-level partitioning. Persist-then-publish adds a few ms but guarantees no lost messages."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Clarify scope, then functional + non-functional needs",
+    "Estimate load to size storage and fan-out",
+    "Core pieces: Client, Gateway servers, REST API, Messages DB sharded by channel_id, Pub/Sub by channel",
+    "Know your trade-offs and failure modes"
+   ],
+   "narration": "To recap Slack: we clarified the scope, set functional and non-functional requirements, estimated the load, sketched an architecture built around Client, Gateway servers, REST API, Messages DB sharded by channel id, and walked through the deep dives and trade-offs. Practise explaining each decision out loud."
+  }
+ ]
+}

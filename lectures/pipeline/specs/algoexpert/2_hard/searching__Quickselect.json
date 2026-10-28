@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Quickselect",
+ "out": "algoexpert/hard/searching/Quickselect",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Quickselect",
+   "subtitle": "AlgoExpert · Hard · Searching",
+   "narration": "Let's solve Quickselect, a hard searching problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Kth smallest element (1-based) of an unsorted array, in place with Hoare-style partitioning."
+   ],
+   "narration": "Here's the problem. Kth smallest element (1-based) of an unsorted array, in place with Hoare-style partitioning."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class Quickselect {\n    public static int quickselect(int[] a, int k) {\n        int lo = 0, hi = a.length - 1, target = k - 1;\n        while (true) {\n            int p = lo, l = lo + 1, r = hi;\n            while (l <= r) {\n                if (a[l] > a[p] && a[r] < a[p]) swap(a, l, r);\n                if (a[l] <= a[p]) l++;\n                if (a[r] >= a[p]) r--;\n            }\n            swap(a, p, r);\n            if (r == target) return a[r];\n            if (r < target) lo = r + 1; else hi = r - 1;\n        }\n    }\n\n    static void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "Quickselect.java",
+   "narration": "Here's the Java solution, starting with quickselect. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n) avg, O(n^2) worst",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n avg, O of n squared worst. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Kth smallest element (1-based) of an unsorted array, in place with Hoare-style partitioning.",
+    "Complexity: O(n) avg, O(n^2) worst"
+   ],
+   "narration": "To recap Quickselect: Kth smallest element (1-based) of an unsorted array, in place with Hoare-style partitioning. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

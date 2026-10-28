@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Smallest Difference",
+ "out": "algoexpert/medium/arrays/SmallestDifference",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Smallest Difference",
+   "subtitle": "AlgoExpert · Medium · Arrays",
+   "narration": "Let's solve Smallest Difference, a medium arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Pick one number from each array with the smallest absolute difference; return [a, b]."
+   ],
+   "narration": "Here's the problem. Pick one number from each array with the smallest absolute difference; return a, b ."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SmallestDifference {\n    public static int[] smallestDifference(int[] a, int[] b) {\n        Arrays.sort(a);\n        Arrays.sort(b);\n        int i = 0, j = 0;\n        long best = Long.MAX_VALUE;\n        int[] pair = new int[2];\n        while (i < a.length && j < b.length) {\n            long d = Math.abs((long) a[i] - b[j]);\n            if (d < best) { best = d; pair = new int[]{a[i], b[j]}; }\n            if (a[i] < b[j]) i++; else if (a[i] > b[j]) j++; else break;\n        }\n        return pair;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SmallestDifference.java",
+   "narration": "Here's the Java solution, starting with smallest difference. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log n + m log m)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n log n plus m log m. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Pick one number from each array with the smallest absolute difference; return [a, b].",
+    "Complexity: O(n log n + m log m)"
+   ],
+   "narration": "To recap Smallest Difference: Pick one number from each array with the smallest absolute difference; return a, b . Try re-implementing it from scratch without looking."
+  }
+ ]
+}

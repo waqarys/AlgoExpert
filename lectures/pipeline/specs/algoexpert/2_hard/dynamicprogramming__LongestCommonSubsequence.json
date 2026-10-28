@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Longest Common Subsequence",
+ "out": "algoexpert/hard/dynamicprogramming/LongestCommonSubsequence",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Longest Common Subsequence",
+   "subtitle": "AlgoExpert · Hard · Dynamic Programming",
+   "narration": "Let's solve Longest Common Subsequence, a hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "One LCS of two strings as a list of chars."
+   ],
+   "narration": "Here's the problem. One LCS of two strings as a list of chars."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class LongestCommonSubsequence {\n    public static List<Character> longestCommonSubsequence(String a, String b) {\n        int n = a.length(), m = b.length();\n        int[][] dp = new int[n + 1][m + 1];\n        for (int i = 1; i <= n; i++) for (int j = 1; j <= m; j++)\n            dp[i][j] = a.charAt(i - 1) == b.charAt(j - 1) ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1]);\n        List<Character> out = new ArrayList<>();\n        int i = n, j = m;\n        while (i > 0 && j > 0) {\n            if (a.charAt(i - 1) == b.charAt(j - 1)) { out.add(0, a.charAt(i - 1)); i--; j--; }\n            else if (dp[i - 1][j] >= dp[i][j - 1]) i--; else j--;\n        }\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LongestCommonSubsequence.java",
+   "narration": "Here's the Java solution, starting with longest common subsequence. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n*m)",
+    "Space: O(n*m)"
+   ],
+   "narration": "Time is O of n times m. Space is O of n times m."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "One LCS of two strings as a list of chars.",
+    "Complexity: O(n*m)"
+   ],
+   "narration": "To recap Longest Common Subsequence: One LCS of two strings as a list of chars. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

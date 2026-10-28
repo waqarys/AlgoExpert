@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Spiral Traverse",
+ "out": "algoexpert/medium/arrays/SpiralTraverse",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Spiral Traverse",
+   "subtitle": "AlgoExpert · Medium · Arrays",
+   "narration": "Let's solve Spiral Traverse, a medium arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Read a (possibly non-square) matrix in clockwise spiral order."
+   ],
+   "narration": "Here's the problem. Read a (possibly non-square) matrix in clockwise spiral order."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SpiralTraverse {\n    public static List<Integer> spiralTraverse(int[][] m) {\n        List<Integer> out = new ArrayList<>();\n        if (m.length == 0) return out;\n        int sr = 0, er = m.length - 1, sc = 0, ec = m[0].length - 1;\n        while (sr <= er && sc <= ec) {\n            for (int c = sc; c <= ec; c++) out.add(m[sr][c]);\n            for (int r = sr + 1; r <= er; r++) out.add(m[r][ec]);\n            for (int c = ec - 1; c >= sc && sr < er; c--) out.add(m[er][c]);\n            for (int r = er - 1; r > sr && sc < ec; r--) out.add(m[r][sc]);\n            sr++; er--; sc++; ec--;\n        }\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SpiralTraverse.java",
+   "narration": "Here's the Java solution, starting with spiral traverse. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n) cells",
+    "Space: O(n) output"
+   ],
+   "narration": "Time is O of n cells. Space is O of n output."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Read a (possibly non-square) matrix in clockwise spiral order.",
+    "Complexity: O(n) cells"
+   ],
+   "narration": "To recap Spiral Traverse: Read a (possibly non-square) matrix in clockwise spiral order. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Longest Palindromic Substring",
+ "out": "algoexpert/medium/strings/LongestPalindromicSubstring",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Longest Palindromic Substring",
+   "subtitle": "AlgoExpert · Medium · Strings",
+   "narration": "Let's solve Longest Palindromic Substring, a medium strings problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Expand around every centre (odd and even)."
+   ],
+   "narration": "Here's the problem. Expand around every centre (odd and even)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class LongestPalindromicSubstring {\n    public static String longestPalindromicSubstring(String s) {\n        int bs = 0, be = 0;\n        for (int i = 0; i < s.length(); i++)\n            for (int j = i; j <= i + 1; j++) {\n                int l = i, r = j;\n                while (l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)) { l--; r++; }\n                if (r - l - 1 > be - bs) { bs = l + 1; be = r; }\n            }\n        return s.substring(bs, be);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LongestPalindromicSubstring.java",
+   "narration": "Here's the Java solution, starting with longest palindromic substring. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^2)",
+    "Space: O(n) output"
+   ],
+   "narration": "Time is O of n squared. Space is O of n output."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Expand around every centre (odd and even).",
+    "Complexity: O(n^2)"
+   ],
+   "narration": "To recap Longest Palindromic Substring: Expand around every centre (odd and even). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

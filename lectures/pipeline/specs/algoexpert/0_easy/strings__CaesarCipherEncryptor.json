@@ -1,0 +1,66 @@
+{
+ "title": "AlgoExpert · Caesar Cipher Encryptor",
+ "out": "algoexpert/easy/strings/CaesarCipherEncryptor",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Caesar Cipher Encryptor",
+   "subtitle": "AlgoExpert · Easy · Strings",
+   "narration": "Let's solve Caesar Cipher Encryptor, an easy strings problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Shift each lowercase letter by `key` positions, wrapping around z."
+   ],
+   "narration": "Here's the problem. Shift each lowercase letter by key positions, wrapping around z."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Shift each letter by the key, wrapping around the alphabet with modulo twenty-six."
+   ],
+   "narration": "Shift each letter by the key, wrapping around the alphabet with modulo twenty-six."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Reduce the key modulo twenty-six",
+    "2. For each letter, compute its new code",
+    "3. Wrap past z back to a",
+    "4. Build the new string"
+   ],
+   "narration": "Step by step. First, reduce the key modulo twenty-six. Second, for each letter, compute its new code. Third, wrap past z back to a. Fourth, build the new string."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class CaesarCipherEncryptor {\n    public static String caesarCypherEncryptor(String str, int key) {\n        int k = key % 26;\n        StringBuilder sb = new StringBuilder();\n        for (char c : str.toCharArray()) sb.append((char) ('a' + (c - 'a' + k) % 26));\n        return sb.toString();\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "CaesarCipherEncryptor.java",
+   "narration": "Here's the Java solution, starting with caesar cypher encryptor. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Shift each letter by the key, wrapping around the alphabet with modulo twenty-six.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Caesar Cipher Encryptor: Shift each letter by the key, wrapping around the alphabet with modulo twenty-six. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

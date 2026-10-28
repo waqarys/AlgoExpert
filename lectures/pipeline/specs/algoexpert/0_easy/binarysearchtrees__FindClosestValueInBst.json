@@ -1,0 +1,67 @@
+{
+ "title": "AlgoExpert · Find Closest Value In Bst",
+ "out": "algoexpert/easy/binarysearchtrees/FindClosestValueInBst",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Find Closest Value In Bst",
+   "subtitle": "AlgoExpert · Easy · Binary Search Trees",
+   "narration": "Let's solve Find Closest Value In Bst, an easy binary search trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Return the value in the BST closest to the target (assume one answer).",
+    "Iteratively walk down, pruning half the tree each step."
+   ],
+   "narration": "Here's the problem. Return the value in the BST closest to the target (assume one answer). Iteratively walk down, pruning half the tree each step."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "The BST ordering lets us discard half the tree at every step, just like binary search."
+   ],
+   "narration": "The BST ordering lets us discard half the tree at every step, just like binary search."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Start at the root, tracking the closest value",
+    "2. Update closest if this node is nearer",
+    "3. Go left if the target is smaller, right if larger",
+    "4. Stop on an exact match or a null child"
+   ],
+   "narration": "Step by step. First, start at the root, tracking the closest value. Second, update closest if this node is nearer. Third, go left if the target is smaller, right if larger. Fourth, stop on an exact match or a null child."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class FindClosestValueInBst {\n    public static int findClosestValueInBst(BST tree, int target) {\n        int closest = tree.value;\n        BST cur = tree;\n        while (cur != null) {\n            if (Math.abs(target - cur.value) < Math.abs(target - closest)) closest = cur.value;\n            if (target < cur.value) cur = cur.left;\n            else if (target > cur.value) cur = cur.right;\n            else break;\n        }\n        return closest;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "FindClosestValueInBst.java",
+   "narration": "Here's the Java solution, starting with find closest value in bst. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(log n) avg, O(n) worst",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of log n avg, O of n worst. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "The BST ordering lets us discard half the tree at every step, just like binary search.",
+    "Complexity: O(log n) avg, O(n) worst"
+   ],
+   "narration": "To recap Find Closest Value In Bst: The BST ordering lets us discard half the tree at every step, just like binary search. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

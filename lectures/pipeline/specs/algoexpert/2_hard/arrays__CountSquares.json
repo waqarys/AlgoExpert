@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Count Squares",
+ "out": "algoexpert/hard/arrays/CountSquares",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Count Squares",
+   "subtitle": "AlgoExpert · Hard · Arrays",
+   "narration": "Let's solve Count Squares, a hard arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Number of squares (any orientation) whose four corners are all in the point set.",
+    "For each pair as a diagonal, compute the other two corners; each square is found twice."
+   ],
+   "narration": "Here's the problem. Number of squares (any orientation) whose four corners are all in the point set. For each pair as a diagonal, compute the other two corners; each square is found twice."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class CountSquares {\n    public static int countSquares(int[][] points) {\n        Set<String> set = new HashSet<>();\n        for (int[] p : points) set.add(p[0] * 2 + \",\" + p[1] * 2);\n        int count = 0;\n        for (int i = 0; i < points.length; i++)\n            for (int j = 0; j < points.length; j++) {\n                if (i == j) continue;\n                long x1 = points[i][0] * 2L, y1 = points[i][1] * 2L, x2 = points[j][0] * 2L, y2 = points[j][1] * 2L;\n                long mx = (x1 + x2) / 2, my = (y1 + y2) / 2, dx = x1 - mx, dy = y1 - my;\n                if (set.contains((mx - dy) + \",\" + (my + dx)) && set.contains((mx + dy) + \",\" + (my - dx))) count++;\n            }\n        return count / 4;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "CountSquares.java",
+   "narration": "Here's the Java solution, starting with count squares. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^2)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n squared. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Number of squares (any orientation) whose four corners are all in the point set.",
+    "Complexity: O(n^2)"
+   ],
+   "narration": "To recap Count Squares: Number of squares (any orientation) whose four corners are all in the point set. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Min Height Bst",
+ "out": "algoexpert/medium/binarysearchtrees/MinHeightBst",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Min Height Bst",
+   "subtitle": "AlgoExpert · Medium · Binary Search Trees",
+   "narration": "Let's solve Min Height Bst, a medium binary search trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Build a BST of minimal height from a sorted list of distinct ints (pick middle as root)."
+   ],
+   "narration": "Here's the problem. Build a BST of minimal height from a sorted list of distinct ints (pick middle as root)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MinHeightBst {\n    public static BST minHeightBst(List<Integer> a) { return build(a, 0, a.size() - 1); }\n\n    private static BST build(List<Integer> a, int lo, int hi) {\n        if (lo > hi) return null;\n        int mid = (lo + hi) / 2;\n        BST n = new BST(a.get(mid));\n        n.left = build(a, lo, mid - 1);\n        n.right = build(a, mid + 1, hi);\n        return n;\n    }\n\n    public static int height(BST t) { return t == null ? 0 : 1 + Math.max(height(t.left), height(t.right)); }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MinHeightBst.java",
+   "narration": "Here's the Java solution, starting with min height bst. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Build a BST of minimal height from a sorted list of distinct ints (pick middle as root).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Min Height Bst: Build a BST of minimal height from a sorted list of distinct ints (pick middle as root). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,160 @@
+{
+ "title": "SystemsExpert · Design a Stockbroker",
+ "out": "systemsexpert/03-design-a-stockbroker",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Design a Stockbroker",
+   "subtitle": "SystemsExpert design walkthrough",
+   "narration": "In this lecture we design a Stockbroker. We'll follow the interview framework: clarify, set requirements, estimate, sketch the architecture, define the data and API, then dive into the hard parts and the trade-offs."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Clarifying questions",
+   "bullets": [
+    "Do we run the exchange or route orders to one?",
+    "Order types (market, limit), and is trading only during market hours?",
+    "How many users and orders per day?",
+    "Need real-time price feeds in the app?"
+   ],
+   "narration": "Start by clarifying the scope with your interviewer. Good questions here are: Do we run the exchange or route orders to one? Order types (market, limit), and is trading only during market hours? How many users and orders per day? Need real-time price feeds in the app?"
+  },
+  {
+   "kind": "bullets",
+   "heading": "Functional requirements",
+   "bullets": [
+    "Place, cancel and view orders",
+    "See balances and positions",
+    "Order status updates when filled"
+   ],
+   "narration": "The functional requirements. Place, cancel and view orders. See balances and positions. Order status updates when filled."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Non-functional requirements",
+   "bullets": [
+    "Never lose or duplicate an order; balances must be correct",
+    "Low latency to the exchange",
+    "Highly available during market hours"
+   ],
+   "narration": "The non-functional requirements. Never lose or duplicate an order; balances must be correct. Low latency to the exchange. Highly available during market hours."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Capacity estimates",
+   "bullets": [
+    "~10M users, ~20M orders/day, peaks at open/close ~2k orders/s",
+    "Each order ~1 KB -> tiny storage; correctness dominates design"
+   ],
+   "narration": "Now some rough capacity estimates, which drive the design. about 10M users, about 20M orders per day, peaks at open or close about 2k orders per s. Each order about 1 KB to tiny storage; correctness dominates design."
+  },
+  {
+   "kind": "diagram",
+   "heading": "High-level architecture",
+   "edges": [
+    [
+     "App",
+     "API gateway"
+    ],
+    [
+     "API gateway",
+     "Order service"
+    ],
+    [
+     "Order service",
+     "Orders + ledger DB, sharded by user"
+    ],
+    [
+     "Order service",
+     "Outbound order queue"
+    ],
+    [
+     "Outbound order queue",
+     "Exchange connector"
+    ],
+    [
+     "Exchange connector",
+     "Exchange"
+    ],
+    [
+     "Exchange connector",
+     "Fills queue"
+    ],
+    [
+     "Fills queue",
+     "Order service"
+    ],
+    [
+     "Order service",
+     "Push notifications / websocket"
+    ]
+   ],
+   "narration": "Here's the high-level architecture. App connects to API gateway. API gateway connects to Order service. Order service connects to Orders plus ledger DB, sharded by user and Outbound order queue and Push notifications / websocket. Outbound order queue connects to Exchange connector. Exchange connector connects to Exchange and Fills queue. Fills queue connects to Order service."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Data model",
+   "bullets": [
+    "orders(id, user_id, idempotency_key, symbol, side, type, qty, limit_price, status, exchange_order_id)",
+    "ledger_entries(id, user_id, amount, currency, reason, order_id) - append-only, balance = sum",
+    "positions(user_id, symbol, qty) derived from fills"
+   ],
+   "narration": "Here is the data model. orders(id, user id, idempotency key, symbol, side, type, qty, limit price, status, exchange order id). ledger entries(id, user id, amount, currency, reason, order id) - append-only, balance equals sum. positions(user id, symbol, qty) derived from fills."
+  },
+  {
+   "kind": "code",
+   "heading": "API",
+   "code": "POST   /orders  {idempotencyKey, symbol, side, qty, type, limitPrice?} -> order\nDELETE /orders/{id}\nGET    /orders?status=open\nGET    /portfolio -> balances, positions",
+   "lang": "text",
+   "font_size": 26,
+   "filename": "08_api.txt",
+   "narration": "The API. The main endpoints are: POST orders; DELETE orders by id; GET orders with status equals open; GET portfolio. Each one is small, resource-oriented and easy to version."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Exactly-once order placement",
+   "bullets": [
+    "Client sends an idempotency key; order row is written (status PENDING) in the same transaction that reserves buying power.",
+    "A connector picks PENDING orders, sends them with our client order id so retries are deduplicated by the exchange."
+   ],
+   "narration": "Deep dive: Exactly-once order placement. Client sends an idempotency key; order row is written (status PENDING) in the same transaction that reserves buying power. A connector picks PENDING orders, sends them with our client order id so retries are deduplicated by the exchange."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Fills",
+   "bullets": [
+    "The exchange streams executions; connector writes them to a durable queue; order service applies them idempotently (keyed by execution id) updating order status, ledger and positions in one transaction."
+   ],
+   "narration": "Deep dive: Fills. The exchange streams executions; connector writes them to a durable queue; order service applies them idempotently (keyed by execution id) updating order status, ledger and positions in one transaction."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Scaling",
+   "bullets": [
+    "Shard by user_id; exchange connectors partitioned by symbol range; keep hot reads (portfolio) in a cache invalidated by fills."
+   ],
+   "narration": "Deep dive: Scaling. Shard by user id; exchange connectors partitioned by symbol range; keep hot reads (portfolio) in a cache invalidated by fills."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Trade-offs & alternatives",
+   "bullets": [
+    "Strong consistency on money paths over availability",
+    "Queue between us and the exchange decouples bursts but adds latency (ms)",
+    "Ledger vs mutable balance: ledger is auditable; cache the sum"
+   ],
+   "narration": "Finally, the key trade-offs. Strong consistency on money paths over availability. Queue between us and the exchange decouples bursts but adds latency (ms). Ledger versus mutable balance: ledger is auditable; cache the sum."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Clarify scope, then functional + non-functional needs",
+    "Estimate load to size storage and fan-out",
+    "Core pieces: App, API gateway, Order service, Orders + ledger DB, sharded by user, Outbound order queue",
+    "Know your trade-offs and failure modes"
+   ],
+   "narration": "To recap a Stockbroker: we clarified the scope, set functional and non-functional requirements, estimated the load, sketched an architecture built around App, API gateway, Order service, Orders plus ledger DB, sharded by user, and walked through the deep dives and trade-offs. Practise explaining each decision out loud."
+  }
+ ]
+}

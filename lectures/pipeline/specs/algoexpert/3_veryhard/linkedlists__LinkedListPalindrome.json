@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Linked List Palindrome",
+ "out": "algoexpert/veryhard/linkedlists/LinkedListPalindrome",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Linked List Palindrome",
+   "subtitle": "AlgoExpert · Very Hard · Linked Lists",
+   "narration": "Let's solve Linked List Palindrome, a very hard linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Do the values read the same both ways?",
+    "Reverse the second half, compare, restore."
+   ],
+   "narration": "Here's the problem. Do the values read the same both ways? Reverse the second half, compare, restore."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class LinkedListPalindrome {\n    public static boolean linkedListPalindrome(LinkedListNode head) {\n        LinkedListNode slow = head, fast = head;\n        while (fast != null && fast.next != null) { slow = slow.next; fast = fast.next.next; }\n        LinkedListNode rev = reverse(slow), a = head, b = rev;\n        boolean ok = true;\n        while (b != null) { if (a.value != b.value) { ok = false; break; } a = a.next; b = b.next; }\n        reverse(rev);\n        return ok;\n    }\n\n    private static LinkedListNode reverse(LinkedListNode h) {\n        LinkedListNode p = null;\n        while (h != null) { LinkedListNode n = h.next; h.next = p; p = h; h = n; }\n        return p;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LinkedListPalindrome.java",
+   "narration": "Here's the Java solution, starting with linked list palindrome. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Do the values read the same both ways?",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Linked List Palindrome: Do the values read the same both ways? Try re-implementing it from scratch without looking."
+  }
+ ]
+}

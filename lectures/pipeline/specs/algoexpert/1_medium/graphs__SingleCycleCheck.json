@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Single Cycle Check",
+ "out": "algoexpert/medium/graphs/SingleCycleCheck",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Single Cycle Check",
+   "subtitle": "AlgoExpert · Medium · Graphs",
+   "narration": "Let's solve Single Cycle Check, a medium graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Each element is a jump (wrapping).",
+    "Do the jumps form one cycle visiting every index exactly once and returning to the start?"
+   ],
+   "narration": "Here's the problem. Each element is a jump (wrapping). Do the jumps form one cycle visiting every index exactly once and returning to the start?"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SingleCycleCheck {\n    public static boolean hasSingleCycle(int[] a) {\n        int n = a.length, idx = 0;\n        for (int visited = 0; visited < n; visited++) {\n            if (visited > 0 && idx == 0) return false;\n            idx = Math.floorMod(idx + a[idx], n);\n        }\n        return idx == 0;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SingleCycleCheck.java",
+   "narration": "Here's the Java solution, starting with has single cycle. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Each element is a jump (wrapping).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Single Cycle Check: Each element is a jump (wrapping). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

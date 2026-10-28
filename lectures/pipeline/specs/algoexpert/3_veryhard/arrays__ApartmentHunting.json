@@ -1,0 +1,49 @@
+{
+ "title": "AlgoExpert · Apartment Hunting",
+ "out": "algoexpert/veryhard/arrays/ApartmentHunting",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Apartment Hunting",
+   "subtitle": "AlgoExpert · Very Hard · Arrays",
+   "narration": "Let's solve Apartment Hunting, a very hard arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Blocks list which buildings (reqs) they contain.",
+    "Choose the block minimising the farthest distance you'd walk to reach any required building.",
+    "Precompute nearest distance per req with a left and right sweep."
+   ],
+   "narration": "Here's the problem. Blocks list which buildings (reqs) they contain. Choose the block minimising the farthest distance you'd walk to reach any required building. Precompute nearest distance per req with a left and right sweep."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ApartmentHunting {\n    public static int apartmentHunting(List<Map<String, Boolean>> blocks, String[] reqs) {\n        int n = blocks.size();\n        int[] worst = new int[n];\n        for (String r : reqs) {\n            int[] d = new int[n];\n            int last = -1_000_000;\n            for (int i = 0; i < n; i++) { if (blocks.get(i).getOrDefault(r, false)) last = i; d[i] = i - last; }\n            last = 2_000_000;\n            for (int i = n - 1; i >= 0; i--) { if (blocks.get(i).getOrDefault(r, false)) last = i; d[i] = Math.min(d[i], last - i); }\n            for (int i = 0; i < n; i++) worst[i] = Math.max(worst[i], d[i]);\n        }\n        int best = 0;\n        for (int i = 1; i < n; i++) if (worst[i] < worst[best]) best = i;\n        return best;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ApartmentHunting.java",
+   "narration": "Here's the Java solution, starting with apartment hunting. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(b*r)",
+    "Space: O(b*r)"
+   ],
+   "narration": "Time is O of b times r. Space is O of b times r."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Blocks list which buildings (reqs) they contain.",
+    "Complexity: O(b*r)"
+   ],
+   "narration": "To recap Apartment Hunting: Blocks list which buildings (reqs) they contain. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

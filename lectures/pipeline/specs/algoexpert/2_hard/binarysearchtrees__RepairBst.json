@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Repair Bst",
+ "out": "algoexpert/hard/binarysearchtrees/RepairBst",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Repair Bst",
+   "subtitle": "AlgoExpert · Hard · Binary Search Trees",
+   "narration": "Let's solve Repair Bst, a hard binary search trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Exactly two nodes' values were swapped; swap them back in place.",
+    "Iterative in-order finds the two out-of-order nodes."
+   ],
+   "narration": "Here's the problem. Exactly two nodes' values were swapped; swap them back in place. Iterative in-order finds the two out-of-order nodes."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class RepairBst {\n    public static BST repairBst(BST tree) {\n        BST first = null, second = null, prev = null, cur = tree;\n        ArrayDeque<BST> st = new ArrayDeque<>();\n        while (cur != null || !st.isEmpty()) {\n            while (cur != null) { st.push(cur); cur = cur.left; }\n            cur = st.pop();\n            if (prev != null && prev.value > cur.value) { if (first == null) first = prev; second = cur; }\n            prev = cur;\n            cur = cur.right;\n        }\n        int t = first.value; first.value = second.value; second.value = t;\n        return tree;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "RepairBst.java",
+   "narration": "Here's the Java solution, starting with repair bst. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Exactly two nodes' values were swapped; swap them back in place.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Repair Bst: Exactly two nodes' values were swapped; swap them back in place. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Find Nodes Distance K",
+ "out": "algoexpert/hard/binarytrees/FindNodesDistanceK",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Find Nodes Distance K",
+   "subtitle": "AlgoExpert · Hard · Binary Trees",
+   "narration": "Let's solve Find Nodes Distance K, a hard binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Values of all nodes exactly k edges from the node with value `target` (unique values).",
+    "Build parent links, then BFS."
+   ],
+   "narration": "Here's the problem. Values of all nodes exactly k edges from the node with value target (unique values). Build parent links, then BFS."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class FindNodesDistanceK {\n    public static ArrayList<Integer> findNodesDistanceK(BinaryTree tree, int target, int k) {\n        Map<BinaryTree, BinaryTree> parent = new HashMap<>();\n        BinaryTree start = null;\n        ArrayDeque<BinaryTree> st = new ArrayDeque<>();\n        st.push(tree);\n        while (!st.isEmpty()) {\n            BinaryTree n = st.pop();\n            if (n.value == target) start = n;\n            for (BinaryTree c : new BinaryTree[]{n.left, n.right}) if (c != null) { parent.put(c, n); st.push(c); }\n        }\n        ArrayList<Integer> out = new ArrayList<>();\n        if (start == null) return out;\n        Set<BinaryTree> seen = new HashSet<>();\n        ArrayDeque<BinaryTree> q = new ArrayDeque<>();\n        q.add(start); seen.add(start);\n        for (int d = 0; d < k && !q.isEmpty(); d++) {\n            for (int s = q.size(); s > 0; s--) {\n                BinaryTree n = q.poll();\n                for (BinaryTree c : new BinaryTree[]{n.left, n.right, parent.get(n)})\n                    if (c != null && seen.add(c)) q.add(c);\n            }\n        }\n        for (BinaryTree n : q) out.add(n.value);\n        return out;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "FindNodesDistanceK.java",
+   "narration": "Here's the Java solution, starting with find nodes distance k. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Values of all nodes exactly k edges from the node with value `target` (unique values).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Find Nodes Distance K: Values of all nodes exactly k edges from the node with value target (unique values). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

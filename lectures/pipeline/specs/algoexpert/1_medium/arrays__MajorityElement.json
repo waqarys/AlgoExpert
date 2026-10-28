@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Majority Element",
+ "out": "algoexpert/medium/arrays/MajorityElement",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Majority Element",
+   "subtitle": "AlgoExpert · Medium · Arrays",
+   "narration": "Let's solve Majority Element, a medium arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "An element occurs in more than half the array; find it (Boyer-Moore voting)."
+   ],
+   "narration": "Here's the problem. An element occurs in more than half the array; find it (Boyer-Moore voting)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MajorityElement {\n    public static int majorityElement(int[] a) {\n        int cand = 0, count = 0;\n        for (int x : a) {\n            if (count == 0) cand = x;\n            count += (x == cand) ? 1 : -1;\n        }\n        return cand;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MajorityElement.java",
+   "narration": "Here's the Java solution, starting with majority element. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "An element occurs in more than half the array; find it (Boyer-Moore voting).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Majority Element: An element occurs in more than half the array; find it (Boyer-Moore voting). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

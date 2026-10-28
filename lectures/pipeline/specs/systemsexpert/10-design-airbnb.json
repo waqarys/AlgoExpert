@@ -1,0 +1,152 @@
+{
+ "title": "SystemsExpert · Design Airbnb",
+ "out": "systemsexpert/10-design-airbnb",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Design Airbnb",
+   "subtitle": "SystemsExpert design walkthrough",
+   "narration": "In this lecture we design Airbnb. We'll follow the interview framework: clarify, set requirements, estimate, sketch the architecture, define the data and API, then dive into the hard parts and the trade-offs."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Clarifying questions",
+   "bullets": [
+    "Search + booking + host listing management in scope? Payments?",
+    "Can two guests book overlapping dates? (No)",
+    "Scale of listings?"
+   ],
+   "narration": "Start by clarifying the scope with your interviewer. Good questions here are: Search plus booking plus host listing management in scope? Payments? Can two guests book overlapping dates? (No). Scale of listings?"
+  },
+  {
+   "kind": "bullets",
+   "heading": "Functional requirements",
+   "bullets": [
+    "Hosts create listings with availability",
+    "Guests search by location/dates/price",
+    "Guests book; double booking impossible"
+   ],
+   "narration": "The functional requirements. Hosts create listings with availability. Guests search by location or dates or price. Guests book; double booking impossible."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Non-functional requirements",
+   "bullets": [
+    "Search fast (< 300 ms)",
+    "Booking strongly consistent"
+   ],
+   "narration": "The non-functional requirements. Search fast ( under 300 ms). Booking strongly consistent."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Capacity estimates",
+   "bullets": [
+    "~10M listings, ~100M searches/day (~1.2k/s), ~1M bookings/day"
+   ],
+   "narration": "Now some rough capacity estimates, which drive the design. about 10M listings, about 100M searches per day (about 1.2k per s), about 1M bookings per day."
+  },
+  {
+   "kind": "diagram",
+   "heading": "High-level architecture",
+   "edges": [
+    [
+     "Guest",
+     "API"
+    ],
+    [
+     "Host",
+     "API"
+    ],
+    [
+     "API",
+     "Listings DB"
+    ],
+    [
+     "Listings DB",
+     "Change data capture"
+    ],
+    [
+     "Change data capture",
+     "Search index - geo + filters"
+    ],
+    [
+     "API",
+     "Search index - geo + filters"
+    ],
+    [
+     "API",
+     "Bookings / availability DB"
+    ],
+    [
+     "API",
+     "Payments"
+    ]
+   ],
+   "narration": "Here's the high-level architecture. Guest connects to API. Host connects to API. API connects to Listings DB and Search index - geo plus filters and Bookings / availability DB and Payments. Listings DB connects to Change data capture. Change data capture connects to Search index - geo plus filters."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Data model",
+   "bullets": [
+    "listings(id, host_id, geo, price, attributes)",
+    "availability(listing_id, date, status) PK(listing_id, date)",
+    "bookings(id, listing_id, guest_id, start, end, status)"
+   ],
+   "narration": "Here is the data model. listings(id, host id, geo, price, attributes). availability(listing id, date, status) PK(listing id, date). bookings(id, listing id, guest id, start, end, status)."
+  },
+  {
+   "kind": "code",
+   "heading": "API",
+   "code": "GET  /search?lat&lng&radius&checkIn&checkOut&guests&priceMax\nGET  /listings/{id}\nPOST /listings  (host)\nPOST /bookings {listingId, checkIn, checkOut, idempotencyKey}",
+   "lang": "text",
+   "font_size": 26,
+   "filename": "08_api.txt",
+   "narration": "The API. The main endpoints are: GET search with lat and lng and radius and checkIn and checkOut and guests and priceMax; GET listings by id; POST listings; POST bookings. Each one is small, resource-oriented and easy to version."
+  },
+  {
+   "kind": "bullets",
+   "heading": "No double booking",
+   "bullets": [
+    "In one transaction, lock the availability rows for the date range (SELECT … FOR UPDATE) and mark them reserved; or insert into a table with a unique (listing_id, date) constraint.",
+    "Temporary holds expire if payment fails."
+   ],
+   "narration": "Deep dive: No double booking. In one transaction, lock the availability rows for the date range (SELECT FOR UPDATE) and mark them reserved; or insert into a table with a unique (listing id, date) constraint. Temporary holds expire if payment fails."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Search",
+   "bullets": [
+    "Geo index (geohash/quadtree) in Elasticsearch with date availability filters; results may be slightly stale, so booking re-validates."
+   ],
+   "narration": "Deep dive: Search. Geo index (geohash or quadtree) in Elasticsearch with date availability filters; results may be slightly stale, so booking re-validates."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Payments",
+   "bullets": [
+    "Authorise at booking, capture after check-in."
+   ],
+   "narration": "Deep dive: Payments. Authorise at booking, capture after check-in."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Trade-offs & alternatives",
+   "bullets": [
+    "Search eventual consistency vs booking strong consistency",
+    "Per-date rows are simple; range types/interval trees are more compact"
+   ],
+   "narration": "Finally, the key trade-offs. Search eventual consistency versus booking strong consistency. Per-date rows are simple; range types or interval trees are more compact."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Clarify scope, then functional + non-functional needs",
+    "Estimate load to size storage and fan-out",
+    "Core pieces: Guest, API, Host, Listings DB, Change data capture",
+    "Know your trade-offs and failure modes"
+   ],
+   "narration": "To recap Airbnb: we clarified the scope, set functional and non-functional requirements, estimated the load, sketched an architecture built around Guest, API, Host, Listings DB, and walked through the deep dives and trade-offs. Practise explaining each decision out loud."
+  }
+ ]
+}

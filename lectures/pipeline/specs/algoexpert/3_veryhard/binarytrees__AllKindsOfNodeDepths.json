@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · All Kinds Of Node Depths",
+ "out": "algoexpert/veryhard/binarytrees/AllKindsOfNodeDepths",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "All Kinds Of Node Depths",
+   "subtitle": "AlgoExpert · Very Hard · Binary Trees",
+   "narration": "Let's solve All Kinds Of Node Depths, a very hard binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Sum, over every node, of the depths of all nodes in its subtree (relative to it).",
+    "Per subtree: sumDepths = sumDepths(l) + size(l) + sumDepths(r) + size(r)."
+   ],
+   "narration": "Here's the problem. Sum, over every node, of the depths of all nodes in its subtree (relative to it). Per subtree: sumDepths equals sumDepths(l) plus size(l) plus sumDepths(r) plus size(r)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class AllKindsOfNodeDepths {\n    public static int allKindsOfNodeDepths(BinaryTree root) { return (int) info(root)[2]; }\n\n    /** returns {size, sumDepths, total} */\n    private static long[] info(BinaryTree t) {\n        if (t == null) return new long[]{0, 0, 0};\n        long[] l = info(t.left), r = info(t.right);\n        long size = 1 + l[0] + r[0], depths = l[1] + l[0] + r[1] + r[0];\n        return new long[]{size, depths, depths + l[2] + r[2]};\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "AllKindsOfNodeDepths.java",
+   "narration": "Here's the Java solution, starting with all kinds of node depths. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Sum, over every node, of the depths of all nodes in its subtree (relative to it).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap All Kinds Of Node Depths: Sum, over every node, of the depths of all nodes in its subtree (relative to it). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

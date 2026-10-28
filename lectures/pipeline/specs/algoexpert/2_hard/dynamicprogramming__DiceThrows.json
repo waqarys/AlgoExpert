@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Dice Throws",
+ "out": "algoexpert/hard/dynamicprogramming/DiceThrows",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Dice Throws",
+   "subtitle": "AlgoExpert · Hard · Dynamic Programming",
+   "narration": "Let's solve Dice Throws, a hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Number of ways to roll numDice dice with numSides sides to total `target`."
+   ],
+   "narration": "Here's the problem. Number of ways to roll numDice dice with numSides sides to total target."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class DiceThrows {\n    public static int diceThrows(int numDice, int numSides, int target) {\n        long[] ways = new long[target + 1];\n        ways[0] = 1;\n        for (int d = 0; d < numDice; d++) {\n            long[] next = new long[target + 1];\n            for (int t = 0; t <= target; t++) if (ways[t] != 0)\n                for (int s = 1; s <= numSides && t + s <= target; s++) next[t + s] += ways[t];\n            ways = next;\n        }\n        return (int) ways[target];\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "DiceThrows.java",
+   "narration": "Here's the Java solution, starting with dice throws. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(d * t * s)",
+    "Space: O(t)"
+   ],
+   "narration": "Time is O of d times t times s. Space is O of t."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Number of ways to roll numDice dice with numSides sides to total `target`.",
+    "Complexity: O(d * t * s)"
+   ],
+   "narration": "To recap Dice Throws: Number of ways to roll numDice dice with numSides sides to total target. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

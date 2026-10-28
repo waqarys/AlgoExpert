@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Breadth First Search",
+ "out": "algoexpert/medium/graphs/BreadthFirstSearch",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Breadth First Search",
+   "subtitle": "AlgoExpert · Medium · Graphs",
+   "narration": "Let's solve Breadth First Search, a medium graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Return node names of a tree-like graph level by level."
+   ],
+   "narration": "Here's the problem. Return node names of a tree-like graph level by level."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class BreadthFirstSearch {\n    public static class Node {\n        public final String name;\n        public final List<Node> children = new ArrayList<>();\n        public Node(String name) { this.name = name; }\n        public Node addChild(String n) { children.add(new Node(n)); return this; }\n\n        public List<String> breadthFirstSearch(List<String> out) {\n            ArrayDeque<Node> q = new ArrayDeque<>();\n            q.add(this);\n            while (!q.isEmpty()) { Node c = q.poll(); out.add(c.name); q.addAll(c.children); }\n            return out;\n        }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "BreadthFirstSearch.java",
+   "narration": "Here's the Java solution, starting with node. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(v + e)",
+    "Space: O(v)"
+   ],
+   "narration": "Time is O of v plus e. Space is O of v."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Return node names of a tree-like graph level by level.",
+    "Complexity: O(v + e)"
+   ],
+   "narration": "To recap Breadth First Search: Return node names of a tree-like graph level by level. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

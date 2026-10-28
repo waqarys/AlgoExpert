@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Largest Rectangle Under Skyline",
+ "out": "algoexpert/hard/stacks/LargestRectangleUnderSkyline",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Largest Rectangle Under Skyline",
+   "subtitle": "AlgoExpert · Hard · Stacks",
+   "narration": "Let's solve Largest Rectangle Under Skyline, a hard stacks problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Largest rectangle area within adjacent buildings of width 1.",
+    "Monotonic increasing stack of indices."
+   ],
+   "narration": "Here's the problem. Largest rectangle area within adjacent buildings of width 1. Monotonic increasing stack of indices."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class LargestRectangleUnderSkyline {\n    public static int largestRectangleUnderSkyline(int[] h) {\n        ArrayDeque<Integer> st = new ArrayDeque<>();\n        int best = 0;\n        for (int i = 0; i <= h.length; i++) {\n            int cur = i == h.length ? 0 : h[i];\n            while (!st.isEmpty() && h[st.peek()] >= cur) {\n                int height = h[st.pop()];\n                int left = st.isEmpty() ? -1 : st.peek();\n                best = Math.max(best, height * (i - left - 1));\n            }\n            st.push(i);\n        }\n        return best;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LargestRectangleUnderSkyline.java",
+   "narration": "Here's the Java solution, starting with largest rectangle under skyline. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Largest rectangle area within adjacent buildings of width 1.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Largest Rectangle Under Skyline: Largest rectangle area within adjacent buildings of width 1. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

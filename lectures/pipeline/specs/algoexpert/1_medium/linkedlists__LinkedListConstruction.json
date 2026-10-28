@@ -1,0 +1,75 @@
+{
+ "title": "AlgoExpert · Linked List Construction",
+ "out": "algoexpert/medium/linkedlists/LinkedListConstruction",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Linked List Construction",
+   "subtitle": "AlgoExpert · Medium · Linked Lists",
+   "narration": "Let's solve Linked List Construction, a medium linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Doubly linked list with head/tail supporting setHead, setTail, insertBefore, insertAfter, insertAtPosition (1-based), removeNodesWithValue, remove and containsNodeWithValue.",
+    "Inserting a node already in the list moves it."
+   ],
+   "narration": "Here's the problem. Doubly linked list with head or tail supporting setHead, setTail, insertBefore, insertAfter, insertAtPosition (1-based), removeNodesWithValue, remove and containsNodeWithValue. Inserting a node already in the list moves it."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (1/4)",
+   "code": "public class LinkedListConstruction {\n    public static class Node {\n        public int value;\n        public Node prev, next;\n        public Node(int value) { this.value = value; }\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LinkedListConstruction_part1.java",
+   "narration": "Here's the Java solution, starting with node. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (2/4)",
+   "code": "    public static class DoublyLinkedList {\n        public Node head, tail;\n\n        public void setHead(Node n) {\n            if (head == null) { head = tail = n; return; }\n            insertBefore(head, n);\n        }\n\n        public void setTail(Node n) {\n            if (tail == null) { setHead(n); return; }\n            insertAfter(tail, n);\n        }\n\n        public void insertBefore(Node node, Node ins) {\n            if (ins == head && ins == tail) return;\n            remove(ins);\n            ins.prev = node.prev;\n            ins.next = node;\n            if (node.prev == null) head = ins; else node.prev.next = ins;\n            node.prev = ins;\n        }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LinkedListConstruction_part2.java",
+   "narration": "Continuing with set head, set tail, insert before."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (3/4)",
+   "code": "        public void insertAfter(Node node, Node ins) {\n            if (ins == head && ins == tail) return;\n            remove(ins);\n            ins.prev = node;\n            ins.next = node.next;\n            if (node.next == null) tail = ins; else node.next.prev = ins;\n            node.next = ins;\n        }\n\n        public void insertAtPosition(int pos, Node ins) {\n            if (pos == 1) { setHead(ins); return; }\n            Node cur = head;\n            for (int p = 1; cur != null && p < pos; p++) cur = cur.next;\n            if (cur != null) insertBefore(cur, ins); else setTail(ins);\n        }\n\n        public void removeNodesWithValue(int v) {\n            Node cur = head;\n            while (cur != null) { Node nx = cur.next; if (cur.value == v) remove(cur); cur = nx; }\n        }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LinkedListConstruction_part3.java",
+   "narration": "Continuing with insert after, insert at position, remove nodes with value."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (4/4)",
+   "code": "        public void remove(Node n) {\n            if (n == head) head = head.next;\n            if (n == tail) tail = tail.prev;\n            if (n.prev != null) n.prev.next = n.next;\n            if (n.next != null) n.next.prev = n.prev;\n            n.prev = n.next = null;\n        }\n\n        public boolean containsNodeWithValue(int v) {\n            for (Node c = head; c != null; c = c.next) if (c.value == v) return true;\n            return false;\n        }\n\n        public java.util.List<Integer> values() {\n            java.util.List<Integer> out = new java.util.ArrayList<>();\n            for (Node c = head; c != null; c = c.next) out.add(c.value);\n            return out;\n        }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LinkedListConstruction_part4.java",
+   "narration": "Continuing with remove, contains node with value."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(1) for head/tail/insertBefore/After/remove, O(n) for position/value ops",
+    "Space: O(1)"
+   ],
+   "narration": "Time is constant for head or tail or insertBefore or After or remove, O of n for position or value ops. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Doubly linked list with head/tail supporting setHead, setTail, insertBefore, insertAfter, insertAtPosition (1-based), removeNodesWithValue, remove and containsNodeWithValue.",
+    "Complexity: O(1) for head/tail/insertBefore/After/remove, O(n) for position/value ops"
+   ],
+   "narration": "To recap Linked List Construction: Doubly linked list with head or tail supporting setHead, setTail, insertBefore, insertAfter, insertAtPosition (1-based), removeNodesWithValue, remove and containsNodeWithValue. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Lowest Common Manager",
+ "out": "algoexpert/hard/recursion/LowestCommonManager",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Lowest Common Manager",
+   "subtitle": "AlgoExpert · Hard · Recursion",
+   "narration": "Let's solve Lowest Common Manager, a hard recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "In an org chart tree, the lowest manager having both reports somewhere beneath (or being one of them).",
+    "Post-order counting of found reports."
+   ],
+   "narration": "Here's the problem. In an org chart tree, the lowest manager having both reports somewhere beneath (or being one of them). Post-order counting of found reports."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class LowestCommonManager {\n    public static class OrgChart {\n        public final char name;\n        public final List<OrgChart> directReports = new ArrayList<>();\n        public OrgChart(char name) { this.name = name; }\n        public OrgChart add(OrgChart... r) { directReports.addAll(List.of(r)); return this; }\n    }\n\n    public static OrgChart getLowestCommonManager(OrgChart top, OrgChart a, OrgChart b) {\n        OrgChart[] ans = {null};\n        count(top, a, b, ans);\n        return ans[0];\n    }\n\n    private static int count(OrgChart m, OrgChart a, OrgChart b, OrgChart[] ans) {\n        int n = (m == a ? 1 : 0) + (m == b ? 1 : 0);\n        for (OrgChart r : m.directReports) { n += count(r, a, b, ans); if (ans[0] != null) return 2; }\n        if (n == 2 && ans[0] == null) ans[0] = m;\n        return n;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LowestCommonManager.java",
+   "narration": "Here's the Java solution, starting with org chart. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(d)"
+   ],
+   "narration": "Time is O of n. Space is O of d."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "In an org chart tree, the lowest manager having both reports somewhere beneath (or being one of them).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Lowest Common Manager: In an org chart tree, the lowest manager having both reports somewhere beneath (or being one of them). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

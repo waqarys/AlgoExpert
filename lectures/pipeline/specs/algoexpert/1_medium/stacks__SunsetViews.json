@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Sunset Views",
+ "out": "algoexpert/medium/stacks/SunsetViews",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Sunset Views",
+   "subtitle": "AlgoExpert · Medium · Stacks",
+   "narration": "Let's solve Sunset Views, a medium stacks problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Buildings face EAST or WEST; return ascending indices of buildings that can see the sunset (strictly taller than everything in front of them in that direction)."
+   ],
+   "narration": "Here's the problem. Buildings face EAST or WEST; return ascending indices of buildings that can see the sunset (strictly taller than everything in front of them in that direction)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SunsetViews {\n    public static List<Integer> sunsetViews(int[] heights, String direction) {\n        List<Integer> out = new ArrayList<>();\n        boolean east = direction.equals(\"EAST\");\n        int max = Integer.MIN_VALUE;\n        for (int k = 0; k < heights.length; k++) {\n            int i = east ? heights.length - 1 - k : k;\n            if (heights[i] > max) { out.add(i); max = heights[i]; }\n        }\n        if (east) Collections.reverse(out);\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SunsetViews.java",
+   "narration": "Here's the Java solution, starting with sunset views. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Buildings face EAST or WEST; return ascending indices of buildings that can see the sunset (strictly taller than everything in front of them in that direction).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Sunset Views: Buildings face EAST or WEST; return ascending indices of buildings that can see the sunset (strictly taller than everything in front of them in that direction). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

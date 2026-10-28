@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Sort Stack",
+ "out": "algoexpert/medium/stacks/SortStack",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Sort Stack",
+   "subtitle": "AlgoExpert · Medium · Stacks",
+   "narration": "Let's solve Sort Stack, a medium stacks problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Sort a stack (list, top = end) ascending using only push/pop/peek and recursion."
+   ],
+   "narration": "Here's the problem. Sort a stack (list, top equals end) ascending using only push or pop or peek and recursion."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SortStack {\n    public static ArrayList<Integer> sortStack(ArrayList<Integer> stack) {\n        if (stack.isEmpty()) return stack;\n        int top = stack.remove(stack.size() - 1);\n        sortStack(stack);\n        insert(stack, top);\n        return stack;\n    }\n\n    private static void insert(ArrayList<Integer> st, int v) {\n        if (st.isEmpty() || st.get(st.size() - 1) <= v) { st.add(v); return; }\n        int top = st.remove(st.size() - 1);\n        insert(st, v);\n        st.add(top);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SortStack.java",
+   "narration": "Here's the Java solution, starting with sort stack. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^2)",
+    "Space: O(n) recursion"
+   ],
+   "narration": "Time is O of n squared. Space is O of n recursion."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Sort a stack (list, top = end) ascending using only push/pop/peek and recursion.",
+    "Complexity: O(n^2)"
+   ],
+   "narration": "To recap Sort Stack: Sort a stack (list, top equals end) ascending using only push or pop or peek and recursion. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

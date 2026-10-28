@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Merge Linked Lists",
+ "out": "algoexpert/hard/linkedlists/MergeLinkedLists",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Merge Linked Lists",
+   "subtitle": "AlgoExpert · Hard · Linked Lists",
+   "narration": "Let's solve Merge Linked Lists, a hard linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Merge two sorted lists in place; return the head of the merged list."
+   ],
+   "narration": "Here's the problem. Merge two sorted lists in place; return the head of the merged list."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MergeLinkedLists {\n    public static LinkedListNode mergeLinkedLists(LinkedListNode a, LinkedListNode b) {\n        LinkedListNode dummy = new LinkedListNode(0), t = dummy;\n        while (a != null && b != null) {\n            if (a.value <= b.value) { t.next = a; a = a.next; } else { t.next = b; b = b.next; }\n            t = t.next;\n        }\n        t.next = a != null ? a : b;\n        return dummy.next;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MergeLinkedLists.java",
+   "narration": "Here's the Java solution, starting with merge linked lists. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n + m)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n plus m. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Merge two sorted lists in place; return the head of the merged list.",
+    "Complexity: O(n + m)"
+   ],
+   "narration": "To recap Merge Linked Lists: Merge two sorted lists in place; return the head of the merged list. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

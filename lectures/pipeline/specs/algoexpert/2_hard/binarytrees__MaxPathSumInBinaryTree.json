@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Max Path Sum In Binary Tree",
+ "out": "algoexpert/hard/binarytrees/MaxPathSumInBinaryTree",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Max Path Sum In Binary Tree",
+   "subtitle": "AlgoExpert · Hard · Binary Trees",
+   "narration": "Let's solve Max Path Sum In Binary Tree, a hard binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Maximum sum over any path (node-to-node, no repeats)."
+   ],
+   "narration": "Here's the problem. Maximum sum over any path (node-to-node, no repeats)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MaxPathSumInBinaryTree {\n    public static int maxPathSum(BinaryTree t) { int[] best = {Integer.MIN_VALUE}; branch(t, best); return best[0]; }\n\n    private static int branch(BinaryTree t, int[] best) {\n        if (t == null) return 0;\n        int l = Math.max(0, branch(t.left, best)), r = Math.max(0, branch(t.right, best));\n        best[0] = Math.max(best[0], t.value + l + r);\n        return t.value + Math.max(l, r);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MaxPathSumInBinaryTree.java",
+   "narration": "Here's the Java solution, starting with max path sum. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Maximum sum over any path (node-to-node, no repeats).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Max Path Sum In Binary Tree: Maximum sum over any path (node-to-node, no repeats). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

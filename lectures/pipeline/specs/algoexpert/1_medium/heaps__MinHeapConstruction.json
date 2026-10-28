@@ -1,0 +1,56 @@
+{
+ "title": "AlgoExpert · Min Heap Construction",
+ "out": "algoexpert/medium/heaps/MinHeapConstruction",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Min Heap Construction",
+   "subtitle": "AlgoExpert · Medium · Heaps",
+   "narration": "Let's solve Min Heap Construction, a medium heaps problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Array-backed min-heap with buildHeap (O(n) sift-down), siftUp, siftDown, peek, insert and remove."
+   ],
+   "narration": "Here's the problem. Array-backed min-heap with buildHeap (O of n sift-down), siftUp, siftDown, peek, insert and remove."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (1/2)",
+   "code": "public class MinHeapConstruction {\n    public static class MinHeap {\n        public final List<Integer> heap;\n\n        public MinHeap(List<Integer> array) { heap = buildHeap(new ArrayList<>(array)); }\n\n        public List<Integer> buildHeap(List<Integer> a) {\n            for (int i = (a.size() - 2) / 2; i >= 0; i--) siftDown(i, a.size() - 1, a);\n            return a;\n        }\n\n        public void siftDown(int i, int end, List<Integer> h) {\n            while (2 * i + 1 <= end) {\n                int c = 2 * i + 1;\n                if (c + 1 <= end && h.get(c + 1) < h.get(c)) c++;\n                if (h.get(c) >= h.get(i)) return;\n                java.util.Collections.swap(h, i, c);\n                i = c;\n            }\n        }\n\n        public void siftUp(int i, List<Integer> h) {",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MinHeapConstruction_part1.java",
+   "narration": "Here's the Java solution, starting with min heap. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (2/2)",
+   "code": "            while (i > 0 && h.get((i - 1) / 2) > h.get(i)) { java.util.Collections.swap(h, i, (i - 1) / 2); i = (i - 1) / 2; }\n        }\n\n        public int peek() { return heap.get(0); }\n\n        public int remove() {\n            java.util.Collections.swap(heap, 0, heap.size() - 1);\n            int v = heap.remove(heap.size() - 1);\n            siftDown(0, heap.size() - 1, heap);\n            return v;\n        }\n\n        public void insert(int v) { heap.add(v); siftUp(heap.size() - 1, heap); }\n\n        public boolean isEmpty() { return heap.isEmpty(); }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MinHeapConstruction_part2.java",
+   "narration": "Continuing with peek, remove, insert."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: build O(n), insert/remove O(log n), peek O(1)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is build O of n, insert or remove O of log n, peek constant. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Array-backed min-heap with buildHeap (O(n) sift-down), siftUp, siftDown, peek, insert and remove.",
+    "Complexity: build O(n), insert/remove O(log n), peek O(1)"
+   ],
+   "narration": "To recap Min Heap Construction: Array-backed min-heap with buildHeap (O of n sift-down), siftUp, siftDown, peek, insert and remove. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

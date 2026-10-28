@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Valid Ip Addresses",
+ "out": "algoexpert/medium/strings/ValidIpAddresses",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Valid Ip Addresses",
+   "subtitle": "AlgoExpert · Medium · Strings",
+   "narration": "Let's solve Valid Ip Addresses, a medium strings problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "All ways to insert three dots into a digit string to form valid IPv4 addresses (each part 0-255, no leading zeros)."
+   ],
+   "narration": "Here's the problem. All ways to insert three dots into a digit string to form valid IPv4 addresses (each part 0-255, no leading zeros)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ValidIpAddresses {\n    public static ArrayList<String> validIPAddresses(String s) {\n        ArrayList<String> out = new ArrayList<>();\n        for (int i = 1; i < Math.min(4, s.length()); i++)\n            for (int j = i + 1; j < Math.min(i + 4, s.length()); j++)\n                for (int k = j + 1; k < Math.min(j + 4, s.length()); k++) {\n                    String[] p = {s.substring(0, i), s.substring(i, j), s.substring(j, k), s.substring(k)};\n                    if (valid(p[0]) && valid(p[1]) && valid(p[2]) && valid(p[3])) out.add(String.join(\".\", p));\n                }\n        return out;\n    }\n\n    private static boolean valid(String p) {\n        if (p.isEmpty() || p.length() > 3 || (p.length() > 1 && p.charAt(0) == '0')) return false;\n        return Integer.parseInt(p) <= 255;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ValidIpAddresses.java",
+   "narration": "Here's the Java solution, starting with valid ip addresses. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(1) (bounded by 3^3 splits)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is constant (bounded by 3^3 splits). Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "All ways to insert three dots into a digit string to form valid IPv4 addresses (each part 0-255, no leading zeros).",
+    "Complexity: O(1) (bounded by 3^3 splits)"
+   ],
+   "narration": "To recap Valid Ip Addresses: All ways to insert three dots into a digit string to form valid IPv4 addresses (each part 0-255, no leading zeros). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

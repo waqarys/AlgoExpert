@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Powerset",
+ "out": "algoexpert/medium/recursion/Powerset",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Powerset",
+   "subtitle": "AlgoExpert · Medium · Recursion",
+   "narration": "Let's solve Powerset, a medium recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Every subset of a set of distinct ints (iteratively doubling)."
+   ],
+   "narration": "Here's the problem. Every subset of a set of distinct ints (iteratively doubling)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class Powerset {\n    public static List<List<Integer>> powerset(List<Integer> array) {\n        List<List<Integer>> subsets = new ArrayList<>();\n        subsets.add(new ArrayList<>());\n        for (int x : array) {\n            int size = subsets.size();\n            for (int i = 0; i < size; i++) { List<Integer> s = new ArrayList<>(subsets.get(i)); s.add(x); subsets.add(s); }\n        }\n        return subsets;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "Powerset.java",
+   "narration": "Here's the Java solution, starting with powerset. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n * 2^n)",
+    "Space: O(n * 2^n)"
+   ],
+   "narration": "Time is O of n times 2 to the n. Space is O of n times 2 to the n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Every subset of a set of distinct ints (iteratively doubling).",
+    "Complexity: O(n * 2^n)"
+   ],
+   "narration": "To recap Powerset: Every subset of a set of distinct ints (iteratively doubling). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

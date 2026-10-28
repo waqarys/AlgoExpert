@@ -1,0 +1,58 @@
+{
+ "title": "AlgoExpert · Largest Park",
+ "out": "algoexpert/veryhard/stacks/LargestPark",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Largest Park",
+   "subtitle": "AlgoExpert · Very Hard · Stacks",
+   "narration": "Let's solve Largest Park, a very hard stacks problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Boolean matrix where false is free land and true is in use.",
+    "Area of the largest all-free rectangle (0 if none).",
+    "For each row build a histogram of consecutive free cells above and take the largest rectangle in it with a monotonic stack."
+   ],
+   "narration": "Here's the problem. Boolean matrix where false is free land and true is in use. Area of the largest all-free rectangle (0 if none). For each row build a histogram of consecutive free cells above and take the largest rectangle in it with a monotonic stack."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (1/2)",
+   "code": "public class LargestPark {\n    public static int largestPark(boolean[][] land) {\n        if (land.length == 0) return 0;\n        int[] heights = new int[land[0].length];\n        int best = 0;\n        for (boolean[] row : land) {\n            for (int c = 0; c < row.length; c++) heights[c] = row[c] ? 0 : heights[c] + 1;\n            best = Math.max(best, largestRectangle(heights));\n        }\n        return best;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LargestPark_part1.java",
+   "narration": "Here's the Java solution, starting with largest park. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (2/2)",
+   "code": "    static int largestRectangle(int[] h) {\n        ArrayDeque<Integer> st = new ArrayDeque<>();\n        int best = 0;\n        for (int i = 0; i <= h.length; i++) {\n            int cur = i == h.length ? 0 : h[i];\n            while (!st.isEmpty() && h[st.peek()] >= cur) {\n                int height = h[st.pop()];\n                int left = st.isEmpty() ? -1 : st.peek();\n                best = Math.max(best, height * (i - left - 1));\n            }\n            st.push(i);\n        }\n        return best;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "LargestPark_part2.java",
+   "narration": "Continuing with largest rectangle."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(w*h)",
+    "Space: O(w)"
+   ],
+   "narration": "Time is O of w times h. Space is O of w."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Boolean matrix where false is free land and true is in use.",
+    "Complexity: O(w*h)"
+   ],
+   "narration": "To recap Largest Park: Boolean matrix where false is free land and true is in use. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

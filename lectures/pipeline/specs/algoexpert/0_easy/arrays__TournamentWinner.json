@@ -1,0 +1,67 @@
+{
+ "title": "AlgoExpert · Tournament Winner",
+ "out": "algoexpert/easy/arrays/TournamentWinner",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Tournament Winner",
+   "subtitle": "AlgoExpert · Easy · Arrays",
+   "narration": "Let's solve Tournament Winner, an easy arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Competitions are [home, away] pairs, results[i]==1 means home won.",
+    "A win is worth 3 points; return the team with most points (guaranteed unique)."
+   ],
+   "narration": "Here's the problem. Competitions are home, away pairs, results i equals equals 1 means home won. A win is worth 3 points; return the team with most points (guaranteed unique)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Every match has exactly one winner worth three points, so a running score table is all we need."
+   ],
+   "narration": "Every match has exactly one winner worth three points, so a running score table is all we need."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Keep a hash map of team to points",
+    "2. For each match, credit the winner",
+    "3. Track the leader as scores change",
+    "4. Return the best team"
+   ],
+   "narration": "Step by step. First, keep a hash map of team to points. Second, for each match, credit the winner. Third, track the leader as scores change. Fourth, return the best team."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class TournamentWinner {\n    public static String tournamentWinner(List<List<String>> competitions, List<Integer> results) {\n        Map<String, Integer> score = new HashMap<>();\n        String best = \"\";\n        score.put(best, 0);\n        for (int i = 0; i < competitions.size(); i++) {\n            String winner = results.get(i) == 1 ? competitions.get(i).get(0) : competitions.get(i).get(1);\n            int s = score.merge(winner, 3, Integer::sum);\n            if (s > score.get(best)) best = winner;\n        }\n        return best;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "TournamentWinner.java",
+   "narration": "Here's the Java solution, starting with tournament winner. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(k) teams"
+   ],
+   "narration": "Time is O of n. Space is O of k teams."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Every match has exactly one winner worth three points, so a running score table is all we need.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Tournament Winner: Every match has exactly one winner worth three points, so a running score table is all we need. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

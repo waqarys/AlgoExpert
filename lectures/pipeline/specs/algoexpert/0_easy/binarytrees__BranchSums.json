@@ -1,0 +1,66 @@
+{
+ "title": "AlgoExpert · Branch Sums",
+ "out": "algoexpert/easy/binarytrees/BranchSums",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Branch Sums",
+   "subtitle": "AlgoExpert · Easy · Binary Trees",
+   "narration": "Let's solve Branch Sums, an easy binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "List the root-to-leaf path sums, ordered left to right."
+   ],
+   "narration": "Here's the problem. List the root-to-leaf path sums, ordered left to right."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Carry the running sum down each path; at a leaf, that sum is one branch sum."
+   ],
+   "narration": "Carry the running sum down each path; at a leaf, that sum is one branch sum."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Depth-first from the root with sum zero",
+    "2. Add the node's value",
+    "3. At a leaf, record the sum",
+    "4. Recurse left then right to keep left-to-right order"
+   ],
+   "narration": "Step by step. First, depth-first from the root with sum zero. Second, add the node's value. Third, at a leaf, record the sum. Fourth, recurse left then right to keep left-to-right order."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class BranchSums {\n    public static List<Integer> branchSums(BinaryTree root) {\n        List<Integer> sums = new ArrayList<>();\n        dfs(root, 0, sums);\n        return sums;\n    }\n\n    private static void dfs(BinaryTree node, int running, List<Integer> sums) {\n        if (node == null) return;\n        int s = running + node.value;\n        if (node.left == null && node.right == null) { sums.add(s); return; }\n        dfs(node.left, s, sums);\n        dfs(node.right, s, sums);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "BranchSums.java",
+   "narration": "Here's the Java solution, starting with branch sums. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Carry the running sum down each path; at a leaf, that sum is one branch sum.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Branch Sums: Carry the running sum down each path; at a leaf, that sum is one branch sum. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

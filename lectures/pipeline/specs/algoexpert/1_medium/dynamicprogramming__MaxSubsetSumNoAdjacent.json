@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Max Subset Sum No Adjacent",
+ "out": "algoexpert/medium/dynamicprogramming/MaxSubsetSumNoAdjacent",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Max Subset Sum No Adjacent",
+   "subtitle": "AlgoExpert · Medium · Dynamic Programming",
+   "narration": "Let's solve Max Subset Sum No Adjacent, a medium dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Max sum of positive ints with no two chosen elements adjacent."
+   ],
+   "narration": "Here's the problem. Max sum of positive ints with no two chosen elements adjacent."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MaxSubsetSumNoAdjacent {\n    public static int maxSubsetSumNoAdjacent(int[] a) {\n        int prev = 0, cur = 0;\n        for (int x : a) { int next = Math.max(cur, prev + x); prev = cur; cur = next; }\n        return cur;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MaxSubsetSumNoAdjacent.java",
+   "narration": "Here's the Java solution, starting with max subset sum no adjacent. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Max sum of positive ints with no two chosen elements adjacent.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Max Subset Sum No Adjacent: Max sum of positive ints with no two chosen elements adjacent. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

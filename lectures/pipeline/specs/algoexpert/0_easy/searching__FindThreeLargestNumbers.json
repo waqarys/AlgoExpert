@@ -1,0 +1,66 @@
+{
+ "title": "AlgoExpert · Find Three Largest Numbers",
+ "out": "algoexpert/easy/searching/FindThreeLargestNumbers",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Find Three Largest Numbers",
+   "subtitle": "AlgoExpert · Easy · Searching",
+   "narration": "Let's solve Find Three Largest Numbers, an easy searching problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Return the three largest values (sorted ascending) without sorting the input."
+   ],
+   "narration": "Here's the problem. Return the three largest values (sorted ascending) without sorting the input."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Keep a tiny sorted window of the three largest seen so far, and shift values into place as larger ones arrive."
+   ],
+   "narration": "Keep a tiny sorted window of the three largest seen so far, and shift values into place as larger ones arrive."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Start with three empty slots",
+    "2. Compare each number with the largest slot first",
+    "3. Shift smaller values down to make room",
+    "4. Return the three values ascending"
+   ],
+   "narration": "Step by step. First, start with three empty slots. Second, compare each number with the largest slot first. Third, shift smaller values down to make room. Fourth, return the three values ascending."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class FindThreeLargestNumbers {\n    public static int[] findThreeLargestNumbers(int[] array) {\n        int[] top = {Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE};\n        for (int x : array) {\n            if (x > top[2]) { top[0] = top[1]; top[1] = top[2]; top[2] = x; }\n            else if (x > top[1]) { top[0] = top[1]; top[1] = x; }\n            else if (x > top[0]) top[0] = x;\n        }\n        return top;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "FindThreeLargestNumbers.java",
+   "narration": "Here's the Java solution, starting with find three largest numbers. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Keep a tiny sorted window of the three largest seen so far, and shift values into place as larger ones arrive.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Find Three Largest Numbers: Keep a tiny sorted window of the three largest seen so far, and shift values into place as larger ones arrive. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

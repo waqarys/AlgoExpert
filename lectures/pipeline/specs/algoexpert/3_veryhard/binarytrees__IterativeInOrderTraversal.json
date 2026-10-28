@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Iterative In Order Traversal",
+ "out": "algoexpert/veryhard/binarytrees/IterativeInOrderTraversal",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Iterative In Order Traversal",
+   "subtitle": "AlgoExpert · Very Hard · Binary Trees",
+   "narration": "Let's solve Iterative In Order Traversal, a very hard binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "In-order traversal with O(1) extra space using parent pointers."
+   ],
+   "narration": "Here's the problem. In-order traversal with constant extra space using parent pointers."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class IterativeInOrderTraversal {\n    public static void iterativeInOrderTraversal(BinaryTree tree, Consumer<BinaryTree> callback) {\n        BinaryTree prev = null, cur = tree;\n        while (cur != null) {\n            BinaryTree next;\n            if (prev == null || prev == cur.parent) {\n                if (cur.left != null) next = cur.left;\n                else { callback.accept(cur); next = cur.right != null ? cur.right : cur.parent; }\n            } else if (prev == cur.left) {\n                callback.accept(cur);\n                next = cur.right != null ? cur.right : cur.parent;\n            } else next = cur.parent;\n            prev = cur;\n            cur = next;\n        }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "IterativeInOrderTraversal.java",
+   "narration": "Here's the Java solution, starting with iterative in order traversal. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "In-order traversal with O(1) extra space using parent pointers.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Iterative In Order Traversal: In-order traversal with constant extra space using parent pointers. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

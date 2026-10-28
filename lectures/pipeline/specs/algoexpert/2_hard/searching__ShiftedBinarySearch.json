@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Shifted Binary Search",
+ "out": "algoexpert/hard/searching/ShiftedBinarySearch",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Shifted Binary Search",
+   "subtitle": "AlgoExpert · Hard · Searching",
+   "narration": "Let's solve Shifted Binary Search, a hard searching problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Find target's index in a sorted array of distinct ints rotated by some amount; -1 if absent."
+   ],
+   "narration": "Here's the problem. Find target's index in a sorted array of distinct ints rotated by some amount; -1 if absent."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ShiftedBinarySearch {\n    public static int shiftedBinarySearch(int[] a, int t) {\n        int lo = 0, hi = a.length - 1;\n        while (lo <= hi) {\n            int mid = (lo + hi) >>> 1;\n            if (a[mid] == t) return mid;\n            if (a[lo] <= a[mid]) { if (t >= a[lo] && t < a[mid]) hi = mid - 1; else lo = mid + 1; }\n            else { if (t > a[mid] && t <= a[hi]) lo = mid + 1; else hi = mid - 1; }\n        }\n        return -1;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ShiftedBinarySearch.java",
+   "narration": "Here's the Java solution, starting with shifted binary search. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(log n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of log n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Find target's index in a sorted array of distinct ints rotated by some amount; -1 if absent.",
+    "Complexity: O(log n)"
+   ],
+   "narration": "To recap Shifted Binary Search: Find target's index in a sorted array of distinct ints rotated by some amount; -1 if absent. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

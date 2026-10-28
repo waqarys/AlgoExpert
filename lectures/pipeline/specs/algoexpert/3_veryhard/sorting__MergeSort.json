@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Merge Sort",
+ "out": "algoexpert/veryhard/sorting/MergeSort",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Merge Sort",
+   "subtitle": "AlgoExpert · Very Hard · Sorting",
+   "narration": "Let's solve Merge Sort, a very hard sorting problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Stable divide-and-conquer sort using one auxiliary buffer."
+   ],
+   "narration": "Here's the problem. Stable divide-and-conquer sort using one auxiliary buffer."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MergeSort {\n    public static int[] mergeSort(int[] a) {\n        sort(a, new int[a.length], 0, a.length - 1);\n        return a;\n    }\n\n    private static void sort(int[] a, int[] aux, int lo, int hi) {\n        if (lo >= hi) return;\n        int mid = (lo + hi) >>> 1;\n        sort(a, aux, lo, mid);\n        sort(a, aux, mid + 1, hi);\n        System.arraycopy(a, lo, aux, lo, hi - lo + 1);\n        int i = lo, j = mid + 1;\n        for (int k = lo; k <= hi; k++) {\n            if (i > mid) a[k] = aux[j++];\n            else if (j > hi) a[k] = aux[i++];\n            else if (aux[j] < aux[i]) a[k] = aux[j++];\n            else a[k] = aux[i++];\n        }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MergeSort.java",
+   "narration": "Here's the Java solution, starting with merge sort. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n log n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Stable divide-and-conquer sort using one auxiliary buffer.",
+    "Complexity: O(n log n)"
+   ],
+   "narration": "To recap Merge Sort: Stable divide-and-conquer sort using one auxiliary buffer. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

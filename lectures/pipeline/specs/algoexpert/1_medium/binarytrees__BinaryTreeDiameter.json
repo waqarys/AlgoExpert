@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Binary Tree Diameter",
+ "out": "algoexpert/medium/binarytrees/BinaryTreeDiameter",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Binary Tree Diameter",
+   "subtitle": "AlgoExpert · Medium · Binary Trees",
+   "narration": "Let's solve Binary Tree Diameter, a medium binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Number of edges on the longest path between any two nodes."
+   ],
+   "narration": "Here's the problem. Number of edges on the longest path between any two nodes."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class BinaryTreeDiameter {\n    public static int binaryTreeDiameter(BinaryTree t) {\n        int[] best = {0};\n        height(t, best);\n        return best[0];\n    }\n\n    private static int height(BinaryTree t, int[] best) {\n        if (t == null) return 0;\n        int l = height(t.left, best), r = height(t.right, best);\n        best[0] = Math.max(best[0], l + r);\n        return 1 + Math.max(l, r);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "BinaryTreeDiameter.java",
+   "narration": "Here's the Java solution, starting with binary tree diameter. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Number of edges on the longest path between any two nodes.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Binary Tree Diameter: Number of edges on the longest path between any two nodes. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

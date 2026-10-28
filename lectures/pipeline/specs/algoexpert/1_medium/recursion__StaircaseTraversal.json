@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Staircase Traversal",
+ "out": "algoexpert/medium/recursion/StaircaseTraversal",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Staircase Traversal",
+   "subtitle": "AlgoExpert · Medium · Recursion",
+   "narration": "Let's solve Staircase Traversal, a medium recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Ways to climb `height` steps taking 1..maxSteps at a time.",
+    "Sliding-window sum DP."
+   ],
+   "narration": "Here's the problem. Ways to climb height steps taking 1..maxSteps at a time. Sliding-window sum DP."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class StaircaseTraversal {\n    public static int staircaseTraversal(int height, int maxSteps) {\n        int[] ways = new int[height + 1];\n        ways[0] = 1;\n        int window = 0;\n        for (int h = 1; h <= height; h++) {\n            window += ways[h - 1];\n            if (h - maxSteps - 1 >= 0) window -= ways[h - maxSteps - 1];\n            ways[h] = window;\n        }\n        return ways[height];\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "StaircaseTraversal.java",
+   "narration": "Here's the Java solution, starting with staircase traversal. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Ways to climb `height` steps taking 1..maxSteps at a time.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Staircase Traversal: Ways to climb height steps taking 1..maxSteps at a time. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+{
+ "title": "AlgoExpert · Bst Construction",
+ "out": "algoexpert/medium/binarysearchtrees/BstConstruction",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Bst Construction",
+   "subtitle": "AlgoExpert · Medium · Binary Search Trees",
+   "narration": "Let's solve Bst Construction, a medium binary search trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "A BST class supporting insert, contains and remove (duplicates go right; removing a node with two children replaces it with its in-order successor's value).",
+    "Removing the only node is a no-op."
+   ],
+   "narration": "Here's the problem. A BST class supporting insert, contains and remove (duplicates go right; removing a node with two children replaces it with its in-order successor's value). Removing the only node is a no-op."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (1/2)",
+   "code": "public class BstConstruction {\n    public static class BST {\n        public int value;\n        public BST left, right;\n\n        public BST(int value) { this.value = value; }\n\n        public BST insert(int v) {\n            BST cur = this;\n            while (true) {\n                if (v < cur.value) { if (cur.left == null) { cur.left = new BST(v); return this; } cur = cur.left; }\n                else { if (cur.right == null) { cur.right = new BST(v); return this; } cur = cur.right; }\n            }\n        }\n\n        public boolean contains(int v) {\n            BST cur = this;\n            while (cur != null) {\n                if (v == cur.value) return true;\n                cur = v < cur.value ? cur.left : cur.right;\n            }\n            return false;",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "BstConstruction_part1.java",
+   "narration": "Here's the Java solution, starting with bst. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (2/2)",
+   "code": "        }\n\n        public BST remove(int v) { remove(v, null); return this; }\n\n        private void remove(int v, BST parent) {\n            BST cur = this;\n            while (cur != null) {\n                if (v < cur.value) { parent = cur; cur = cur.left; }\n                else if (v > cur.value) { parent = cur; cur = cur.right; }\n                else {\n                    if (cur.left != null && cur.right != null) {\n                        cur.value = cur.right.minValue();\n                        cur.right.remove(cur.value, cur);\n                    } else if (parent == null) {\n                        BST child = cur.left != null ? cur.left : cur.right;\n                        if (child != null) { cur.value = child.value; cur.left = child.left; cur.right = child.right; }\n                    } else if (parent.left == cur) parent.left = cur.left != null ? cur.left : cur.right;\n                    else parent.right = cur.left != null ? cur.left : cur.right;\n                    return;\n                }\n            }\n        }\n\n        private int minValue() { BST c = this; while (c.left != null) c = c.left; return c.value; }\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "BstConstruction_part2.java",
+   "narration": "Continuing with remove, remove, min value."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(log n) avg, O(n) worst per op",
+    "Space: O(1) (iterative)"
+   ],
+   "narration": "Time is O of log n avg, O of n worst per op. Space is constant (iterative)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "A BST class supporting insert, contains and remove (duplicates go right; removing a node with two children replaces it with its in-order successor's value).",
+    "Complexity: O(log n) avg, O(n) worst per op"
+   ],
+   "narration": "To recap Bst Construction: A BST class supporting insert, contains and remove (duplicates go right; removing a node with two children replaces it with its in-order successor's value). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

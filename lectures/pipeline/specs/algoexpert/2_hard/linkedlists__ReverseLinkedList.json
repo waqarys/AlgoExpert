@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Reverse Linked List",
+ "out": "algoexpert/hard/linkedlists/ReverseLinkedList",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Reverse Linked List",
+   "subtitle": "AlgoExpert · Hard · Linked Lists",
+   "narration": "Let's solve Reverse Linked List, a hard linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Reverse in place and return the new head."
+   ],
+   "narration": "Here's the problem. Reverse in place and return the new head."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ReverseLinkedList {\n    public static LinkedListNode reverseLinkedList(LinkedListNode head) {\n        LinkedListNode prev = null;\n        while (head != null) { LinkedListNode n = head.next; head.next = prev; prev = head; head = n; }\n        return prev;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ReverseLinkedList.java",
+   "narration": "Here's the Java solution, starting with reverse linked list. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Reverse in place and return the new head.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Reverse Linked List: Reverse in place and return the new head. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

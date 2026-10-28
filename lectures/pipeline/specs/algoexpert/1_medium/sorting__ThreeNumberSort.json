@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Three Number Sort",
+ "out": "algoexpert/medium/sorting/ThreeNumberSort",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Three Number Sort",
+   "subtitle": "AlgoExpert · Medium · Sorting",
+   "narration": "Let's solve Three Number Sort, a medium sorting problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Sort an array in place according to a 3-value `order` (Dutch national flag)."
+   ],
+   "narration": "Here's the problem. Sort an array in place according to a 3-value order (Dutch national flag)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ThreeNumberSort {\n    public static int[] threeNumberSort(int[] a, int[] order) {\n        int lo = 0, mid = 0, hi = a.length - 1;\n        while (mid <= hi) {\n            if (a[mid] == order[0]) swap(a, lo++, mid++);\n            else if (a[mid] == order[1]) mid++;\n            else swap(a, mid, hi--);\n        }\n        return a;\n    }\n\n    private static void swap(int[] a, int i, int j) { int t = a[i]; a[i] = a[j]; a[j] = t; }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ThreeNumberSort.java",
+   "narration": "Here's the Java solution, starting with three number sort. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Sort an array in place according to a 3-value `order` (Dutch national flag).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Three Number Sort: Sort an array in place according to a 3-value order (Dutch national flag). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,80 @@
+{
+ "title": "SystemsExpert · Fundamentals 2/4",
+ "out": "systemsexpert/00c_fundamentals_2",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Design Fundamentals 2/4",
+   "subtitle": "Topics 7–12",
+   "narration": "Design fundamentals, part 2 of 4. We'll cover Caching, Proxies, Load balancers, Hashing, Relational databases, and Key-value stores."
+  },
+  {
+   "kind": "bullets",
+   "heading": "7. Caching",
+   "bullets": [
+    "Client, server, CDN, DB caches",
+    "Write-through vs write-back",
+    "eviction policies LRU/LFU",
+    "staleness and invalidation"
+   ],
+   "narration": "Caching. Client, server, CDN, DB caches. Write-through versus write-back. eviction policies LRU or LFU. staleness and invalidation."
+  },
+  {
+   "kind": "bullets",
+   "heading": "8. Proxies",
+   "bullets": [
+    "Forward proxy (acts for the client) vs reverse proxy (acts for the server: LB, TLS termination, caching)",
+    "Nginx"
+   ],
+   "narration": "Proxies. Forward proxy (acts for the client) versus reverse proxy (acts for the server: LB, TLS termination, caching). Nginx."
+  },
+  {
+   "kind": "bullets",
+   "heading": "9. Load balancers",
+   "bullets": [
+    "Round robin, weighted, least-connections, IP/consistent hashing",
+    "health checks",
+    "L4 vs L7"
+   ],
+   "narration": "Load balancers. Round robin, weighted, least-connections, IP or consistent hashing. health checks. L4 versus L7."
+  },
+  {
+   "kind": "bullets",
+   "heading": "10. Hashing",
+   "bullets": [
+    "Consistent hashing and rendezvous hashing keep remapping small when servers join or leave"
+   ],
+   "narration": "Hashing. Consistent hashing and rendezvous hashing keep remapping small when servers join or leave."
+  },
+  {
+   "kind": "bullets",
+   "heading": "11. Relational databases",
+   "bullets": [
+    "SQL, ACID transactions, indexes (B-trees), strong consistency, joins"
+   ],
+   "narration": "Relational databases. SQL, ACID transactions, indexes (B-trees), strong consistency, joins."
+  },
+  {
+   "kind": "bullets",
+   "heading": "12. Key-value stores",
+   "bullets": [
+    "Simple get/put, very fast, flexible",
+    "Redis (memory), DynamoDB, etcd/ZooKeeper (strongly consistent config)"
+   ],
+   "narration": "Key-value stores. Simple get or put, very fast, flexible. Redis (memory), DynamoDB, etcd or ZooKeeper (strongly consistent config)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "7. Caching",
+    "8. Proxies",
+    "9. Load balancers",
+    "10. Hashing",
+    "11. Relational databases",
+    "12. Key-value stores"
+   ],
+   "narration": "To recap this part: Caching; Proxies; Load balancers; Hashing; Relational databases; Key-value stores. Each of these shows up again in the design walkthroughs."
+  }
+ ]
+}

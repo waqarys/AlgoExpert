@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Detect Arbitrage",
+ "out": "algoexpert/veryhard/graphs/DetectArbitrage",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Detect Arbitrage",
+   "subtitle": "AlgoExpert · Very Hard · Graphs",
+   "narration": "Let's solve Detect Arbitrage, a very hard graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Exchange-rate matrix; is there a cycle of trades yielding profit?",
+    "Take -log(rate) edge weights and look for a negative cycle with Bellman-Ford."
+   ],
+   "narration": "Here's the problem. Exchange-rate matrix; is there a cycle of trades yielding profit? Take -log(rate) edge weights and look for a negative cycle with Bellman-Ford."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class DetectArbitrage {\n    public static boolean detectArbitrage(double[][] rates) {\n        int n = rates.length;\n        double[] dist = new double[n];\n        java.util.Arrays.fill(dist, Double.MAX_VALUE);\n        dist[0] = 0;\n        for (int it = 0; it < n; it++) {\n            boolean changed = false;\n            for (int u = 0; u < n; u++) for (int v = 0; v < n; v++) {\n                double w = -Math.log(rates[u][v]);\n                if (dist[u] + w < dist[v] - 1e-12) { dist[v] = dist[u] + w; changed = true; }\n            }\n            if (!changed) return false;\n        }\n        return true;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "DetectArbitrage.java",
+   "narration": "Here's the Java solution, starting with detect arbitrage. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^3)",
+    "Space: O(n^2)"
+   ],
+   "narration": "Time is O of n cubed. Space is O of n squared."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Exchange-rate matrix; is there a cycle of trades yielding profit?",
+    "Complexity: O(n^3)"
+   ],
+   "narration": "To recap Detect Arbitrage: Exchange-rate matrix; is there a cycle of trades yielding profit? Try re-implementing it from scratch without looking."
+  }
+ ]
+}

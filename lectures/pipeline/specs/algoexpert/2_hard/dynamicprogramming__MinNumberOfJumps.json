@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Min Number Of Jumps",
+ "out": "algoexpert/hard/dynamicprogramming/MinNumberOfJumps",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Min Number Of Jumps",
+   "subtitle": "AlgoExpert · Hard · Dynamic Programming",
+   "narration": "Let's solve Min Number Of Jumps, a hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Each value is the max jump length from that index; fewest jumps to reach the end.",
+    "Greedy BFS-by-ranges."
+   ],
+   "narration": "Here's the problem. Each value is the max jump length from that index; fewest jumps to reach the end. Greedy BFS-by-ranges."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MinNumberOfJumps {\n    public static int minNumberOfJumps(int[] a) {\n        int jumps = 0, curEnd = 0, farthest = 0;\n        for (int i = 0; i < a.length - 1; i++) {\n            farthest = Math.max(farthest, i + a[i]);\n            if (i == curEnd) { jumps++; curEnd = farthest; }\n        }\n        return jumps;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MinNumberOfJumps.java",
+   "narration": "Here's the Java solution, starting with min number of jumps. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Each value is the max jump length from that index; fewest jumps to reach the end.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Min Number Of Jumps: Each value is the max jump length from that index; fewest jumps to reach the end. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

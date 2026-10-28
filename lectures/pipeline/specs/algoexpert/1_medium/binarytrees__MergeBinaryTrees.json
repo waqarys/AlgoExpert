@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Merge Binary Trees",
+ "out": "algoexpert/medium/binarytrees/MergeBinaryTrees",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Merge Binary Trees",
+   "subtitle": "AlgoExpert · Medium · Binary Trees",
+   "narration": "Let's solve Merge Binary Trees, a medium binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Overlay two trees; overlapping nodes sum their values.",
+    "Mutates and returns tree1."
+   ],
+   "narration": "Here's the problem. Overlay two trees; overlapping nodes sum their values. Mutates and returns tree1."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MergeBinaryTrees {\n    public static BinaryTree mergeBinaryTrees(BinaryTree a, BinaryTree b) {\n        if (a == null) return b;\n        if (b == null) return a;\n        a.value += b.value;\n        a.left = mergeBinaryTrees(a.left, b.left);\n        a.right = mergeBinaryTrees(a.right, b.right);\n        return a;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MergeBinaryTrees.java",
+   "narration": "Here's the Java solution, starting with merge binary trees. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n) of the smaller overlap",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n of the smaller overlap. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Overlay two trees; overlapping nodes sum their values.",
+    "Complexity: O(n) of the smaller overlap"
+   ],
+   "narration": "To recap Merge Binary Trees: Overlay two trees; overlapping nodes sum their values. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

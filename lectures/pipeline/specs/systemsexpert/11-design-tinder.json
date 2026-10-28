@@ -1,0 +1,139 @@
+{
+ "title": "SystemsExpert · Design Tinder",
+ "out": "systemsexpert/11-design-tinder",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Design Tinder",
+   "subtitle": "SystemsExpert design walkthrough",
+   "narration": "In this lecture we design Tinder. We'll follow the interview framework: clarify, set requirements, estimate, sketch the architecture, define the data and API, then dive into the hard parts and the trade-offs."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Clarifying questions",
+   "bullets": [
+    "Profiles, swiping, matches, chat - which are in scope?",
+    "How are recommendations generated?"
+   ],
+   "narration": "Start by clarifying the scope with your interviewer. Good questions here are: Profiles, swiping, matches, chat - which are in scope? How are recommendations generated?"
+  },
+  {
+   "kind": "bullets",
+   "heading": "Functional requirements",
+   "bullets": [
+    "Create/update profile and preferences",
+    "Get a deck of candidate profiles",
+    "Swipe left/right; mutual right swipe creates a match",
+    "List matches; message matches"
+   ],
+   "narration": "The functional requirements. Create or update profile and preferences. Get a deck of candidate profiles. Swipe left or right; mutual right swipe creates a match. List matches; message matches."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Non-functional requirements",
+   "bullets": [
+    "Deck loads quickly; swipes never lost",
+    "Match created exactly once"
+   ],
+   "narration": "The non-functional requirements. Deck loads quickly; swipes never lost. Match created exactly once."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Capacity estimates",
+   "bullets": [
+    "~50M DAU x ~100 swipes/day ~ 60k swipes/s peak"
+   ],
+   "narration": "Now some rough capacity estimates, which drive the design. about 50M DAU x about 100 swipes per day about 60k swipes per s peak."
+  },
+  {
+   "kind": "diagram",
+   "heading": "High-level architecture",
+   "edges": [
+    [
+     "App",
+     "API"
+    ],
+    [
+     "API",
+     "Profiles"
+    ],
+    [
+     "API",
+     "Deck service - geo + prefs + ranking"
+    ],
+    [
+     "API",
+     "Swipes PK swiper, swipee"
+    ],
+    [
+     "Swipes PK swiper, swipee",
+     "Match detector"
+    ],
+    [
+     "Match detector",
+     "Matches"
+    ],
+    [
+     "API",
+     "Messaging service"
+    ]
+   ],
+   "narration": "Here's the high-level architecture. App connects to API. API connects to Profiles and Deck service - geo plus prefs plus ranking and Swipes PK swiper, swipee and Messaging service. Swipes PK swiper, swipee connects to Match detector. Match detector connects to Matches."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Data model",
+   "bullets": [
+    "profile(user_id, name, photos, bio, geo, prefs)",
+    "swipe(swiper_id, swipee_id, decision, ts)",
+    "match(id, user_a, user_b, created_at) unique(min,max)"
+   ],
+   "narration": "Here is the data model. profile(user id, name, photos, bio, geo, prefs). swipe(swiper id, swipee id, decision, ts). match(id, user a, user b, created at) unique(min,max)."
+  },
+  {
+   "kind": "code",
+   "heading": "API",
+   "code": "GET  /v1/profile, PUT /v1/profile\nGET  /v1/deck?limit=50            -> profiles[]\nPOST /v1/swipes {profileId, decision: LIKE|PASS} -> {matched: bool, matchId?}\nGET  /v1/matches?cursor\nPOST /v1/matches/{id}/messages {text}\nGET  /v1/matches/{id}/messages?cursor",
+   "lang": "text",
+   "font_size": 26,
+   "filename": "08_api.txt",
+   "narration": "The API. The main endpoints are: GET v1 profile,; GET v1 deck with limit equals 50; POST v1 swipes; GET v1 matches with cursor; POST v1 matches by id messages; GET v1 matches by id messages with cursor. Each one is small, resource-oriented and easy to version."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Match detection",
+   "bullets": [
+    "On LIKE, check whether the reverse LIKE exists; insert the match with a unique constraint on the ordered pair so concurrent likes create one match."
+   ],
+   "narration": "Deep dive: Match detection. On LIKE, check whether the reverse LIKE exists; insert the match with a unique constraint on the ordered pair so concurrent likes create one match."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Deck",
+   "bullets": [
+    "Precompute decks in the background per user; exclude already-swiped profiles with a bloom filter."
+   ],
+   "narration": "Deep dive: Deck. Precompute decks in the background per user; exclude already-swiped profiles with a bloom filter."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Trade-offs & alternatives",
+   "bullets": [
+    "Synchronous match check gives instant 'It's a match!' at slightly higher write latency",
+    "Precomputed decks may be slightly stale"
+   ],
+   "narration": "Finally, the key trade-offs. Synchronous match check gives instant 'It's a match!' at slightly higher write latency. Precomputed decks may be slightly stale."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Clarify scope, then functional + non-functional needs",
+    "Estimate load to size storage and fan-out",
+    "Core pieces: App, API, Profiles, Deck service - geo + prefs + ranking, Swipes PK swiper, swipee",
+    "Know your trade-offs and failure modes"
+   ],
+   "narration": "To recap Tinder: we clarified the scope, set functional and non-functional requirements, estimated the load, sketched an architecture built around App, API, Profiles, Deck service - geo plus prefs plus ranking, and walked through the deep dives and trade-offs. Practise explaining each decision out loud."
+  }
+ ]
+}

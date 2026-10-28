@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Validate Bst",
+ "out": "algoexpert/medium/binarysearchtrees/ValidateBst",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Validate Bst",
+   "subtitle": "AlgoExpert · Medium · Binary Search Trees",
+   "narration": "Let's solve Validate Bst, a medium binary search trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Every node must be strictly greater than all left-subtree values and <= all right-subtree values."
+   ],
+   "narration": "Here's the problem. Every node must be strictly greater than all left-subtree values and under equals all right-subtree values."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ValidateBst {\n    public static boolean validateBst(BST t) { return valid(t, Long.MIN_VALUE, Long.MAX_VALUE); }\n\n    private static boolean valid(BST t, long min, long max) {\n        if (t == null) return true;\n        if (t.value < min || t.value >= max) return false;\n        return valid(t.left, min, t.value) && valid(t.right, t.value, max);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ValidateBst.java",
+   "narration": "Here's the Java solution, starting with validate bst. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Every node must be strictly greater than all left-subtree values and <= all right-subtree values.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Validate Bst: Every node must be strictly greater than all left-subtree values and under equals all right-subtree values. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

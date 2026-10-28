@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Group Anagrams",
+ "out": "algoexpert/medium/strings/GroupAnagrams",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Group Anagrams",
+   "subtitle": "AlgoExpert · Medium · Strings",
+   "narration": "Let's solve Group Anagrams, a medium strings problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Group words that are anagrams of each other (key = sorted letters)."
+   ],
+   "narration": "Here's the problem. Group words that are anagrams of each other (key equals sorted letters)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class GroupAnagrams {\n    public static List<List<String>> groupAnagrams(List<String> words) {\n        Map<String, List<String>> groups = new LinkedHashMap<>();\n        for (String w : words) {\n            char[] c = w.toCharArray();\n            Arrays.sort(c);\n            groups.computeIfAbsent(new String(c), k -> new ArrayList<>()).add(w);\n        }\n        return new ArrayList<>(groups.values());\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "GroupAnagrams.java",
+   "narration": "Here's the Java solution, starting with group anagrams. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(w * n log n)",
+    "Space: O(w * n)"
+   ],
+   "narration": "Time is O of w times n log n. Space is O of w times n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Group words that are anagrams of each other (key = sorted letters).",
+    "Complexity: O(w * n log n)"
+   ],
+   "narration": "To recap Group Anagrams: Group words that are anagrams of each other (key equals sorted letters). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

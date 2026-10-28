@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Merge Sorted Arrays",
+ "out": "algoexpert/veryhard/heaps/MergeSortedArrays",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Merge Sorted Arrays",
+   "subtitle": "AlgoExpert · Very Hard · Heaps",
+   "narration": "Let's solve Merge Sorted Arrays, a very hard heaps problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Merge k sorted lists into one sorted list using a min-heap of (value, list, index)."
+   ],
+   "narration": "Here's the problem. Merge k sorted lists into one sorted list using a min-heap of (value, list, index)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MergeSortedArrays {\n    public static List<Integer> mergeSortedArrays(List<List<Integer>> arrays) {\n        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0]));\n        for (int i = 0; i < arrays.size(); i++) if (!arrays.get(i).isEmpty()) pq.add(new int[]{arrays.get(i).get(0), i, 0});\n        List<Integer> out = new ArrayList<>();\n        while (!pq.isEmpty()) {\n            int[] t = pq.poll();\n            out.add(t[0]);\n            List<Integer> src = arrays.get(t[1]);\n            if (t[2] + 1 < src.size()) pq.add(new int[]{src.get(t[2] + 1), t[1], t[2] + 1});\n        }\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MergeSortedArrays.java",
+   "narration": "Here's the Java solution, starting with merge sorted arrays. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log k)",
+    "Space: O(n + k)"
+   ],
+   "narration": "Time is O of n log k. Space is O of n plus k."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Merge k sorted lists into one sorted list using a min-heap of (value, list, index).",
+    "Complexity: O(n log k)"
+   ],
+   "narration": "To recap Merge Sorted Arrays: Merge k sorted lists into one sorted list using a min-heap of (value, list, index). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

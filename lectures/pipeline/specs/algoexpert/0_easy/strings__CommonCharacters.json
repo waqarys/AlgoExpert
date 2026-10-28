@@ -1,0 +1,65 @@
+{
+ "title": "AlgoExpert · Common Characters",
+ "out": "algoexpert/easy/strings/CommonCharacters",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Common Characters",
+   "subtitle": "AlgoExpert · Easy · Strings",
+   "narration": "Let's solve Common Characters, an easy strings problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Return the unique characters that appear in every string."
+   ],
+   "narration": "Here's the problem. Return the unique characters that appear in every string."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "A character is common if it appears in every string, so count in how many strings each unique character appears."
+   ],
+   "narration": "A character is common if it appears in every string, so count in how many strings each unique character appears."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. For each string, take its set of characters",
+    "2. Count the number of strings containing each one",
+    "3. Keep characters whose count equals the number of strings"
+   ],
+   "narration": "Step by step. First, for each string, take its set of characters. Second, count the number of strings containing each one. Third, keep characters whose count equals the number of strings."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class CommonCharacters {\n    public static String[] commonCharacters(String[] strings) {\n        Set<Character> common = null;\n        for (String s : strings) {\n            Set<Character> cur = new HashSet<>();\n            for (char c : s.toCharArray()) cur.add(c);\n            if (common == null) common = cur; else common.retainAll(cur);\n        }\n        List<String> out = new ArrayList<>();\n        for (char c : new TreeSet<>(common)) out.add(String.valueOf(c));\n        return out.toArray(new String[0]);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "CommonCharacters.java",
+   "narration": "Here's the Java solution, starting with common characters. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n*m)",
+    "Space: O(c) distinct chars"
+   ],
+   "narration": "Time is O of n times m. Space is O of c distinct chars."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "A character is common if it appears in every string, so count in how many strings each unique character appears.",
+    "Complexity: O(n*m)"
+   ],
+   "narration": "To recap Common Characters: A character is common if it appears in every string, so count in how many strings each unique character appears. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

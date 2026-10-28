@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Balanced Brackets",
+ "out": "algoexpert/medium/stacks/BalancedBrackets",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Balanced Brackets",
+   "subtitle": "AlgoExpert · Medium · Stacks",
+   "narration": "Let's solve Balanced Brackets, a medium stacks problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Are (), [], {} properly balanced and nested?",
+    "Non-bracket chars are ignored."
+   ],
+   "narration": "Here's the problem. Are (), , properly balanced and nested? Non-bracket chars are ignored."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class BalancedBrackets {\n    public static boolean balancedBrackets(String s) {\n        ArrayDeque<Character> st = new ArrayDeque<>();\n        for (char c : s.toCharArray()) {\n            if (\"([{\".indexOf(c) >= 0) st.push(c);\n            else if (\")]}\".indexOf(c) >= 0) {\n                if (st.isEmpty() || \"([{\".indexOf(st.pop()) != \")]}\".indexOf(c)) return false;\n            }\n        }\n        return st.isEmpty();\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "BalancedBrackets.java",
+   "narration": "Here's the Java solution, starting with balanced brackets. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Are (), [], {} properly balanced and nested?",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Balanced Brackets: Are (), , properly balanced and nested? Try re-implementing it from scratch without looking."
+  }
+ ]
+}

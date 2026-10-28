@@ -1,0 +1,49 @@
+{
+ "title": "AlgoExpert · Ambiguous Measurements",
+ "out": "algoexpert/hard/recursion/AmbiguousMeasurements",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Ambiguous Measurements",
+   "subtitle": "AlgoExpert · Hard · Recursion",
+   "narration": "Let's solve Ambiguous Measurements, a hard recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Measuring cups each measure a [low, high] range.",
+    "Can repeated pours produce a volume within [low, high]?",
+    "Memoised search over remaining (low, high) targets."
+   ],
+   "narration": "Here's the problem. Measuring cups each measure a low, high range. Can repeated pours produce a volume within low, high ? Memoised search over remaining (low, high) targets."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class AmbiguousMeasurements {\n    public static boolean ambiguousMeasurements(int[][] cups, int low, int high) {\n        return can(cups, low, high, new HashMap<>());\n    }\n\n    private static boolean can(int[][] cups, int low, int high, Map<String, Boolean> memo) {\n        String key = low + \":\" + high;\n        if (memo.containsKey(key)) return memo.get(key);\n        if (low <= 0 && high <= 0) return false;\n        boolean ok = false;\n        for (int[] c : cups) {\n            if (c[1] == 0) continue; // an empty cup never makes progress (avoids infinite recursion)\n            if (c[0] >= low && c[1] <= high) { ok = true; break; }\n            if (can(cups, Math.max(0, low - c[0]), Math.max(0, high - c[1]), memo)) { ok = true; break; }\n        }\n        memo.put(key, ok);\n        return ok;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "AmbiguousMeasurements.java",
+   "narration": "Here's the Java solution, starting with ambiguous measurements. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(low * high * n)",
+    "Space: O(low * high)"
+   ],
+   "narration": "Time is O of low times high times n. Space is O of low times high."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Measuring cups each measure a [low, high] range.",
+    "Complexity: O(low * high * n)"
+   ],
+   "narration": "To recap Ambiguous Measurements: Measuring cups each measure a low, high range. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

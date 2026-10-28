@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Reveal Minesweeper",
+ "out": "algoexpert/medium/recursion/RevealMinesweeper",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Reveal Minesweeper",
+   "subtitle": "AlgoExpert · Medium · Recursion",
+   "narration": "Let's solve Reveal Minesweeper, a medium recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Board of \"M\" (mine), \"H\" (hidden), \"0\"-\"8\" (revealed).",
+    "Clicking a mine sets it to \"X\"; clicking a hidden cell reveals its adjacent-mine count and, if zero, recursively reveals neighbours."
+   ],
+   "narration": "Here's the problem. Board of \"M\" (mine), \"H\" (hidden), \"0\"-\"8\" (revealed). Clicking a mine sets it to \"X\"; clicking a hidden cell reveals its adjacent-mine count and, if zero, recursively reveals neighbours."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class RevealMinesweeper {\n    public static String[][] revealMinesweeper(String[][] board, int row, int col) {\n        if (board[row][col].equals(\"M\")) { board[row][col] = \"X\"; return board; }\n        reveal(board, row, col);\n        return board;\n    }\n\n    private static void reveal(String[][] b, int r, int c) {\n        if (!b[r][c].equals(\"H\")) return;\n        int mines = 0;\n        for (int dr = -1; dr <= 1; dr++) for (int dc = -1; dc <= 1; dc++) {\n            int nr = r + dr, nc = c + dc;\n            if ((dr != 0 || dc != 0) && nr >= 0 && nc >= 0 && nr < b.length && nc < b[0].length && b[nr][nc].equals(\"M\")) mines++;\n        }\n        b[r][c] = String.valueOf(mines);\n        if (mines > 0) return;\n        for (int dr = -1; dr <= 1; dr++) for (int dc = -1; dc <= 1; dc++) {\n            int nr = r + dr, nc = c + dc;\n            if (nr >= 0 && nc >= 0 && nr < b.length && nc < b[0].length) reveal(b, nr, nc);\n        }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "RevealMinesweeper.java",
+   "narration": "Here's the Java solution, starting with reveal minesweeper. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(w*h)",
+    "Space: O(w*h)"
+   ],
+   "narration": "Time is O of w times h. Space is O of w times h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Board of \"M\" (mine), \"H\" (hidden), \"0\"-\"8\" (revealed).",
+    "Complexity: O(w*h)"
+   ],
+   "narration": "To recap Reveal Minesweeper: Board of \"M\" (mine), \"H\" (hidden), \"0\"-\"8\" (revealed). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

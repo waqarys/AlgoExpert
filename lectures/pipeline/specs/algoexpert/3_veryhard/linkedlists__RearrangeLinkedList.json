@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Rearrange Linked List",
+ "out": "algoexpert/veryhard/linkedlists/RearrangeLinkedList",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Rearrange Linked List",
+   "subtitle": "AlgoExpert · Very Hard · Linked Lists",
+   "narration": "Let's solve Rearrange Linked List, a very hard linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Stable partition around k: nodes < k, then == k, then > k.",
+    "Returns new head."
+   ],
+   "narration": "Here's the problem. Stable partition around k: nodes under k, then equals equals k, then over k. Returns new head."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class RearrangeLinkedList {\n    public static LinkedListNode rearrangeLinkedList(LinkedListNode head, int k) {\n        LinkedListNode lo = new LinkedListNode(0), eq = new LinkedListNode(0), hi = new LinkedListNode(0);\n        LinkedListNode l = lo, e = eq, h = hi;\n        for (LinkedListNode c = head; c != null; c = c.next) {\n            if (c.value < k) { l.next = c; l = c; }\n            else if (c.value == k) { e.next = c; e = c; }\n            else { h.next = c; h = c; }\n        }\n        h.next = null;\n        e.next = hi.next;\n        l.next = eq.next != null ? eq.next : hi.next;\n        return lo.next;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "RearrangeLinkedList.java",
+   "narration": "Here's the Java solution, starting with rearrange linked list. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Stable partition around k: nodes < k, then == k, then > k.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Rearrange Linked List: Stable partition around k: nodes under k, then equals equals k, then over k. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

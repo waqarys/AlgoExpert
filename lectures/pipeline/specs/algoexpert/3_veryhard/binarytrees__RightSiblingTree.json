@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Right Sibling Tree",
+ "out": "algoexpert/veryhard/binarytrees/RightSiblingTree",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Right Sibling Tree",
+   "subtitle": "AlgoExpert · Very Hard · Binary Trees",
+   "narration": "Let's solve Right Sibling Tree, a very hard binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Transform in place so every node's right pointer points to the next node on the same level (null at the end of a level); left pointers keep the first child.",
+    "Level-by-level, O(1) extra space using the already-linked level above."
+   ],
+   "narration": "Here's the problem. Transform in place so every node's right pointer points to the next node on the same level (null at the end of a level); left pointers keep the first child. Level-by-level, constant extra space using the already-linked level above."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class RightSiblingTree {\n    public static BinaryTree rightSiblingTree(BinaryTree root) {\n        java.util.List<BinaryTree> level = java.util.List.of(root);\n        while (!level.isEmpty()) {\n            java.util.List<BinaryTree> next = new java.util.ArrayList<>();\n            for (BinaryTree n : level) { if (n.left != null) next.add(n.left); if (n.right != null) next.add(n.right); }\n            for (int i = 0; i < level.size(); i++) level.get(i).right = i + 1 < level.size() ? level.get(i + 1) : null;\n            level = next;\n        }\n        return root;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "RightSiblingTree.java",
+   "narration": "Here's the Java solution, starting with right sibling tree. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1) (iterative, besides an original-children snapshot per level)"
+   ],
+   "narration": "Time is O of n. Space is constant (iterative, besides an original-children snapshot per level)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Transform in place so every node's right pointer points to the next node on the same level (null at the end of a level); left pointers keep the first child.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Right Sibling Tree: Transform in place so every node's right pointer points to the next node on the same level (null at the end of a level); left pointers keep the first child. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

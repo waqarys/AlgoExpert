@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Best Seat",
+ "out": "algoexpert/medium/arrays/BestSeat",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Best Seat",
+   "subtitle": "AlgoExpert · Medium · Arrays",
+   "narration": "Let's solve Best Seat, a medium arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "A row of seats (1 taken, 0 free; both ends taken).",
+    "Return the index of the free seat with the most space on both sides (centre of the widest gap, leftmost on ties), or -1."
+   ],
+   "narration": "Here's the problem. A row of seats (1 taken, 0 free; both ends taken). Return the index of the free seat with the most space on both sides (centre of the widest gap, leftmost on ties), or -1."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class BestSeat {\n    public static int bestSeat(int[] seats) {\n        int best = -1, bestGap = 0, l = 0;\n        while (l < seats.length) {\n            int r = l + 1;\n            while (r < seats.length && seats[r] == 0) r++;\n            int gap = r - l - 1;\n            if (gap > bestGap) { bestGap = gap; best = (l + r) / 2; }\n            l = r;\n        }\n        return best;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "BestSeat.java",
+   "narration": "Here's the Java solution, starting with best seat. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "A row of seats (1 taken, 0 free; both ends taken).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Best Seat: A row of seats (1 taken, 0 free; both ends taken). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

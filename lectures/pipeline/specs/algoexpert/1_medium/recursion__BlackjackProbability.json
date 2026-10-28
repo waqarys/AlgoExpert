@@ -1,0 +1,49 @@
+{
+ "title": "AlgoExpert · Blackjack Probability",
+ "out": "algoexpert/medium/recursion/BlackjackProbability",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Blackjack Probability",
+   "subtitle": "AlgoExpert · Medium · Recursion",
+   "narration": "Let's solve Blackjack Probability, a medium recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "The dealer draws cards valued 1-10 uniformly while below target-4; busts if above target.",
+    "Starting from a hand value, probability of busting (rounded to 3 decimals).",
+    "Memoised recursion."
+   ],
+   "narration": "Here's the problem. The dealer draws cards valued 1-10 uniformly while below target-4; busts if above target. Starting from a hand value, probability of busting (rounded to 3 decimals). Memoised recursion."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class BlackjackProbability {\n    public static float blackjackProbability(int target, int startingHand) {\n        double p = bust(target, startingHand, new HashMap<>());\n        return Math.round(p * 1000) / 1000f;\n    }\n\n    private static double bust(int target, int hand, Map<Integer, Double> memo) {\n        if (hand > target) return 1;\n        if (hand + 4 >= target) return 0;\n        Double m = memo.get(hand);\n        if (m != null) return m;\n        double p = 0;\n        for (int c = 1; c <= 10; c++) p += 0.1 * bust(target, hand + c, memo);\n        memo.put(hand, p);\n        return p;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "BlackjackProbability.java",
+   "narration": "Here's the Java solution, starting with blackjack probability. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(t)",
+    "Space: O(t)"
+   ],
+   "narration": "Time is O of t. Space is O of t."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "The dealer draws cards valued 1-10 uniformly while below target-4; busts if above target.",
+    "Complexity: O(t)"
+   ],
+   "narration": "To recap Blackjack Probability: The dealer draws cards valued 1-10 uniformly while below target-4; busts if above target. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

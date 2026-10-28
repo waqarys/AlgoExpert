@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Interweaving Strings",
+ "out": "algoexpert/hard/recursion/InterweavingStrings",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Interweaving Strings",
+   "subtitle": "AlgoExpert · Hard · Recursion",
+   "narration": "Let's solve Interweaving Strings, a hard recursion problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Can `three` be formed by interleaving `one` and `two` keeping each one's order?"
+   ],
+   "narration": "Here's the problem. Can three be formed by interleaving one and two keeping each one's order?"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class InterweavingStrings {\n    public static boolean interweavingStrings(String one, String two, String three) {\n        int n = one.length(), m = two.length();\n        if (n + m != three.length()) return false;\n        boolean[] dp = new boolean[m + 1];\n        for (int i = 0; i <= n; i++)\n            for (int j = 0; j <= m; j++) {\n                if (i == 0 && j == 0) { dp[0] = true; continue; }\n                boolean fromOne = i > 0 && dp[j] && one.charAt(i - 1) == three.charAt(i + j - 1);\n                boolean fromTwo = j > 0 && dp[j - 1] && two.charAt(j - 1) == three.charAt(i + j - 1);\n                dp[j] = fromOne || fromTwo;\n            }\n        return dp[m];\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "InterweavingStrings.java",
+   "narration": "Here's the Java solution, starting with interweaving strings. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n*m)",
+    "Space: O(m)"
+   ],
+   "narration": "Time is O of n times m. Space is O of m."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Can `three` be formed by interleaving `one` and `two` keeping each one's order?",
+    "Complexity: O(n*m)"
+   ],
+   "narration": "To recap Interweaving Strings: Can three be formed by interleaving one and two keeping each one's order? Try re-implementing it from scratch without looking."
+  }
+ ]
+}

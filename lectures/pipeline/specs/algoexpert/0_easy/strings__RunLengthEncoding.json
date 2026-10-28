@@ -1,0 +1,65 @@
+{
+ "title": "AlgoExpert · Run Length Encoding",
+ "out": "algoexpert/easy/strings/RunLengthEncoding",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Run Length Encoding",
+   "subtitle": "AlgoExpert · Easy · Strings",
+   "narration": "Let's solve Run Length Encoding, an easy strings problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Encode runs as count+char, with runs longer than 9 split (\"AAAAAAAAAAAA\" -> \"9A3A\")."
+   ],
+   "narration": "Here's the problem. Encode runs as count plus char, with runs longer than 9 split (\"AAAAAAAAAAAA\" to \"9A3A\")."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Count runs of equal characters, but cap each run at nine so the count is always a single digit."
+   ],
+   "narration": "Count runs of equal characters, but cap each run at nine so the count is always a single digit."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Scan with a running count",
+    "2. Flush when the character changes or the count hits nine",
+    "3. Write count then character"
+   ],
+   "narration": "Step by step. First, scan with a running count. Second, flush when the character changes or the count hits nine. Third, write count then character."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class RunLengthEncoding {\n    public static String runLengthEncoding(String s) {\n        StringBuilder sb = new StringBuilder();\n        int run = 1;\n        for (int i = 1; i <= s.length(); i++) {\n            if (i == s.length() || s.charAt(i) != s.charAt(i - 1) || run == 9) {\n                sb.append(run).append(s.charAt(i - 1));\n                run = 1;\n            } else run++;\n        }\n        return sb.toString();\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "RunLengthEncoding.java",
+   "narration": "Here's the Java solution, starting with run length encoding. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Count runs of equal characters, but cap each run at nine so the count is always a single digit.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Run Length Encoding: Count runs of equal characters, but cap each run at nine so the count is always a single digit. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

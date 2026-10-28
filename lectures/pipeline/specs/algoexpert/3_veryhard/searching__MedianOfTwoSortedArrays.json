@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Median Of Two Sorted Arrays",
+ "out": "algoexpert/veryhard/searching/MedianOfTwoSortedArrays",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Median Of Two Sorted Arrays",
+   "subtitle": "AlgoExpert · Very Hard · Searching",
+   "narration": "Let's solve Median Of Two Sorted Arrays, a very hard searching problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Median of the union of two sorted arrays via binary-searched partition."
+   ],
+   "narration": "Here's the problem. Median of the union of two sorted arrays via binary-searched partition."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MedianOfTwoSortedArrays {\n    public static float medianOfTwoSortedArrays(int[] a, int[] b) {\n        if (a.length > b.length) return medianOfTwoSortedArrays(b, a);\n        int n = a.length, m = b.length, half = (n + m + 1) / 2, lo = 0, hi = n;\n        while (true) {\n            int i = (lo + hi) / 2, j = half - i;\n            int aL = i == 0 ? Integer.MIN_VALUE : a[i - 1], aR = i == n ? Integer.MAX_VALUE : a[i];\n            int bL = j == 0 ? Integer.MIN_VALUE : b[j - 1], bR = j == m ? Integer.MAX_VALUE : b[j];\n            if (aL > bR) hi = i - 1;\n            else if (bL > aR) lo = i + 1;\n            else {\n                if ((n + m) % 2 == 1) return Math.max(aL, bL);\n                return (Math.max(aL, bL) + (float) Math.min(aR, bR)) / 2;\n            }\n        }\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MedianOfTwoSortedArrays.java",
+   "narration": "Here's the Java solution, starting with median of two sorted arrays. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(log(min(n, m)))",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O(log(min(n, m))). Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Median of the union of two sorted arrays via binary-searched partition.",
+    "Complexity: O(log(min(n, m)))"
+   ],
+   "narration": "To recap Median Of Two Sorted Arrays: Median of the union of two sorted arrays via binary-searched partition. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Smallest Substring Containing",
+ "out": "algoexpert/veryhard/strings/SmallestSubstringContaining",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Smallest Substring Containing",
+   "subtitle": "AlgoExpert · Very Hard · Strings",
+   "narration": "Let's solve Smallest Substring Containing, a very hard strings problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Shortest substring of `big` containing every character of `small` (with multiplicity), or \"\".",
+    "Sliding window."
+   ],
+   "narration": "Here's the problem. Shortest substring of big containing every character of small (with multiplicity), or \"\". Sliding window."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SmallestSubstringContaining {\n    public static String smallestSubstringContaining(String big, String small) {\n        Map<Character, Integer> need = new HashMap<>();\n        for (char c : small.toCharArray()) need.merge(c, 1, Integer::sum);\n        int missing = small.length(), l = 0, bs = 0, be = Integer.MAX_VALUE;\n        for (int r = 0; r < big.length(); r++) {\n            char c = big.charAt(r);\n            if (need.containsKey(c)) { if (need.get(c) > 0) missing--; need.merge(c, -1, Integer::sum); }\n            while (missing == 0) {\n                if (r - l < be - bs) { bs = l; be = r; }\n                char d = big.charAt(l++);\n                if (need.containsKey(d)) { need.merge(d, 1, Integer::sum); if (need.get(d) > 0) missing++; }\n            }\n        }\n        return be == Integer.MAX_VALUE ? \"\" : big.substring(bs, be + 1);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SmallestSubstringContaining.java",
+   "narration": "Here's the Java solution, starting with smallest substring containing. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(b + s)",
+    "Space: O(s)"
+   ],
+   "narration": "Time is O of b plus s. Space is O of s."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Shortest substring of `big` containing every character of `small` (with multiplicity), or \"\".",
+    "Complexity: O(b + s)"
+   ],
+   "narration": "To recap Smallest Substring Containing: Shortest substring of big containing every character of small (with multiplicity), or \"\". Try re-implementing it from scratch without looking."
+  }
+ ]
+}

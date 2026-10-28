@@ -1,0 +1,68 @@
+{
+ "title": "AlgoExpert · Optimal Freelancing",
+ "out": "algoexpert/easy/greedyalgorithms/OptimalFreelancing",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Optimal Freelancing",
+   "subtitle": "AlgoExpert · Easy · Greedy Algorithms",
+   "narration": "Let's solve Optimal Freelancing, an easy greedy algorithms problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Each job takes one day and has a deadline (days left) and a payment.",
+    "Working at most 7 days, one job per day, maximise profit.",
+    "Greedy: take jobs by payment descending and place each in the latest free day on or before its deadline."
+   ],
+   "narration": "Here's the problem. Each job takes one day and has a deadline (days left) and a payment. Working at most 7 days, one job per day, maximise profit. Greedy: take jobs by payment descending and place each in the latest free day on or before its deadline."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Greedy by payment: take the most valuable jobs first and schedule each as late as its deadline allows."
+   ],
+   "narration": "Greedy by payment: take the most valuable jobs first and schedule each as late as its deadline allows."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Sort jobs by payment, highest first",
+    "2. Keep seven day slots",
+    "3. Place each job in the latest free day before its deadline",
+    "4. Sum the payments of placed jobs"
+   ],
+   "narration": "Step by step. First, sort jobs by payment, highest first. Second, keep seven day slots. Third, place each job in the latest free day before its deadline. Fourth, sum the payments of placed jobs."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class OptimalFreelancing {\n    public static int optimalFreelancing(List<Map<String, Integer>> jobs) {\n        final int days = 7;\n        boolean[] taken = new boolean[days];\n        int profit = 0;\n        List<Map<String, Integer>> sorted = new java.util.ArrayList<>(jobs);\n        sorted.sort((a, b) -> Integer.compare(b.get(\"payment\"), a.get(\"payment\")));\n        for (Map<String, Integer> job : sorted) {\n            for (int d = Math.min(job.get(\"deadline\"), days) - 1; d >= 0; d--) {\n                if (!taken[d]) { taken[d] = true; profit += job.get(\"payment\"); break; }\n            }\n        }\n        return profit;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "OptimalFreelancing.java",
+   "narration": "Here's the Java solution, starting with optimal freelancing. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log n)",
+    "Space: O(1) (7 slots)"
+   ],
+   "narration": "Time is O of n log n. Space is constant (7 slots)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Greedy by payment: take the most valuable jobs first and schedule each as late as its deadline allows.",
+    "Complexity: O(n log n)"
+   ],
+   "narration": "To recap Optimal Freelancing: Greedy by payment: take the most valuable jobs first and schedule each as late as its deadline allows. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

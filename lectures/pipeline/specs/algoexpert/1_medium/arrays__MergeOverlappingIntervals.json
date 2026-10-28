@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Merge Overlapping Intervals",
+ "out": "algoexpert/medium/arrays/MergeOverlappingIntervals",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Merge Overlapping Intervals",
+   "subtitle": "AlgoExpert · Medium · Arrays",
+   "narration": "Let's solve Merge Overlapping Intervals, a medium arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Merge all overlapping [start, end] intervals; result sorted by start."
+   ],
+   "narration": "Here's the problem. Merge all overlapping start, end intervals; result sorted by start."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MergeOverlappingIntervals {\n    public static int[][] mergeOverlappingIntervals(int[][] intervals) {\n        int[][] s = intervals.clone();\n        Arrays.sort(s, (x, y) -> Integer.compare(x[0], y[0]));\n        List<int[]> out = new ArrayList<>();\n        for (int[] iv : s) {\n            if (!out.isEmpty() && out.get(out.size() - 1)[1] >= iv[0])\n                out.get(out.size() - 1)[1] = Math.max(out.get(out.size() - 1)[1], iv[1]);\n            else out.add(new int[]{iv[0], iv[1]});\n        }\n        return out.toArray(new int[0][]);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MergeOverlappingIntervals.java",
+   "narration": "Here's the Java solution, starting with merge overlapping intervals. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n log n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n log n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Merge all overlapping [start, end] intervals; result sorted by start.",
+    "Complexity: O(n log n)"
+   ],
+   "narration": "To recap Merge Overlapping Intervals: Merge all overlapping start, end intervals; result sorted by start. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

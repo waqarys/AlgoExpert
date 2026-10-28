@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Shift Linked List",
+ "out": "algoexpert/hard/linkedlists/ShiftLinkedList",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Shift Linked List",
+   "subtitle": "AlgoExpert · Hard · Linked Lists",
+   "narration": "Let's solve Shift Linked List, a hard linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Rotate the list k positions forward (k > 0) or backward (k < 0); return the new head."
+   ],
+   "narration": "Here's the problem. Rotate the list k positions forward (k over 0) or backward (k under 0); return the new head."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ShiftLinkedList {\n    public static LinkedListNode shiftLinkedList(LinkedListNode head, int k) {\n        int len = 1;\n        LinkedListNode tail = head;\n        while (tail.next != null) { tail = tail.next; len++; }\n        int shift = Math.floorMod(k, len);\n        if (shift == 0) return head;\n        LinkedListNode newTail = head;\n        for (int i = 1; i < len - shift; i++) newTail = newTail.next;\n        LinkedListNode newHead = newTail.next;\n        newTail.next = null;\n        tail.next = head;\n        return newHead;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ShiftLinkedList.java",
+   "narration": "Here's the Java solution, starting with shift linked list. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Rotate the list k positions forward (k > 0) or backward (k < 0); return the new head.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Shift Linked List: Rotate the list k positions forward (k over 0) or backward (k under 0); return the new head. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

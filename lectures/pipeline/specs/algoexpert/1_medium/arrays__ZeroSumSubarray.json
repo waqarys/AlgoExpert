@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Zero Sum Subarray",
+ "out": "algoexpert/medium/arrays/ZeroSumSubarray",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Zero Sum Subarray",
+   "subtitle": "AlgoExpert · Medium · Arrays",
+   "narration": "Let's solve Zero Sum Subarray, a medium arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Does any non-empty contiguous subarray sum to zero?",
+    "A repeated prefix sum proves it."
+   ],
+   "narration": "Here's the problem. Does any non-empty contiguous subarray sum to zero? A repeated prefix sum proves it."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ZeroSumSubarray {\n    public static boolean zeroSumSubarray(int[] nums) {\n        Set<Long> seen = new HashSet<>();\n        seen.add(0L);\n        long sum = 0;\n        for (int n : nums) { sum += n; if (!seen.add(sum)) return true; }\n        return false;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ZeroSumSubarray.java",
+   "narration": "Here's the Java solution, starting with zero sum subarray. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Does any non-empty contiguous subarray sum to zero?",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Zero Sum Subarray: Does any non-empty contiguous subarray sum to zero? Try re-implementing it from scratch without looking."
+  }
+ ]
+}

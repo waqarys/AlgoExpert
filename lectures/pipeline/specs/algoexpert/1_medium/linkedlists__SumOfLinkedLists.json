@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Sum Of Linked Lists",
+ "out": "algoexpert/medium/linkedlists/SumOfLinkedLists",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Sum Of Linked Lists",
+   "subtitle": "AlgoExpert · Medium · Linked Lists",
+   "narration": "Let's solve Sum Of Linked Lists, a medium linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Lists store digits least-significant first; return their sum in the same format."
+   ],
+   "narration": "Here's the problem. Lists store digits least-significant first; return their sum in the same format."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SumOfLinkedLists {\n    public static LinkedListNode sumOfLinkedLists(LinkedListNode a, LinkedListNode b) {\n        LinkedListNode dummy = new LinkedListNode(0), cur = dummy;\n        int carry = 0;\n        while (a != null || b != null || carry != 0) {\n            int s = carry + (a == null ? 0 : a.value) + (b == null ? 0 : b.value);\n            cur.next = new LinkedListNode(s % 10);\n            cur = cur.next;\n            carry = s / 10;\n            if (a != null) a = a.next;\n            if (b != null) b = b.next;\n        }\n        return dummy.next;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SumOfLinkedLists.java",
+   "narration": "Here's the Java solution, starting with sum of linked lists. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(max(n, m))",
+    "Space: O(max(n, m))"
+   ],
+   "narration": "Time is O of max(n, m). Space is O of max(n, m)."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Lists store digits least-significant first; return their sum in the same format.",
+    "Complexity: O(max(n, m))"
+   ],
+   "narration": "To recap Sum Of Linked Lists: Lists store digits least-significant first; return their sum in the same format. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

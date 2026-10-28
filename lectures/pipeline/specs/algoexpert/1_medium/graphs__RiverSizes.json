@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · River Sizes",
+ "out": "algoexpert/medium/graphs/RiverSizes",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "River Sizes",
+   "subtitle": "AlgoExpert · Medium · Graphs",
+   "narration": "Let's solve River Sizes, a medium graphs problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "In a 0/1 matrix, sizes of all 4-directionally connected groups of 1s (any order)."
+   ],
+   "narration": "Here's the problem. In a 0 or 1 matrix, sizes of all 4-directionally connected groups of 1s (any order)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class RiverSizes {\n    public static List<Integer> riverSizes(int[][] m) {\n        List<Integer> sizes = new ArrayList<>();\n        boolean[][] seen = new boolean[m.length][m[0].length];\n        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n        for (int r = 0; r < m.length; r++)\n            for (int c = 0; c < m[0].length; c++) {\n                if (m[r][c] != 1 || seen[r][c]) continue;\n                int size = 0;\n                ArrayDeque<int[]> st = new ArrayDeque<>();\n                st.push(new int[]{r, c});\n                seen[r][c] = true;\n                while (!st.isEmpty()) {\n                    int[] p = st.pop();\n                    size++;\n                    for (int[] d : dirs) {\n                        int nr = p[0] + d[0], nc = p[1] + d[1];\n                        if (nr >= 0 && nc >= 0 && nr < m.length && nc < m[0].length && m[nr][nc] == 1 && !seen[nr][nc]) {\n                            seen[nr][nc] = true;\n                            st.push(new int[]{nr, nc});\n                        }\n                    }\n                }\n                sizes.add(size);\n            }\n        return sizes;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "RiverSizes.java",
+   "narration": "Here's the Java solution, starting with river sizes. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(w*h)",
+    "Space: O(w*h)"
+   ],
+   "narration": "Time is O of w times h. Space is O of w times h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "In a 0/1 matrix, sizes of all 4-directionally connected groups of 1s (any order).",
+    "Complexity: O(w*h)"
+   ],
+   "narration": "To recap River Sizes: In a 0 or 1 matrix, sizes of all 4-directionally connected groups of 1s (any order). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

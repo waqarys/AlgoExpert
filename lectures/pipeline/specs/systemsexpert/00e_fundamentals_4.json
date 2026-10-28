@@ -1,0 +1,82 @@
+{
+ "title": "SystemsExpert · Fundamentals 4/4",
+ "out": "systemsexpert/00e_fundamentals_4",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Design Fundamentals 4/4",
+   "subtitle": "Topics 19–24",
+   "narration": "Design fundamentals, part 4 of 4. We'll cover Rate limiting, Logging and monitoring, Publish or subscribe pattern, MapReduce, Security and HTTPS, and API design."
+  },
+  {
+   "kind": "bullets",
+   "heading": "19. Rate limiting",
+   "bullets": [
+    "Token bucket, leaky bucket, fixed/sliding window",
+    "per user/IP/region",
+    "a shared store such as Redis",
+    "DoS protection"
+   ],
+   "narration": "Rate limiting. Token bucket, leaky bucket, fixed or sliding window. per user or IP or region. a shared store such as Redis. DoS protection."
+  },
+  {
+   "kind": "bullets",
+   "heading": "20. Logging and monitoring",
+   "bullets": [
+    "Structured logs, metrics (time-series), dashboards, alerts on SLOs, tracing"
+   ],
+   "narration": "Logging and monitoring. Structured logs, metrics (time-series), dashboards, alerts on SLOs, tracing."
+  },
+  {
+   "kind": "bullets",
+   "heading": "21. Publish/subscribe pattern",
+   "bullets": [
+    "Topics, publishers, subscribers",
+    "at-least-once delivery means idempotent consumers",
+    "ordering per partition",
+    "Kafka, Pub/Sub"
+   ],
+   "narration": "Publish or subscribe pattern. Topics, publishers, subscribers. at-least-once delivery means idempotent consumers. ordering per partition. Kafka, Pub or Sub."
+  },
+  {
+   "kind": "bullets",
+   "heading": "22. MapReduce",
+   "bullets": [
+    "Map → shuffle → reduce over a distributed file system",
+    "idempotent tasks",
+    "data stays where it is and the code moves to it"
+   ],
+   "narration": "MapReduce. Map to shuffle to reduce over a distributed file system. idempotent tasks. data stays where it is and the code moves to it."
+  },
+  {
+   "kind": "bullets",
+   "heading": "23. Security and HTTPS",
+   "bullets": [
+    "Symmetric/asymmetric encryption, TLS handshake, certificates and CAs, MITM"
+   ],
+   "narration": "Security and HTTPS. Symmetric or asymmetric encryption, TLS handshake, certificates and CAs, MITM."
+  },
+  {
+   "kind": "bullets",
+   "heading": "24. API design",
+   "bullets": [
+    "Resource-oriented REST or RPC/GraphQL",
+    "pagination, versioning, idempotency keys, rate limits, clear errors"
+   ],
+   "narration": "API design. Resource-oriented REST or RPC or GraphQL. pagination, versioning, idempotency keys, rate limits, clear errors."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "19. Rate limiting",
+    "20. Logging and monitoring",
+    "21. Publish/subscribe pattern",
+    "22. MapReduce",
+    "23. Security and HTTPS",
+    "24. API design"
+   ],
+   "narration": "To recap this part: Rate limiting; Logging and monitoring; Publish or subscribe pattern; MapReduce; Security and HTTPS; API design. Each of these shows up again in the design walkthroughs."
+  }
+ ]
+}

@@ -1,0 +1,66 @@
+{
+ "title": "AlgoExpert · Node Depths",
+ "out": "algoexpert/easy/binarytrees/NodeDepths",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Node Depths",
+   "subtitle": "AlgoExpert · Easy · Binary Trees",
+   "narration": "Let's solve Node Depths, an easy binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Sum of the depths (distance from root) of every node."
+   ],
+   "narration": "Here's the problem. Sum of the depths (distance from root) of every node."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "Each node contributes its depth, so pass the depth down while traversing and add it up."
+   ],
+   "narration": "Each node contributes its depth, so pass the depth down while traversing and add it up."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Traverse from the root at depth zero",
+    "2. Add the current depth to the total",
+    "3. Visit children with depth plus one",
+    "4. Return the sum"
+   ],
+   "narration": "Step by step. First, traverse from the root at depth zero. Second, add the current depth to the total. Third, visit children with depth plus one. Fourth, return the sum."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class NodeDepths {\n    public static int nodeDepths(BinaryTree root) { return sum(root, 0); }\n\n    private static int sum(BinaryTree n, int depth) {\n        if (n == null) return 0;\n        return depth + sum(n.left, depth + 1) + sum(n.right, depth + 1);\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "NodeDepths.java",
+   "narration": "Here's the Java solution, starting with node depths. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(h)"
+   ],
+   "narration": "Time is O of n. Space is O of h."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Each node contributes its depth, so pass the depth down while traversing and add it up.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Node Depths: Each node contributes its depth, so pass the depth down while traversing and add it up. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

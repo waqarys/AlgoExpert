@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Node Swap",
+ "out": "algoexpert/veryhard/linkedlists/NodeSwap",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Node Swap",
+   "subtitle": "AlgoExpert · Very Hard · Linked Lists",
+   "narration": "Let's solve Node Swap, a very hard linked lists problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Swap every pair of adjacent nodes (not values); return the new head."
+   ],
+   "narration": "Here's the problem. Swap every pair of adjacent nodes (not values); return the new head."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class NodeSwap {\n    public static LinkedListNode nodeSwap(LinkedListNode head) {\n        LinkedListNode dummy = new LinkedListNode(0);\n        dummy.next = head;\n        LinkedListNode p = dummy;\n        while (p.next != null && p.next.next != null) {\n            LinkedListNode a = p.next, b = a.next;\n            a.next = b.next; b.next = a; p.next = b;\n            p = a;\n        }\n        return dummy.next;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "NodeSwap.java",
+   "narration": "Here's the Java solution, starting with node swap. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Swap every pair of adjacent nodes (not values); return the new head.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Node Swap: Swap every pair of adjacent nodes (not values); return the new head. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

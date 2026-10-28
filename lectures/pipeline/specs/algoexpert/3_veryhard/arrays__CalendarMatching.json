@@ -1,0 +1,57 @@
+{
+ "title": "AlgoExpert · Calendar Matching",
+ "out": "algoexpert/veryhard/arrays/CalendarMatching",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Calendar Matching",
+   "subtitle": "AlgoExpert · Very Hard · Arrays",
+   "narration": "Let's solve Calendar Matching, a very hard arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Two people's meetings (\"HH:MM\" pairs) and daily bounds; return all free slots of at least `duration` minutes available to both.",
+    "Convert to minutes, merge busy intervals, invert."
+   ],
+   "narration": "Here's the problem. Two people's meetings (\"HH:MM\" pairs) and daily bounds; return all free slots of at least duration minutes available to both. Convert to minutes, merge busy intervals, invert."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (1/2)",
+   "code": "public class CalendarMatching {\n    public static List<String[]> calendarMatching(List<String[]> cal1, String[] bounds1, List<String[]> cal2, String[] bounds2, int duration) {\n        List<int[]> busy = new ArrayList<>();\n        addCal(busy, cal1, bounds1);\n        addCal(busy, cal2, bounds2);\n        busy.sort((a, b) -> Integer.compare(a[0], b[0]));\n        List<int[]> merged = new ArrayList<>();\n        for (int[] b : busy) {\n            if (!merged.isEmpty() && merged.get(merged.size() - 1)[1] >= b[0])\n                merged.get(merged.size() - 1)[1] = Math.max(merged.get(merged.size() - 1)[1], b[1]);\n            else merged.add(b.clone());\n        }\n        List<String[]> out = new ArrayList<>();\n        for (int i = 1; i < merged.size(); i++) {\n            int s = merged.get(i - 1)[1], e = merged.get(i)[0];\n            if (e - s >= duration) out.add(new String[]{fmt(s), fmt(e)});\n        }\n        return out;\n    }",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "CalendarMatching_part1.java",
+   "narration": "Here's the Java solution, starting with calendar matching. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution (2/2)",
+   "code": "    private static void addCal(List<int[]> busy, List<String[]> cal, String[] bounds) {\n        busy.add(new int[]{0, min(bounds[0])});\n        for (String[] m : cal) busy.add(new int[]{min(m[0]), min(m[1])});\n        busy.add(new int[]{min(bounds[1]), 24 * 60});\n    }\n\n    private static int min(String t) { String[] p = t.split(\":\"); return Integer.parseInt(p[0]) * 60 + Integer.parseInt(p[1]); }\n\n    private static String fmt(int m) { return (m / 60) + \":\" + String.format(\"%02d\", m % 60); }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "CalendarMatching_part2.java",
+   "narration": "Continuing with add cal, min, fmt."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(c1 + c2)",
+    "Space: O(c1 + c2)"
+   ],
+   "narration": "Time is O of c1 plus c2. Space is O of c1 plus c2."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Two people's meetings (\"HH:MM\" pairs) and daily bounds; return all free slots of at least `duration` minutes available to both.",
+    "Complexity: O(c1 + c2)"
+   ],
+   "narration": "To recap Calendar Matching: Two people's meetings (\"HH:MM\" pairs) and daily bounds; return all free slots of at least duration minutes available to both. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

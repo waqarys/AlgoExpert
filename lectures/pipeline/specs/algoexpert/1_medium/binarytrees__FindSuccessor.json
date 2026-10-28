@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Find Successor",
+ "out": "algoexpert/medium/binarytrees/FindSuccessor",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Find Successor",
+   "subtitle": "AlgoExpert · Medium · Binary Trees",
+   "narration": "Let's solve Find Successor, a medium binary trees problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Nodes have parent pointers; return the in-order successor of `node` (or null)."
+   ],
+   "narration": "Here's the problem. Nodes have parent pointers; return the in-order successor of node (or null)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class FindSuccessor {\n    public static BinaryTree findSuccessor(BinaryTree tree, BinaryTree node) {\n        if (node.right != null) {\n            BinaryTree c = node.right;\n            while (c.left != null) c = c.left;\n            return c;\n        }\n        BinaryTree c = node;\n        while (c.parent != null && c.parent.right == c) c = c.parent;\n        return c.parent;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "FindSuccessor.java",
+   "narration": "Here's the Java solution, starting with find successor. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(h)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of h. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Nodes have parent pointers; return the in-order successor of `node` (or null).",
+    "Complexity: O(h)"
+   ],
+   "narration": "To recap Find Successor: Nodes have parent pointers; return the in-order successor of node (or null). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

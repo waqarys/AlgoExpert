@@ -1,0 +1,49 @@
+{
+ "title": "AlgoExpert · Valid Starting City",
+ "out": "algoexpert/medium/greedyalgorithms/ValidStartingCity",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Valid Starting City",
+   "subtitle": "AlgoExpert · Medium · Greedy Algorithms",
+   "narration": "Let's solve Valid Starting City, a medium greedy algorithms problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Circular route; city i has fuel[i] gallons and is distances[i] miles from the next.",
+    "Return the unique start index allowing a full loop.",
+    "The start is the point after the lowest fuel balance."
+   ],
+   "narration": "Here's the problem. Circular route; city i has fuel i gallons and is distances i miles from the next. Return the unique start index allowing a full loop. The start is the point after the lowest fuel balance."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ValidStartingCity {\n    public static int validStartingCity(int[] distances, int[] fuel, int mpg) {\n        int miles = 0, minMiles = 0, start = 0;\n        for (int i = 1; i < distances.length; i++) {\n            miles += fuel[i - 1] * mpg - distances[i - 1];\n            if (miles < minMiles) { minMiles = miles; start = i; }\n        }\n        return start;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ValidStartingCity.java",
+   "narration": "Here's the Java solution, starting with valid starting city. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Circular route; city i has fuel[i] gallons and is distances[i] miles from the next.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Valid Starting City: Circular route; city i has fuel i gallons and is distances i miles from the next. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

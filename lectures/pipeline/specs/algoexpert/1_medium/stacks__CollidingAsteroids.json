@@ -1,0 +1,49 @@
+{
+ "title": "AlgoExpert · Colliding Asteroids",
+ "out": "algoexpert/medium/stacks/CollidingAsteroids",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Colliding Asteroids",
+   "subtitle": "AlgoExpert · Medium · Stacks",
+   "narration": "Let's solve Colliding Asteroids, a medium stacks problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Sign is direction (+ right, - left), magnitude is size.",
+    "When they meet the smaller explodes (both if equal).",
+    "Return survivors."
+   ],
+   "narration": "Here's the problem. Sign is direction ( plus right, - left), magnitude is size. When they meet the smaller explodes (both if equal). Return survivors."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class CollidingAsteroids {\n    public static int[] collidingAsteroids(int[] asteroids) {\n        ArrayDeque<Integer> st = new ArrayDeque<>();\n        for (int a : asteroids) {\n            boolean alive = true;\n            while (alive && a < 0 && !st.isEmpty() && st.peekLast() > 0) {\n                int top = st.peekLast();\n                if (top < -a) st.pollLast();\n                else { if (top == -a) st.pollLast(); alive = false; }\n            }\n            if (alive) st.addLast(a);\n        }\n        return st.stream().mapToInt(Integer::intValue).toArray();\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "CollidingAsteroids.java",
+   "narration": "Here's the Java solution, starting with colliding asteroids. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Sign is direction (+ right, - left), magnitude is size.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Colliding Asteroids: Sign is direction ( plus right, - left), magnitude is size. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

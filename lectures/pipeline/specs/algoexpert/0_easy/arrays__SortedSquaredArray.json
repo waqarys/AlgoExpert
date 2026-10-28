@@ -1,0 +1,67 @@
+{
+ "title": "AlgoExpert · Sorted Squared Array",
+ "out": "algoexpert/easy/arrays/SortedSquaredArray",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Sorted Squared Array",
+   "subtitle": "AlgoExpert · Easy · Arrays",
+   "narration": "Let's solve Sorted Squared Array, an easy arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Given a sorted array (may contain negatives) return the squares in sorted order.",
+    "Two pointers from both ends fill the result from the back."
+   ],
+   "narration": "Here's the problem. Given a sorted array (may contain negatives) return the squares in sorted order. Two pointers from both ends fill the result from the back."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Intuition",
+   "bullets": [
+    "The largest squares sit at the two ends of a sorted array, because big negatives square to big positives."
+   ],
+   "narration": "The largest squares sit at the two ends of a sorted array, because big negatives square to big positives."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Approach",
+   "bullets": [
+    "1. Put pointers at both ends",
+    "2. Compare absolute values",
+    "3. Write the larger square into the result from the back",
+    "4. Move that pointer inward"
+   ],
+   "narration": "Step by step. First, put pointers at both ends. Second, compare absolute values. Third, write the larger square into the result from the back. Fourth, move that pointer inward."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class SortedSquaredArray {\n    public static int[] sortedSquaredArray(int[] array) {\n        int[] out = new int[array.length];\n        int l = 0, r = array.length - 1;\n        for (int k = array.length - 1; k >= 0; k--) {\n            if (Math.abs(array[l]) > Math.abs(array[r])) { out[k] = array[l] * array[l]; l++; }\n            else { out[k] = array[r] * array[r]; r--; }\n        }\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "SortedSquaredArray.java",
+   "narration": "Here's the Java solution, starting with sorted squared array. It follows the steps we just described."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "The largest squares sit at the two ends of a sorted array, because big negatives square to big positives.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Sorted Squared Array: The largest squares sit at the two ends of a sorted array, because big negatives square to big positives. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Juice Bottling",
+ "out": "algoexpert/hard/dynamicprogramming/JuiceBottling",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Juice Bottling",
+   "subtitle": "AlgoExpert · Hard · Dynamic Programming",
+   "narration": "Let's solve Juice Bottling, a hard dynamic programming problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Prices[i] is the price of a bottle of size i (prices[0] = 0).",
+    "Split the total (prices.length - 1 units) into bottle sizes maximising revenue; return sizes (rod cutting)."
+   ],
+   "narration": "Here's the problem. Prices i is the price of a bottle of size i (prices 0 equals 0). Split the total (prices.length - 1 units) into bottle sizes maximising revenue; return sizes (rod cutting)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class JuiceBottling {\n    public static List<Integer> juiceBottling(int[] prices) {\n        int n = prices.length;\n        int[] best = new int[n], cut = new int[n];\n        for (int s = 1; s < n; s++)\n            for (int k = 1; k <= s; k++)\n                if (prices[k] + best[s - k] > best[s]) { best[s] = prices[k] + best[s - k]; cut[s] = k; }\n        List<Integer> out = new ArrayList<>();\n        for (int s = n - 1; s > 0; s -= cut[s]) out.add(cut[s]);\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "JuiceBottling.java",
+   "narration": "Here's the Java solution, starting with juice bottling. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^2)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n squared. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Prices[i] is the price of a bottle of size i (prices[0] = 0).",
+    "Complexity: O(n^2)"
+   ],
+   "narration": "To recap Juice Bottling: Prices i is the price of a bottle of size i (prices 0 equals 0). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

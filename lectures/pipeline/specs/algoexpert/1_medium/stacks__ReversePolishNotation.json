@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Reverse Polish Notation",
+ "out": "algoexpert/medium/stacks/ReversePolishNotation",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Reverse Polish Notation",
+   "subtitle": "AlgoExpert · Medium · Stacks",
+   "narration": "Let's solve Reverse Polish Notation, a medium stacks problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Evaluate postfix tokens with + - * / (integer division truncating toward zero)."
+   ],
+   "narration": "Here's the problem. Evaluate postfix tokens with plus - / (integer division truncating toward zero)."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class ReversePolishNotation {\n    public static int reversePolishNotation(String[] tokens) {\n        ArrayDeque<Integer> st = new ArrayDeque<>();\n        for (String t : tokens) {\n            switch (t) {\n                case \"+\" -> st.push(st.pop() + st.pop());\n                case \"*\" -> st.push(st.pop() * st.pop());\n                case \"-\" -> { int b = st.pop(); st.push(st.pop() - b); }\n                case \"/\" -> { int b = st.pop(); st.push(st.pop() / b); }\n                default -> st.push(Integer.parseInt(t));\n            }\n        }\n        return st.pop();\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "ReversePolishNotation.java",
+   "narration": "Here's the Java solution, starting with reverse polish notation. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(n)"
+   ],
+   "narration": "Time is O of n. Space is O of n."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Evaluate postfix tokens with + - * / (integer division truncating toward zero).",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Reverse Polish Notation: Evaluate postfix tokens with plus - / (integer division truncating toward zero). Try re-implementing it from scratch without looking."
+  }
+ ]
+}

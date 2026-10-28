@@ -1,0 +1,47 @@
+{
+ "title": "AlgoExpert · Monotonic Array",
+ "out": "algoexpert/medium/arrays/MonotonicArray",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Monotonic Array",
+   "subtitle": "AlgoExpert · Medium · Arrays",
+   "narration": "Let's solve Monotonic Array, a medium arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Is the array entirely non-increasing or entirely non-decreasing?"
+   ],
+   "narration": "Here's the problem. Is the array entirely non-increasing or entirely non-decreasing?"
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MonotonicArray {\n    public static boolean isMonotonic(int[] a) {\n        boolean inc = true, dec = true;\n        for (int i = 1; i < a.length; i++) {\n            if (a[i] < a[i - 1]) inc = false;\n            if (a[i] > a[i - 1]) dec = false;\n        }\n        return inc || dec;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MonotonicArray.java",
+   "narration": "Here's the Java solution, starting with is monotonic. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Is the array entirely non-increasing or entirely non-decreasing?",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Monotonic Array: Is the array entirely non-increasing or entirely non-decreasing? Try re-implementing it from scratch without looking."
+  }
+ ]
+}

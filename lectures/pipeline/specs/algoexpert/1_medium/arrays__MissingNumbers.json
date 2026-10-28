@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Missing Numbers",
+ "out": "algoexpert/medium/arrays/MissingNumbers",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Missing Numbers",
+   "subtitle": "AlgoExpert · Medium · Arrays",
+   "narration": "Let's solve Missing Numbers, a medium arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "Array holds 1..n+2 with two numbers missing; return them ascending.",
+    "Split by the average of the two missing values and sum each half."
+   ],
+   "narration": "Here's the problem. Array holds 1..n plus 2 with two numbers missing; return them ascending. Split by the average of the two missing values and sum each half."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class MissingNumbers {\n    public static int[] missingNumbers(int[] nums) {\n        int n = nums.length + 2;\n        long total = (long) n * (n + 1) / 2;\n        for (int x : nums) total -= x;\n        long avg = total / 2, lowExpected = avg * (avg + 1) / 2, lowActual = 0;\n        for (int x : nums) if (x <= avg) lowActual += x;\n        int a = (int) (lowExpected - lowActual);\n        return new int[]{a, (int) (total - a)};\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "MissingNumbers.java",
+   "narration": "Here's the Java solution, starting with missing numbers. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n)",
+    "Space: O(1)"
+   ],
+   "narration": "Time is O of n. Space is constant."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "Array holds 1..n+2 with two numbers missing; return them ascending.",
+    "Complexity: O(n)"
+   ],
+   "narration": "To recap Missing Numbers: Array holds 1..n plus 2 with two numbers missing; return them ascending. Try re-implementing it from scratch without looking."
+  }
+ ]
+}

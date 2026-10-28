@@ -1,0 +1,48 @@
+{
+ "title": "AlgoExpert · Four Number Sum",
+ "out": "algoexpert/hard/arrays/FourNumberSum",
+ "slides": [
+  {
+   "kind": "title",
+   "heading": "Four Number Sum",
+   "subtitle": "AlgoExpert · Hard · Arrays",
+   "narration": "Let's solve Four Number Sum, a hard arrays problem. We'll restate the problem, build the intuition, walk through the approach, read the Java solution, and finish with its complexity."
+  },
+  {
+   "kind": "bullets",
+   "heading": "The problem",
+   "bullets": [
+    "All quadruplets of distinct integers summing to target (any order).",
+    "Store pair sums seen before index i, combine with pairs after i, so each quadruplet is reported once."
+   ],
+   "narration": "Here's the problem. All quadruplets of distinct integers summing to target (any order). Store pair sums seen before index i, combine with pairs after i, so each quadruplet is reported once."
+  },
+  {
+   "kind": "code",
+   "heading": "Java solution",
+   "code": "public class FourNumberSum {\n    public static List<Integer[]> fourNumberSum(int[] a, int target) {\n        Map<Integer, List<int[]>> pairs = new HashMap<>();\n        List<Integer[]> out = new ArrayList<>();\n        for (int i = 1; i < a.length - 1; i++) {\n            for (int j = i + 1; j < a.length; j++) {\n                List<int[]> ps = pairs.get(target - a[i] - a[j]);\n                if (ps != null) for (int[] p : ps) out.add(new Integer[]{p[0], p[1], a[i], a[j]});\n            }\n            for (int k = 0; k < i; k++) pairs.computeIfAbsent(a[i] + a[k], x -> new ArrayList<>()).add(new int[]{a[k], a[i]});\n        }\n        return out;\n    }\n}",
+   "lang": "java",
+   "font_size": 26,
+   "filename": "FourNumberSum.java",
+   "narration": "Here's the Java solution, starting with four number sum. Read it top to bottom; the method names mirror the steps."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Complexity",
+   "bullets": [
+    "Time: O(n^2) avg",
+    "Space: O(n^2)"
+   ],
+   "narration": "Time is O of n squared avg. Space is O of n squared."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Recap",
+   "bullets": [
+    "All quadruplets of distinct integers summing to target (any order).",
+    "Complexity: O(n^2) avg"
+   ],
+   "narration": "To recap Four Number Sum: All quadruplets of distinct integers summing to target (any order). Try re-implementing it from scratch without looking."
+  }
+ ]
+}
