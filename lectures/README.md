@@ -51,7 +51,7 @@ Built with [`pipeline/`](pipeline/README.md).
 | Design Amazon | 2:26 | [mp4](systemsexpert/12-design-amazon/lecture.mp4) | [pdf](systemsexpert/12-design-amazon/slides.pdf) | [md](systemsexpert/12-design-amazon/transcript.md) |
 | Design the Twitch API | 4:10 | [mp4](systemsexpert/13-design-the-twitch-api/lecture.mp4) | [pdf](systemsexpert/13-design-the-twitch-api/slides.pdf) | [md](systemsexpert/13-design-the-twitch-api/transcript.md) |
 
-## AlgoExpert (22)
+## AlgoExpert (32)
 
 | Lecture | Length | Video | Slides | Transcript |
 |---|---|---|---|---|
@@ -77,3 +77,13 @@ Built with [`pipeline/`](pipeline/README.md).
 | easy / searching / Binary Search | 1:00 | [mp4](algoexpert/easy/searching/BinarySearch/lecture.mp4) | [pdf](algoexpert/easy/searching/BinarySearch/slides.pdf) | [md](algoexpert/easy/searching/BinarySearch/transcript.md) |
 | easy / searching / Find Three Largest Numbers | 1:05 | [mp4](algoexpert/easy/searching/FindThreeLargestNumbers/lecture.mp4) | [pdf](algoexpert/easy/searching/FindThreeLargestNumbers/slides.pdf) | [md](algoexpert/easy/searching/FindThreeLargestNumbers/transcript.md) |
 | easy / sorting / Bubble Sort | 1:01 | [mp4](algoexpert/easy/sorting/BubbleSort/lecture.mp4) | [pdf](algoexpert/easy/sorting/BubbleSort/slides.pdf) | [md](algoexpert/easy/sorting/BubbleSort/transcript.md) |
+| easy / sorting / Insertion Sort | 0:58 | [mp4](algoexpert/easy/sorting/InsertionSort/lecture.mp4) | [pdf](algoexpert/easy/sorting/InsertionSort/slides.pdf) | [md](algoexpert/easy/sorting/InsertionSort/transcript.md) |
+| easy / sorting / Selection Sort | 0:57 | [mp4](algoexpert/easy/sorting/SelectionSort/lecture.mp4) | [pdf](algoexpert/easy/sorting/SelectionSort/slides.pdf) | [md](algoexpert/easy/sorting/SelectionSort/transcript.md) |
+| easy / strings / Caesar Cipher Encryptor | 0:55 | [mp4](algoexpert/easy/strings/CaesarCipherEncryptor/lecture.mp4) | [pdf](algoexpert/easy/strings/CaesarCipherEncryptor/slides.pdf) | [md](algoexpert/easy/strings/CaesarCipherEncryptor/transcript.md) |
+| easy / strings / Common Characters | 1:01 | [mp4](algoexpert/easy/strings/CommonCharacters/lecture.mp4) | [pdf](algoexpert/easy/strings/CommonCharacters/slides.pdf) | [md](algoexpert/easy/strings/CommonCharacters/transcript.md) |
+| easy / strings / First Non Repeating Character | 1:00 | [mp4](algoexpert/easy/strings/FirstNonRepeatingCharacter/lecture.mp4) | [pdf](algoexpert/easy/strings/FirstNonRepeatingCharacter/slides.pdf) | [md](algoexpert/easy/strings/FirstNonRepeatingCharacter/transcript.md) |
+| easy / strings / Generate Document | 1:01 | [mp4](algoexpert/easy/strings/GenerateDocument/lecture.mp4) | [pdf](algoexpert/easy/strings/GenerateDocument/slides.pdf) | [md](algoexpert/easy/strings/GenerateDocument/transcript.md) |
+| easy / strings / Palindrome Check | 0:56 | [mp4](algoexpert/easy/strings/PalindromeCheck/lecture.mp4) | [pdf](algoexpert/easy/strings/PalindromeCheck/slides.pdf) | [md](algoexpert/easy/strings/PalindromeCheck/transcript.md) |
+| easy / strings / Run Length Encoding | 0:59 | [mp4](algoexpert/easy/strings/RunLengthEncoding/lecture.mp4) | [pdf](algoexpert/easy/strings/RunLengthEncoding/slides.pdf) | [md](algoexpert/easy/strings/RunLengthEncoding/transcript.md) |
+| easy / strings / Semordnilap | 0:58 | [mp4](algoexpert/easy/strings/Semordnilap/lecture.mp4) | [pdf](algoexpert/easy/strings/Semordnilap/slides.pdf) | [md](algoexpert/easy/strings/Semordnilap/transcript.md) |
+| medium / arrays / Array Of Products | 1:05 | [mp4](algoexpert/medium/arrays/ArrayOfProducts/lecture.mp4) | [pdf](algoexpert/medium/arrays/ArrayOfProducts/slides.pdf) | [md](algoexpert/medium/arrays/ArrayOfProducts/transcript.md) |
