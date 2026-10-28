@@ -6,6 +6,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(os.pat
 PY = sys.executable; GROUP = 16
 specs = sorted(glob.glob(f"{HERE}/specs/mlexpert/*.py")) + sorted(glob.glob(f"{HERE}/specs/systemsexpert/*.json")) + \
         sorted(glob.glob(f"{HERE}/specs/algoexpert/*/*.json"))
+if len(sys.argv) > 1: specs = [f for f in specs if any(k in f for k in sys.argv[1:])]
 push = None
 def build(f):
     r = subprocess.run([PY, "make_lecture.py", "--skip-existing", f], cwd=HERE, capture_output=True, text=True)

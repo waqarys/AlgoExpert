@@ -37,7 +37,8 @@ def canvas(heading, idx, total, title):
     fig.text(0.95, 0.03, f"{idx}/{total}", fontsize=12, color=MUTED, ha="right")
     return fig
 
-def draw_diagram(fig, edges, rect=(0.03, 0.08, 0.94, 0.76)):
+def draw_diagram(fig, edges, rect=(0.03, 0.08, 0.94, 0.76), hl=(), caption=None):
+    if caption: rect = (0.03, 0.17, 0.94, 0.67)
     """Layered left-to-right box diagram from [(src, dst, label?)]."""
     nodes = []
     for e in edges:
@@ -73,7 +74,7 @@ def draw_diagram(fig, edges, rect=(0.03, 0.08, 0.94, 0.76)):
                                     connectionstyle="arc3,rad=0" if x2 > x1 else "arc3,rad=0.35"))
     for n, (x, y) in pos.items():
         ax.add_patch(FancyBboxPatch((x - bw / 2, y - bh / 2), bw, bh, boxstyle="round,pad=0.005,rounding_size=0.015",
-                                    fc=PANEL, ec=ACCENT, lw=1.5))
+                                    fc="#b45309" if n in hl else PANEL, ec="#f59e0b" if n in hl else ACCENT, lw=3 if n in hl else 1.5))
         ax.text(x, y, "\n".join(textwrap.wrap(n, max(10, int(bw * 95)))), ha="center", va="center",
                 fontsize=14 if len(n) < 16 else 12 if len(n) < 34 else 10, color=FG, linespacing=1.1)
 
@@ -89,7 +90,7 @@ def render(s, path, idx, total, title):
             fig.text(0.5, y - 0.04, b, fontsize=s.get("eq_size", 34), ha="center", color=ACCENT); y -= 0.15
         bl = [b[:1].upper() + b[1:] for b in s.get("bullets", [])]
         avail = y - 0.08
-        for size in ([s["size"]] if "size" in s else [24, 22, 20, 18, 16, 14]):
+        for size in ([s["size"]] if "size" in s else [24, 22, 20, 18]):
             width = int(1550 / size)                      # ~chars per line at this size
             wrapped = [textwrap.wrap(b, width) or [""] for b in bl]
             lh = size / 72 / (H / DPI) * 1.45             # line height in figure fraction
@@ -107,7 +108,11 @@ def render(s, path, idx, total, title):
         for b in s.get("bullets", []):
             fig.text(0.67, y, b, fontsize=20, color=FG); y -= 0.09
     elif k == "diagram":
-        draw_diagram(fig, s["edges"])
+        draw_diagram(fig, s["edges"], hl=s.get("highlight", []), caption=s.get("caption"))
+        if s.get("caption"):
+            fig.text(0.5, 0.09, s["caption"], ha="center", fontsize=22, color=FG, bbox=dict(boxstyle="round,pad=0.4", fc=PANEL, ec="#334155"))
+    elif k == "viz":
+        import viz; viz.render(fig, s)
     elif k == "code":
         fmt = ImageFormatter(style=get_style_by_name("monokai"), font_name="DejaVu Sans Mono",
                              font_size=int(s.get("font_size", 30) * S), line_numbers=False,

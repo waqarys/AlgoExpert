@@ -2,13 +2,21 @@
 """Generate JSON slide specs for SystemsExpert from systemsexpert/*.md (narration derived from the notes)."""
 import json, os, re, glob
 from speech import speak, clean, sentences
+from enrich.systems import D as ENRICH
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
 OUTD = os.path.join(HERE, "specs", "systemsexpert"); os.makedirs(OUTD, exist_ok=True)
 MAXB = 6
 end = lambda t: t if t.endswith(('.', '?', '!')) else t + '.'
 
-def chunks(items, n=MAXB):
-    return [items[i:i + n] for i in range(0, len(items), n)] or [[]]
+def chunks(items, n=MAXB, budget=9.0, width=74):
+    """Split bullets so each slide fits at >= 20pt (about 74 chars per line, ~9 lines)."""
+    out, cur, used = [], [], 0.0
+    for b in items:
+        cost = -(-len(b) // width) + 0.45
+        if cur and (used + cost > budget or len(cur) >= n): out.append(cur); cur, used = [], 0.0
+        cur.append(b); used += cost
+    if cur: out.append(cur)
+    return out or [[]]
 
 def mermaid_edges(src):
     labels, edges = {}, []
@@ -82,7 +90,7 @@ def design_spec(path, idx):
     slug = os.path.basename(path)[:-3]
     slides = [dict(kind="title", heading=short, subtitle="SystemsExpert design walkthrough",
                    narration=f"In this lecture we design {speak(short.replace('Design ', ''))}. We'll follow the interview framework: clarify, set requirements, estimate, sketch the architecture, define the data and API, then dive into the hard parts and the trade-offs.")]
-    seen = set(); comps = []
+    seen = set(); comps = []; E = ENRICH.get(slug, {})
     for sec, sub, kind, payload in blocks:
         head = sec if not sub else (f"{sec}: {sub}" if sec not in ("Deep dives",) else sub)
         if sec == "Requirements" and sub: head = f"{sub} requirements"
@@ -103,6 +111,11 @@ def design_spec(path, idx):
             flow = " ".join(f"{speak(a)} connects to {' and '.join(bs)}." for a, bs in list(outs.items())[:8])
             slides.append(dict(kind="diagram", heading="High-level architecture", edges=edges,
                                narration=f"Here's the high-level architecture. {flow}"))
+            if E.get("flow"):
+                rname, steps = E["flow"]
+                for node, cap, narr in steps:
+                    assert node in nodes, (path, node)
+                    slides.append(dict(kind="diagram", heading=f"Request flow: {rname}", edges=edges, highlight=[node], caption=cap, narration=narr))
         elif kind == "code":
             code = payload.strip("\n")
             if not code.strip(): continue
@@ -113,10 +126,21 @@ def design_spec(path, idx):
             slides.append(dict(kind="code", heading=head, code=code, lang="text", font_size=26,
                                filename=f"{len(slides) + 1:02d}_{re.sub(r'[^a-z0-9]+', '_', head.lower()).strip('_')}.txt", narration=narr))
         else:
-            for j, part in enumerate(chunks(payload)):
+            parts = chunks(payload); ov = E.get("speech", {}).get(sub or "")
+            ov_s = sentences(ov) if ov else []
+            for j, part in enumerate(parts):
                 h = head if j == 0 else f"{head} (cont.)"
-                narr = (intro + " " if j == 0 else "") + " ".join(end(speak(b)) for b in part)
+                said = [re.sub(r"^([\w ]+?)\s*\((.*)\)\s*(.*)$", lambda m: f"The {m.group(1)} record holds {m.group(2)}. {m.group(3)}", b) if sec == "Data model" else b for b in part]
+                narr = (intro + " " if j == 0 else "") + " ".join(end(speak(b)) for b in said)
+                if ov_s:
+                    k = -(-len(ov_s) // len(parts)); narr = " ".join(ov_s[j * k:(j + 1) * k]) or "Continuing that point."
+                if sec.startswith("Trade-offs") and j == 0 and E.get("decisions"):
+                    slides.append(dict(kind="bullets", heading="Key decisions", bullets=[f"{a} → {b}" for a, b in E["decisions"]],
+                        narration="Let's pull together the key decisions. " + " ".join(f"{speak(a)}, because {speak(b)}." for a, b in E["decisions"])))
                 slides.append(dict(kind="bullets", heading=h, bullets=part, narration=narr.strip()))
+                if sec == "Capacity estimates" and j == len(parts) - 1 and E.get("capacity"):
+                    slides.append(dict(kind="bullets", heading="Capacity: worked out", bullets=[a for a, _ in E["capacity"]],
+                        narration="Let's actually work the numbers. " + " ".join(b for _, b in E["capacity"])))
     rec = ["Clarify scope, then functional + non-functional needs", "Estimate load to size storage and fan-out"]
     if comps: rec.append("Core pieces: " + ", ".join(re.sub(r"[:(].*", "", c).strip() for c in comps[:5]))
     rec.append("Know your trade-offs and failure modes")

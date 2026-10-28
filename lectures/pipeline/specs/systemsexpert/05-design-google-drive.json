@@ -50,6 +50,17 @@
    "narration": "Now some rough capacity estimates, which drive the design. about 1B users x about 15 GB avg used about exabytes of blobs. Metadata: about 100 files per user to 100B rows; must be sharded. Uploads chunked (for example 4-8 MB) for resumability and dedup."
   },
   {
+   "kind": "bullets",
+   "heading": "Capacity: worked out",
+   "bullets": [
+    "1B users × 15 GB ≈ 15 EB of blobs",
+    "× 3 replicas ≈ 45 EB raw (dedup helps)",
+    "100 files/user → 100B metadata rows",
+    "~1 KB/row → ~100 TB metadata → shard by owner"
+   ],
+   "narration": "Let's actually work the numbers. A billion users at fifteen gigabytes each is fifteen exabytes of data. With three replicas that's about forty-five exabytes raw, before deduplication saves a chunk. A hundred files per user means a hundred billion metadata rows. At about a kilobyte per row that's a hundred terabytes, so the metadata store must be sharded, by owner."
+  },
+  {
    "kind": "diagram",
    "heading": "High-level architecture",
    "edges": [
@@ -85,6 +96,240 @@
    "narration": "Here's the high-level architecture. Client connects to LB. LB connects to Metadata service and Upload service. Metadata service connects to Metadata DB sharded by owner or folder and Change notifications. Upload service connects to Blob store, replicated, content-addressed chunks. Change notifications connects to Client."
   },
   {
+   "kind": "diagram",
+   "heading": "Request flow: Upload a file",
+   "edges": [
+    [
+     "Client",
+     "LB"
+    ],
+    [
+     "LB",
+     "Metadata service"
+    ],
+    [
+     "Metadata service",
+     "Metadata DB sharded by owner/folder"
+    ],
+    [
+     "LB",
+     "Upload service"
+    ],
+    [
+     "Upload service",
+     "Blob store, replicated, content-addressed chunks"
+    ],
+    [
+     "Metadata service",
+     "Change notifications"
+    ],
+    [
+     "Change notifications",
+     "Client"
+    ]
+   ],
+   "highlight": [
+    "Client"
+   ],
+   "caption": "1. Client chunks the file",
+   "narration": "Let's follow an upload. The client splits the file into chunks of a few megabytes and hashes each one."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Upload a file",
+   "edges": [
+    [
+     "Client",
+     "LB"
+    ],
+    [
+     "LB",
+     "Metadata service"
+    ],
+    [
+     "Metadata service",
+     "Metadata DB sharded by owner/folder"
+    ],
+    [
+     "LB",
+     "Upload service"
+    ],
+    [
+     "Upload service",
+     "Blob store, replicated, content-addressed chunks"
+    ],
+    [
+     "Metadata service",
+     "Change notifications"
+    ],
+    [
+     "Change notifications",
+     "Client"
+    ]
+   ],
+   "highlight": [
+    "Metadata service"
+   ],
+   "caption": "2. Ask which chunks are new",
+   "narration": "It asks the metadata service which chunk hashes the server doesn't already have, enabling dedup and resumable uploads."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Upload a file",
+   "edges": [
+    [
+     "Client",
+     "LB"
+    ],
+    [
+     "LB",
+     "Metadata service"
+    ],
+    [
+     "Metadata service",
+     "Metadata DB sharded by owner/folder"
+    ],
+    [
+     "LB",
+     "Upload service"
+    ],
+    [
+     "Upload service",
+     "Blob store, replicated, content-addressed chunks"
+    ],
+    [
+     "Metadata service",
+     "Change notifications"
+    ],
+    [
+     "Change notifications",
+     "Client"
+    ]
+   ],
+   "highlight": [
+    "Upload service"
+   ],
+   "caption": "3. Upload only missing chunks",
+   "narration": "The client uploads just the missing chunks to the upload service."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Upload a file",
+   "edges": [
+    [
+     "Client",
+     "LB"
+    ],
+    [
+     "LB",
+     "Metadata service"
+    ],
+    [
+     "Metadata service",
+     "Metadata DB sharded by owner/folder"
+    ],
+    [
+     "LB",
+     "Upload service"
+    ],
+    [
+     "Upload service",
+     "Blob store, replicated, content-addressed chunks"
+    ],
+    [
+     "Metadata service",
+     "Change notifications"
+    ],
+    [
+     "Change notifications",
+     "Client"
+    ]
+   ],
+   "highlight": [
+    "Blob store, replicated, content-addressed chunks"
+   ],
+   "caption": "4. Chunks stored by hash",
+   "narration": "Chunks land in the blob store, addressed by their hash and replicated across zones."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Upload a file",
+   "edges": [
+    [
+     "Client",
+     "LB"
+    ],
+    [
+     "LB",
+     "Metadata service"
+    ],
+    [
+     "Metadata service",
+     "Metadata DB sharded by owner/folder"
+    ],
+    [
+     "LB",
+     "Upload service"
+    ],
+    [
+     "Upload service",
+     "Blob store, replicated, content-addressed chunks"
+    ],
+    [
+     "Metadata service",
+     "Change notifications"
+    ],
+    [
+     "Change notifications",
+     "Client"
+    ]
+   ],
+   "highlight": [
+    "Metadata DB sharded by owner/folder"
+   ],
+   "caption": "5. Commit the new file version",
+   "narration": "Then the metadata service commits the new file version, the ordered list of chunk hashes, in one transaction."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Upload a file",
+   "edges": [
+    [
+     "Client",
+     "LB"
+    ],
+    [
+     "LB",
+     "Metadata service"
+    ],
+    [
+     "Metadata service",
+     "Metadata DB sharded by owner/folder"
+    ],
+    [
+     "LB",
+     "Upload service"
+    ],
+    [
+     "Upload service",
+     "Blob store, replicated, content-addressed chunks"
+    ],
+    [
+     "Metadata service",
+     "Change notifications"
+    ],
+    [
+     "Change notifications",
+     "Client"
+    ]
+   ],
+   "highlight": [
+    "Change notifications"
+   ],
+   "caption": "6. Other devices sync",
+   "narration": "A change notification goes out, and the user's other devices pull the new metadata and fetch only changed chunks."
+  },
+  {
    "kind": "bullets",
    "heading": "Data model",
    "bullets": [
@@ -92,7 +337,7 @@
     "acl(file_id, principal_id, role)",
     "chunks(hash, size, ref_count, locations)"
    ],
-   "narration": "Here is the data model. files(id, owner id, parent id, name, is folder, size, version, chunk ids , deleted). acl(file id, principal id, role). chunks(hash, size, ref count, locations)."
+   "narration": "Here is the data model. The files record holds id, owner id, parent id, name, is folder, size, version, chunk ids , deleted. The acl record holds file id, principal id, role. The chunks record holds hash, size, ref count, locations."
   },
   {
    "kind": "code",
@@ -100,7 +345,7 @@
    "code": "POST /files/upload-session {parentId, name, size} -> {sessionId}\nPUT  /upload/{sessionId}/chunks/{n}\nPOST /upload/{sessionId}/commit -> file\nGET  /files/{id}/content\nGET  /folders/{id}/children\nPATCH /files/{id} {name?, parentId?}\nPOST /files/{id}/share {principal, role}",
    "lang": "text",
    "font_size": 26,
-   "filename": "08_api.txt",
+   "filename": "15_api.txt",
    "narration": "The API. The main endpoints are: POST files upload-session; PUT upload by sessionId chunks by n; POST upload by sessionId commit; GET files by id content; GET folders by id children; PATCH files by id; POST files by id share. Each one is small, resource-oriented and easy to version."
   },
   {
@@ -127,6 +372,17 @@
     "Clients long-poll/websocket for change events with a per-user change log cursor; conflicts produce 'conflicted copy' files."
    ],
    "narration": "Deep dive: Sync. Clients long-poll or websocket for change events with a per-user change log cursor; conflicts produce 'conflicted copy' files."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Key decisions",
+   "bullets": [
+    "Separate metadata from blobs → different scale and consistency needs",
+    "Content-addressed chunks → dedup and resumable uploads",
+    "Strongly consistent metadata → no lost edits",
+    "Push change notifications → fast sync without polling"
+   ],
+   "narration": "Let's pull together the key decisions. Separate metadata from blobs, because different scale and consistency needs. Content-addressed chunks, because dedup and resumable uploads. Strongly consistent metadata, because no lost edits. Push change notifications, because fast sync without polling."
   },
   {
    "kind": "bullets",

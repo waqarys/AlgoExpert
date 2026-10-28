@@ -46,6 +46,17 @@
    "narration": "Now some rough capacity estimates, which drive the design. about 100M DAU, about 10M orders per day (about 120 per s avg, 10x at peaks)."
   },
   {
+   "kind": "bullets",
+   "heading": "Capacity: worked out",
+   "bullets": [
+    "10M orders/day ÷ 86,400 ≈ 120 orders/s",
+    "Peak events ~10× ≈ 1.2k orders/s",
+    "100M DAU × 20 page views ≈ 23k reads/s",
+    "Reads cached; checkout writes must be exact"
+   ],
+   "narration": "Let's actually work the numbers. Ten million orders a day is about a hundred twenty a second. Big sale events push that ten times, to about twelve hundred a second. A hundred million daily users viewing twenty pages each is around twenty-three thousand reads a second. Catalogue reads are cached aggressively, while checkout writes must be exact."
+  },
+  {
    "kind": "diagram",
    "heading": "High-level architecture",
    "edges": [
@@ -85,13 +96,271 @@
    "narration": "Here's the high-level architecture. U connects to API. API connects to Catalog plus search and Cart store and Checkout orchestrator. Checkout orchestrator connects to Inventory and Payments and Orders. Orders connects to Fulfilment events."
   },
   {
+   "kind": "diagram",
+   "heading": "Request flow: Check out",
+   "edges": [
+    [
+     "U",
+     "API"
+    ],
+    [
+     "API",
+     "Catalog + search"
+    ],
+    [
+     "API",
+     "Cart store"
+    ],
+    [
+     "API",
+     "Checkout orchestrator"
+    ],
+    [
+     "Checkout orchestrator",
+     "Inventory"
+    ],
+    [
+     "Checkout orchestrator",
+     "Payments"
+    ],
+    [
+     "Checkout orchestrator",
+     "Orders"
+    ],
+    [
+     "Orders",
+     "Fulfilment events"
+    ]
+   ],
+   "highlight": [
+    "U"
+   ],
+   "caption": "1. User clicks Place order",
+   "narration": "Let's follow a checkout. The user clicks place order on their cart."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Check out",
+   "edges": [
+    [
+     "U",
+     "API"
+    ],
+    [
+     "API",
+     "Catalog + search"
+    ],
+    [
+     "API",
+     "Cart store"
+    ],
+    [
+     "API",
+     "Checkout orchestrator"
+    ],
+    [
+     "Checkout orchestrator",
+     "Inventory"
+    ],
+    [
+     "Checkout orchestrator",
+     "Payments"
+    ],
+    [
+     "Checkout orchestrator",
+     "Orders"
+    ],
+    [
+     "Orders",
+     "Fulfilment events"
+    ]
+   ],
+   "highlight": [
+    "Checkout orchestrator"
+   ],
+   "caption": "2. Orchestrator starts a saga",
+   "narration": "The checkout orchestrator starts a saga, a sequence of steps each with a compensating action."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Check out",
+   "edges": [
+    [
+     "U",
+     "API"
+    ],
+    [
+     "API",
+     "Catalog + search"
+    ],
+    [
+     "API",
+     "Cart store"
+    ],
+    [
+     "API",
+     "Checkout orchestrator"
+    ],
+    [
+     "Checkout orchestrator",
+     "Inventory"
+    ],
+    [
+     "Checkout orchestrator",
+     "Payments"
+    ],
+    [
+     "Checkout orchestrator",
+     "Orders"
+    ],
+    [
+     "Orders",
+     "Fulfilment events"
+    ]
+   ],
+   "highlight": [
+    "Inventory"
+   ],
+   "caption": "3. Reserve inventory",
+   "narration": "First it reserves inventory for each item, with a short expiry."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Check out",
+   "edges": [
+    [
+     "U",
+     "API"
+    ],
+    [
+     "API",
+     "Catalog + search"
+    ],
+    [
+     "API",
+     "Cart store"
+    ],
+    [
+     "API",
+     "Checkout orchestrator"
+    ],
+    [
+     "Checkout orchestrator",
+     "Inventory"
+    ],
+    [
+     "Checkout orchestrator",
+     "Payments"
+    ],
+    [
+     "Checkout orchestrator",
+     "Orders"
+    ],
+    [
+     "Orders",
+     "Fulfilment events"
+    ]
+   ],
+   "highlight": [
+    "Payments"
+   ],
+   "caption": "4. Charge payment",
+   "narration": "Next it charges the payment method with an idempotency key. If payment fails, the inventory reservation is released."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Check out",
+   "edges": [
+    [
+     "U",
+     "API"
+    ],
+    [
+     "API",
+     "Catalog + search"
+    ],
+    [
+     "API",
+     "Cart store"
+    ],
+    [
+     "API",
+     "Checkout orchestrator"
+    ],
+    [
+     "Checkout orchestrator",
+     "Inventory"
+    ],
+    [
+     "Checkout orchestrator",
+     "Payments"
+    ],
+    [
+     "Checkout orchestrator",
+     "Orders"
+    ],
+    [
+     "Orders",
+     "Fulfilment events"
+    ]
+   ],
+   "highlight": [
+    "Orders"
+   ],
+   "caption": "5. Create the order",
+   "narration": "Then the order is written in a confirmed state."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Check out",
+   "edges": [
+    [
+     "U",
+     "API"
+    ],
+    [
+     "API",
+     "Catalog + search"
+    ],
+    [
+     "API",
+     "Cart store"
+    ],
+    [
+     "API",
+     "Checkout orchestrator"
+    ],
+    [
+     "Checkout orchestrator",
+     "Inventory"
+    ],
+    [
+     "Checkout orchestrator",
+     "Payments"
+    ],
+    [
+     "Checkout orchestrator",
+     "Orders"
+    ],
+    [
+     "Orders",
+     "Fulfilment events"
+    ]
+   ],
+   "highlight": [
+    "Fulfilment events"
+   ],
+   "caption": "6. Fulfilment begins",
+   "narration": "Finally an event kicks off fulfilment, picking, packing and shipping."
+  },
+  {
    "kind": "bullets",
    "heading": "Data model",
    "bullets": [
     "inventory(sku, warehouse, available, reserved)",
     "orders(id, user_id, items, status, payment_id, idempotency_key)"
    ],
-   "narration": "Here is the data model. inventory(sku, warehouse, available, reserved). orders(id, user id, items, status, payment id, idempotency key)."
+   "narration": "Here is the data model. The inventory record holds sku, warehouse, available, reserved. The orders record holds id, user id, items, status, payment id, idempotency key."
   },
   {
    "kind": "code",
@@ -99,7 +368,7 @@
    "code": "POST /cart/items {sku, qty}\nPOST /checkout {cartId, addressId, paymentMethodId, idempotencyKey} -> order\nGET  /orders/{id}",
    "lang": "text",
    "font_size": 26,
-   "filename": "08_api.txt",
+   "filename": "15_api.txt",
    "narration": "The API. The main endpoints are: POST cart items; POST checkout; GET orders by id. Each one is small, resource-oriented and easy to version."
   },
   {
@@ -117,6 +386,17 @@
     "Shard inventory counters; for flash sales use a token queue to admit buyers."
    ],
    "narration": "Deep dive: Hot items. Shard inventory counters; for flash sales use a token queue to admit buyers."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Key decisions",
+   "bullets": [
+    "Saga, not a distributed transaction → services stay independent",
+    "Reserve inventory with expiry → no oversell, no stuck stock",
+    "Idempotent payments → safe retries",
+    "Event-driven fulfilment → decoupled and scalable"
+   ],
+   "narration": "Let's pull together the key decisions. Saga, not a distributed transaction, because services stay independent. Reserve inventory with expiry, because no oversell, no stuck stock. Idempotent payments, because safe retries. Event-driven fulfilment, because decoupled and scalable."
   },
   {
    "kind": "bullets",

@@ -54,6 +54,17 @@
    "narration": "Now some rough capacity estimates, which drive the design. about 1M users, about 10k concurrent at peak; about 200 questions. Static content about few hundred MB excl. video to CDN. Autosave every few seconds while typing: about 10k writes per s peak to debounce client-side to about 1 or 10s to about 1k writes per s. Code runs: about 1-2k per min peak; each needs about 1-2 s of sandbox CPU to about 50 concurrent sandboxes, provision headroom x3."
   },
   {
+   "kind": "bullets",
+   "heading": "Capacity: worked out",
+   "bullets": [
+    "Autosave: 10k users typing, 1 save/s → 10k writes/s",
+    "Debounce to 1 save / 10 s → ~1k writes/s",
+    "Runs: 2k/min ≈ 33/s × 1.5 s CPU ≈ 50 busy sandboxes",
+    "Provision ×3 headroom → ~150 sandboxes"
+   ],
+   "narration": "Let's actually work the numbers. Ten thousand concurrent users saving every second would be ten thousand writes a second. Debouncing on the client to one save every ten seconds cuts that to about a thousand writes a second, easy for one Postgres primary. Code runs peak around two thousand a minute, about thirty-three a second. Each takes about one and a half seconds, so roughly fifty sandboxes are busy at once. With three times headroom for spikes, we provision about one hundred and fifty sandbox slots."
+  },
+  {
    "kind": "diagram",
    "heading": "High-level architecture",
    "edges": [
@@ -97,6 +108,288 @@
    "narration": "Here's the high-level architecture. Browser connects to CDN: static site, prompts, video and Load balancer. Load balancer connects to API servers - stateless. API servers - stateless connects to Postgres: users, progress, saved code and Redis: question list, sessions and Run queue and Payments provider. Run queue connects to Sandbox workers per language. Sandbox workers per language connects to API servers - stateless."
   },
   {
+   "kind": "diagram",
+   "heading": "Request flow: Run Code",
+   "edges": [
+    [
+     "Browser",
+     "CDN: static site, prompts, video"
+    ],
+    [
+     "Browser",
+     "Load balancer"
+    ],
+    [
+     "Load balancer",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Postgres: users, progress, saved code"
+    ],
+    [
+     "API servers - stateless",
+     "Redis: question list, sessions"
+    ],
+    [
+     "API servers - stateless",
+     "Run queue"
+    ],
+    [
+     "Run queue",
+     "Sandbox workers per language"
+    ],
+    [
+     "Sandbox workers per language",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Payments provider"
+    ]
+   ],
+   "highlight": [
+    "Browser"
+   ],
+   "caption": "1. User clicks Run Code",
+   "narration": "Let's follow one Run Code click. The browser sends the user's code and the question ID in a single POST."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Run Code",
+   "edges": [
+    [
+     "Browser",
+     "CDN: static site, prompts, video"
+    ],
+    [
+     "Browser",
+     "Load balancer"
+    ],
+    [
+     "Load balancer",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Postgres: users, progress, saved code"
+    ],
+    [
+     "API servers - stateless",
+     "Redis: question list, sessions"
+    ],
+    [
+     "API servers - stateless",
+     "Run queue"
+    ],
+    [
+     "Run queue",
+     "Sandbox workers per language"
+    ],
+    [
+     "Sandbox workers per language",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Payments provider"
+    ]
+   ],
+   "highlight": [
+    "Load balancer"
+   ],
+   "caption": "2. LB picks a healthy API server",
+   "narration": "The load balancer forwards it to any healthy API server. Because API servers are stateless, any one will do."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Run Code",
+   "edges": [
+    [
+     "Browser",
+     "CDN: static site, prompts, video"
+    ],
+    [
+     "Browser",
+     "Load balancer"
+    ],
+    [
+     "Load balancer",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Postgres: users, progress, saved code"
+    ],
+    [
+     "API servers - stateless",
+     "Redis: question list, sessions"
+    ],
+    [
+     "API servers - stateless",
+     "Run queue"
+    ],
+    [
+     "Run queue",
+     "Sandbox workers per language"
+    ],
+    [
+     "Sandbox workers per language",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Payments provider"
+    ]
+   ],
+   "highlight": [
+    "API servers - stateless"
+   ],
+   "caption": "3. API validates and enqueues",
+   "narration": "The API server checks the session, rate-limits the user, and puts a run job on the queue instead of executing anything itself."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Run Code",
+   "edges": [
+    [
+     "Browser",
+     "CDN: static site, prompts, video"
+    ],
+    [
+     "Browser",
+     "Load balancer"
+    ],
+    [
+     "Load balancer",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Postgres: users, progress, saved code"
+    ],
+    [
+     "API servers - stateless",
+     "Redis: question list, sessions"
+    ],
+    [
+     "API servers - stateless",
+     "Run queue"
+    ],
+    [
+     "Run queue",
+     "Sandbox workers per language"
+    ],
+    [
+     "Sandbox workers per language",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Payments provider"
+    ]
+   ],
+   "highlight": [
+    "Run queue"
+   ],
+   "caption": "4. Job waits in the per-language queue",
+   "narration": "The job waits in the queue for that language. The queue absorbs bursts, so a spike in runs never overloads the API tier."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Run Code",
+   "edges": [
+    [
+     "Browser",
+     "CDN: static site, prompts, video"
+    ],
+    [
+     "Browser",
+     "Load balancer"
+    ],
+    [
+     "Load balancer",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Postgres: users, progress, saved code"
+    ],
+    [
+     "API servers - stateless",
+     "Redis: question list, sessions"
+    ],
+    [
+     "API servers - stateless",
+     "Run queue"
+    ],
+    [
+     "Run queue",
+     "Sandbox workers per language"
+    ],
+    [
+     "Sandbox workers per language",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Payments provider"
+    ]
+   ],
+   "highlight": [
+    "Sandbox workers per language"
+   ],
+   "caption": "5. Sandbox compiles and runs tests",
+   "narration": "A sandbox worker picks up the job, compiles the code in an isolated container with CPU and memory limits, and runs the test cases."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Run Code",
+   "edges": [
+    [
+     "Browser",
+     "CDN: static site, prompts, video"
+    ],
+    [
+     "Browser",
+     "Load balancer"
+    ],
+    [
+     "Load balancer",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Postgres: users, progress, saved code"
+    ],
+    [
+     "API servers - stateless",
+     "Redis: question list, sessions"
+    ],
+    [
+     "API servers - stateless",
+     "Run queue"
+    ],
+    [
+     "Run queue",
+     "Sandbox workers per language"
+    ],
+    [
+     "Sandbox workers per language",
+     "API servers - stateless"
+    ],
+    [
+     "API servers - stateless",
+     "Payments provider"
+    ]
+   ],
+   "highlight": [
+    "API servers - stateless"
+   ],
+   "caption": "6. Results return to the browser",
+   "narration": "Results flow back to the API server, which returns them to the browser, typically within two or three seconds."
+  },
+  {
    "kind": "bullets",
    "heading": "Data model",
    "bullets": [
@@ -105,7 +398,7 @@
     "user_code(user_id, question_id, language, code, updated_at) PK(user_id, question_id, language)",
     "completions(user_id, question_id, completed_at)"
    ],
-   "narration": "Here is the data model. questions(id, name, difficulty, category, prompt md, tests json, version). users(id, email, plan, created at). user code(user id, question id, language, code, updated at) PK(user id, question id, language). completions(user id, question id, completed at)."
+   "narration": "Here is the data model. The questions record holds id, name, difficulty, category, prompt md, tests json, version. The users record holds id, email, plan, created at. The user code record holds user id, question id, language, code, updated at) PK(user id, question id, language. The completions record holds user id, question id, completed at."
   },
   {
    "kind": "code",
@@ -113,7 +406,7 @@
    "code": "GET  /questions                          -> [{id, name, difficulty, category, completed}]\nGET  /questions/{id}                     -> prompt, hints, starter code\nPUT  /questions/{id}/code/{language}     body {code}\nPOST /questions/{id}/run                 body {language, code} -> {runId}\nGET  /runs/{runId}                       -> {status, results[]}",
    "lang": "text",
    "font_size": 26,
-   "filename": "08_api.txt",
+   "filename": "15_api.txt",
    "narration": "The API. The main endpoints are: GET questions; GET questions by id; PUT questions by id code by language; POST questions by id run; GET runs by runId. Each one is small, resource-oriented and easy to version."
   },
   {
@@ -142,6 +435,17 @@
     "Static assets on a CDN; API in 2-3 regions with a primary DB and read replicas; sandbox fleets in each region so run latency stays low."
    ],
    "narration": "Deep dive: Global latency. Static assets on a CDN; API in 2-3 regions with a primary DB and read replicas; sandbox fleets in each region so run latency stays low."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Key decisions",
+   "bullets": [
+    "CDN for prompts and videos → content is read-only and global",
+    "Queue in front of sandboxes → absorbs bursts, isolates failures",
+    "Containers per run with hard limits → untrusted code must never touch the host",
+    "Client-side debounce → 10× fewer writes, no lost work"
+   ],
+   "narration": "Let's pull together the key decisions. CDN for prompts and videos, because content is read-only and global. Queue in front of sandboxes, because absorbs bursts, isolates failures. Containers per run with hard limits, because untrusted code must never touch the host. Client-side debounce, because 10× fewer writes, no lost work."
   },
   {
    "kind": "bullets",

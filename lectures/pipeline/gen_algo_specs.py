@@ -55,6 +55,13 @@ def split_code(body):
     if cur: chunks.append(cur)
     return ["\n".join(c).strip("\n") for c in chunks if "".join(c).strip() not in ("", "}")]
 
+def enrichment(diff, cls):
+    import importlib
+    try: mod = importlib.import_module(f"enrich.algo.{diff}")
+    except ModuleNotFoundError: return None
+    f = getattr(mod, cls, None)
+    return f() if f else None
+
 def spec(path, notes):
     rel = os.path.relpath(path, SRC); diff, cat, fname = rel.split(os.sep); cls = fname[:-5]
     text = open(path).read()
@@ -74,9 +81,14 @@ def spec(path, notes):
                   narration="Here's the problem. " + " ".join(speak(big_o(s)) for s in desc_s)))
     if idea:
         S.append(dict(kind="bullets", heading="Intuition", bullets=sentences(idea), narration=speak(big_o(idea))))
+    X = enrichment(diff, cls)
+    if X:
+        b, n = X["brute"]; S.append(dict(kind="bullets", heading="Brute force vs optimal", bullets=b, narration=n))
     if steps:
         S.append(dict(kind="bullets", heading="Approach", bullets=[f"{i}. {s}" for i, s in enumerate(steps, 1)],
                       narration="Step by step. " + " ".join(f"{['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth'][min(i, 5)]}, {speak(s)[0].lower() + speak(s)[1:]}." for i, s in enumerate(steps))))
+    if X:
+        S.extend(X["example"])
     chunks = split_code(body)
     for i, c in enumerate(chunks):
         methods = re.findall(r"(?:public|private|protected|static)[\w<>\[\],\s]*\s(\w+)\s*\(", c)
@@ -86,6 +98,7 @@ def spec(path, notes):
                 "It follows the steps we just described." if steps else "Read it top to bottom; the method names mirror the steps.")
         else:
             narr = f"Continuing{' with ' + ', '.join(words(m).lower() for m in meth[:3]) if meth else ' the implementation'}."
+        if X and X.get("code"): narr = X["code"][min(i, len(X["code"]) - 1)]
         S.append(dict(kind="code", heading="Java solution" + (f" ({i + 1}/{len(chunks)})" if len(chunks) > 1 else ""), code=c, lang="java",
                       font_size=26, filename=f"{cls}.java" if len(chunks) == 1 else f"{cls}_part{i + 1}.java", narration=narr))
     if cx_text:
@@ -93,6 +106,9 @@ def spec(path, notes):
         bl = ["Time: " + parts[0]] + (["Space: " + re.sub(r"^Space:\s*", "", parts[1])] if len(parts) > 1 else [])
         S.append(dict(kind="bullets", heading="Complexity", bullets=bl,
                       narration=" ".join(speak(big_o(b)).replace("Time:", "Time is").replace("Space:", "Space is").rstrip(".") + "." for b in bl)))
+    if X:
+        b, n = X["pitfalls"]; S.append(dict(kind="bullets", heading="Edge cases & pitfalls", bullets=b, narration=n))
+        b, n = X["tips"]; S.append(dict(kind="bullets", heading="Interview tips & follow-ups", bullets=b, narration=n))
     rec = [s for s in (sentences(idea)[:1] if idea else desc_s[:1])] + ([("Complexity: " + cx_text.split("|")[0].strip().rstrip("."))] if cx_text else [])
     S.append(dict(kind="bullets", heading="Recap", bullets=rec or [title],
                   narration=f"To recap {title}: " + (speak(big_o(idea)) if idea else " ".join(speak(big_o(s)) for s in desc_s[:1])) + " Try re-implementing it from scratch without looking."))
@@ -100,9 +116,11 @@ def spec(path, notes):
     return dict(title=f"AlgoExpert · {title}", out=f"algoexpert/{diff}/{cat}/{cls}", slides=S), f"{order}_{diff}/{cat}__{cls}.json"
 
 if __name__ == "__main__":
+    import sys; only = sys.argv[1:]
     notes = load_notes(); n = 0
     for d, _ in DIFF:
         for p in sorted(glob.glob(os.path.join(SRC, d, "*", "*.java"))):
+            if only and not any(k in p for k in only): continue
             s, name = spec(p, notes); out = os.path.join(HERE, "specs", "algoexpert", name)
             os.makedirs(os.path.dirname(out), exist_ok=True); json.dump(s, open(out, "w"), indent=1, ensure_ascii=False); n += 1
     print(n, "algo specs;", len(notes), "with notes")

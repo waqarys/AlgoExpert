@@ -51,6 +51,17 @@
    "narration": "Now some rough capacity estimates, which drive the design. about thousands of builds per day; artifacts up to about 10 GB. about 100k-1M hosts across about 10 regions. Fan-out: 10 GB x 1M hosts is impossible from one store to regional replication plus peer-to-peer distribution."
   },
   {
+   "kind": "bullets",
+   "heading": "Capacity: worked out",
+   "bullets": [
+    "Artifact 10 GB × 100k hosts = 1 PB of transfer",
+    "One store at 100 Gbps ≈ 12.5 GB/s → ~22 hours",
+    "10 regions + P2P: bandwidth grows with hosts",
+    "Goal: whole fleet in < 30 min"
+   ],
+   "narration": "Let's actually work the numbers. A ten gigabyte artifact sent to a hundred thousand hosts is a petabyte of transfer. Even one store pushing a hundred gigabits a second would need about twenty-two hours. With regional replicas and peer-to-peer sharing, every host also uploads, so total bandwidth scales with the fleet. That's how we get the whole fleet updated in under thirty minutes."
+  },
+  {
    "kind": "diagram",
    "heading": "High-level architecture",
    "edges": [
@@ -94,6 +105,288 @@
    "narration": "Here's the high-level architecture. Engineer / CI trigger connects to Deploy API. Deploy API connects to Jobs table: SQL queue and Goal state: desired build per service. Jobs table: SQL queue connects to Build workers. Build workers connects to Global blob store. Global blob store connects to Regional blob replicas. Regional blob replicas connects to Peer-to-peer distribution in each region. Hosts' agents connects to Goal state: desired build per service and Peer-to-peer distribution in each region."
   },
   {
+   "kind": "diagram",
+   "heading": "Request flow: Deploy build X",
+   "edges": [
+    [
+     "Engineer / CI trigger",
+     "Deploy API"
+    ],
+    [
+     "Deploy API",
+     "Jobs table: SQL queue"
+    ],
+    [
+     "Jobs table: SQL queue",
+     "Build workers"
+    ],
+    [
+     "Build workers",
+     "Global blob store"
+    ],
+    [
+     "Global blob store",
+     "Regional blob replicas"
+    ],
+    [
+     "Regional blob replicas",
+     "Peer-to-peer distribution in each region"
+    ],
+    [
+     "Deploy API",
+     "Goal state: desired build per service"
+    ],
+    [
+     "Hosts' agents",
+     "Goal state: desired build per service"
+    ],
+    [
+     "Hosts' agents",
+     "Peer-to-peer distribution in each region"
+    ]
+   ],
+   "highlight": [
+    "Engineer / CI trigger"
+   ],
+   "caption": "1. Engineer requests a deploy",
+   "narration": "Let's follow a deploy. An engineer asks to deploy build X of a service."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Deploy build X",
+   "edges": [
+    [
+     "Engineer / CI trigger",
+     "Deploy API"
+    ],
+    [
+     "Deploy API",
+     "Jobs table: SQL queue"
+    ],
+    [
+     "Jobs table: SQL queue",
+     "Build workers"
+    ],
+    [
+     "Build workers",
+     "Global blob store"
+    ],
+    [
+     "Global blob store",
+     "Regional blob replicas"
+    ],
+    [
+     "Regional blob replicas",
+     "Peer-to-peer distribution in each region"
+    ],
+    [
+     "Deploy API",
+     "Goal state: desired build per service"
+    ],
+    [
+     "Hosts' agents",
+     "Goal state: desired build per service"
+    ],
+    [
+     "Hosts' agents",
+     "Peer-to-peer distribution in each region"
+    ]
+   ],
+   "highlight": [
+    "Deploy API"
+   ],
+   "caption": "2. Deploy API records the request",
+   "narration": "The deploy API checks the build exists and has been replicated to every target region, then records the deployment."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Deploy build X",
+   "edges": [
+    [
+     "Engineer / CI trigger",
+     "Deploy API"
+    ],
+    [
+     "Deploy API",
+     "Jobs table: SQL queue"
+    ],
+    [
+     "Jobs table: SQL queue",
+     "Build workers"
+    ],
+    [
+     "Build workers",
+     "Global blob store"
+    ],
+    [
+     "Global blob store",
+     "Regional blob replicas"
+    ],
+    [
+     "Regional blob replicas",
+     "Peer-to-peer distribution in each region"
+    ],
+    [
+     "Deploy API",
+     "Goal state: desired build per service"
+    ],
+    [
+     "Hosts' agents",
+     "Goal state: desired build per service"
+    ],
+    [
+     "Hosts' agents",
+     "Peer-to-peer distribution in each region"
+    ]
+   ],
+   "highlight": [
+    "Goal state: desired build per service"
+   ],
+   "caption": "3. Goal state flips to build X",
+   "narration": "The key move: it simply updates the goal state, the desired build for the service, in a strongly consistent key-value store."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Deploy build X",
+   "edges": [
+    [
+     "Engineer / CI trigger",
+     "Deploy API"
+    ],
+    [
+     "Deploy API",
+     "Jobs table: SQL queue"
+    ],
+    [
+     "Jobs table: SQL queue",
+     "Build workers"
+    ],
+    [
+     "Build workers",
+     "Global blob store"
+    ],
+    [
+     "Global blob store",
+     "Regional blob replicas"
+    ],
+    [
+     "Regional blob replicas",
+     "Peer-to-peer distribution in each region"
+    ],
+    [
+     "Deploy API",
+     "Goal state: desired build per service"
+    ],
+    [
+     "Hosts' agents",
+     "Goal state: desired build per service"
+    ],
+    [
+     "Hosts' agents",
+     "Peer-to-peer distribution in each region"
+    ]
+   ],
+   "highlight": [
+    "Hosts' agents"
+   ],
+   "caption": "4. Agents notice the new goal",
+   "narration": "Agent processes on every host watch that key, so they notice the change within seconds."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Deploy build X",
+   "edges": [
+    [
+     "Engineer / CI trigger",
+     "Deploy API"
+    ],
+    [
+     "Deploy API",
+     "Jobs table: SQL queue"
+    ],
+    [
+     "Jobs table: SQL queue",
+     "Build workers"
+    ],
+    [
+     "Build workers",
+     "Global blob store"
+    ],
+    [
+     "Global blob store",
+     "Regional blob replicas"
+    ],
+    [
+     "Regional blob replicas",
+     "Peer-to-peer distribution in each region"
+    ],
+    [
+     "Deploy API",
+     "Goal state: desired build per service"
+    ],
+    [
+     "Hosts' agents",
+     "Goal state: desired build per service"
+    ],
+    [
+     "Hosts' agents",
+     "Peer-to-peer distribution in each region"
+    ]
+   ],
+   "highlight": [
+    "Peer-to-peer distribution in each region"
+   ],
+   "caption": "5. Hosts fetch chunks from peers",
+   "narration": "Each host downloads the artifact in chunks, mostly from peers in its own region, so no single store becomes a bottleneck."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Deploy build X",
+   "edges": [
+    [
+     "Engineer / CI trigger",
+     "Deploy API"
+    ],
+    [
+     "Deploy API",
+     "Jobs table: SQL queue"
+    ],
+    [
+     "Jobs table: SQL queue",
+     "Build workers"
+    ],
+    [
+     "Build workers",
+     "Global blob store"
+    ],
+    [
+     "Global blob store",
+     "Regional blob replicas"
+    ],
+    [
+     "Regional blob replicas",
+     "Peer-to-peer distribution in each region"
+    ],
+    [
+     "Deploy API",
+     "Goal state: desired build per service"
+    ],
+    [
+     "Hosts' agents",
+     "Goal state: desired build per service"
+    ],
+    [
+     "Hosts' agents",
+     "Peer-to-peer distribution in each region"
+    ]
+   ],
+   "highlight": [
+    "Hosts' agents"
+   ],
+   "caption": "6. Swap, health-check, report",
+   "narration": "The agent swaps the binary, runs health checks, and reports back. Rolling back just means setting the goal state to the previous build."
+  },
+  {
    "kind": "bullets",
    "heading": "Data model",
    "bullets": [
@@ -102,7 +395,7 @@
     "deployments(id, service, sha, strategy, status, started_at)",
     "goal_state key/value: service -> sha (strongly consistent store, e.g. etcd/ZooKeeper)"
    ],
-   "narration": "Here is the data model. jobs(id, sha, status QUEUED,RUNNING,SUCCEEDED,FAILED , worker id, heartbeat at, created at). builds(sha, artifact url, size, checksum, regions replicated ). deployments(id, service, sha, strategy, status, started at). goal state key or value: service to sha (strongly consistent store, for example etcd or ZooKeeper)."
+   "narration": "Here is the data model. The jobs record holds id, sha, status QUEUED,RUNNING,SUCCEEDED,FAILED , worker id, heartbeat at, created at. The builds record holds sha, artifact url, size, checksum, regions replicated . The deployments record holds id, service, sha, strategy, status, started at. goal state key or value: service to sha (strongly consistent store, for example etcd or ZooKeeper)."
   },
   {
    "kind": "code",
@@ -110,7 +403,7 @@
    "code": "POST /builds          {sha}                -> {jobId}\nGET  /builds/{sha}                         -> status, artifact\nPOST /deployments     {service, sha, strategy: canary|all}\nGET  /deployments/{id}                     -> per-region progress\nPOST /deployments/{id}/rollback",
    "lang": "text",
    "font_size": 26,
-   "filename": "08_api.txt",
+   "filename": "15_api.txt",
    "narration": "The API. The main endpoints are: POST builds; GET builds by sha; POST deployments; GET deployments by id; POST deployments by id rollback. Each one is small, resource-oriented and easy to version."
   },
   {
@@ -122,7 +415,7 @@
     "ACID guarantees each job runs once.",
     "Workers heartbeat; a reaper resets stale RUNNING jobs."
    ],
-   "narration": "Deep dive: Queue as a SQL table. Workers dequeue with UPDATE SET status equals 'RUNNING', worker id equals ? WHERE id equals (SELECT FOR UPDATE SKIP LOCKED). ACID guarantees each job runs once. Workers heartbeat; a reaper resets stale RUNNING jobs."
+   "narration": "Deep dive: the build queue is just a SQL table. A worker claims a job by updating its status to running inside a transaction, selecting the next queued row with FOR UPDATE SKIP LOCKED, so two workers can never grab the same job. Workers send heartbeats, and a reaper resets any running job whose heartbeat goes stale."
   },
   {
    "kind": "bullets",
@@ -141,6 +434,17 @@
     "Rollback = set goal to previous sha."
    ],
    "narration": "Deep dive: Goal state. Deploy just flips the desired sha in a consistent KV store; host agents watch it, download, swap, and report health. Rollback equals set goal to previous sha."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Key decisions",
+   "bullets": [
+    "SQL table as the build queue → exactly-once claims via row locks",
+    "Goal state, not push commands → idempotent, easy rollback",
+    "Regional replicas + P2P → removes the bandwidth bottleneck",
+    "Canary stages → limits blast radius"
+   ],
+   "narration": "Let's pull together the key decisions. SQL table as the build queue, because exactly-once claims via row locks. Goal state, not push commands, because idempotent, easy rollback. Regional replicas plus P2P, because removes the bandwidth bottleneck. Canary stages, because limits blast radius."
   },
   {
    "kind": "bullets",

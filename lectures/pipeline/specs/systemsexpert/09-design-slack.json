@@ -49,6 +49,17 @@
    "narration": "Now some rough capacity estimates, which drive the design. about 10M DAU, about 100 messages per user per day to about 1B messages per day about 12k per s avg. Messages about 1 KB to about 1 TB per day."
   },
   {
+   "kind": "bullets",
+   "heading": "Capacity: worked out",
+   "bullets": [
+    "10M DAU × 100 msgs = 1B messages/day",
+    "1B ÷ 86,400 ≈ 12k msgs/s (peak ~3× ≈ 35k)",
+    "× 1 KB ≈ 1 TB/day ≈ 365 TB/year",
+    "Fan-out to ~10 online members ≈ 350k pushes/s"
+   ],
+   "narration": "Let's actually work the numbers. Ten million daily users sending a hundred messages each is a billion messages a day. That's about twelve thousand messages a second, maybe thirty-five thousand at peak. At a kilobyte each that's a terabyte a day, over three hundred terabytes a year. If each message reaches about ten online members, gateways push around three hundred fifty thousand messages a second."
+  },
+  {
    "kind": "diagram",
    "heading": "High-level architecture",
    "edges": [
@@ -84,6 +95,240 @@
    "narration": "Here's the high-level architecture. Client connects to Gateway servers and REST API. REST API connects to Messages DB sharded by channel id and Pub or Sub by channel and Read state: user, channel, last read ts and Search index. Pub or Sub by channel connects to Gateway servers."
   },
   {
+   "kind": "diagram",
+   "heading": "Request flow: Send a message",
+   "edges": [
+    [
+     "Client",
+     "Gateway servers"
+    ],
+    [
+     "Client",
+     "REST API"
+    ],
+    [
+     "REST API",
+     "Messages DB sharded by channel_id"
+    ],
+    [
+     "REST API",
+     "Pub/Sub by channel"
+    ],
+    [
+     "Pub/Sub by channel",
+     "Gateway servers"
+    ],
+    [
+     "REST API",
+     "Read state: user, channel, last_read_ts"
+    ],
+    [
+     "REST API",
+     "Search index"
+    ]
+   ],
+   "highlight": [
+    "Client"
+   ],
+   "caption": "1. User sends a message",
+   "narration": "Let's follow a message. The client sends it with a client message ID, so retries can be de-duplicated."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Send a message",
+   "edges": [
+    [
+     "Client",
+     "Gateway servers"
+    ],
+    [
+     "Client",
+     "REST API"
+    ],
+    [
+     "REST API",
+     "Messages DB sharded by channel_id"
+    ],
+    [
+     "REST API",
+     "Pub/Sub by channel"
+    ],
+    [
+     "Pub/Sub by channel",
+     "Gateway servers"
+    ],
+    [
+     "REST API",
+     "Read state: user, channel, last_read_ts"
+    ],
+    [
+     "REST API",
+     "Search index"
+    ]
+   ],
+   "highlight": [
+    "REST API"
+   ],
+   "caption": "2. API persists it",
+   "narration": "The API checks channel membership and writes the message."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Send a message",
+   "edges": [
+    [
+     "Client",
+     "Gateway servers"
+    ],
+    [
+     "Client",
+     "REST API"
+    ],
+    [
+     "REST API",
+     "Messages DB sharded by channel_id"
+    ],
+    [
+     "REST API",
+     "Pub/Sub by channel"
+    ],
+    [
+     "Pub/Sub by channel",
+     "Gateway servers"
+    ],
+    [
+     "REST API",
+     "Read state: user, channel, last_read_ts"
+    ],
+    [
+     "REST API",
+     "Search index"
+    ]
+   ],
+   "highlight": [
+    "Messages DB sharded by channel_id"
+   ],
+   "caption": "3. Stored in the channel shard",
+   "narration": "It's stored in the shard for that channel, with a server timestamp that orders messages in the channel."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Send a message",
+   "edges": [
+    [
+     "Client",
+     "Gateway servers"
+    ],
+    [
+     "Client",
+     "REST API"
+    ],
+    [
+     "REST API",
+     "Messages DB sharded by channel_id"
+    ],
+    [
+     "REST API",
+     "Pub/Sub by channel"
+    ],
+    [
+     "Pub/Sub by channel",
+     "Gateway servers"
+    ],
+    [
+     "REST API",
+     "Read state: user, channel, last_read_ts"
+    ],
+    [
+     "REST API",
+     "Search index"
+    ]
+   ],
+   "highlight": [
+    "Pub/Sub by channel"
+   ],
+   "caption": "4. Published to the channel topic",
+   "narration": "The API publishes the message to the channel's pub-sub topic."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Send a message",
+   "edges": [
+    [
+     "Client",
+     "Gateway servers"
+    ],
+    [
+     "Client",
+     "REST API"
+    ],
+    [
+     "REST API",
+     "Messages DB sharded by channel_id"
+    ],
+    [
+     "REST API",
+     "Pub/Sub by channel"
+    ],
+    [
+     "Pub/Sub by channel",
+     "Gateway servers"
+    ],
+    [
+     "REST API",
+     "Read state: user, channel, last_read_ts"
+    ],
+    [
+     "REST API",
+     "Search index"
+    ]
+   ],
+   "highlight": [
+    "Gateway servers"
+   ],
+   "caption": "5. Gateways push to members",
+   "narration": "Gateway servers holding websocket connections for channel members receive it and push it instantly."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Send a message",
+   "edges": [
+    [
+     "Client",
+     "Gateway servers"
+    ],
+    [
+     "Client",
+     "REST API"
+    ],
+    [
+     "REST API",
+     "Messages DB sharded by channel_id"
+    ],
+    [
+     "REST API",
+     "Pub/Sub by channel"
+    ],
+    [
+     "Pub/Sub by channel",
+     "Gateway servers"
+    ],
+    [
+     "REST API",
+     "Read state: user, channel, last_read_ts"
+    ],
+    [
+     "REST API",
+     "Search index"
+    ]
+   ],
+   "highlight": [
+    "Read state: user, channel, last_read_ts"
+   ],
+   "caption": "6. Unread counts update",
+   "narration": "Each member's read state determines unread badges, updated when they view the channel."
+  },
+  {
    "kind": "bullets",
    "heading": "Data model",
    "bullets": [
@@ -92,7 +337,7 @@
     "messages(channel_id, ts, author_id, body, thread_ts) PK(channel_id, ts)",
     "read_state(user_id, channel_id, last_read_ts)"
    ],
-   "narration": "Here is the data model. channels(id, workspace id, name, type). memberships(channel id, user id). messages(channel id, ts, author id, body, thread ts) PK(channel id, ts). read state(user id, channel id, last read ts)."
+   "narration": "Here is the data model. The channels record holds id, workspace id, name, type. The memberships record holds channel id, user id. The messages record holds channel id, ts, author id, body, thread ts) PK(channel id, ts. The read state record holds user id, channel id, last read ts."
   },
   {
    "kind": "code",
@@ -100,7 +345,7 @@
    "code": "POST /channels/{id}/messages {text, clientMsgId}\nGET  /channels/{id}/messages?before=ts&limit=50\nPOST /channels/{id}/read {ts}\nWS   events: message.new, message.edited, reaction.added, typing",
    "lang": "text",
    "font_size": 26,
-   "filename": "08_api.txt",
+   "filename": "15_api.txt",
    "narration": "The API. The main endpoints are: POST channels by id messages; GET channels by id messages with before equals ts and limit equals 50; POST channels by id read; WS events:. Each one is small, resource-oriented and easy to version."
   },
   {
@@ -127,6 +372,17 @@
     "Compare channel latest ts with read_state; computed on connect and kept live by events."
    ],
    "narration": "Deep dive: Unreads. Compare channel latest ts with read state; computed on connect and kept live by events."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Key decisions",
+   "bullets": [
+    "Shard messages by channel → channel reads stay on one shard",
+    "WebSocket gateways + pub/sub → real-time delivery",
+    "Server timestamps per channel → consistent ordering",
+    "Client message IDs → dedupe on retry"
+   ],
+   "narration": "Let's pull together the key decisions. Shard messages by channel, because channel reads stay on one shard. WebSocket gateways plus pub or sub, because real-time delivery. Server timestamps per channel, because consistent ordering. Client message IDs, because dedupe on retry."
   },
   {
    "kind": "bullets",

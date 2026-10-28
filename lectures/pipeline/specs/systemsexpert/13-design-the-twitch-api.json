@@ -111,17 +111,277 @@
    "narration": "Here's the high-level architecture. Clients connects to API Gateway / LB. API Gateway / LB connects to Channel and Follow API and Chat WebSocket servers. Chat WebSocket servers connects to Pub or Sub per channel and Chat moderation service. Channel and Follow API connects to SQL: channels, follows, subs and Redis: live state, viewer counts. Stream ingest connects to Event queue. Event queue connects to Notification service."
   },
   {
+   "kind": "diagram",
+   "heading": "Request flow: Send a chat message",
+   "edges": [
+    [
+     "Clients",
+     "API Gateway / LB"
+    ],
+    [
+     "API Gateway / LB",
+     "Channel & Follow API"
+    ],
+    [
+     "API Gateway / LB",
+     "Chat WebSocket servers"
+    ],
+    [
+     "Chat WebSocket servers",
+     "Pub/Sub per channel"
+    ],
+    [
+     "Channel & Follow API",
+     "SQL: channels, follows, subs"
+    ],
+    [
+     "Channel & Follow API",
+     "Redis: live state, viewer counts"
+    ],
+    [
+     "Chat WebSocket servers",
+     "Chat moderation service"
+    ],
+    [
+     "Stream ingest",
+     "Event queue"
+    ],
+    [
+     "Event queue",
+     "Notification service"
+    ]
+   ],
+   "highlight": [
+    "Clients"
+   ],
+   "caption": "1. Viewer sends a chat message",
+   "narration": "Let's follow a chat message. The viewer's client sends it over its open websocket."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Send a chat message",
+   "edges": [
+    [
+     "Clients",
+     "API Gateway / LB"
+    ],
+    [
+     "API Gateway / LB",
+     "Channel & Follow API"
+    ],
+    [
+     "API Gateway / LB",
+     "Chat WebSocket servers"
+    ],
+    [
+     "Chat WebSocket servers",
+     "Pub/Sub per channel"
+    ],
+    [
+     "Channel & Follow API",
+     "SQL: channels, follows, subs"
+    ],
+    [
+     "Channel & Follow API",
+     "Redis: live state, viewer counts"
+    ],
+    [
+     "Chat WebSocket servers",
+     "Chat moderation service"
+    ],
+    [
+     "Stream ingest",
+     "Event queue"
+    ],
+    [
+     "Event queue",
+     "Notification service"
+    ]
+   ],
+   "highlight": [
+    "Chat WebSocket servers"
+   ],
+   "caption": "2. Chat server receives it",
+   "narration": "The chat server holding that connection receives it."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Send a chat message",
+   "edges": [
+    [
+     "Clients",
+     "API Gateway / LB"
+    ],
+    [
+     "API Gateway / LB",
+     "Channel & Follow API"
+    ],
+    [
+     "API Gateway / LB",
+     "Chat WebSocket servers"
+    ],
+    [
+     "Chat WebSocket servers",
+     "Pub/Sub per channel"
+    ],
+    [
+     "Channel & Follow API",
+     "SQL: channels, follows, subs"
+    ],
+    [
+     "Channel & Follow API",
+     "Redis: live state, viewer counts"
+    ],
+    [
+     "Chat WebSocket servers",
+     "Chat moderation service"
+    ],
+    [
+     "Stream ingest",
+     "Event queue"
+    ],
+    [
+     "Event queue",
+     "Notification service"
+    ]
+   ],
+   "highlight": [
+    "Chat moderation service"
+   ],
+   "caption": "3. Moderation check",
+   "narration": "It checks bans, slow mode and filters with the moderation service, cached in memory."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Send a chat message",
+   "edges": [
+    [
+     "Clients",
+     "API Gateway / LB"
+    ],
+    [
+     "API Gateway / LB",
+     "Channel & Follow API"
+    ],
+    [
+     "API Gateway / LB",
+     "Chat WebSocket servers"
+    ],
+    [
+     "Chat WebSocket servers",
+     "Pub/Sub per channel"
+    ],
+    [
+     "Channel & Follow API",
+     "SQL: channels, follows, subs"
+    ],
+    [
+     "Channel & Follow API",
+     "Redis: live state, viewer counts"
+    ],
+    [
+     "Chat WebSocket servers",
+     "Chat moderation service"
+    ],
+    [
+     "Stream ingest",
+     "Event queue"
+    ],
+    [
+     "Event queue",
+     "Notification service"
+    ]
+   ],
+   "highlight": [
+    "Pub/Sub per channel"
+   ],
+   "caption": "4. Publish to the channel topic",
+   "narration": "The message is published once to the channel's pub-sub topic."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Send a chat message",
+   "edges": [
+    [
+     "Clients",
+     "API Gateway / LB"
+    ],
+    [
+     "API Gateway / LB",
+     "Channel & Follow API"
+    ],
+    [
+     "API Gateway / LB",
+     "Chat WebSocket servers"
+    ],
+    [
+     "Chat WebSocket servers",
+     "Pub/Sub per channel"
+    ],
+    [
+     "Channel & Follow API",
+     "SQL: channels, follows, subs"
+    ],
+    [
+     "Channel & Follow API",
+     "Redis: live state, viewer counts"
+    ],
+    [
+     "Chat WebSocket servers",
+     "Chat moderation service"
+    ],
+    [
+     "Stream ingest",
+     "Event queue"
+    ],
+    [
+     "Event queue",
+     "Notification service"
+    ]
+   ],
+   "highlight": [
+    "Chat WebSocket servers"
+   ],
+   "caption": "5. Fan out to viewers",
+   "narration": "Every chat server with viewers of that channel receives it and pushes it to its local sockets, batching for huge channels."
+  },
+  {
    "kind": "bullets",
    "heading": "Deep dives",
    "bullets": [
     "Chat fan-out: clients hash to WebSocket servers; each server subscribes to the channel topic it has viewers for. A message is published once and each server pushes to its local sockets. For huge channels, batch messages every ~100 ms and sample or rate-limit sending.",
-    "Moderation: check bans and slow mode before publishing (cache them in Redis). Deletions are published as moderation events so clients remove messages.",
+    "Moderation: check bans and slow mode before publishing (cache them in Redis). Deletions are published as moderation events so clients remove messages."
+   ],
+   "narration": "Let's go deeper on one of the hard parts: Chat fan-out: clients hash to WebSocket servers; each server subscribes to the channel topic it has viewers for. A message is published once and each server pushes to its local sockets. For huge channels, batch messages every about 100 ms and sample or rate-limit sending. Moderation: check bans and slow mode before publishing (cache them in Redis). Deletions are published as moderation events so clients remove messages."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Deep dives (cont.)",
+   "bullets": [
     "Viewer count: each WS/edge server reports per-channel counts every few seconds; an aggregator sums them into Redis. Show approximate values.",
-    "Go-live notifications: an ingest event goes onto a queue; workers page through followers and send push/email in batches. Large channels take minutes, which is acceptable.",
+    "Go-live notifications: an ingest event goes onto a queue; workers page through followers and send push/email in batches. Large channels take minutes, which is acceptable."
+   ],
+   "narration": "Viewer count: each WS or edge server reports per-channel counts every few seconds; an aggregator sums them into Redis. Show approximate values. Go-live notifications: an ingest event goes onto a queue; workers page through followers and send push or email in batches. Large channels take minutes, which is acceptable."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Deep dives (cont.)",
+   "bullets": [
     "Subscriptions: require an idempotency key, call the payment provider, write the subscription in a transaction, then emit an event (badge in chat, emote unlock).",
     "Video: the API returns only a signed CDN playlist URL (HLS); the video bytes never go through this API."
    ],
-   "narration": "Let's go deeper on one of the hard parts: Chat fan-out: clients hash to WebSocket servers; each server subscribes to the channel topic it has viewers for. A message is published once and each server pushes to its local sockets. For huge channels, batch messages every about 100 ms and sample or rate-limit sending. Moderation: check bans and slow mode before publishing (cache them in Redis). Deletions are published as moderation events so clients remove messages. Viewer count: each WS or edge server reports per-channel counts every few seconds; an aggregator sums them into Redis. Show approximate values. Go-live notifications: an ingest event goes onto a queue; workers page through followers and send push or email in batches. Large channels take minutes, which is acceptable. Subscriptions: require an idempotency key, call the payment provider, write the subscription in a transaction, then emit an event (badge in chat, emote unlock). Video: the API returns only a signed CDN playlist URL (HLS); the video bytes never go through this API."
+   "narration": "Subscriptions: require an idempotency key, call the payment provider, write the subscription in a transaction, then emit an event (badge in chat, emote unlock). Video: the API returns only a signed CDN playlist URL (HLS); the video bytes never go through this API."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Key decisions",
+   "bullets": [
+    "Pub/sub per channel → publish once, fan out per server",
+    "Approximate viewer counts → cheap, a few seconds stale is fine",
+    "Strong consistency for subscriptions → money involved",
+    "API serves playback URLs only → video bytes go via CDN"
+   ],
+   "narration": "Let's pull together the key decisions. Pub or sub per channel, because publish once, fan out per server. Approximate viewer counts, because cheap, a few seconds stale is fine. Strong consistency for subscriptions, because money involved. API serves playback URLs only, because video bytes go via CDN."
   },
   {
    "kind": "bullets",

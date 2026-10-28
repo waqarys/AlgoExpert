@@ -47,6 +47,17 @@
    "narration": "Now some rough capacity estimates, which drive the design. Read-heavy (about 100:1); vote writes are the hottest write path."
   },
   {
+   "kind": "bullets",
+   "heading": "Capacity: worked out",
+   "bullets": [
+    "Read:write ≈ 100:1",
+    "Say 50M DAU × 20 votes = 1B votes/day",
+    "1B ÷ 86,400 ≈ 12k votes/s",
+    "Batching per post turns hot rows into 1 write/s"
+   ],
+   "narration": "Let's actually work the numbers. Reddit is read-heavy, roughly a hundred reads for every write. Assume fifty million daily users casting twenty votes each: a billion votes a day. That's about twelve thousand vote writes a second. Batching deltas per post turns thousands of updates on a hot post into about one write a second."
+  },
+  {
    "kind": "diagram",
    "heading": "High-level architecture",
    "edges": [
@@ -82,6 +93,201 @@
    "narration": "Here's the high-level architecture. Client connects to REST API. REST API connects to Subreddits and Posts and Comments, tree by parent id and Votes PK user,target. Votes PK user,target connects to Score aggregator. Score aggregator connects to Posts."
   },
   {
+   "kind": "diagram",
+   "heading": "Request flow: Upvote a post",
+   "edges": [
+    [
+     "Client",
+     "REST API"
+    ],
+    [
+     "REST API",
+     "Subreddits"
+    ],
+    [
+     "REST API",
+     "Posts"
+    ],
+    [
+     "REST API",
+     "Comments, tree by parent_id"
+    ],
+    [
+     "REST API",
+     "Votes PK user,target"
+    ],
+    [
+     "Votes PK user,target",
+     "Score aggregator"
+    ],
+    [
+     "Score aggregator",
+     "Posts"
+    ]
+   ],
+   "highlight": [
+    "Client"
+   ],
+   "caption": "1. User taps upvote",
+   "narration": "Let's follow an upvote. The client sends a PUT that sets this user's vote on the post to plus one."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Upvote a post",
+   "edges": [
+    [
+     "Client",
+     "REST API"
+    ],
+    [
+     "REST API",
+     "Subreddits"
+    ],
+    [
+     "REST API",
+     "Posts"
+    ],
+    [
+     "REST API",
+     "Comments, tree by parent_id"
+    ],
+    [
+     "REST API",
+     "Votes PK user,target"
+    ],
+    [
+     "Votes PK user,target",
+     "Score aggregator"
+    ],
+    [
+     "Score aggregator",
+     "Posts"
+    ]
+   ],
+   "highlight": [
+    "REST API"
+   ],
+   "caption": "2. API validates",
+   "narration": "The API authenticates the user and validates the target."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Upvote a post",
+   "edges": [
+    [
+     "Client",
+     "REST API"
+    ],
+    [
+     "REST API",
+     "Subreddits"
+    ],
+    [
+     "REST API",
+     "Posts"
+    ],
+    [
+     "REST API",
+     "Comments, tree by parent_id"
+    ],
+    [
+     "REST API",
+     "Votes PK user,target"
+    ],
+    [
+     "Votes PK user,target",
+     "Score aggregator"
+    ],
+    [
+     "Score aggregator",
+     "Posts"
+    ]
+   ],
+   "highlight": [
+    "Votes PK user,target"
+   ],
+   "caption": "3. Upsert the vote row",
+   "narration": "It upserts a row keyed by user and target, so repeating the request is harmless and a user can only vote once."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Upvote a post",
+   "edges": [
+    [
+     "Client",
+     "REST API"
+    ],
+    [
+     "REST API",
+     "Subreddits"
+    ],
+    [
+     "REST API",
+     "Posts"
+    ],
+    [
+     "REST API",
+     "Comments, tree by parent_id"
+    ],
+    [
+     "REST API",
+     "Votes PK user,target"
+    ],
+    [
+     "Votes PK user,target",
+     "Score aggregator"
+    ],
+    [
+     "Score aggregator",
+     "Posts"
+    ]
+   ],
+   "highlight": [
+    "Score aggregator"
+   ],
+   "caption": "4. Aggregate score changes",
+   "narration": "A score aggregator consumes vote changes and batches the deltas, so a viral post doesn't turn into a write hotspot."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Upvote a post",
+   "edges": [
+    [
+     "Client",
+     "REST API"
+    ],
+    [
+     "REST API",
+     "Subreddits"
+    ],
+    [
+     "REST API",
+     "Posts"
+    ],
+    [
+     "REST API",
+     "Comments, tree by parent_id"
+    ],
+    [
+     "REST API",
+     "Votes PK user,target"
+    ],
+    [
+     "Votes PK user,target",
+     "Score aggregator"
+    ],
+    [
+     "Score aggregator",
+     "Posts"
+    ]
+   ],
+   "highlight": [
+    "Posts"
+   ],
+   "caption": "5. Post score updated",
+   "narration": "The post's score is updated, and listings ranked by hot or top pick it up shortly after."
+  },
+  {
    "kind": "bullets",
    "heading": "Data model",
    "bullets": [
@@ -90,7 +296,7 @@
     "comment(id, post_id, parent_id, author_id, body, score, ...)",
     "vote(user_id, target_id, target_type, value in {-1,0,1})"
    ],
-   "narration": "Here is the data model. subreddit(id, name, description, created by). post(id, subreddit id, author id, title, body, score, comment count, created at, edited at, deleted at). comment(id, post id, parent id, author id, body, score, ). vote(user id, target id, target type, value in -1,0,1 )."
+   "narration": "Here is the data model. The subreddit record holds id, name, description, created by. The post record holds id, subreddit id, author id, title, body, score, comment count, created at, edited at, deleted at. The comment record holds id, post id, parent id, author id, body, score, . The vote record holds user id, target id, target type, value in -1,0,1 ."
   },
   {
    "kind": "code",
@@ -98,7 +304,7 @@
    "code": "GET    /v1/subreddits/{name}\nGET    /v1/subreddits/{name}/posts?sort=hot|new|top&cursor=..&limit=..\nPOST   /v1/subreddits/{name}/posts            {title, body}\nPATCH  /v1/posts/{postId}                     {body}\nDELETE /v1/posts/{postId}\nGET    /v1/posts/{postId}/comments?sort=..&depth=..&cursor=..\nPOST   /v1/posts/{postId}/comments            {parentId?, body}\nPUT    /v1/posts/{postId}/vote                {value: -1|0|1}\nPUT    /v1/comments/{commentId}/vote          {value}",
    "lang": "text",
    "font_size": 26,
-   "filename": "08_api.txt",
+   "filename": "14_api.txt",
    "narration": "The API. The main endpoints are: GET v1 subreddits by name; GET v1 subreddits by name posts with sort equals hot new top and cursor equals .. and limit equals ..; POST v1 subreddits by name posts; PATCH v1 posts by postId; DELETE v1 posts by postId; GET v1 posts by postId comments with sort equals .. and depth equals .. and cursor equals ..; POST v1 posts by postId comments; PUT v1 posts by postId vote. Each one is small, resource-oriented and easy to version."
   },
   {
@@ -124,6 +330,17 @@
     "Opaque cursors (score, id) rather than offsets so lists stay stable while new content arrives."
    ],
    "narration": "Deep dive: Pagination. Opaque cursors (score, id) rather than offsets so lists stay stable while new content arrives."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Key decisions",
+   "bullets": [
+    "PUT vote (idempotent) → safe retries, one vote per user",
+    "Cursor pagination → stable under inserts",
+    "Async score aggregation → avoids hot-row contention",
+    "Comments by parent_id → simple tree loading"
+   ],
+   "narration": "Let's pull together the key decisions. PUT vote (idempotent), because safe retries, one vote per user. Cursor pagination, because stable under inserts. Async score aggregation, because avoids hot-row contention. Comments by parent id, because simple tree loading."
   },
   {
    "kind": "bullets",

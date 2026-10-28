@@ -50,6 +50,17 @@
    "narration": "Now some rough capacity estimates, which drive the design. about 2B users, about 1B DAU, each opens feed about 10x per day to about 100k feed reads per s avg, about 300k peak. about 500M posts per day to about 6k writes per s. Average about 500 friends; celebrities millions of followers."
   },
   {
+   "kind": "bullets",
+   "heading": "Capacity: worked out",
+   "bullets": [
+    "1B DAU × 10 opens/day = 10B reads/day",
+    "10B ÷ 86,400 ≈ 115k reads/s; peak ~3× ≈ 350k/s",
+    "500M posts/day ≈ 6k writes/s",
+    "Fan-out: 6k/s × 500 friends ≈ 3M cache writes/s"
+   ],
+   "narration": "Let's actually work the numbers. A billion daily users each opening the feed ten times is ten billion reads a day. That's about a hundred fifteen thousand reads a second, and around three hundred fifty thousand at peak. Five hundred million posts a day is about six thousand writes a second. Fanning each out to five hundred friends means about three million cache writes a second, which is why celebrities are handled differently."
+  },
+  {
    "kind": "diagram",
    "heading": "High-level architecture",
    "edges": [
@@ -101,6 +112,336 @@
    "narration": "Here's the high-level architecture. Client connects to API. API connects to Post service and Feed service. Post service connects to Posts DB sharded by post id and Post-created stream. Post-created stream connects to Fan-out workers. Fan-out workers connects to Feed cache: user to post ids. Feed service connects to Feed cache: user to post ids and Ranking service and Posts DB sharded by post id. Social graph connects to Fan-out workers."
   },
   {
+   "kind": "diagram",
+   "heading": "Request flow: Open the feed",
+   "edges": [
+    [
+     "Client",
+     "API"
+    ],
+    [
+     "API",
+     "Post service"
+    ],
+    [
+     "Post service",
+     "Posts DB sharded by post_id"
+    ],
+    [
+     "Post service",
+     "Post-created stream"
+    ],
+    [
+     "Post-created stream",
+     "Fan-out workers"
+    ],
+    [
+     "Fan-out workers",
+     "Feed cache: user -> post ids"
+    ],
+    [
+     "API",
+     "Feed service"
+    ],
+    [
+     "Feed service",
+     "Feed cache: user -> post ids"
+    ],
+    [
+     "Feed service",
+     "Ranking service"
+    ],
+    [
+     "Feed service",
+     "Posts DB sharded by post_id"
+    ],
+    [
+     "Social graph",
+     "Fan-out workers"
+    ]
+   ],
+   "highlight": [
+    "Client"
+   ],
+   "caption": "1. User opens the app",
+   "narration": "Let's follow a feed load. The user opens the app and requests the first page of the feed."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Open the feed",
+   "edges": [
+    [
+     "Client",
+     "API"
+    ],
+    [
+     "API",
+     "Post service"
+    ],
+    [
+     "Post service",
+     "Posts DB sharded by post_id"
+    ],
+    [
+     "Post service",
+     "Post-created stream"
+    ],
+    [
+     "Post-created stream",
+     "Fan-out workers"
+    ],
+    [
+     "Fan-out workers",
+     "Feed cache: user -> post ids"
+    ],
+    [
+     "API",
+     "Feed service"
+    ],
+    [
+     "Feed service",
+     "Feed cache: user -> post ids"
+    ],
+    [
+     "Feed service",
+     "Ranking service"
+    ],
+    [
+     "Feed service",
+     "Posts DB sharded by post_id"
+    ],
+    [
+     "Social graph",
+     "Fan-out workers"
+    ]
+   ],
+   "highlight": [
+    "API"
+   ],
+   "caption": "2. API routes to feed service",
+   "narration": "The API authenticates and calls the feed service."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Open the feed",
+   "edges": [
+    [
+     "Client",
+     "API"
+    ],
+    [
+     "API",
+     "Post service"
+    ],
+    [
+     "Post service",
+     "Posts DB sharded by post_id"
+    ],
+    [
+     "Post service",
+     "Post-created stream"
+    ],
+    [
+     "Post-created stream",
+     "Fan-out workers"
+    ],
+    [
+     "Fan-out workers",
+     "Feed cache: user -> post ids"
+    ],
+    [
+     "API",
+     "Feed service"
+    ],
+    [
+     "Feed service",
+     "Feed cache: user -> post ids"
+    ],
+    [
+     "Feed service",
+     "Ranking service"
+    ],
+    [
+     "Feed service",
+     "Posts DB sharded by post_id"
+    ],
+    [
+     "Social graph",
+     "Fan-out workers"
+    ]
+   ],
+   "highlight": [
+    "Feed service"
+   ],
+   "caption": "3. Read precomputed post IDs",
+   "narration": "The feed service reads the user's precomputed list of post IDs from the feed cache, built earlier by fan-out workers."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Open the feed",
+   "edges": [
+    [
+     "Client",
+     "API"
+    ],
+    [
+     "API",
+     "Post service"
+    ],
+    [
+     "Post service",
+     "Posts DB sharded by post_id"
+    ],
+    [
+     "Post service",
+     "Post-created stream"
+    ],
+    [
+     "Post-created stream",
+     "Fan-out workers"
+    ],
+    [
+     "Fan-out workers",
+     "Feed cache: user -> post ids"
+    ],
+    [
+     "API",
+     "Feed service"
+    ],
+    [
+     "Feed service",
+     "Feed cache: user -> post ids"
+    ],
+    [
+     "Feed service",
+     "Ranking service"
+    ],
+    [
+     "Feed service",
+     "Posts DB sharded by post_id"
+    ],
+    [
+     "Social graph",
+     "Fan-out workers"
+    ]
+   ],
+   "highlight": [
+    "Feed cache: user -> post ids"
+   ],
+   "caption": "4. Cache returns candidates",
+   "narration": "The cache returns a few hundred candidate post IDs. Posts from celebrities are pulled at read time instead and merged in."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Open the feed",
+   "edges": [
+    [
+     "Client",
+     "API"
+    ],
+    [
+     "API",
+     "Post service"
+    ],
+    [
+     "Post service",
+     "Posts DB sharded by post_id"
+    ],
+    [
+     "Post service",
+     "Post-created stream"
+    ],
+    [
+     "Post-created stream",
+     "Fan-out workers"
+    ],
+    [
+     "Fan-out workers",
+     "Feed cache: user -> post ids"
+    ],
+    [
+     "API",
+     "Feed service"
+    ],
+    [
+     "Feed service",
+     "Feed cache: user -> post ids"
+    ],
+    [
+     "Feed service",
+     "Ranking service"
+    ],
+    [
+     "Feed service",
+     "Posts DB sharded by post_id"
+    ],
+    [
+     "Social graph",
+     "Fan-out workers"
+    ]
+   ],
+   "highlight": [
+    "Ranking service"
+   ],
+   "caption": "5. Rank candidates",
+   "narration": "The ranking service scores the candidates for this user, using engagement predictions and freshness."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Open the feed",
+   "edges": [
+    [
+     "Client",
+     "API"
+    ],
+    [
+     "API",
+     "Post service"
+    ],
+    [
+     "Post service",
+     "Posts DB sharded by post_id"
+    ],
+    [
+     "Post service",
+     "Post-created stream"
+    ],
+    [
+     "Post-created stream",
+     "Fan-out workers"
+    ],
+    [
+     "Fan-out workers",
+     "Feed cache: user -> post ids"
+    ],
+    [
+     "API",
+     "Feed service"
+    ],
+    [
+     "Feed service",
+     "Feed cache: user -> post ids"
+    ],
+    [
+     "Feed service",
+     "Ranking service"
+    ],
+    [
+     "Feed service",
+     "Posts DB sharded by post_id"
+    ],
+    [
+     "Social graph",
+     "Fan-out workers"
+    ]
+   ],
+   "highlight": [
+    "Posts DB sharded by post_id"
+   ],
+   "caption": "6. Hydrate the top posts",
+   "narration": "Finally we hydrate the top posts with their content from the posts store and return the page."
+  },
+  {
    "kind": "bullets",
    "heading": "Data model",
    "bullets": [
@@ -108,7 +449,7 @@
     "edges(user_id, friend_id)",
     "feed_cache: user_id -> list of (post_id, score) capped ~500"
    ],
-   "narration": "Here is the data model. posts(id, author id, body, media urls, created at). edges(user id, friend id). feed cache: user id to list of (post id, score) capped about 500."
+   "narration": "Here is the data model. The posts record holds id, author id, body, media urls, created at. The edges record holds user id, friend id. feed cache: user id to list of (post id, score) capped about 500."
   },
   {
    "kind": "code",
@@ -116,7 +457,7 @@
    "code": "POST /posts {body, media}\nGET  /feed?cursor=...&limit=20 -> posts[], nextCursor",
    "lang": "text",
    "font_size": 26,
-   "filename": "08_api.txt",
+   "filename": "15_api.txt",
    "narration": "The API. The main endpoints are: POST posts; GET feed with cursor equals and limit equals 20. Each one is small, resource-oriented and easy to version."
   },
   {
@@ -143,6 +484,17 @@
     "Posts in a sharded KV/SQL store; media in blob store + CDN; feed cache in Redis/Memcache clusters sharded by user_id, rebuildable from source."
    ],
    "narration": "Deep dive: Storage. Posts in a sharded KV or SQL store; media in blob store plus CDN; feed cache in Redis or Memcache clusters sharded by user id, rebuildable from source."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Key decisions",
+   "bullets": [
+    "Fan-out on write for most users → fast reads",
+    "Fan-out on read for celebrities → avoids millions of writes per post",
+    "Feed cache stores IDs only → small, cheap to update",
+    "Separate ranking service → iterate on models independently"
+   ],
+   "narration": "Let's pull together the key decisions. Fan-out on write for most users, because fast reads. Fan-out on read for celebrities, because avoids millions of writes per post. Feed cache stores IDs only, because small, cheap to update. Separate ranking service, because iterate on models independently."
   },
   {
    "kind": "bullets",

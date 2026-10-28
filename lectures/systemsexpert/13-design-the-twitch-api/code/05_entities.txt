@@ -1,6 +1,0 @@
-Channel   { id, ownerUserId, title, gameId, isLive, streamStartedAt }
-User      { id, username, ... }
-Follow    { userId, channelId, createdAt }
-Subscription { id, userId, channelId, tier, status, renewsAt }
-ChatMessage  { id, channelId, userId, text, createdAt }
-Ban       { channelId, userId, expiresAt? }

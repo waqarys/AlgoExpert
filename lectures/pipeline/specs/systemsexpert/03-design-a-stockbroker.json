@@ -49,6 +49,17 @@
    "narration": "Now some rough capacity estimates, which drive the design. about 10M users, about 20M orders per day, peaks at open or close about 2k orders per s. Each order about 1 KB to tiny storage; correctness dominates design."
   },
   {
+   "kind": "bullets",
+   "heading": "Capacity: worked out",
+   "bullets": [
+    "20M orders/day ÷ 86,400 s ≈ 230 orders/s",
+    "Market open/close spikes ~10× → ~2k orders/s",
+    "1 KB/order × 20M ≈ 20 GB/day",
+    "Storage is small; correctness dominates"
+   ],
+   "narration": "Let's actually work the numbers. Twenty million orders a day divided by eighty-six thousand seconds is about two hundred thirty orders a second. Activity spikes about ten times at the open and close, so design for two thousand orders a second. At a kilobyte each that's only about twenty gigabytes a day. Storage is trivial; the real challenge is correctness and never double-spending."
+  },
+  {
    "kind": "diagram",
    "heading": "High-level architecture",
    "edges": [
@@ -92,6 +103,288 @@
    "narration": "Here's the high-level architecture. App connects to API gateway. API gateway connects to Order service. Order service connects to Orders plus ledger DB, sharded by user and Outbound order queue and Push notifications / websocket. Outbound order queue connects to Exchange connector. Exchange connector connects to Exchange and Fills queue. Fills queue connects to Order service."
   },
   {
+   "kind": "diagram",
+   "heading": "Request flow: Place a buy order",
+   "edges": [
+    [
+     "App",
+     "API gateway"
+    ],
+    [
+     "API gateway",
+     "Order service"
+    ],
+    [
+     "Order service",
+     "Orders + ledger DB, sharded by user"
+    ],
+    [
+     "Order service",
+     "Outbound order queue"
+    ],
+    [
+     "Outbound order queue",
+     "Exchange connector"
+    ],
+    [
+     "Exchange connector",
+     "Exchange"
+    ],
+    [
+     "Exchange connector",
+     "Fills queue"
+    ],
+    [
+     "Fills queue",
+     "Order service"
+    ],
+    [
+     "Order service",
+     "Push notifications / websocket"
+    ]
+   ],
+   "highlight": [
+    "App"
+   ],
+   "caption": "1. User taps Buy",
+   "narration": "Let's follow a buy order. The user taps buy for ten shares, and the app sends the order with an idempotency key."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Place a buy order",
+   "edges": [
+    [
+     "App",
+     "API gateway"
+    ],
+    [
+     "API gateway",
+     "Order service"
+    ],
+    [
+     "Order service",
+     "Orders + ledger DB, sharded by user"
+    ],
+    [
+     "Order service",
+     "Outbound order queue"
+    ],
+    [
+     "Outbound order queue",
+     "Exchange connector"
+    ],
+    [
+     "Exchange connector",
+     "Exchange"
+    ],
+    [
+     "Exchange connector",
+     "Fills queue"
+    ],
+    [
+     "Fills queue",
+     "Order service"
+    ],
+    [
+     "Order service",
+     "Push notifications / websocket"
+    ]
+   ],
+   "highlight": [
+    "API gateway"
+   ],
+   "caption": "2. Gateway authenticates",
+   "narration": "The gateway authenticates the user and routes the request to the order service."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Place a buy order",
+   "edges": [
+    [
+     "App",
+     "API gateway"
+    ],
+    [
+     "API gateway",
+     "Order service"
+    ],
+    [
+     "Order service",
+     "Orders + ledger DB, sharded by user"
+    ],
+    [
+     "Order service",
+     "Outbound order queue"
+    ],
+    [
+     "Outbound order queue",
+     "Exchange connector"
+    ],
+    [
+     "Exchange connector",
+     "Exchange"
+    ],
+    [
+     "Exchange connector",
+     "Fills queue"
+    ],
+    [
+     "Fills queue",
+     "Order service"
+    ],
+    [
+     "Order service",
+     "Push notifications / websocket"
+    ]
+   ],
+   "highlight": [
+    "Order service"
+   ],
+   "caption": "3. Check and reserve funds",
+   "narration": "The order service checks buying power and, in one transaction, writes the order and reserves the cash in the ledger."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Place a buy order",
+   "edges": [
+    [
+     "App",
+     "API gateway"
+    ],
+    [
+     "API gateway",
+     "Order service"
+    ],
+    [
+     "Order service",
+     "Orders + ledger DB, sharded by user"
+    ],
+    [
+     "Order service",
+     "Outbound order queue"
+    ],
+    [
+     "Outbound order queue",
+     "Exchange connector"
+    ],
+    [
+     "Exchange connector",
+     "Exchange"
+    ],
+    [
+     "Exchange connector",
+     "Fills queue"
+    ],
+    [
+     "Fills queue",
+     "Order service"
+    ],
+    [
+     "Order service",
+     "Push notifications / websocket"
+    ]
+   ],
+   "highlight": [
+    "Outbound order queue"
+   ],
+   "caption": "4. Order queued for the exchange",
+   "narration": "The order goes onto a durable outbound queue, so nothing is lost if the connector restarts."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Place a buy order",
+   "edges": [
+    [
+     "App",
+     "API gateway"
+    ],
+    [
+     "API gateway",
+     "Order service"
+    ],
+    [
+     "Order service",
+     "Orders + ledger DB, sharded by user"
+    ],
+    [
+     "Order service",
+     "Outbound order queue"
+    ],
+    [
+     "Outbound order queue",
+     "Exchange connector"
+    ],
+    [
+     "Exchange connector",
+     "Exchange"
+    ],
+    [
+     "Exchange connector",
+     "Fills queue"
+    ],
+    [
+     "Fills queue",
+     "Order service"
+    ],
+    [
+     "Order service",
+     "Push notifications / websocket"
+    ]
+   ],
+   "highlight": [
+    "Exchange connector"
+   ],
+   "caption": "5. Connector sends to the exchange",
+   "narration": "The exchange connector sends it to the exchange and receives acknowledgements and fills."
+  },
+  {
+   "kind": "diagram",
+   "heading": "Request flow: Place a buy order",
+   "edges": [
+    [
+     "App",
+     "API gateway"
+    ],
+    [
+     "API gateway",
+     "Order service"
+    ],
+    [
+     "Order service",
+     "Orders + ledger DB, sharded by user"
+    ],
+    [
+     "Order service",
+     "Outbound order queue"
+    ],
+    [
+     "Outbound order queue",
+     "Exchange connector"
+    ],
+    [
+     "Exchange connector",
+     "Exchange"
+    ],
+    [
+     "Exchange connector",
+     "Fills queue"
+    ],
+    [
+     "Fills queue",
+     "Order service"
+    ],
+    [
+     "Order service",
+     "Push notifications / websocket"
+    ]
+   ],
+   "highlight": [
+    "Fills queue"
+   ],
+   "caption": "6. Fills update the ledger",
+   "narration": "Fills flow back through a queue to the order service, which updates the position and ledger, and the user gets a push notification."
+  },
+  {
    "kind": "bullets",
    "heading": "Data model",
    "bullets": [
@@ -99,7 +392,7 @@
     "ledger_entries(id, user_id, amount, currency, reason, order_id) - append-only, balance = sum",
     "positions(user_id, symbol, qty) derived from fills"
    ],
-   "narration": "Here is the data model. orders(id, user id, idempotency key, symbol, side, type, qty, limit price, status, exchange order id). ledger entries(id, user id, amount, currency, reason, order id) - append-only, balance equals sum. positions(user id, symbol, qty) derived from fills."
+   "narration": "Here is the data model. The orders record holds id, user id, idempotency key, symbol, side, type, qty, limit price, status, exchange order id. The ledger entries record holds id, user id, amount, currency, reason, order id. - append-only, balance equals sum. The positions record holds user id, symbol, qty. derived from fills."
   },
   {
    "kind": "code",
@@ -107,7 +400,7 @@
    "code": "POST   /orders  {idempotencyKey, symbol, side, qty, type, limitPrice?} -> order\nDELETE /orders/{id}\nGET    /orders?status=open\nGET    /portfolio -> balances, positions",
    "lang": "text",
    "font_size": 26,
-   "filename": "08_api.txt",
+   "filename": "15_api.txt",
    "narration": "The API. The main endpoints are: POST orders; DELETE orders by id; GET orders with status equals open; GET portfolio. Each one is small, resource-oriented and easy to version."
   },
   {
@@ -134,6 +427,17 @@
     "Shard by user_id; exchange connectors partitioned by symbol range; keep hot reads (portfolio) in a cache invalidated by fills."
    ],
    "narration": "Deep dive: Scaling. Shard by user id; exchange connectors partitioned by symbol range; keep hot reads (portfolio) in a cache invalidated by fills."
+  },
+  {
+   "kind": "bullets",
+   "heading": "Key decisions",
+   "bullets": [
+    "Ledger with double-entry → auditable, never lose money",
+    "Idempotency keys → safe client retries",
+    "Queues around the exchange → decouple from exchange outages",
+    "Shard by user → keeps a user's orders in one place"
+   ],
+   "narration": "Let's pull together the key decisions. Ledger with double-entry, because auditable, never lose money. Idempotency keys, because safe client retries. Queues around the exchange, because decouple from exchange outages. Shard by user, because keeps a user's orders in one place."
   },
   {
    "kind": "bullets",
