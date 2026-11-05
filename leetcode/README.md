@@ -2,7 +2,7 @@
 
 Interview-focused LeetCode set: the **NeetCode 150** list (a superset of Blind 75), solved in Java 17 with
 JUnit 5 tests, plus an explanation, video script, and 1920x1080 dark slides for every problem.
-**121 problems done so far.**
+**135 problems done so far.**
 
 The problem list comes from [neetcode-gh/leetcode](https://github.com/neetcode-gh/leetcode) (MIT).
 All code, explanations and slides here are original.
@@ -208,3 +208,27 @@ All code, explanations and slides here are original.
 | 0494. Target Sum | Medium | [LeetCode](https://leetcode.com/problems/target-sum/) | [Explanation](content/0494-target-sum/explanation.md) | [Slides PDF](content/0494-target-sum/slides.pdf) · [PNGs](content/0494-target-sum/slides/) | [Java](java/src/main/java/dp2/TargetSum.java) |
 | 0518. Coin Change II | Medium | [LeetCode](https://leetcode.com/problems/coin-change-ii/) | [Explanation](content/0518-coin-change-ii/explanation.md) | [Slides PDF](content/0518-coin-change-ii/slides.pdf) · [PNGs](content/0518-coin-change-ii/slides/) | [Java](java/src/main/java/dp2/CoinChangeII.java) |
 | 1143. Longest Common Subsequence | Medium | [LeetCode](https://leetcode.com/problems/longest-common-subsequence/) | [Explanation](content/1143-longest-common-subsequence/explanation.md) | [Slides PDF](content/1143-longest-common-subsequence/slides.pdf) · [PNGs](content/1143-longest-common-subsequence/slides/) | [Java](java/src/main/java/dp2/LongestCommonSubsequence.java) |
+
+## Greedy (8)
+
+| Problem | Difficulty | Link | Explanation | Slides | Code |
+|---|---|---|---|---|---|
+| 0045. Jump Game II | Medium | [LeetCode](https://leetcode.com/problems/jump-game-ii/) | [Explanation](content/0045-jump-game-ii/explanation.md) | [Slides PDF](content/0045-jump-game-ii/slides.pdf) · [PNGs](content/0045-jump-game-ii/slides/) | [Java](java/src/main/java/greedy/JumpGameII.java) |
+| 0053. Maximum Subarray | Medium | [LeetCode](https://leetcode.com/problems/maximum-subarray/) | [Explanation](content/0053-maximum-subarray/explanation.md) | [Slides PDF](content/0053-maximum-subarray/slides.pdf) · [PNGs](content/0053-maximum-subarray/slides/) | [Java](java/src/main/java/greedy/MaximumSubarray.java) |
+| 0055. Jump Game | Medium | [LeetCode](https://leetcode.com/problems/jump-game/) | [Explanation](content/0055-jump-game/explanation.md) | [Slides PDF](content/0055-jump-game/slides.pdf) · [PNGs](content/0055-jump-game/slides/) | [Java](java/src/main/java/greedy/JumpGame.java) |
+| 0134. Gas Station | Medium | [LeetCode](https://leetcode.com/problems/gas-station/) | [Explanation](content/0134-gas-station/explanation.md) | [Slides PDF](content/0134-gas-station/slides.pdf) · [PNGs](content/0134-gas-station/slides/) | [Java](java/src/main/java/greedy/GasStation.java) |
+| 0678. Valid Parenthesis String | Medium | [LeetCode](https://leetcode.com/problems/valid-parenthesis-string/) | [Explanation](content/0678-valid-parenthesis-string/explanation.md) | [Slides PDF](content/0678-valid-parenthesis-string/slides.pdf) · [PNGs](content/0678-valid-parenthesis-string/slides/) | [Java](java/src/main/java/greedy/ValidParenthesisString.java) |
+| 0763. Partition Labels | Medium | [LeetCode](https://leetcode.com/problems/partition-labels/) | [Explanation](content/0763-partition-labels/explanation.md) | [Slides PDF](content/0763-partition-labels/slides.pdf) · [PNGs](content/0763-partition-labels/slides/) | [Java](java/src/main/java/greedy/PartitionLabels.java) |
+| 0846. Hand of Straights | Medium | [LeetCode](https://leetcode.com/problems/hand-of-straights/) | [Explanation](content/0846-hand-of-straights/explanation.md) | [Slides PDF](content/0846-hand-of-straights/slides.pdf) · [PNGs](content/0846-hand-of-straights/slides/) | [Java](java/src/main/java/greedy/HandOfStraights.java) |
+| 1899. Merge Triplets to Form Target Triplet | Medium | [LeetCode](https://leetcode.com/problems/merge-triplets-to-form-target-triplet/) | [Explanation](content/1899-merge-triplets-to-form-target-triplet/explanation.md) | [Slides PDF](content/1899-merge-triplets-to-form-target-triplet/slides.pdf) · [PNGs](content/1899-merge-triplets-to-form-target-triplet/slides/) | [Java](java/src/main/java/greedy/MergeTripletsToFormTarget.java) |
+
+## Intervals (6)
+
+| Problem | Difficulty | Link | Explanation | Slides | Code |
+|---|---|---|---|---|---|
+| 0056. Merge Intervals | Medium | [LeetCode](https://leetcode.com/problems/merge-intervals/) | [Explanation](content/0056-merge-intervals/explanation.md) | [Slides PDF](content/0056-merge-intervals/slides.pdf) · [PNGs](content/0056-merge-intervals/slides/) | [Java](java/src/main/java/intervals/MergeIntervals.java) |
+| 0057. Insert Interval | Medium | [LeetCode](https://leetcode.com/problems/insert-interval/) | [Explanation](content/0057-insert-interval/explanation.md) | [Slides PDF](content/0057-insert-interval/slides.pdf) · [PNGs](content/0057-insert-interval/slides/) | [Java](java/src/main/java/intervals/InsertInterval.java) |
+| 0252. Meeting Rooms | Easy | [LeetCode](https://leetcode.com/problems/meeting-rooms/) | [Explanation](content/0252-meeting-rooms/explanation.md) | [Slides PDF](content/0252-meeting-rooms/slides.pdf) · [PNGs](content/0252-meeting-rooms/slides/) | [Java](java/src/main/java/intervals/MeetingRooms.java) |
+| 0253. Meeting Rooms II | Medium | [LeetCode](https://leetcode.com/problems/meeting-rooms-ii/) | [Explanation](content/0253-meeting-rooms-ii/explanation.md) | [Slides PDF](content/0253-meeting-rooms-ii/slides.pdf) · [PNGs](content/0253-meeting-rooms-ii/slides/) | [Java](java/src/main/java/intervals/MeetingRoomsII.java) |
+| 0435. Non-overlapping Intervals | Medium | [LeetCode](https://leetcode.com/problems/non-overlapping-intervals/) | [Explanation](content/0435-non-overlapping-intervals/explanation.md) | [Slides PDF](content/0435-non-overlapping-intervals/slides.pdf) · [PNGs](content/0435-non-overlapping-intervals/slides/) | [Java](java/src/main/java/intervals/NonOverlappingIntervals.java) |
+| 1851. Minimum Interval to Include Each Query | Hard | [LeetCode](https://leetcode.com/problems/minimum-interval-to-include-each-query/) | [Explanation](content/1851-minimum-interval-to-include-each-query/explanation.md) | [Slides PDF](content/1851-minimum-interval-to-include-each-query/slides.pdf) · [PNGs](content/1851-minimum-interval-to-include-each-query/slides/) | [Java](java/src/main/java/intervals/MinimumIntervalToIncludeEachQuery.java) |
