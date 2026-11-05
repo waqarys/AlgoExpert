@@ -2,7 +2,7 @@
 
 Interview-focused LeetCode set: the **NeetCode 150** list (a superset of Blind 75), solved in Java 17 with
 JUnit 5 tests, plus an explanation, video script, and 1920x1080 dark slides for every problem.
-**63 problems done so far.**
+**79 problems done so far.**
 
 The problem list comes from [neetcode-gh/leetcode](https://github.com/neetcode-gh/leetcode) (MIT).
 All code, explanations and slides here are original.
@@ -120,3 +120,29 @@ All code, explanations and slides here are original.
 | 0208. Implement Trie (Prefix Tree) | Medium | [LeetCode](https://leetcode.com/problems/implement-trie-prefix-tree/) | [Explanation](content/0208-implement-trie-prefix-tree/explanation.md) | [Slides PDF](content/0208-implement-trie-prefix-tree/slides.pdf) · [PNGs](content/0208-implement-trie-prefix-tree/slides/) | [Java](java/src/main/java/tries/Trie.java) |
 | 0211. Design Add and Search Words Data Structure | Medium | [LeetCode](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | [Explanation](content/0211-design-add-and-search-words-data-structure/explanation.md) | [Slides PDF](content/0211-design-add-and-search-words-data-structure/slides.pdf) · [PNGs](content/0211-design-add-and-search-words-data-structure/slides/) | [Java](java/src/main/java/tries/WordDictionary.java) |
 | 0212. Word Search II | Hard | [LeetCode](https://leetcode.com/problems/word-search-ii/) | [Explanation](content/0212-word-search-ii/explanation.md) | [Slides PDF](content/0212-word-search-ii/slides.pdf) · [PNGs](content/0212-word-search-ii/slides/) | [Java](java/src/main/java/tries/WordSearchII.java) |
+
+## Heap / Priority Queue (7)
+
+| Problem | Difficulty | Link | Explanation | Slides | Code |
+|---|---|---|---|---|---|
+| 0215. Kth Largest Element in an Array | Medium | [LeetCode](https://leetcode.com/problems/kth-largest-element-in-an-array/) | [Explanation](content/0215-kth-largest-element-in-an-array/explanation.md) | [Slides PDF](content/0215-kth-largest-element-in-an-array/slides.pdf) · [PNGs](content/0215-kth-largest-element-in-an-array/slides/) | [Java](java/src/main/java/heap/KthLargestElementInArray.java) |
+| 0295. Find Median from Data Stream | Hard | [LeetCode](https://leetcode.com/problems/find-median-from-data-stream/) | [Explanation](content/0295-find-median-from-data-stream/explanation.md) | [Slides PDF](content/0295-find-median-from-data-stream/slides.pdf) · [PNGs](content/0295-find-median-from-data-stream/slides/) | [Java](java/src/main/java/heap/MedianFinder.java) |
+| 0355. Design Twitter | Medium | [LeetCode](https://leetcode.com/problems/design-twitter/) | [Explanation](content/0355-design-twitter/explanation.md) | [Slides PDF](content/0355-design-twitter/slides.pdf) · [PNGs](content/0355-design-twitter/slides/) | [Java](java/src/main/java/heap/Twitter.java) |
+| 0621. Task Scheduler | Medium | [LeetCode](https://leetcode.com/problems/task-scheduler/) | [Explanation](content/0621-task-scheduler/explanation.md) | [Slides PDF](content/0621-task-scheduler/slides.pdf) · [PNGs](content/0621-task-scheduler/slides/) | [Java](java/src/main/java/heap/TaskScheduler.java) |
+| 0703. Kth Largest Element in a Stream | Easy | [LeetCode](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | [Explanation](content/0703-kth-largest-element-in-a-stream/explanation.md) | [Slides PDF](content/0703-kth-largest-element-in-a-stream/slides.pdf) · [PNGs](content/0703-kth-largest-element-in-a-stream/slides/) | [Java](java/src/main/java/heap/KthLargest.java) |
+| 0973. K Closest Points to Origin | Medium | [LeetCode](https://leetcode.com/problems/k-closest-points-to-origin/) | [Explanation](content/0973-k-closest-points-to-origin/explanation.md) | [Slides PDF](content/0973-k-closest-points-to-origin/slides.pdf) · [PNGs](content/0973-k-closest-points-to-origin/slides/) | [Java](java/src/main/java/heap/KClosestPointsToOrigin.java) |
+| 1046. Last Stone Weight | Easy | [LeetCode](https://leetcode.com/problems/last-stone-weight/) | [Explanation](content/1046-last-stone-weight/explanation.md) | [Slides PDF](content/1046-last-stone-weight/slides.pdf) · [PNGs](content/1046-last-stone-weight/slides/) | [Java](java/src/main/java/heap/LastStoneWeight.java) |
+
+## Backtracking (9)
+
+| Problem | Difficulty | Link | Explanation | Slides | Code |
+|---|---|---|---|---|---|
+| 0017. Letter Combinations of a Phone Number | Medium | [LeetCode](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) | [Explanation](content/0017-letter-combinations-of-a-phone-number/explanation.md) | [Slides PDF](content/0017-letter-combinations-of-a-phone-number/slides.pdf) · [PNGs](content/0017-letter-combinations-of-a-phone-number/slides/) | [Java](java/src/main/java/backtracking/LetterCombinationsOfPhoneNumber.java) |
+| 0039. Combination Sum | Medium | [LeetCode](https://leetcode.com/problems/combination-sum/) | [Explanation](content/0039-combination-sum/explanation.md) | [Slides PDF](content/0039-combination-sum/slides.pdf) · [PNGs](content/0039-combination-sum/slides/) | [Java](java/src/main/java/backtracking/CombinationSum.java) |
+| 0040. Combination Sum II | Medium | [LeetCode](https://leetcode.com/problems/combination-sum-ii/) | [Explanation](content/0040-combination-sum-ii/explanation.md) | [Slides PDF](content/0040-combination-sum-ii/slides.pdf) · [PNGs](content/0040-combination-sum-ii/slides/) | [Java](java/src/main/java/backtracking/CombinationSumII.java) |
+| 0046. Permutations | Medium | [LeetCode](https://leetcode.com/problems/permutations/) | [Explanation](content/0046-permutations/explanation.md) | [Slides PDF](content/0046-permutations/slides.pdf) · [PNGs](content/0046-permutations/slides/) | [Java](java/src/main/java/backtracking/Permutations.java) |
+| 0051. N-Queens | Hard | [LeetCode](https://leetcode.com/problems/n-queens/) | [Explanation](content/0051-n-queens/explanation.md) | [Slides PDF](content/0051-n-queens/slides.pdf) · [PNGs](content/0051-n-queens/slides/) | [Java](java/src/main/java/backtracking/NQueens.java) |
+| 0078. Subsets | Medium | [LeetCode](https://leetcode.com/problems/subsets/) | [Explanation](content/0078-subsets/explanation.md) | [Slides PDF](content/0078-subsets/slides.pdf) · [PNGs](content/0078-subsets/slides/) | [Java](java/src/main/java/backtracking/Subsets.java) |
+| 0079. Word Search | Medium | [LeetCode](https://leetcode.com/problems/word-search/) | [Explanation](content/0079-word-search/explanation.md) | [Slides PDF](content/0079-word-search/slides.pdf) · [PNGs](content/0079-word-search/slides/) | [Java](java/src/main/java/backtracking/WordSearch.java) |
+| 0090. Subsets II | Medium | [LeetCode](https://leetcode.com/problems/subsets-ii/) | [Explanation](content/0090-subsets-ii/explanation.md) | [Slides PDF](content/0090-subsets-ii/slides.pdf) · [PNGs](content/0090-subsets-ii/slides/) | [Java](java/src/main/java/backtracking/SubsetsII.java) |
+| 0131. Palindrome Partitioning | Medium | [LeetCode](https://leetcode.com/problems/palindrome-partitioning/) | [Explanation](content/0131-palindrome-partitioning/explanation.md) | [Slides PDF](content/0131-palindrome-partitioning/slides.pdf) · [PNGs](content/0131-palindrome-partitioning/slides/) | [Java](java/src/main/java/backtracking/PalindromePartitioning.java) |
