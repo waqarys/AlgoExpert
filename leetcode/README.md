@@ -2,7 +2,7 @@
 
 Interview-focused LeetCode set: the **NeetCode 150** list (a superset of Blind 75), solved in Java 17 with
 JUnit 5 tests, plus an explanation, video script, and 1920x1080 dark slides for every problem.
-**20 problems done so far.**
+**34 problems done so far.**
 
 The problem list comes from [neetcode-gh/leetcode](https://github.com/neetcode-gh/leetcode) (MIT).
 All code, explanations and slides here are original.
@@ -52,3 +52,27 @@ All code, explanations and slides here are original.
 | 0239. Sliding Window Maximum | Hard | [LeetCode](https://leetcode.com/problems/sliding-window-maximum/) | [Explanation](content/0239-sliding-window-maximum/explanation.md) | [Slides PDF](content/0239-sliding-window-maximum/slides.pdf) · [PNGs](content/0239-sliding-window-maximum/slides/) | [Java](java/src/main/java/slidingwindow/SlidingWindowMaximum.java) |
 | 0424. Longest Repeating Character Replacement | Medium | [LeetCode](https://leetcode.com/problems/longest-repeating-character-replacement/) | [Explanation](content/0424-longest-repeating-character-replacement/explanation.md) | [Slides PDF](content/0424-longest-repeating-character-replacement/slides.pdf) · [PNGs](content/0424-longest-repeating-character-replacement/slides/) | [Java](java/src/main/java/slidingwindow/LongestRepeatingCharacterReplacement.java) |
 | 0567. Permutation in String | Medium | [LeetCode](https://leetcode.com/problems/permutation-in-string/) | [Explanation](content/0567-permutation-in-string/explanation.md) | [Slides PDF](content/0567-permutation-in-string/slides.pdf) · [PNGs](content/0567-permutation-in-string/slides/) | [Java](java/src/main/java/slidingwindow/PermutationInString.java) |
+
+## Stack (7)
+
+| Problem | Difficulty | Link | Explanation | Slides | Code |
+|---|---|---|---|---|---|
+| 0020. Valid Parentheses | Easy | [LeetCode](https://leetcode.com/problems/valid-parentheses/) | [Explanation](content/0020-valid-parentheses/explanation.md) | [Slides PDF](content/0020-valid-parentheses/slides.pdf) · [PNGs](content/0020-valid-parentheses/slides/) | [Java](java/src/main/java/stack/ValidParentheses.java) |
+| 0022. Generate Parentheses | Medium | [LeetCode](https://leetcode.com/problems/generate-parentheses/) | [Explanation](content/0022-generate-parentheses/explanation.md) | [Slides PDF](content/0022-generate-parentheses/slides.pdf) · [PNGs](content/0022-generate-parentheses/slides/) | [Java](java/src/main/java/stack/GenerateParentheses.java) |
+| 0084. Largest Rectangle in Histogram | Hard | [LeetCode](https://leetcode.com/problems/largest-rectangle-in-histogram/) | [Explanation](content/0084-largest-rectangle-in-histogram/explanation.md) | [Slides PDF](content/0084-largest-rectangle-in-histogram/slides.pdf) · [PNGs](content/0084-largest-rectangle-in-histogram/slides/) | [Java](java/src/main/java/stack/LargestRectangleInHistogram.java) |
+| 0150. Evaluate Reverse Polish Notation | Medium | [LeetCode](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | [Explanation](content/0150-evaluate-reverse-polish-notation/explanation.md) | [Slides PDF](content/0150-evaluate-reverse-polish-notation/slides.pdf) · [PNGs](content/0150-evaluate-reverse-polish-notation/slides/) | [Java](java/src/main/java/stack/EvaluateReversePolishNotation.java) |
+| 0155. Min Stack | Medium | [LeetCode](https://leetcode.com/problems/min-stack/) | [Explanation](content/0155-min-stack/explanation.md) | [Slides PDF](content/0155-min-stack/slides.pdf) · [PNGs](content/0155-min-stack/slides/) | [Java](java/src/main/java/stack/MinStack.java) |
+| 0739. Daily Temperatures | Medium | [LeetCode](https://leetcode.com/problems/daily-temperatures/) | [Explanation](content/0739-daily-temperatures/explanation.md) | [Slides PDF](content/0739-daily-temperatures/slides.pdf) · [PNGs](content/0739-daily-temperatures/slides/) | [Java](java/src/main/java/stack/DailyTemperatures.java) |
+| 0853. Car Fleet | Medium | [LeetCode](https://leetcode.com/problems/car-fleet/) | [Explanation](content/0853-car-fleet/explanation.md) | [Slides PDF](content/0853-car-fleet/slides.pdf) · [PNGs](content/0853-car-fleet/slides/) | [Java](java/src/main/java/stack/CarFleet.java) |
+
+## Binary Search (7)
+
+| Problem | Difficulty | Link | Explanation | Slides | Code |
+|---|---|---|---|---|---|
+| 0004. Median of Two Sorted Arrays | Hard | [LeetCode](https://leetcode.com/problems/median-of-two-sorted-arrays/) | [Explanation](content/0004-median-of-two-sorted-arrays/explanation.md) | [Slides PDF](content/0004-median-of-two-sorted-arrays/slides.pdf) · [PNGs](content/0004-median-of-two-sorted-arrays/slides/) | [Java](java/src/main/java/binarysearch/MedianOfTwoSortedArrays.java) |
+| 0033. Search in Rotated Sorted Array | Medium | [LeetCode](https://leetcode.com/problems/search-in-rotated-sorted-array/) | [Explanation](content/0033-search-in-rotated-sorted-array/explanation.md) | [Slides PDF](content/0033-search-in-rotated-sorted-array/slides.pdf) · [PNGs](content/0033-search-in-rotated-sorted-array/slides/) | [Java](java/src/main/java/binarysearch/SearchInRotatedSortedArray.java) |
+| 0074. Search a 2D Matrix | Medium | [LeetCode](https://leetcode.com/problems/search-a-2d-matrix/) | [Explanation](content/0074-search-a-2d-matrix/explanation.md) | [Slides PDF](content/0074-search-a-2d-matrix/slides.pdf) · [PNGs](content/0074-search-a-2d-matrix/slides/) | [Java](java/src/main/java/binarysearch/SearchA2DMatrix.java) |
+| 0153. Find Minimum in Rotated Sorted Array | Medium | [LeetCode](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | [Explanation](content/0153-find-minimum-in-rotated-sorted-array/explanation.md) | [Slides PDF](content/0153-find-minimum-in-rotated-sorted-array/slides.pdf) · [PNGs](content/0153-find-minimum-in-rotated-sorted-array/slides/) | [Java](java/src/main/java/binarysearch/FindMinimumInRotatedSortedArray.java) |
+| 0704. Binary Search | Easy | [LeetCode](https://leetcode.com/problems/binary-search/) | [Explanation](content/0704-binary-search/explanation.md) | [Slides PDF](content/0704-binary-search/slides.pdf) · [PNGs](content/0704-binary-search/slides/) | [Java](java/src/main/java/binarysearch/BinarySearch.java) |
+| 0875. Koko Eating Bananas | Medium | [LeetCode](https://leetcode.com/problems/koko-eating-bananas/) | [Explanation](content/0875-koko-eating-bananas/explanation.md) | [Slides PDF](content/0875-koko-eating-bananas/slides.pdf) · [PNGs](content/0875-koko-eating-bananas/slides/) | [Java](java/src/main/java/binarysearch/KokoEatingBananas.java) |
+| 0981. Time Based Key-Value Store | Medium | [LeetCode](https://leetcode.com/problems/time-based-key-value-store/) | [Explanation](content/0981-time-based-key-value-store/explanation.md) | [Slides PDF](content/0981-time-based-key-value-store/slides.pdf) · [PNGs](content/0981-time-based-key-value-store/slides/) | [Java](java/src/main/java/binarysearch/TimeMap.java) |
