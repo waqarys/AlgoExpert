@@ -2,7 +2,7 @@
 
 Interview-focused LeetCode set: the **NeetCode 150** list (a superset of Blind 75), solved in Java 17 with
 JUnit 5 tests, plus an explanation, video script, and 1920x1080 dark slides for every problem.
-**135 problems done so far.**
+**150 problems done so far.**
 
 The problem list comes from [neetcode-gh/leetcode](https://github.com/neetcode-gh/leetcode) (MIT).
 All code, explanations and slides here are original.
@@ -232,3 +232,28 @@ All code, explanations and slides here are original.
 | 0253. Meeting Rooms II | Medium | [LeetCode](https://leetcode.com/problems/meeting-rooms-ii/) | [Explanation](content/0253-meeting-rooms-ii/explanation.md) | [Slides PDF](content/0253-meeting-rooms-ii/slides.pdf) · [PNGs](content/0253-meeting-rooms-ii/slides/) | [Java](java/src/main/java/intervals/MeetingRoomsII.java) |
 | 0435. Non-overlapping Intervals | Medium | [LeetCode](https://leetcode.com/problems/non-overlapping-intervals/) | [Explanation](content/0435-non-overlapping-intervals/explanation.md) | [Slides PDF](content/0435-non-overlapping-intervals/slides.pdf) · [PNGs](content/0435-non-overlapping-intervals/slides/) | [Java](java/src/main/java/intervals/NonOverlappingIntervals.java) |
 | 1851. Minimum Interval to Include Each Query | Hard | [LeetCode](https://leetcode.com/problems/minimum-interval-to-include-each-query/) | [Explanation](content/1851-minimum-interval-to-include-each-query/explanation.md) | [Slides PDF](content/1851-minimum-interval-to-include-each-query/slides.pdf) · [PNGs](content/1851-minimum-interval-to-include-each-query/slides/) | [Java](java/src/main/java/intervals/MinimumIntervalToIncludeEachQuery.java) |
+
+## Math & Geometry (8)
+
+| Problem | Difficulty | Link | Explanation | Slides | Code |
+|---|---|---|---|---|---|
+| 0043. Multiply Strings | Medium | [LeetCode](https://leetcode.com/problems/multiply-strings/) | [Explanation](content/0043-multiply-strings/explanation.md) | [Slides PDF](content/0043-multiply-strings/slides.pdf) · [PNGs](content/0043-multiply-strings/slides/) | [Java](java/src/main/java/math/MultiplyStrings.java) |
+| 0048. Rotate Image | Medium | [LeetCode](https://leetcode.com/problems/rotate-image/) | [Explanation](content/0048-rotate-image/explanation.md) | [Slides PDF](content/0048-rotate-image/slides.pdf) · [PNGs](content/0048-rotate-image/slides/) | [Java](java/src/main/java/math/RotateImage.java) |
+| 0050. Pow(x, n) | Medium | [LeetCode](https://leetcode.com/problems/powx-n/) | [Explanation](content/0050-powx-n/explanation.md) | [Slides PDF](content/0050-powx-n/slides.pdf) · [PNGs](content/0050-powx-n/slides/) | [Java](java/src/main/java/math/PowXN.java) |
+| 0054. Spiral Matrix | Medium | [LeetCode](https://leetcode.com/problems/spiral-matrix/) | [Explanation](content/0054-spiral-matrix/explanation.md) | [Slides PDF](content/0054-spiral-matrix/slides.pdf) · [PNGs](content/0054-spiral-matrix/slides/) | [Java](java/src/main/java/math/SpiralMatrix.java) |
+| 0066. Plus One | Easy | [LeetCode](https://leetcode.com/problems/plus-one/) | [Explanation](content/0066-plus-one/explanation.md) | [Slides PDF](content/0066-plus-one/slides.pdf) · [PNGs](content/0066-plus-one/slides/) | [Java](java/src/main/java/math/PlusOne.java) |
+| 0073. Set Matrix Zeroes | Medium | [LeetCode](https://leetcode.com/problems/set-matrix-zeroes/) | [Explanation](content/0073-set-matrix-zeroes/explanation.md) | [Slides PDF](content/0073-set-matrix-zeroes/slides.pdf) · [PNGs](content/0073-set-matrix-zeroes/slides/) | [Java](java/src/main/java/math/SetMatrixZeroes.java) |
+| 0202. Happy Number | Easy | [LeetCode](https://leetcode.com/problems/happy-number/) | [Explanation](content/0202-happy-number/explanation.md) | [Slides PDF](content/0202-happy-number/slides.pdf) · [PNGs](content/0202-happy-number/slides/) | [Java](java/src/main/java/math/HappyNumber.java) |
+| 2013. Detect Squares | Medium | [LeetCode](https://leetcode.com/problems/detect-squares/) | [Explanation](content/2013-detect-squares/explanation.md) | [Slides PDF](content/2013-detect-squares/slides.pdf) · [PNGs](content/2013-detect-squares/slides/) | [Java](java/src/main/java/math/DetectSquares.java) |
+
+## Bit Manipulation (7)
+
+| Problem | Difficulty | Link | Explanation | Slides | Code |
+|---|---|---|---|---|---|
+| 0007. Reverse Integer | Medium | [LeetCode](https://leetcode.com/problems/reverse-integer/) | [Explanation](content/0007-reverse-integer/explanation.md) | [Slides PDF](content/0007-reverse-integer/slides.pdf) · [PNGs](content/0007-reverse-integer/slides/) | [Java](java/src/main/java/bits/ReverseInteger.java) |
+| 0136. Single Number | Easy | [LeetCode](https://leetcode.com/problems/single-number/) | [Explanation](content/0136-single-number/explanation.md) | [Slides PDF](content/0136-single-number/slides.pdf) · [PNGs](content/0136-single-number/slides/) | [Java](java/src/main/java/bits/SingleNumber.java) |
+| 0190. Reverse Bits | Easy | [LeetCode](https://leetcode.com/problems/reverse-bits/) | [Explanation](content/0190-reverse-bits/explanation.md) | [Slides PDF](content/0190-reverse-bits/slides.pdf) · [PNGs](content/0190-reverse-bits/slides/) | [Java](java/src/main/java/bits/ReverseBits.java) |
+| 0191. Number of 1 Bits | Easy | [LeetCode](https://leetcode.com/problems/number-of-1-bits/) | [Explanation](content/0191-number-of-1-bits/explanation.md) | [Slides PDF](content/0191-number-of-1-bits/slides.pdf) · [PNGs](content/0191-number-of-1-bits/slides/) | [Java](java/src/main/java/bits/NumberOf1Bits.java) |
+| 0268. Missing Number | Easy | [LeetCode](https://leetcode.com/problems/missing-number/) | [Explanation](content/0268-missing-number/explanation.md) | [Slides PDF](content/0268-missing-number/slides.pdf) · [PNGs](content/0268-missing-number/slides/) | [Java](java/src/main/java/bits/MissingNumber.java) |
+| 0338. Counting Bits | Easy | [LeetCode](https://leetcode.com/problems/counting-bits/) | [Explanation](content/0338-counting-bits/explanation.md) | [Slides PDF](content/0338-counting-bits/slides.pdf) · [PNGs](content/0338-counting-bits/slides/) | [Java](java/src/main/java/bits/CountingBits.java) |
+| 0371. Sum of Two Integers | Medium | [LeetCode](https://leetcode.com/problems/sum-of-two-integers/) | [Explanation](content/0371-sum-of-two-integers/explanation.md) | [Slides PDF](content/0371-sum-of-two-integers/slides.pdf) · [PNGs](content/0371-sum-of-two-integers/slides/) | [Java](java/src/main/java/bits/SumOfTwoIntegers.java) |
