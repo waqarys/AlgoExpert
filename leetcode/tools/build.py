@@ -13,11 +13,26 @@ BLOCK = re.compile(r"```java (file|test)=(\S+)\n(.*?)```", re.S)
 def parse(md):
     text = open(md).read()
     title = re.search(r"^# (.+)$", text, re.M).group(1)
-    meta = re.search(r"^\*\*Difficulty:\*\*.*$", text, re.M).group(0).replace("**", "")
+    meta_raw = re.search(r"^\*\*Difficulty:\*\*.*$", text, re.M).group(0)
+    meta = meta_raw.replace("**", "")
+    # Short title-slide subtitle: "Easy · Arrays & Hashing" + optional short path
+    diff = re.search(r"\*\*Difficulty:\*\*\s*([^|]+)", meta_raw)
+    cat = re.search(r"\*\*Category:\*\*\s*([^|]+)", meta_raw)
+    url = re.search(r"\*\*LeetCode:\*\*\s*(\S+)", meta_raw)
+    diff_s = (diff.group(1).strip() if diff else "").strip()
+    cat_s = (cat.group(1).strip() if cat else "").strip()
+    line1 = " · ".join(x for x in (diff_s, cat_s) if x)
+    line2 = ""
+    if url:
+        u = url.group(1).strip().rstrip("/")
+        # leetcode.com/problems/two-sum  (no https://)
+        u = re.sub(r"^https?://", "", u)
+        line2 = u
+    subtitle = (line1 + ("\n" + line2 if line2 else "")).strip() or meta
     secs = {}
     for m in re.finditer(r"^## (.+?)\n(.*?)(?=^## |\Z)", text, re.M | re.S):
         secs[m.group(1).strip()] = m.group(2).strip()
-    return text, title, meta, secs
+    return text, title, meta, secs, subtitle
 
 def extract(text):
     out = []
@@ -58,9 +73,9 @@ def chunks(code, n=34):
 def slides(md):
     import make_lecture as ml
     from PIL import Image
-    text, title, meta, secs = parse(md)
+    text, title, meta, secs, subtitle = parse(md)
     sol = [b for k, r, b in BLOCK.findall(text) if k == "file"]
-    S = [dict(kind="title", heading=title, subtitle=meta)]
+    S = [dict(kind="title", heading=title, subtitle=subtitle)]
     for name in ["Problem", "Intuition", "Brute Force", "Optimal Approach"]:
         if name in secs: S.append(dict(kind="bullets", heading=name, bullets=bullets_of(secs[name])))
     if "Worked Example" in secs:
