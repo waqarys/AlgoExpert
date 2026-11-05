@@ -2,7 +2,7 @@
 
 Interview-focused LeetCode set: the **NeetCode 150** list (a superset of Blind 75), solved in Java 17 with
 JUnit 5 tests, plus an explanation, video script, and 1920x1080 dark slides for every problem.
-**79 problems done so far.**
+**98 problems done so far.**
 
 The problem list comes from [neetcode-gh/leetcode](https://github.com/neetcode-gh/leetcode) (MIT).
 All code, explanations and slides here are original.
@@ -146,3 +146,32 @@ All code, explanations and slides here are original.
 | 0079. Word Search | Medium | [LeetCode](https://leetcode.com/problems/word-search/) | [Explanation](content/0079-word-search/explanation.md) | [Slides PDF](content/0079-word-search/slides.pdf) · [PNGs](content/0079-word-search/slides/) | [Java](java/src/main/java/backtracking/WordSearch.java) |
 | 0090. Subsets II | Medium | [LeetCode](https://leetcode.com/problems/subsets-ii/) | [Explanation](content/0090-subsets-ii/explanation.md) | [Slides PDF](content/0090-subsets-ii/slides.pdf) · [PNGs](content/0090-subsets-ii/slides/) | [Java](java/src/main/java/backtracking/SubsetsII.java) |
 | 0131. Palindrome Partitioning | Medium | [LeetCode](https://leetcode.com/problems/palindrome-partitioning/) | [Explanation](content/0131-palindrome-partitioning/explanation.md) | [Slides PDF](content/0131-palindrome-partitioning/slides.pdf) · [PNGs](content/0131-palindrome-partitioning/slides/) | [Java](java/src/main/java/backtracking/PalindromePartitioning.java) |
+
+## Graphs (13)
+
+| Problem | Difficulty | Link | Explanation | Slides | Code |
+|---|---|---|---|---|---|
+| 0127. Word Ladder | Hard | [LeetCode](https://leetcode.com/problems/word-ladder/) | [Explanation](content/0127-word-ladder/explanation.md) | [Slides PDF](content/0127-word-ladder/slides.pdf) · [PNGs](content/0127-word-ladder/slides/) | [Java](java/src/main/java/graphs/WordLadder.java) |
+| 0130. Surrounded Regions | Medium | [LeetCode](https://leetcode.com/problems/surrounded-regions/) | [Explanation](content/0130-surrounded-regions/explanation.md) | [Slides PDF](content/0130-surrounded-regions/slides.pdf) · [PNGs](content/0130-surrounded-regions/slides/) | [Java](java/src/main/java/graphs/SurroundedRegions.java) |
+| 0133. Clone Graph | Medium | [LeetCode](https://leetcode.com/problems/clone-graph/) | [Explanation](content/0133-clone-graph/explanation.md) | [Slides PDF](content/0133-clone-graph/slides.pdf) · [PNGs](content/0133-clone-graph/slides/) | [Java](java/src/main/java/graphs/CloneGraph.java) |
+| 0200. Number of Islands | Medium | [LeetCode](https://leetcode.com/problems/number-of-islands/) | [Explanation](content/0200-number-of-islands/explanation.md) | [Slides PDF](content/0200-number-of-islands/slides.pdf) · [PNGs](content/0200-number-of-islands/slides/) | [Java](java/src/main/java/graphs/NumberOfIslands.java) |
+| 0207. Course Schedule | Medium | [LeetCode](https://leetcode.com/problems/course-schedule/) | [Explanation](content/0207-course-schedule/explanation.md) | [Slides PDF](content/0207-course-schedule/slides.pdf) · [PNGs](content/0207-course-schedule/slides/) | [Java](java/src/main/java/graphs/CourseSchedule.java) |
+| 0210. Course Schedule II | Medium | [LeetCode](https://leetcode.com/problems/course-schedule-ii/) | [Explanation](content/0210-course-schedule-ii/explanation.md) | [Slides PDF](content/0210-course-schedule-ii/slides.pdf) · [PNGs](content/0210-course-schedule-ii/slides/) | [Java](java/src/main/java/graphs/CourseScheduleII.java) |
+| 0261. Graph Valid Tree | Medium | [LeetCode](https://leetcode.com/problems/graph-valid-tree/) | [Explanation](content/0261-graph-valid-tree/explanation.md) | [Slides PDF](content/0261-graph-valid-tree/slides.pdf) · [PNGs](content/0261-graph-valid-tree/slides/) | [Java](java/src/main/java/graphs/GraphValidTree.java) |
+| 0286. Walls and Gates | Medium | [LeetCode](https://leetcode.com/problems/walls-and-gates/) | [Explanation](content/0286-walls-and-gates/explanation.md) | [Slides PDF](content/0286-walls-and-gates/slides.pdf) · [PNGs](content/0286-walls-and-gates/slides/) | [Java](java/src/main/java/graphs/WallsAndGates.java) |
+| 0323. Number of Connected Components in an Undirected Graph | Medium | [LeetCode](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | [Explanation](content/0323-number-of-connected-components-in-an-undirected-graph/explanation.md) | [Slides PDF](content/0323-number-of-connected-components-in-an-undirected-graph/slides.pdf) · [PNGs](content/0323-number-of-connected-components-in-an-undirected-graph/slides/) | [Java](java/src/main/java/graphs/NumberOfConnectedComponents.java) |
+| 0417. Pacific Atlantic Water Flow | Medium | [LeetCode](https://leetcode.com/problems/pacific-atlantic-water-flow/) | [Explanation](content/0417-pacific-atlantic-water-flow/explanation.md) | [Slides PDF](content/0417-pacific-atlantic-water-flow/slides.pdf) · [PNGs](content/0417-pacific-atlantic-water-flow/slides/) | [Java](java/src/main/java/graphs/PacificAtlanticWaterFlow.java) |
+| 0684. Redundant Connection | Medium | [LeetCode](https://leetcode.com/problems/redundant-connection/) | [Explanation](content/0684-redundant-connection/explanation.md) | [Slides PDF](content/0684-redundant-connection/slides.pdf) · [PNGs](content/0684-redundant-connection/slides/) | [Java](java/src/main/java/graphs/RedundantConnection.java) |
+| 0695. Max Area of Island | Medium | [LeetCode](https://leetcode.com/problems/max-area-of-island/) | [Explanation](content/0695-max-area-of-island/explanation.md) | [Slides PDF](content/0695-max-area-of-island/slides.pdf) · [PNGs](content/0695-max-area-of-island/slides/) | [Java](java/src/main/java/graphs/MaxAreaOfIsland.java) |
+| 0994. Rotting Oranges | Medium | [LeetCode](https://leetcode.com/problems/rotting-oranges/) | [Explanation](content/0994-rotting-oranges/explanation.md) | [Slides PDF](content/0994-rotting-oranges/slides.pdf) · [PNGs](content/0994-rotting-oranges/slides/) | [Java](java/src/main/java/graphs/RottingOranges.java) |
+
+## Advanced Graphs (6)
+
+| Problem | Difficulty | Link | Explanation | Slides | Code |
+|---|---|---|---|---|---|
+| 0269. Alien Dictionary | Hard | [LeetCode](https://leetcode.com/problems/alien-dictionary/) | [Explanation](content/0269-alien-dictionary/explanation.md) | [Slides PDF](content/0269-alien-dictionary/slides.pdf) · [PNGs](content/0269-alien-dictionary/slides/) | [Java](java/src/main/java/advancedgraphs/AlienDictionary.java) |
+| 0332. Reconstruct Itinerary | Hard | [LeetCode](https://leetcode.com/problems/reconstruct-itinerary/) | [Explanation](content/0332-reconstruct-itinerary/explanation.md) | [Slides PDF](content/0332-reconstruct-itinerary/slides.pdf) · [PNGs](content/0332-reconstruct-itinerary/slides/) | [Java](java/src/main/java/advancedgraphs/ReconstructItinerary.java) |
+| 0743. Network Delay Time | Medium | [LeetCode](https://leetcode.com/problems/network-delay-time/) | [Explanation](content/0743-network-delay-time/explanation.md) | [Slides PDF](content/0743-network-delay-time/slides.pdf) · [PNGs](content/0743-network-delay-time/slides/) | [Java](java/src/main/java/advancedgraphs/NetworkDelayTime.java) |
+| 0778. Swim in Rising Water | Hard | [LeetCode](https://leetcode.com/problems/swim-in-rising-water/) | [Explanation](content/0778-swim-in-rising-water/explanation.md) | [Slides PDF](content/0778-swim-in-rising-water/slides.pdf) · [PNGs](content/0778-swim-in-rising-water/slides/) | [Java](java/src/main/java/advancedgraphs/SwimInRisingWater.java) |
+| 0787. Cheapest Flights Within K Stops | Medium | [LeetCode](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | [Explanation](content/0787-cheapest-flights-within-k-stops/explanation.md) | [Slides PDF](content/0787-cheapest-flights-within-k-stops/slides.pdf) · [PNGs](content/0787-cheapest-flights-within-k-stops/slides/) | [Java](java/src/main/java/advancedgraphs/CheapestFlightsWithinKStops.java) |
+| 1584. Min Cost to Connect All Points | Medium | [LeetCode](https://leetcode.com/problems/min-cost-to-connect-all-points/) | [Explanation](content/1584-min-cost-to-connect-all-points/explanation.md) | [Slides PDF](content/1584-min-cost-to-connect-all-points/slides.pdf) · [PNGs](content/1584-min-cost-to-connect-all-points/slides/) | [Java](java/src/main/java/advancedgraphs/MinCostToConnectAllPoints.java) |
