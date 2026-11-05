@@ -2,7 +2,7 @@
 
 Interview-focused LeetCode set: the **NeetCode 150** list (a superset of Blind 75), solved in Java 17 with
 JUnit 5 tests, plus an explanation, video script, and 1920x1080 dark slides for every problem.
-**34 problems done so far.**
+**45 problems done so far.**
 
 The problem list comes from [neetcode-gh/leetcode](https://github.com/neetcode-gh/leetcode) (MIT).
 All code, explanations and slides here are original.
@@ -76,3 +76,19 @@ All code, explanations and slides here are original.
 | 0704. Binary Search | Easy | [LeetCode](https://leetcode.com/problems/binary-search/) | [Explanation](content/0704-binary-search/explanation.md) | [Slides PDF](content/0704-binary-search/slides.pdf) · [PNGs](content/0704-binary-search/slides/) | [Java](java/src/main/java/binarysearch/BinarySearch.java) |
 | 0875. Koko Eating Bananas | Medium | [LeetCode](https://leetcode.com/problems/koko-eating-bananas/) | [Explanation](content/0875-koko-eating-bananas/explanation.md) | [Slides PDF](content/0875-koko-eating-bananas/slides.pdf) · [PNGs](content/0875-koko-eating-bananas/slides/) | [Java](java/src/main/java/binarysearch/KokoEatingBananas.java) |
 | 0981. Time Based Key-Value Store | Medium | [LeetCode](https://leetcode.com/problems/time-based-key-value-store/) | [Explanation](content/0981-time-based-key-value-store/explanation.md) | [Slides PDF](content/0981-time-based-key-value-store/slides.pdf) · [PNGs](content/0981-time-based-key-value-store/slides/) | [Java](java/src/main/java/binarysearch/TimeMap.java) |
+
+## Linked List (11)
+
+| Problem | Difficulty | Link | Explanation | Slides | Code |
+|---|---|---|---|---|---|
+| 0002. Add Two Numbers | Medium | [LeetCode](https://leetcode.com/problems/add-two-numbers/) | [Explanation](content/0002-add-two-numbers/explanation.md) | [Slides PDF](content/0002-add-two-numbers/slides.pdf) · [PNGs](content/0002-add-two-numbers/slides/) | [Java](java/src/main/java/linkedlist/AddTwoNumbers.java) |
+| 0019. Remove Nth Node From End of List | Medium | [LeetCode](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | [Explanation](content/0019-remove-nth-node-from-end-of-list/explanation.md) | [Slides PDF](content/0019-remove-nth-node-from-end-of-list/slides.pdf) · [PNGs](content/0019-remove-nth-node-from-end-of-list/slides/) | [Java](java/src/main/java/linkedlist/RemoveNthNodeFromEnd.java) |
+| 0021. Merge Two Sorted Lists | Easy | [LeetCode](https://leetcode.com/problems/merge-two-sorted-lists/) | [Explanation](content/0021-merge-two-sorted-lists/explanation.md) | [Slides PDF](content/0021-merge-two-sorted-lists/slides.pdf) · [PNGs](content/0021-merge-two-sorted-lists/slides/) | [Java](java/src/main/java/linkedlist/MergeTwoSortedLists.java) |
+| 0023. Merge k Sorted Lists | Hard | [LeetCode](https://leetcode.com/problems/merge-k-sorted-lists/) | [Explanation](content/0023-merge-k-sorted-lists/explanation.md) | [Slides PDF](content/0023-merge-k-sorted-lists/slides.pdf) · [PNGs](content/0023-merge-k-sorted-lists/slides/) | [Java](java/src/main/java/linkedlist/MergeKSortedLists.java) |
+| 0025. Reverse Nodes in k-Group | Hard | [LeetCode](https://leetcode.com/problems/reverse-nodes-in-k-group/) | [Explanation](content/0025-reverse-nodes-in-k-group/explanation.md) | [Slides PDF](content/0025-reverse-nodes-in-k-group/slides.pdf) · [PNGs](content/0025-reverse-nodes-in-k-group/slides/) | [Java](java/src/main/java/linkedlist/ReverseNodesInKGroup.java) |
+| 0138. Copy List with Random Pointer | Medium | [LeetCode](https://leetcode.com/problems/copy-list-with-random-pointer/) | [Explanation](content/0138-copy-list-with-random-pointer/explanation.md) | [Slides PDF](content/0138-copy-list-with-random-pointer/slides.pdf) · [PNGs](content/0138-copy-list-with-random-pointer/slides/) | [Java](java/src/main/java/linkedlist/CopyListWithRandomPointer.java) |
+| 0141. Linked List Cycle | Easy | [LeetCode](https://leetcode.com/problems/linked-list-cycle/) | [Explanation](content/0141-linked-list-cycle/explanation.md) | [Slides PDF](content/0141-linked-list-cycle/slides.pdf) · [PNGs](content/0141-linked-list-cycle/slides/) | [Java](java/src/main/java/linkedlist/LinkedListCycle.java) |
+| 0143. Reorder List | Medium | [LeetCode](https://leetcode.com/problems/reorder-list/) | [Explanation](content/0143-reorder-list/explanation.md) | [Slides PDF](content/0143-reorder-list/slides.pdf) · [PNGs](content/0143-reorder-list/slides/) | [Java](java/src/main/java/linkedlist/ReorderList.java) |
+| 0146. LRU Cache | Medium | [LeetCode](https://leetcode.com/problems/lru-cache/) | [Explanation](content/0146-lru-cache/explanation.md) | [Slides PDF](content/0146-lru-cache/slides.pdf) · [PNGs](content/0146-lru-cache/slides/) | [Java](java/src/main/java/linkedlist/LRUCache.java) |
+| 0206. Reverse Linked List | Easy | [LeetCode](https://leetcode.com/problems/reverse-linked-list/) | [Explanation](content/0206-reverse-linked-list/explanation.md) | [Slides PDF](content/0206-reverse-linked-list/slides.pdf) · [PNGs](content/0206-reverse-linked-list/slides/) | [Java](java/src/main/java/linkedlist/ReverseLinkedList.java) |
+| 0287. Find the Duplicate Number | Medium | [LeetCode](https://leetcode.com/problems/find-the-duplicate-number/) | [Explanation](content/0287-find-the-duplicate-number/explanation.md) | [Slides PDF](content/0287-find-the-duplicate-number/slides.pdf) · [PNGs](content/0287-find-the-duplicate-number/slides/) | [Java](java/src/main/java/linkedlist/FindTheDuplicateNumber.java) |
