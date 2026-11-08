@@ -1,0 +1,148 @@
+1
+00:00:00,600 --> 00:00:05,165
+Two numbers, one target, and an interviewer watching your complexity.
+
+2
+00:00:05,115 --> 00:00:09,010
+Let's go from n squared to a single pass in under three minutes.
+
+3
+00:00:19,268 --> 00:00:23,040
+We get an array of distinct integers and a target sum.
+
+4
+00:00:22,990 --> 00:00:27,197
+If any two numbers add up to the target, return them as a pair.
+
+5
+00:00:27,197 --> 00:00:30,646
+If no pair exists, return an empty array.
+
+6
+00:00:34,412 --> 00:00:38,041
+Our running example is three, five, minus four, eight,
+
+7
+00:00:38,041 --> 00:00:41,670
+eleven, one, minus one, six, with a target of ten.
+
+8
+00:00:41,620 --> 00:00:44,222
+The integers are distinct, negatives are allowed,
+
+9
+00:00:44,222 --> 00:00:46,824
+and a number cannot pair with itself.
+
+10
+00:00:50,588 --> 00:00:54,336
+The brute force checks every pair, which is n squared time.
+
+11
+00:00:54,286 --> 00:00:58,625
+Sorting plus two pointers gets n log n with constant extra space.
+
+12
+00:00:58,625 --> 00:01:01,017
+But we can do better on time.
+
+13
+00:01:04,772 --> 00:01:06,729
+Here is the insight.
+
+14
+00:01:06,679 --> 00:01:10,537
+For each number x, its partner is target minus x.
+
+15
+00:01:10,537 --> 00:01:13,290
+A hash set of the values we have already
+
+16
+00:01:13,290 --> 00:01:16,042
+seen answers "have I met the partner?" in constant time.
+
+17
+00:01:17,596 --> 00:01:19,998
+So we walk the array once.
+
+18
+00:01:19,948 --> 00:01:23,133
+Check whether target minus x is in the set.
+
+19
+00:01:23,133 --> 00:01:25,633
+If it is, return the pair.
+
+20
+00:01:25,633 --> 00:01:28,458
+Otherwise, add x and keep going.
+
+21
+00:01:32,212 --> 00:01:34,422
+At three we need seven.
+
+22
+00:01:34,372 --> 00:01:37,292
+Not seen yet, so we remember three.
+
+23
+00:01:38,844 --> 00:01:41,992
+Five, minus four, and eight all miss their partners,
+
+24
+00:01:41,992 --> 00:01:45,140
+so the set grows to three, five, minus four, eight.
+
+25
+00:01:46,652 --> 00:01:50,052
+At eleven we need minus one, not there yet.
+
+26
+00:01:50,002 --> 00:01:51,949
+One goes in too.
+
+27
+00:01:51,949 --> 00:01:55,891
+Then at minus one we need eleven, and eleven is in the set.
+
+28
+00:01:55,891 --> 00:01:58,643
+We return eleven and minus one.
+
+29
+00:02:02,396 --> 00:02:08,242
+In Java: create a HashSet of integers, loop over the array, and if the set contains target minus x, return
+
+30
+00:02:08,242 --> 00:02:14,089
+a new array of target minus x and x. Otherwise add x. Falling out of the loop returns an empty array.
+
+31
+00:02:17,804 --> 00:02:21,179
+We touch each number once, so time is O of n.
+
+32
+00:02:21,129 --> 00:02:25,060
+The set can hold up to n values, so space is O of n.
+
+33
+00:02:28,820 --> 00:02:32,906
+Edge cases: no pair means an empty array, checking before adding means
+
+34
+00:02:32,906 --> 00:02:36,991
+a number never pairs with itself, and negatives work exactly the same way.
+
+35
+00:02:38,500 --> 00:02:43,077
+Recap: for each number, ask whether its partner has already appeared.
+
+36
+00:02:43,027 --> 00:02:46,669
+The code is in the AlgoExpert repo, linked below.
+
+37
+00:02:46,669 --> 00:02:49,566
+I'm Waqar, see you in the next one.
+

@@ -1,0 +1,14 @@
+{
+  "name": "AlgoExpert",
+  "accent": [56, 189, 248],
+  "pip_shape": "rounded",
+  "slides_glob": "lectures/algoexpert/<difficulty>/<category>/<Problem>/slides",
+  "code_glob": "algoexpert/src/main/java/<difficulty>/<category>/<Problem>.java",
+  "sections": ["Problem", "Examples & Constraints", "Brute Force", "Optimized Approach", "Dry Run", "Java Walkthrough", "Complexity", "Edge Cases & Recap"],
+  "defaults": {
+    "series": "AlgoExpert · Arrays",
+    "lower_name": "Waqar Shaikh",
+    "repo": "github.com/waqarys/AlgoExpert (leetcode branch)",
+    "thumb_tag": "ALGOEXPERT"
+  }
+}

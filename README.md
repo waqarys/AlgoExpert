@@ -11,7 +11,15 @@ algoexpert/     Java 17 + Maven + JUnit 5, one class per problem
 systemsexpert/  system design notes (markdown + mermaid), one file per question
 mlexpert/       from-scratch ML in Python (numpy) + pytest, ML design notes
 leetcode/, hackerrank/   unrelated practice, left as they were
+video-kit/      YouTube kit (OBS + CapCut) for AlgoExpert and LeetCode episodes
 ```
+
+## YouTube video kit (Build with Waqar)
+On the `leetcode` branch: [video-kit/](https://github.com/waqarys/AlgoExpert/tree/leetcode/video-kit)
+has AlgoExpert and LeetCode presets, OBS scene collections for Windows, macOS and Linux (including IntelliJ Code + Run Console and Full Screen scenes),
+and a one-command episode builder. Guide: [VIDEO-WORKFLOW.md](https://github.com/waqarys/AlgoExpert/blob/leetcode/video-kit/VIDEO-WORKFLOW.md).
+Demo videos + assets ZIP: [release algo-video-kit-v1](https://github.com/waqarys/AlgoExpert/releases/tag/algo-video-kit-v1).
+LeetCode content: [leetcode/README.md](https://github.com/waqarys/AlgoExpert/blob/leetcode/leetcode/README.md).
 
 ## Build & test
 ```bash

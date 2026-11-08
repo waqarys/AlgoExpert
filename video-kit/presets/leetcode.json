@@ -1,0 +1,14 @@
+{
+  "name": "LeetCode",
+  "accent": [251, 146, 60],
+  "pip_shape": "circle",
+  "slides_glob": "leetcode/content/<NNNN-slug>/slides",
+  "code_glob": "leetcode/java/src/main/java/<category>/<Problem>.java",
+  "sections": ["Problem", "Examples & Constraints", "Brute Force", "Optimized Approach", "Dry Run", "Java Walkthrough", "Complexity", "Edge Cases & Recap"],
+  "defaults": {
+    "series": "LeetCode · NeetCode 150",
+    "lower_name": "Waqar Shaikh",
+    "repo": "github.com/waqarys/AlgoExpert/tree/leetcode/leetcode",
+    "thumb_tag": "LEETCODE"
+  }
+}
