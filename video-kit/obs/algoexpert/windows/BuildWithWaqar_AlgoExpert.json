@@ -1,0 +1,1263 @@
+{
+  "name": "Build with Waqar \u2014 AlgoExpert (windows)",
+  "current_scene": "3 \u00b7 Slides + PiP",
+  "current_program_scene": "3 \u00b7 Slides + PiP",
+  "scene_order": [
+    {
+      "name": "1 \u00b7 Intro (AlgoExpert)"
+    },
+    {
+      "name": "2 \u00b7 Full Facecam Hook"
+    },
+    {
+      "name": "3 \u00b7 Slides + PiP"
+    },
+    {
+      "name": "4 \u00b7 Code + PiP"
+    },
+    {
+      "name": "5 \u00b7 IntelliJ \u2014 Code + Run Console"
+    },
+    {
+      "name": "6 \u00b7 IntelliJ \u2014 Full Screen"
+    },
+    {
+      "name": "7 \u00b7 Dry Run / Whiteboard"
+    },
+    {
+      "name": "8 \u00b7 Outro (AlgoExpert)"
+    }
+  ],
+  "sources": [
+    {
+      "name": "1 \u00b7 Intro (AlgoExpert)",
+      "uuid": "ee3649fd-ffe4-4512-9c2a-f029094760d9",
+      "id": "scene",
+      "versioned_id": "scene",
+      "settings": {
+        "id_counter": 2,
+        "custom_size": false,
+        "items": [
+          {
+            "name": "Intro video",
+            "source_uuid": "5d90f4d8-1363-4281-bffb-67031e2d254b",
+            "visible": true,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 1,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          },
+          {
+            "name": "Music bed (low)",
+            "source_uuid": "514803e0-f4b1-4226-9e5d-78eb54d8f52c",
+            "visible": true,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 2,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          }
+        ]
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "2 \u00b7 Full Facecam Hook",
+      "uuid": "ce623e01-0035-4444-ba77-f37b75617224",
+      "id": "scene",
+      "versioned_id": "scene",
+      "settings": {
+        "id_counter": 3,
+        "custom_size": false,
+        "items": [
+          {
+            "name": "Camera \u00b7 full (pick your webcam)",
+            "source_uuid": "64634322-363b-44e0-9d4c-ea1c153789e5",
+            "visible": true,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 2,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 1920,
+              "y": 1080
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 1,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          },
+          {
+            "name": "Full facecam frame",
+            "source_uuid": "932d204d-e7aa-4568-a4a3-aea037097724",
+            "visible": true,
+            "locked": true,
+            "rot": 0.0,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 2,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          },
+          {
+            "name": "Lower third",
+            "source_uuid": "50a8d5c8-cd26-4c77-8d14-055ff7ae7006",
+            "visible": true,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 3,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          }
+        ]
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "3 \u00b7 Slides + PiP",
+      "uuid": "97fada55-17bc-4a16-830d-56ba99e47182",
+      "id": "scene",
+      "versioned_id": "scene",
+      "settings": {
+        "id_counter": 4,
+        "custom_size": false,
+        "items": [
+          {
+            "name": "Slides (display capture, or swap to window capture of your PDF viewer)",
+            "source_uuid": "97a2e16e-0de7-4e85-ad85-398be0a94d6d",
+            "visible": true,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 24,
+              "y": 24
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 2,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 1520,
+              "y": 855
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 1,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          },
+          {
+            "name": "Safe layout frame",
+            "source_uuid": "aea9cafc-ae4b-43bf-a71a-45ed33d87b28",
+            "visible": true,
+            "locked": true,
+            "rot": 0.0,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 2,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          },
+          {
+            "name": "Camera \u00b7 side column (pick your webcam)",
+            "source_uuid": "85f1edae-b3a2-49bb-875f-d5f5a6a01a2b",
+            "visible": true,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 1568,
+              "y": 24
+            },
+            "scale": {
+              "x": 0.3037037037037037,
+              "y": 0.3037037037037037
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 420,
+            "crop_top": 0,
+            "crop_right": 420,
+            "crop_bottom": 0,
+            "id": 3,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          },
+          {
+            "name": "Lower third",
+            "source_uuid": "50a8d5c8-cd26-4c77-8d14-055ff7ae7006",
+            "visible": false,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 4,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          }
+        ]
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "4 \u00b7 Code + PiP",
+      "uuid": "fe996066-214c-4cec-9c0a-07b2f78b0b24",
+      "id": "scene",
+      "versioned_id": "scene",
+      "settings": {
+        "id_counter": 4,
+        "custom_size": false,
+        "items": [
+          {
+            "name": "Code editor window (any editor / slide code)",
+            "source_uuid": "6d701e58-2199-4291-b8f9-e13722c55f34",
+            "visible": true,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 24,
+              "y": 24
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 2,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 1520,
+              "y": 855
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 1,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          },
+          {
+            "name": "Safe layout frame",
+            "source_uuid": "aea9cafc-ae4b-43bf-a71a-45ed33d87b28",
+            "visible": true,
+            "locked": true,
+            "rot": 0.0,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 2,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          },
+          {
+            "name": "Camera \u00b7 side column (pick your webcam)",
+            "source_uuid": "85f1edae-b3a2-49bb-875f-d5f5a6a01a2b",
+            "visible": true,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 1568,
+              "y": 24
+            },
+            "scale": {
+              "x": 0.3037037037037037,
+              "y": 0.3037037037037037
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 420,
+            "crop_top": 0,
+            "crop_right": 420,
+            "crop_bottom": 0,
+            "id": 3,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          },
+          {
+            "name": "Lower third",
+            "source_uuid": "50a8d5c8-cd26-4c77-8d14-055ff7ae7006",
+            "visible": false,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 4,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          }
+        ]
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "5 \u00b7 IntelliJ \u2014 Code + Run Console",
+      "uuid": "07eee4b8-b5d0-4d2c-805d-22869dc69879",
+      "id": "scene",
+      "versioned_id": "scene",
+      "settings": {
+        "id_counter": 4,
+        "custom_size": false,
+        "items": [
+          {
+            "name": "IntelliJ window (select your IntelliJ IDEA window)",
+            "source_uuid": "3dedbef0-665c-43f6-9328-f1a380d51feb",
+            "visible": true,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 24,
+              "y": 24
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 2,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 1520,
+              "y": 855
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 1,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          },
+          {
+            "name": "Safe layout frame",
+            "source_uuid": "aea9cafc-ae4b-43bf-a71a-45ed33d87b28",
+            "visible": true,
+            "locked": true,
+            "rot": 0.0,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 2,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          },
+          {
+            "name": "Camera \u00b7 side column (pick your webcam)",
+            "source_uuid": "85f1edae-b3a2-49bb-875f-d5f5a6a01a2b",
+            "visible": true,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 1568,
+              "y": 24
+            },
+            "scale": {
+              "x": 0.3037037037037037,
+              "y": 0.3037037037037037
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 420,
+            "crop_top": 0,
+            "crop_right": 420,
+            "crop_bottom": 0,
+            "id": 3,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          },
+          {
+            "name": "Lower third",
+            "source_uuid": "50a8d5c8-cd26-4c77-8d14-055ff7ae7006",
+            "visible": false,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 4,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          }
+        ]
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "6 \u00b7 IntelliJ \u2014 Full Screen",
+      "uuid": "d832ba94-c869-4a61-bd85-c2a1302d30e8",
+      "id": "scene",
+      "versioned_id": "scene",
+      "settings": {
+        "id_counter": 1,
+        "custom_size": false,
+        "items": [
+          {
+            "name": "IntelliJ window \u00b7 full screen (select your IntelliJ IDEA window)",
+            "source_uuid": "c56a1dc3-8c74-46f6-ab25-e9a1740c9523",
+            "visible": true,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 2,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 1920,
+              "y": 1080
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 1,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          }
+        ]
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "7 \u00b7 Dry Run / Whiteboard",
+      "uuid": "63aeb063-6742-4c74-8e5d-80f1a700cecb",
+      "id": "scene",
+      "versioned_id": "scene",
+      "settings": {
+        "id_counter": 3,
+        "custom_size": false,
+        "items": [
+          {
+            "name": "Whiteboard window (Excalidraw / tablet app / IntelliJ debugger)",
+            "source_uuid": "53bac288-0d17-47ca-8751-941ba3088864",
+            "visible": true,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 24,
+              "y": 24
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 2,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 1520,
+              "y": 855
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 1,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          },
+          {
+            "name": "Safe layout frame",
+            "source_uuid": "aea9cafc-ae4b-43bf-a71a-45ed33d87b28",
+            "visible": true,
+            "locked": true,
+            "rot": 0.0,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 2,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          },
+          {
+            "name": "Camera \u00b7 side column (pick your webcam)",
+            "source_uuid": "85f1edae-b3a2-49bb-875f-d5f5a6a01a2b",
+            "visible": true,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 1568,
+              "y": 24
+            },
+            "scale": {
+              "x": 0.3037037037037037,
+              "y": 0.3037037037037037
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 420,
+            "crop_top": 0,
+            "crop_right": 420,
+            "crop_bottom": 0,
+            "id": 3,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          }
+        ]
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "8 \u00b7 Outro (AlgoExpert)",
+      "uuid": "5e7f933b-1d91-49e6-8101-cdd74e6d8134",
+      "id": "scene",
+      "versioned_id": "scene",
+      "settings": {
+        "id_counter": 1,
+        "custom_size": false,
+        "items": [
+          {
+            "name": "Outro video",
+            "source_uuid": "306f7e0b-0a0c-42e5-bf95-d9711fa30cb3",
+            "visible": true,
+            "locked": false,
+            "rot": 0.0,
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "align": 5,
+            "bounds_type": 0,
+            "bounds_align": 0,
+            "bounds": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "crop_left": 0,
+            "crop_top": 0,
+            "crop_right": 0,
+            "crop_bottom": 0,
+            "id": 1,
+            "group_item_backup": false,
+            "scale_filter": "lanczos",
+            "blend_method": "default",
+            "blend_type": "normal",
+            "private_settings": {}
+          }
+        ]
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "Camera \u00b7 side column (pick your webcam)",
+      "uuid": "85f1edae-b3a2-49bb-875f-d5f5a6a01a2b",
+      "id": "dshow_input",
+      "versioned_id": "dshow_input",
+      "settings": {},
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [
+        {
+          "name": "Camera shape mask",
+          "id": "mask_filter_v2",
+          "versioned_id": "mask_filter_v2",
+          "enabled": true,
+          "settings": {
+            "type": "mask_alpha_filter.effect",
+            "image_path": "VIDEOKIT_DIR/assets/overlays/obs_mask_square_rounded.png"
+          }
+        }
+      ],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "Camera \u00b7 full (pick your webcam)",
+      "uuid": "64634322-363b-44e0-9d4c-ea1c153789e5",
+      "id": "dshow_input",
+      "versioned_id": "dshow_input",
+      "settings": {},
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "IntelliJ window (select your IntelliJ IDEA window)",
+      "uuid": "3dedbef0-665c-43f6-9328-f1a380d51feb",
+      "id": "window_capture",
+      "versioned_id": "window_capture",
+      "settings": {
+        "window": "",
+        "method": 2,
+        "cursor": true,
+        "client_area": true
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "IntelliJ window \u00b7 full screen (select your IntelliJ IDEA window)",
+      "uuid": "c56a1dc3-8c74-46f6-ab25-e9a1740c9523",
+      "id": "window_capture",
+      "versioned_id": "window_capture",
+      "settings": {
+        "window": "",
+        "method": 2,
+        "cursor": true,
+        "client_area": true
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "Slides (display capture, or swap to window capture of your PDF viewer)",
+      "uuid": "97a2e16e-0de7-4e85-ad85-398be0a94d6d",
+      "id": "monitor_capture",
+      "versioned_id": "monitor_capture",
+      "settings": {
+        "monitor": 0,
+        "capture_cursor": true
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "Code editor window (any editor / slide code)",
+      "uuid": "6d701e58-2199-4291-b8f9-e13722c55f34",
+      "id": "window_capture",
+      "versioned_id": "window_capture",
+      "settings": {
+        "window": "",
+        "method": 2,
+        "cursor": true,
+        "client_area": true
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "Whiteboard window (Excalidraw / tablet app / IntelliJ debugger)",
+      "uuid": "53bac288-0d17-47ca-8751-941ba3088864",
+      "id": "window_capture",
+      "versioned_id": "window_capture",
+      "settings": {
+        "window": "",
+        "method": 2,
+        "cursor": true,
+        "client_area": true
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "Safe layout frame",
+      "uuid": "aea9cafc-ae4b-43bf-a71a-45ed33d87b28",
+      "id": "image_source",
+      "versioned_id": "image_source",
+      "settings": {
+        "file": "VIDEOKIT_DIR/assets/overlays/safe_frame_algoexpert.png",
+        "unload": false
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "Full facecam frame",
+      "uuid": "932d204d-e7aa-4568-a4a3-aea037097724",
+      "id": "image_source",
+      "versioned_id": "image_source",
+      "settings": {
+        "file": "VIDEOKIT_DIR/assets/overlays/fullcam_frame_algoexpert.png",
+        "unload": false
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "Lower third",
+      "uuid": "50a8d5c8-cd26-4c77-8d14-055ff7ae7006",
+      "id": "image_source",
+      "versioned_id": "image_source",
+      "settings": {
+        "file": "VIDEOKIT_DIR/assets/overlays/lower_third_algoexpert.png",
+        "unload": false
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "Intro video",
+      "uuid": "5d90f4d8-1363-4281-bffb-67031e2d254b",
+      "id": "ffmpeg_source",
+      "versioned_id": "ffmpeg_source",
+      "settings": {
+        "local_file": "VIDEOKIT_DIR/assets/intro/intro_algoexpert.mp4",
+        "is_local_file": true,
+        "looping": true,
+        "restart_on_activate": true,
+        "close_when_inactive": true
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "Outro video",
+      "uuid": "306f7e0b-0a0c-42e5-bf95-d9711fa30cb3",
+      "id": "ffmpeg_source",
+      "versioned_id": "ffmpeg_source",
+      "settings": {
+        "local_file": "VIDEOKIT_DIR/assets/outro/outro_algoexpert.mp4",
+        "is_local_file": true,
+        "looping": false,
+        "restart_on_activate": true,
+        "close_when_inactive": true
+      },
+      "enabled": true,
+      "volume": 1.0,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    },
+    {
+      "name": "Music bed (low)",
+      "uuid": "514803e0-f4b1-4226-9e5d-78eb54d8f52c",
+      "id": "ffmpeg_source",
+      "versioned_id": "ffmpeg_source",
+      "settings": {
+        "local_file": "VIDEOKIT_DIR/assets/audio/music_bed_loop.wav",
+        "is_local_file": true,
+        "looping": true,
+        "restart_on_activate": true,
+        "close_when_inactive": true
+      },
+      "enabled": true,
+      "volume": 0.1,
+      "muted": false,
+      "mixers": 255,
+      "monitoring_type": 0,
+      "flags": 0,
+      "sync": 0,
+      "filters": [],
+      "hotkeys": {},
+      "private_settings": {}
+    }
+  ],
+  "groups": [],
+  "AuxAudioDevice1": {
+    "name": "Mic/Aux (pick your microphone)",
+    "uuid": "7808b1d4-cfea-4123-a202-d9484063fda8",
+    "id": "wasapi_input_capture",
+    "versioned_id": "wasapi_input_capture",
+    "settings": {},
+    "enabled": true,
+    "volume": 1.0,
+    "muted": false,
+    "mixers": 255,
+    "monitoring_type": 0,
+    "flags": 0,
+    "sync": 0,
+    "filters": [
+      {
+        "name": "1 Noise Suppression (RNNoise)",
+        "id": "noise_suppress_filter_v2",
+        "versioned_id": "noise_suppress_filter_v2",
+        "enabled": true,
+        "settings": {
+          "method": "rnnoise"
+        }
+      },
+      {
+        "name": "2 Noise Gate",
+        "id": "noise_gate_filter",
+        "versioned_id": "noise_gate_filter",
+        "enabled": true,
+        "settings": {
+          "open_threshold": -36.0,
+          "close_threshold": -46.0
+        }
+      },
+      {
+        "name": "3 Compressor",
+        "id": "compressor_filter",
+        "versioned_id": "compressor_filter",
+        "enabled": true,
+        "settings": {
+          "ratio": 4.0,
+          "threshold": -20.0,
+          "attack_time": 6,
+          "release_time": 60,
+          "output_gain": 4.0
+        }
+      },
+      {
+        "name": "4 Limiter",
+        "id": "limiter_filter",
+        "versioned_id": "limiter_filter",
+        "enabled": true,
+        "settings": {
+          "threshold": -2.0,
+          "release_time": 60
+        }
+      }
+    ],
+    "hotkeys": {},
+    "private_settings": {}
+  },
+  "transitions": [],
+  "current_transition": "Fade",
+  "transition_duration": 300,
+  "quick_transitions": [],
+  "preview_locked": false,
+  "scaling_enabled": false,
+  "modules": {}
+}
